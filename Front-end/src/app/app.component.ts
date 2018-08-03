@@ -16,7 +16,10 @@ export class AppComponent {
 
   onClick() {
     console.log(this.human)
-    this.http.post("api/human/add", this.human).subscribe(x => console.log("success"))
+    this.http.post("api/human/add", this.human).subscribe(x => {
+      console.log("success");
+      this.http.get("api/human").subscribe(x => console.log(x));
+    });
   }
 }
 
