@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'front-end';
+  human : Human = {name: "", lastName : "", age : 0};
+
+  onClick() {
+    console.log(this.human)
+  }
 }
+
+interface Human {
+  name : String;
+  lastName : String;
+  age : number;
+}
+
