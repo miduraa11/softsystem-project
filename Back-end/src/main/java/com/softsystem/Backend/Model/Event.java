@@ -2,6 +2,7 @@ package com.softsystem.Backend.Model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Event")
@@ -26,25 +27,25 @@ public class Event {
     private boolean active;
 
     @Column(name = "result")
-    private String resultl;
+    private String result;
 
     @JoinColumn(name = "id_type")
     @ManyToOne
     private Type type;
 
     @OneToMany(mappedBy = "event")
-    private List <Bet> bets;
+    private List<Bet> bets;
 
     public Event() {
     }
 
-    public Event(Long id, String name, Date beginDate, Date endDate, boolean active, String resultl) {
+    public Event(Long id, String name, Date beginDate, Date endDate, boolean active, String result) {
         this.id = id;
         this.name = name;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.active = active;
-        this.resultl = resultl;
+        this.result = result;
     }
 
     public Long getId() {
@@ -67,8 +68,8 @@ public class Event {
         return active;
     }
 
-    public String getResultl() {
-        return resultl;
+    public String getresult() {
+        return result;
     }
 
     public void setId(Long id) {
@@ -91,7 +92,7 @@ public class Event {
         this.active = active;
     }
 
-    public void setResultl(String resultl) {
-        this.resultl = resultl;
+    public void setresult(String result) {
+        this.result = result;
     }
 }
