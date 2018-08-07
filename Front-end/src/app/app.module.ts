@@ -9,7 +9,7 @@ import { EventsComponent } from './events/events.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { MessagesComponent } from './messages/messages.component';
-import { AppRoutingModule } from './/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { BetsComponent } from './bets/bets.component';
 import { ResultsComponent } from './results/results.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
@@ -18,6 +18,9 @@ import { EditEventsComponent } from './admin-panel/edit-events/edit-events.compo
 import { EditTeamsComponent } from './admin-panel/edit-teams/edit-teams.component';
 import { EditPlayersComponent } from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
+import { PlayerService } from './admin-panel/player.service';
+import {MatListModule} from '@angular/material/list';
+import {MatButtonModule} from '@angular/material/button';
 
 const routes: Routes = [
 
@@ -35,7 +38,7 @@ const routes: Routes = [
     EditEventsComponent,
     EditTeamsComponent,
     EditPlayersComponent,
-    EditUsersComponent,
+    EditUsersComponent,    
   ],
   imports: [
     FormsModule,
@@ -46,8 +49,10 @@ const routes: Routes = [
     MatExpansionModule,
     AppRoutingModule,
     AlertModule.forRoot(),
+    MatListModule,
+    MatButtonModule
   ],
-  providers: [],
+  providers: [PlayerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

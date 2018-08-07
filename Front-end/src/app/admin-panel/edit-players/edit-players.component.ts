@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PlayerService } from '../player.service';
+
 
 @Component({
   selector: 'app-edit-players',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit-players.component.css']
 })
 export class EditPlayersComponent implements OnInit {
+  players: Array<any>;
 
-  constructor() { }
+  constructor(private playerService: PlayerService) { }
 
   ngOnInit() {
+    this.playerService.getPlayers().subscribe(data => {
+      this.players = data;
+    });
   }
-
 }
