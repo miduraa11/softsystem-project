@@ -10,7 +10,7 @@ public class Bet {
     @SequenceGenerator(name="bet_id_sequence", sequenceName = "bet_seq", initialValue = 2, allocationSize = 1)
     @GeneratedValue(generator = "bet_id_sequence", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_bet")
-    private Long id;
+    private long id;
 
     @Column(name = "amount")
     private Float amount;

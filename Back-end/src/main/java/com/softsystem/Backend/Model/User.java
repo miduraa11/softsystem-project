@@ -1,7 +1,5 @@
 package com.softsystem.Backend.Model;
 
-import org.hibernate.validator.constraints.Range;
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +12,7 @@ public class User {
     @SequenceGenerator(name="user_id_sequence", sequenceName = "user_seq", initialValue = 2, allocationSize = 1)
     @GeneratedValue(generator = "user_id_sequence", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_user")
-    private Long id;
+    private long id;
 
     @Column(name = "firstName")
     private String firstName;
@@ -22,18 +20,18 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
 
-    @Column(name = "e-mail")
+    @Column(name = "email")
     private String email;
 
     @Column(name = "password")
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<Bet> bets;
+    private List <Bet> bets;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "rol_user"))
-    private Set<Role> roles;
+    private Set <Role> roles;
 
     public User() {
     }

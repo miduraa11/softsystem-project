@@ -11,9 +11,9 @@ public class Type {
     @SequenceGenerator(name="type_id_sequence", sequenceName = "type_seq", initialValue=2, allocationSize=1)
     @GeneratedValue(generator = "type_id_sequence", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_type")
-    private Long id;
+    private long id;
 
-    @Column(name = "discypline")
+    @Column(name = "discipline")
     private String discipline;
 
     @OneToMany(mappedBy = "type")
