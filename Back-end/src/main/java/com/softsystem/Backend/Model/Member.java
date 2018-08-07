@@ -10,7 +10,7 @@ public class Member {
     @SequenceGenerator(name="member_id_sequence", sequenceName = "member_seq", initialValue=2, allocationSize=1)
     @GeneratedValue(generator = "member_id_sequence", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_member")
-    private Long id;
+    private long id;
 
     @Column(name = "name")
     private String name;

@@ -3,6 +3,7 @@ package com.softsystem.Backend.Model;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Event")
@@ -12,7 +13,7 @@ public class Event {
     @SequenceGenerator(name="event_id_sequence", sequenceName = "event_seq", initialValue=2, allocationSize=1)
     @GeneratedValue(generator = "event_id_sequence", strategy = GenerationType.SEQUENCE)
     @Column(name = "id_event")
-    private Long id;
+    private long id;
 
     @Column(name = "name")
     private String name;
@@ -35,6 +36,10 @@ public class Event {
 
     @OneToMany(mappedBy = "event")
     private List<Bet> bets;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "event_member", joinColumns = @JoinColumn(name = "id_event"), inverseJoinColumns = @JoinColumn(name = "id_member"))
+    private Set <Member> members;
 
     public Event() {
     }
