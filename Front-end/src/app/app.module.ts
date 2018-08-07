@@ -13,6 +13,11 @@ import { AppRoutingModule } from './/app-routing.module';
 import { BetsComponent } from './bets/bets.component';
 import { ResultsComponent } from './results/results.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { AlertModule } from 'ngx-bootstrap';
+import { EditEventsComponent } from './admin-panel/edit-events/edit-events.component';
+import { EditTeamsComponent } from './admin-panel/edit-teams/edit-teams.component';
+import { EditPlayersComponent } from './admin-panel/edit-players/edit-players.component';
+import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
 
 const routes: Routes = [
 
@@ -27,6 +32,10 @@ const routes: Routes = [
     BetsComponent,
     ResultsComponent,
     AdminPanelComponent,
+    EditEventsComponent,
+    EditTeamsComponent,
+    EditPlayersComponent,
+    EditUsersComponent,
   ],
   imports: [
     FormsModule,
@@ -35,7 +44,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     RouterModule,
     MatExpansionModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AlertModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
