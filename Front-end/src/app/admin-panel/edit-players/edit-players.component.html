@@ -12,6 +12,14 @@
     <nav><a routerLink="/edit-users" class="btn btn-lg btn-outline-primary " role="button" aria-pressed="true">Użytkownicy</a></nav>
   </div>
 </div>
-<p>
-  edit-players works!
-</p>
+
+<h2>Player List</h2>
+
+<mat-list>
+  <mat-list-item *ngFor="let player of players">
+    {{player.id}}
+    {{player.name}}
+    <button mat-fab color="primary">Edytuj</button>
+    <button mat-fab color="warn">Usuń</button>
+  </mat-list-item>
+</mat-list>

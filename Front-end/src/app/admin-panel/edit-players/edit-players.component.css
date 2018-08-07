@@ -2,3 +2,10 @@
     margin-top: 5 !important;
     margin-left: 25px;
   }
+
+.button-row button,
+.button-row a {
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-top: 50px;
+}
