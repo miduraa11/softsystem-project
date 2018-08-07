@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EVENTS } from '../eventList';
+import { Event } from '../event';
 import { EventService } from '../event.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class EventsComponent implements OnInit {
  
   onSelect(event: Event): void {
     this.selectedEvent = event;
-  }
+  } 
 // cos nie dziala ale potrzebuje getEvents do wyswietlenia
   getEvents(): void {
     this.eventService.getEvents()
