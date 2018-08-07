@@ -1,17 +1,13 @@
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="800" alt="SoftSystem" src="https://l.gpcdn.pl/2/27/278/278843/_res/softsystem_logo.jpg">
-</div>
-<h2>BTB </h2>
+<div class="container">
+    <ul>
+        <li style="float:left"><img src="assets/img/btb_logo.png"></li>
+        <li><nav><a routerLink="/events">Wydarzenia</a></nav></li>
+        <li><nav><a routerLink="/bets">Moje zakłady</a></nav></li>
+        <li><nav><a routerLink="/results">Wyniki</a></nav></li>
+        <li><nav><a routerLink="/admin-panel">Admin Panel</a></nav></li>
+    </ul>
 
-<form>
-  Name
-  <input [(ngModel)]="human.name" name="imie">
-  Last Name
-  <input [(ngModel)]="human.lastName" name="nazwisko">
-  Age
-  <input [(ngModel)]="human.age" name="wiek">
-  <input type="submit" (click)="onClick()">
-</form>
+    <router-outlet></router-outlet>
+    <app-messages></app-messages>
+</div>
+

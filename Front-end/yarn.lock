@@ -101,9 +101,21 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/animations@angular/animations-builds":
+  version "7.0.0-beta.0"
+  resolved "https://codeload.github.com/angular/animations-builds/tar.gz/9f1b4fd096683d58d70168eb3e648d80bf4cba97"
+  dependencies:
+    tslib "^1.9.0"
+    
 "@angular/cdk@^6.4.2":
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-6.4.2.tgz#e623cdbbe6258980b0fa93beafce0ea7c4e2c17b"
+  dependencies:
+    tslib "^1.7.1"
+
+"@angular/cdk@angular/cdk-builds":
+  version "6.4.2-1e1751f"
+  resolved "https://codeload.github.com/angular/cdk-builds/tar.gz/7bdea0192ed0c62798145a99db4ed05a5308d416"
   dependencies:
     tslib "^1.7.1"
 
@@ -168,6 +180,14 @@
 "@angular/material@^6.4.2":
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/@angular/material/-/material-6.4.2.tgz#f39529d56bad97f0470b886c3f30591b9d3a7d05"
+  dependencies:
+    tslib "^1.7.1"
+  optionalDependencies:
+    parse5 "^5.0.0"
+
+"@angular/material@angular/material2-builds":
+  version "6.4.2-1e1751f"
+  resolved "https://codeload.github.com/angular/material2-builds/tar.gz/17b5e0a0968ad99b85f9a4f86a20a146b7a23217"
   dependencies:
     tslib "^1.7.1"
   optionalDependencies:
