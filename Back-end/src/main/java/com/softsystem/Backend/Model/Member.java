@@ -34,6 +34,10 @@ public class Member {
         return name;
     }
 
+    public Type getType() {
+        return type;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

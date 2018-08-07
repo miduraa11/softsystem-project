@@ -18,6 +18,7 @@ import { EditEventsComponent } from './admin-panel/edit-events/edit-events.compo
 import { EditTeamsComponent } from './admin-panel/edit-teams/edit-teams.component';
 import { EditPlayersComponent } from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
+import { TeamService } from './admin-panel/team.service';
 
 const routes: Routes = [
 
@@ -47,7 +48,7 @@ const routes: Routes = [
     AppRoutingModule,
     AlertModule.forRoot(),
   ],
-  providers: [],
+  providers: [TeamService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
