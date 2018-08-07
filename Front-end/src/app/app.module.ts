@@ -3,11 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { EventsComponent } from './events/events.component';
-import { EventDetailComponent } from './event-detail/event-detail.component';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { BetsComponent } from './bets/bets.component';
@@ -18,6 +17,7 @@ import { EditEventsComponent } from './admin-panel/edit-events/edit-events.compo
 import { EditTeamsComponent } from './admin-panel/edit-teams/edit-teams.component';
 import { EditPlayersComponent } from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
+import { EventService } from './event.service';
 
 const routes: Routes = [
 
@@ -27,7 +27,6 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     EventsComponent,
-    EventDetailComponent,
     MessagesComponent,
     BetsComponent,
     ResultsComponent,
@@ -47,7 +46,7 @@ const routes: Routes = [
     AppRoutingModule,
     AlertModule.forRoot(),
   ],
-  providers: [],
+  providers: [EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -13,6 +13,52 @@
   </div>
 </div>
 
-<p>
-  edit-events works!
-</p>
+
+<table class="table table-sm" id="myTable">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Imię</th>
+        <th scope="col">Nazwisko</th>
+        <th scope="col">Email</th>
+        <th scope="col">Ankieta</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let event of events">
+        <th scope="row"></th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><button type="button" class="btn btn-warning">Edytuj</button></td>
+        <td>
+            <button type="button" class="btn btn-danger" data-toggle="modal">Usuń</button>
+            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Potwierdzenie operacji</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Czy na pewno chcesz usunąć wybranego użytkownika ?</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Nie</button>
+                            <a href="#" class="btn btn-danger">Tak</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<div *ngFor="let event of events">
+  {{event.name}}
+</div>
