@@ -1,5 +1,8 @@
 package com.softsystem.Backend.Model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -35,6 +38,7 @@ public class Event {
     private Type type;
 
     @OneToMany(mappedBy = "event")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Bet> bets;
 
     @ManyToMany(fetch = FetchType.LAZY)

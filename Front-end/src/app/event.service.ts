@@ -7,11 +7,16 @@ import { Observable, of } from 'rxjs';
 })
 export class EventService {
 
+  private baseUrl = 'http://localhost:8080/edit-events';
+
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
-    return this.http.get('//localhost:8080/edit-events');
+    return this.http.get('http://localhost:8080/edit-events');
   }
 
+  deleteEvent(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+  }
 
 }

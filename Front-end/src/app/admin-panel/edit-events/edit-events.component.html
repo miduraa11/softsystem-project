@@ -1,6 +1,6 @@
 <div class="row mt-4">
   <div class="col-sm">
-    <nav><a routerLink="/edit-events" class="btn btn-lg btn-outline-primary " role="button" aria-pressed="true">Wydarzenia</a></nav>
+    <nav><a routerLink="/edit-events" class="btn btn-lg btn-outline-primary active" role="button" aria-pressed="true">Wydarzenia</a></nav>
   </div>
   <div class="col-sm">
     <nav><a routerLink="/edit-teams" class="btn btn-lg btn-outline-primary " role="button" aria-pressed="true">Drużyny</a></nav>
@@ -18,47 +18,28 @@
     <thead>
     <tr>
         <th scope="col">#</th>
-        <th scope="col">Imię</th>
-        <th scope="col">Nazwisko</th>
-        <th scope="col">Email</th>
-        <th scope="col">Ankieta</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Rozpoczęcie</th>
+        <th scope="col">Zakończnie</th>
+        <th scope="col">Status</th>
+        <th scope="col">Wynik</th>
         <th scope="col"></th>
         <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let event of events">
-        <th scope="row"></th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><button type="button" class="btn btn-warning">Edytuj</button></td>
-        <td>
-            <button type="button" class="btn btn-danger" data-toggle="modal">Usuń</button>
-            <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Potwierdzenie operacji</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Czy na pewno chcesz usunąć wybranego użytkownika ?</div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Nie</button>
-                            <a href="#" class="btn btn-danger">Tak</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </td>
+        <th scope="row">{{event.id}}</th>
+        <td>{{event.name}}</td>
+        <td>{{event.beginDate | date: "dd-MM-yyyy"}}</td>
+        <td>{{event.endDate | date: "dd-MM-yyyy"}}</td>
+        <td>{{event.active}}</td>
+        <td>{{event.result}}</td>
+        <td><nav><a class="btn btn-warning btn-sm" role="button" aria-pressed="true">Edytuj</a></nav></td>
+        <td><button type="button" class="btn btn-danger btn-sm" (click)="openDialog(event.id)">Usuń</button></td>
     </tr>
     </tbody>
 </table>
+<nav><a routerLink="#" class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true">Dodaj nowe wydarzenie</a></nav>
 
 
-<div *ngFor="let event of events">
-  {{event.name}}
-</div>
