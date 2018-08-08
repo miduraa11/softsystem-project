@@ -3,7 +3,7 @@
     <nav><a routerLink="/edit-events" class="btn btn-lg btn-outline-primary " role="button" aria-pressed="true">Wydarzenia</a></nav>
   </div>
   <div class="col-sm">
-    <nav><a routerLink="/edit-teams" class="btn btn-lg btn-outline-primary " role="button" aria-pressed="true">Drużyny</a></nav>
+    <nav><a routerLink="/edit-teams" class="btn btn-lg btn-outline-primary active " role="button" aria-pressed="true">Drużyny</a></nav>
   </div>
   <div class="col-sm">
     <nav><a routerLink="/edit-players" class="btn btn-lg btn-outline-primary " role="button" aria-pressed="true">Zawodnicy</a></nav>
@@ -15,7 +15,44 @@
 
 <h2>Team List</h2>
 
-<div *ngFor="let team of teams">
-  {{team.name}}
-</div>
-
+<table class="table table-sm" id="myTable">
+  <thead>
+  <tr>
+      <th scope="col">ID</th>
+      <th scope="col" onclick="sortTable(0)">Nazwa drużyny</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody  *ngFor="let team of teams">
+  <tr >
+      <th scope="row" >
+        {{team.id}}
+      </th>
+      <td >
+        {{team.name}}
+      </td>
+      <td><button type="button" class="btn btn-warning">Edytuj</button></td>
+      <td>
+          <button type="button" class="btn btn-danger" data-toggle="modal" >Usuń</button>
+          <div class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Potwierdzenie operacji</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">Czy na pewno chcesz usunąć wybranego użytkownika ?</div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Nie</button>
+                          <a href="#" class="btn btn-danger">Tak</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </td>
+  </tr>
+  </tbody>
+</table>
