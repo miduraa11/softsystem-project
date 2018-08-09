@@ -32,27 +32,9 @@
       <td >
         {{team.name}}
       </td>
-      <td><button type="button" class="btn btn-warning">Edytuj</button></td>
-      <td>
-          <button type="button" class="btn btn-danger" data-toggle="modal" >Usuń</button>
-          <div class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Potwierdzenie operacji</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                          </button>
-                      </div>
-                      <div class="modal-body">Czy na pewno chcesz usunąć wybranego użytkownika ?</div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Nie</button>
-                          <a href="#" class="btn btn-danger">Tak</a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </td>
+      <td><nav><a class="btn btn-warning btn-sm" role="button" aria-pressed="true">Edytuj</a></nav></td>
+        <td><button type="button" class="btn btn-danger btn-sm" (click)="openDialogDelete(team.id)">Usuń</button></td>
   </tr>
   </tbody>
 </table>
+<nav><a routerLink="#" class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="openDialogAdd()">Dodaj nowe wydarzenie</a></nav>

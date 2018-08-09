@@ -15,10 +15,11 @@ import { ResultsComponent } from './results/results.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { EditEventsComponent } from './admin-panel/edit-events/edit-events.component';
-import { EditTeamsComponent } from './admin-panel/edit-teams/edit-teams.component';
+import { EditTeamsComponent, EditTeamsModal, EditTeamsModalAdd } from './admin-panel/edit-teams/edit-teams.component';
 import { EditPlayersComponent } from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
 import { TeamService } from './admin-panel/team.service';
+import {MatDialogModule} from '@angular/material/dialog';
 
 const routes: Routes = [
 
@@ -37,6 +38,10 @@ const routes: Routes = [
     EditTeamsComponent,
     EditPlayersComponent,
     EditUsersComponent,
+    EditTeamsModal,
+    EditTeamsModalAdd
+    
+
   ],
   imports: [
     FormsModule,
@@ -47,7 +52,9 @@ const routes: Routes = [
     MatExpansionModule,
     AppRoutingModule,
     AlertModule.forRoot(),
+    MatDialogModule,
   ],
+  entryComponents: [EditTeamsModal, EditTeamsModalAdd],
   providers: [TeamService],
   bootstrap: [AppComponent]
 })

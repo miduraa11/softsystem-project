@@ -45,4 +45,8 @@ public class Member {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 }
