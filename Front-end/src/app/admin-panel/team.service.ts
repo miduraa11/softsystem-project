@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { Team } from '../model/team';
 
 @Injectable({
   providedIn: 'root'
@@ -34,11 +35,12 @@ export class TeamService {
   deleteTeam(id : number) : Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`,{responseType: 'text'});
   }
-/*
-  addTeam(team){
+
+  addTeam(team: any){
+    console.log("dziala");
      return this.http.post('//localhost:8080/admin/add', team)
   }
-*/
+
 }
 /*
 interface Member{

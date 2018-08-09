@@ -5,6 +5,7 @@ import { Team } from '../../model/team';
 
 export interface DialogData {
   id: number;
+  name: string;
 }
 
 @Component({
@@ -16,6 +17,7 @@ export class EditTeamsComponent implements OnInit {
   
   id: number;
   teams: Array<any>;
+  name: string;
 
   constructor(private teamService: TeamService, public dialog: MatDialog) { }
 
@@ -39,9 +41,11 @@ export class EditTeamsComponent implements OnInit {
     const dialogRef = this.dialog.open(EditTeamsModalAdd, {
       width: '800px',
       height: '350px',
+      data: {name: this.name}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.name =result;
     });
   }
   }
@@ -84,7 +88,10 @@ export class EditTeamsModal {
 })
 export class EditTeamsModalAdd {
 
-  @Input() team: Team;
+  //@Input() team: Team;
+  name: string;
+  team: Team;
+  
 
   constructor(private teamService: TeamService,
     public dialogRef: MatDialogRef<EditTeamsModalAdd>,
@@ -93,16 +100,20 @@ export class EditTeamsModalAdd {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  /*
-  AddTeam() {
-    this.teamService.AddTeam(this.data)
+  
+  AddTeam(name: string) {
+    
+    console.log(name);//tu dziala
+    this.team.name= name; //to nie dziala
+    console.log(this.team.name);//tu dziala
+    this.teamService.addTeam(this.addTeam)
       .subscribe(
         data => {
-          console.log(data);
+          console.log(this.addTeam.name);
           this.dialogRef.close();
         },
         error => console.log(error));
         window.location.reload();
+        
   }
-  */
 }

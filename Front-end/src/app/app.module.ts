@@ -21,6 +21,8 @@ import { EditUsersComponent } from './admin-panel/edit-users/edit-users.componen
 import { TeamService } from './admin-panel/team.service';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
+import {MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule} from '@angular/material';
+
 
 const routes: Routes = [
 
@@ -40,7 +42,7 @@ const routes: Routes = [
     EditPlayersComponent,
     EditUsersComponent,
     EditTeamsModal,
-    EditTeamsModalAdd
+    EditTeamsModalAdd,
     
 
   ],
@@ -55,6 +57,10 @@ const routes: Routes = [
     AlertModule.forRoot(),
     MatDialogModule,
     ReactiveFormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRippleModule,
   ],
   entryComponents: [EditTeamsModal, EditTeamsModalAdd],
   providers: [TeamService],
