@@ -22,4 +22,15 @@ public class EventService {
 
 
     public void deleteEvent(Long id) {  eventRepository.deleteById(id);    }
+
+
+    public Event getOne(Long id) { return eventRepository.getOne(id);
+    }
+
+
+    public void updateEvent(Event event) {
+        this.getOne(event.getId()).setName(event.getName());
+        this.getOne(event.getId()).setName(event.getName());
+        eventRepository.save(this.getOne(event.getId()));
+    }
 }

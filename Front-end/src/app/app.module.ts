@@ -13,14 +13,14 @@ import { BetsComponent } from './bets/bets.component';
 import { ResultsComponent } from './results/results.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AlertModule } from 'ngx-bootstrap';
-import { EditEventsComponent, EditEventModal } from './admin-panel/edit-events/edit-events.component';
+import { EditEventsComponent, DeleteEventModal, EditEventModal} from './admin-panel/edit-events/edit-events.component';
 import { EditTeamsComponent } from './admin-panel/edit-teams/edit-teams.component';
 import { EditPlayersComponent } from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
 import { EventService } from './event.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import {MatSelectModule} from '@angular/material/select';
 const routes: Routes = [
 
 ];
@@ -37,6 +37,7 @@ const routes: Routes = [
     EditTeamsComponent,
     EditPlayersComponent,
     EditUsersComponent,
+    DeleteEventModal,
     EditEventModal
   ],
   imports: [
@@ -49,9 +50,10 @@ const routes: Routes = [
     AppRoutingModule,
     AlertModule.forRoot(),
     NgbModule.forRoot(),
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule
   ],
-  entryComponents: [EditEventModal],
+  entryComponents: [DeleteEventModal, EditEventModal],
   providers: [EventService],
   bootstrap: [AppComponent]
 })

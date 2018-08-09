@@ -7,6 +7,10 @@ export interface DialogData {
   id: number;
 }
 
+export interface DialogDataEdit {
+  event: Event;
+}
+
 @Component({
   selector: 'app-edit-events',
   templateUrl: './edit-events.component.html',
@@ -27,8 +31,8 @@ export class EditEventsComponent implements OnInit {
       });
     }
 
-    openDialog(id: number): void {
-      const dialogRef = this.dialog.open(EditEventModal, {
+    openDeleteDialog(id: number): void {
+      const dialogRef = this.dialog.open(DeleteEventModal, {
         width: '400px',
         data: {id: id}
       });
@@ -37,20 +41,31 @@ export class EditEventsComponent implements OnInit {
       });
     }
 
+    openEditDialog(event: Event): void{
+      const dialogRef = this.dialog.open(EditEventModal, {
+        width: '600px',
+        data: {event: event}
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+
+    }
+
 
 
 }
 
 @Component({
-  selector: 'edit-event-modal',
-  templateUrl: './edit-event-modal.html',
+  selector: 'delete-event-modal',
+  templateUrl: './delete-event-modal.html',
 })
-export class EditEventModal {
+export class DeleteEventModal {
 
   @Input() event: Event;
 
   constructor(private eventService: EventService,
-    public dialogRef: MatDialogRef<EditEventModal>,
+    public dialogRef: MatDialogRef<DeleteEventModal>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   onNoClick(): void {
@@ -63,9 +78,37 @@ export class EditEventModal {
         data => {
           console.log(data);
           this.dialogRef.close();
+          window.location.reload();
         },
         error => console.log(error));
-        window.location.reload();
+        
   }
 
 }
+
+
+@Component({
+  selector: 'edit-event-modal',
+  templateUrl: './edit-event-modal.html',
+  styleUrls: ['./edit-events.component.css']
+})
+export class EditEventModal {
+
+  @Input() event: Event;
+
+  constructor(private eventService: EventService,
+    public dialogRef: MatDialogRef<EditEventModal>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  editEvent() {
+        
+  }
+
+}
+
+
+
