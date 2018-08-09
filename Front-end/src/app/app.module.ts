@@ -20,6 +20,7 @@ import { EditPlayersComponent } from './admin-panel/edit-players/edit-players.co
 import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
 import { TeamService } from './admin-panel/team.service';
 import {MatDialogModule} from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
 
@@ -53,6 +54,7 @@ const routes: Routes = [
     AppRoutingModule,
     AlertModule.forRoot(),
     MatDialogModule,
+    ReactiveFormsModule,
   ],
   entryComponents: [EditTeamsModal, EditTeamsModalAdd],
   providers: [TeamService],

@@ -37,7 +37,8 @@ export class EditTeamsComponent implements OnInit {
   openDialogAdd(){
     console.log("dzialadodawanie");
     const dialogRef = this.dialog.open(EditTeamsModalAdd, {
-      width: '400px',
+      width: '800px',
+      height: '350px',
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
