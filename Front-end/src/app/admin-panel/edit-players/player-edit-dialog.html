@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Edycja Zawodnika</h1>
+<div mat-dialog-content>
+    <section>
+        <form (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label class="validation-message">Imie i Nazwisko*</label>
+                <input style="width: 300px" value="{{data.name}}" type="text" class="form-control" placeholder="Imie i Nazwisko"/>
+            </div>
+            <div class="form-group">
+                <label class="validation-message">Dyscyplina sportowa*</label>
+                <input style="width: 300px" value="{{data.discipline}}" type="text" class="form-control" placeholder="Dyscyplina"/>
+            </div>
+        </form>
+    </section>
+</div>
+<div>* - pola wymagane</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onAnulujClick()">Anuluj</button>
+  <button mat-flat-button color='primary' (click)="onSaveClick()">Zapisz</button>
+</div>

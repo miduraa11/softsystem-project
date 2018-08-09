@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Event } from './event';
+import { Event } from './model/event';
 import { EVENTS } from './eventList';
 import { MessageService } from './message.service';
  

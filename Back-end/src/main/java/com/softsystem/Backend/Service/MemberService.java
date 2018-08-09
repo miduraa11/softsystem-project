@@ -24,4 +24,14 @@ public class MemberService {
     private boolean isPlayer(Member member) {
         return member.getType().getDiscipline().equals("Skoki_narciarskie");
     }
+
+    public void deleteById(long id) {
+        memberRepository.deleteById(id);
+    }
+
+    public void updateMember(Member member) {
+        memberRepository.getOne(member.getId()).setName(member.getName());
+        memberRepository.getOne(member.getId()).getType().setDiscipline(member.getType().getDiscipline());
+        memberRepository.save(member);
+    }
 }

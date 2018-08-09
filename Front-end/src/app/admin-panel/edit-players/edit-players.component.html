@@ -28,8 +28,8 @@
       <th scope="row">{{player.id}}</th>
       <td>{{player.name}}</td>
       <td>{{player.type.discipline}}</td>
-      <td><nav><a mat-raised-button color="primary" role="button" [routerLink]="['/player-edit', player.id]">Edytuj</a></nav></td>
-      <td><button mat-raised-button color="warn" (click)="openDialog()">Usuń</button></td>
+      <td><button mat-raised-button color="primary" (click)="openEditDialog(player.name, player.type.discipline)">Edytuj</button></td>
+      <td><button mat-raised-button color="warn" (click)="openDialog(player.id)">Usuń</button></td>
   </tr>
   </tbody>
 </table>

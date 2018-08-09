@@ -1,4 +1,4 @@
-import { Event } from './event'; 
+import { Event } from './model/event'; 
 
 export const EVENTS: Event[] = [
   { id: 1, 
