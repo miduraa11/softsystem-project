@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +34,14 @@ public class MemberService {
         memberRepository.saveAndFlush(member);
     }
 
-    public void deleteMember(Long id){memberRepository.deleteById(id);}
+    public void editMember(Member member, long id){
+        member.setId(id);
+        memberRepository.save(member);
+    }
+
+    public void deleteMember(Long id){
+        memberRepository.deleteById(id);
+    }
 
     private boolean isTeam(Member member){
         if (member.getType()!=null)

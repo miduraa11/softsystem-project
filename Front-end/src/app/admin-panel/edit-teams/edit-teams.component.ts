@@ -7,6 +7,7 @@ export interface DialogData {
   id: number;
   name: string;
 }
+//list teams
 
 @Component({
   selector: 'app-edit-teams',
@@ -36,8 +37,7 @@ export class EditTeamsComponent implements OnInit {
       });
     }
 
-  openDialogAdd(){
-    console.log("dzialadodawanie");
+  openDialogAdd(): void{
     const dialogRef = this.dialog.open(EditTeamsModalAdd, {
       width: '800px',
       height: '350px',
@@ -48,9 +48,27 @@ export class EditTeamsComponent implements OnInit {
       this.name =result;
     });
   }
+
+  openDialogEdit(id: number): void{
+    console.log("dzialadodawanie");
+    console.log(id);
+    const dialogRef = this.dialog.open(EditTeamsModalEdit, {
+      width: '800px',
+      height: '350px',
+      data: {name: this.name}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.name =result;
+    });
   }
 
 
+
+  }
+
+
+//Delete Team
 
 @Component({
   selector: 'edit-teams-modal',
@@ -81,6 +99,7 @@ export class EditTeamsModal {
 
 }
 
+//Add team
 
 @Component({
   selector: 'edit-teams-modal-add',
@@ -100,7 +119,41 @@ export class EditTeamsModalAdd {
     this.dialogRef.close();
   }
   
-  AddTeam(name: string) {
+  addTeam(name: string) {
+    this.team.name= name; 
+    this.teamService.addTeam(this.team.name)
+      .subscribe(
+        data => {
+          this.dialogRef.close();
+        },
+        error => console.log(error));
+        window.location.reload();
+      
+  }
+}
+
+//Edit team
+
+@Component({
+  selector: 'edit-teams-modal-edit',
+  templateUrl: './edit-teams-modal-edit.html',
+})
+export class EditTeamsModalEdit {
+
+  name: string;
+  id: number;
+  team: Team = { id : 0, name : ""};
+  
+
+  constructor(private teamService: TeamService,
+    public dialogRef: MatDialogRef<EditTeamsModalEdit>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  
+  editTeam(name: string) {
     this.team.name= name; 
     this.teamService.addTeam(this.team.name)
       .subscribe(

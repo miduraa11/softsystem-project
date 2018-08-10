@@ -32,9 +32,9 @@
       <td >
         {{team.name}}
       </td>
-      <td><nav><a class="btn btn-warning btn-sm" role="button" aria-pressed="true">Edytuj</a></nav></td>
+      <td><button type="button" class="btn btn-warning btn-sm" (click)="openDialogEdit(team.id)">Edytuj</button></td>
         <td><button type="button" class="btn btn-danger btn-sm" (click)="openDialogDelete(team.id)">Usuń</button></td>
   </tr>
   </tbody>
 </table>
-<nav><a routerLink="#" class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="openDialogAdd()">Dodaj nową drużynę</a></nav>
+<nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="openDialogAdd()">Dodaj nową drużynę</button></nav>

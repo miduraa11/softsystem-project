@@ -32,5 +32,9 @@ public class TeamController {
     public void addTeam(@PathVariable(name="name")String name){
         memberService.addTeam(name);
     }
+    @PutMapping(path = "edit-team/{id}")
+    public void editTeam(@RequestBody Member member, @PathVariable long id){
+        memberService.editMember(member, id);
+    }
 
 }
