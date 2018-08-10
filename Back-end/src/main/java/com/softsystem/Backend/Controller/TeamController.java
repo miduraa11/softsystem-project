@@ -28,9 +28,9 @@ public class TeamController {
         memberService.deleteMember(id);
         return "redirect:edit-teams";
     }
-    @PostMapping(path = "edit-teams/add")
-    public void addTeam(@RequestBody MemberDTO team){
-        memberService.addTeam(team);
+    @PostMapping(path = "edit-teams/{name}")
+    public void addTeam(@PathVariable(name="name")String name){
+        memberService.addTeam(name);
     }
 
 }

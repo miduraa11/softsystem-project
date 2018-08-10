@@ -88,9 +88,8 @@ export class EditTeamsModal {
 })
 export class EditTeamsModalAdd {
 
-  //@Input() team: Team;
   name: string;
-  team: Team;
+  team: Team = { id : 0, name : ""};
   
 
   constructor(private teamService: TeamService,
@@ -102,18 +101,14 @@ export class EditTeamsModalAdd {
   }
   
   AddTeam(name: string) {
-    
-    console.log(name);//tu dziala
-    this.team.name= name; //to nie dziala
-    console.log(this.team.name);//tu dziala
-    this.teamService.addTeam(this.addTeam)
+    this.team.name= name; 
+    this.teamService.addTeam(this.team.name)
       .subscribe(
         data => {
-          console.log(this.addTeam.name);
           this.dialogRef.close();
         },
         error => console.log(error));
         window.location.reload();
-        
+      
   }
 }

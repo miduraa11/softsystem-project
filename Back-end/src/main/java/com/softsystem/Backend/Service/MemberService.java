@@ -25,10 +25,10 @@ public class MemberService {
         return teams;
     }
 
-    public void addTeam(MemberDTO team){
+    public void addTeam(String name){
         Member member = new Member();
         // member.setType(MemberType.Team);
-        member.setName(team.getName());
+        member.setName(name);
 
         memberRepository.saveAndFlush(member);
     }
@@ -36,7 +36,8 @@ public class MemberService {
     public void deleteMember(Long id){memberRepository.deleteById(id);}
 
     private boolean isTeam(Member member){
-        return member.getType().getDiscipline().equals("Pilka_nozna");
+        if (member.getType()!=null)
+            return member.getType().getId().equals((long)1);
+        else return true;
     }
-
 }

@@ -4,7 +4,7 @@
             <input [(ngModel)]="data.name" placeholder="Nazwa dtużyny" style="width: 400px">
     </div>
     <div  style="padding: 20px">
-        <button mat-button class="btn btn-success btn-md btn-space" style="width: 150px; margin-right: 50px" [mat-dialog-close]="data.name" cdkFocusInitial>Zapisz</button>
-        <button mat-button class="btn btn-danger btn-sm" (click)="AddTeam(data.name)" style="width: 150px; margin-left: 50px">Anuluj</button>
+        <button mat-button class="btn btn-success btn-md btn-space" style="width: 150px; margin-right: 50px" (click)="AddTeam(data.name)">Zapisz</button>
+        <button mat-button class="btn btn-danger btn-sm" (click)="onNoClick()" style="width: 150px; margin-left: 50px">Anuluj</button>
     </div>
 </div>

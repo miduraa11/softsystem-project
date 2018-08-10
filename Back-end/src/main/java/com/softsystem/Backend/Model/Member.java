@@ -7,10 +7,10 @@ import javax.persistence.*;
 public class Member {
 
     @Id
-    @SequenceGenerator(name="member_id_sequence", sequenceName = "member_seq", initialValue=2, allocationSize=1)
-    @GeneratedValue(generator = "member_id_sequence", strategy = GenerationType.SEQUENCE)
+    //@SequenceGenerator(name="member_id_sequence", sequenceName = "member_seq", initialValue=2, allocationSize=1)
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
     @Column(name = "id_member")
-    private long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;

@@ -36,9 +36,9 @@ export class TeamService {
     return this.http.delete(`${this.baseUrl}/${id}`,{responseType: 'text'});
   }
 
-  addTeam(team: any){
-    console.log("dziala");
-     return this.http.post('//localhost:8080/admin/add', team)
+  addTeam(team: string){
+    console.log(team);
+     return this.http.post(`${this.baseUrl}/${team}`,{responseType: 'text'});
   }
 
 }

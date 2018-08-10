@@ -21,9 +21,9 @@ public class AdminController {
     public Collection<Member> showAllTeams(){
         return memberService.getAllTeams();
     }
-    @PostMapping(path = "/add")
+   /* @PostMapping(path = "/add")
     public void addTeam(@RequestBody MemberDTO team){
         memberService.addTeam(team);
     }
-
+*/
 }
