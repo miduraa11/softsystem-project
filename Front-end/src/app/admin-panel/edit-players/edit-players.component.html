@@ -28,7 +28,7 @@
       <th scope="row">{{player.id}}</th>
       <td>{{player.name}}</td>
       <td>{{player.type.discipline}}</td>
-      <td><button mat-raised-button color="primary" (click)="openEditDialog(player.name, player.type.discipline)">Edytuj</button></td>
+      <td><button mat-raised-button color="primary" (click)="openEditDialog(player.id, player.name, player.type.discipline)">Edytuj</button></td>
       <td><button mat-raised-button color="warn" (click)="openDialog(player.id)">Usuń</button></td>
   </tr>
   </tbody>

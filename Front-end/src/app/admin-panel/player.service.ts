@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 
 export class PlayerService {
   public API = 'http://localhost:8080';
-  public PLAYER_API = this.API + '/players';
 
   constructor(private http: HttpClient) {
   }
@@ -15,18 +14,8 @@ export class PlayerService {
     return this.http.get(this.API + '/edit-players');
   }
 
-  get(id: string) {
-    return this.http.get(this.PLAYER_API + '/' + id);
-  }
-
-  updatePlayer(player: any): Observable<any> {
-    let result: Observable<Object>;
-    if (player['href']) {
-      result = this.http.put(`${this.API}/edit-players/edit/${player.id}`, player);
-    } else {
-      result = this.http.post(this.PLAYER_API, player);
-    }
-    return result;
+  updatePlayer(id: number, name: String, discipline: String): Observable<any> {
+    return this.http.post(`${this.API}/edit-players/edit/${id}/${name}/${discipline}`, { responseType: 'text' });
   }
 
   deletePlayer(id: number): Observable<any> {

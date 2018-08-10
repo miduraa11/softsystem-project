@@ -7,8 +7,7 @@ import javax.persistence.*;
 public class Member {
 
     @Id
-    @SequenceGenerator(name="member_id_sequence", sequenceName = "member_seq", initialValue=2, allocationSize=1)
-    @GeneratedValue(generator = "member_id_sequence", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_member")
     private long id;
 
@@ -26,7 +25,7 @@ public class Member {
         this.name = name;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -36,11 +35,13 @@ public class Member {
 
     public Type getType() { return type; }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setType(Type type) { this.type = type; }
 }

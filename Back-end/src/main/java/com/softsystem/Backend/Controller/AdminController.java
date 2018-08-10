@@ -1,10 +1,10 @@
 package com.softsystem.Backend.Controller;
 
 import com.softsystem.Backend.Model.Member;
+import com.softsystem.Backend.Model.Type;
 import com.softsystem.Backend.Service.MemberService;
+import com.softsystem.Backend.Service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -15,9 +15,11 @@ public class AdminController {
 
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private TypeService typeService;
 
     @GetMapping(value = "/edit-players")
-    public Collection<Member> showAllPlayers () {
+    public Collection<Member> showAllPlayers() {
         return memberService.getAllPlayers();
     }
 
@@ -29,10 +31,13 @@ public class AdminController {
         return "redirect:edit-players";
     }
 
-    @PostMapping(value= "/edit-players/edit/{id}")
-    public String updatePlayer(@RequestBody Member member) {
-        memberService.updateMember(member);
+    @PostMapping(value= "/edit-players/edit/{id}/{name}/{discipline}")
+    public void updatePlayer(@PathVariable("id") long id, @PathVariable("name") String name, @PathVariable("discipline") String discipline) {
+        memberService.updateMember(id, name, discipline);
+    }
 
-        return "redirect:edit-players";
+    @GetMapping(value = "/edit-players/types")
+    public Collection<Type> showAllTypes() {
+        return typeService.getAllTypes();
     }
 }

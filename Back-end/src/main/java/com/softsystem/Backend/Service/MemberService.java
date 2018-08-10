@@ -1,7 +1,9 @@
 package com.softsystem.Backend.Service;
 
 import com.softsystem.Backend.Model.Member;
+import com.softsystem.Backend.Model.Type;
 import com.softsystem.Backend.Repository.MemberRepository;
+import com.softsystem.Backend.Repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
@@ -12,26 +14,31 @@ public class MemberService {
 
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private TypeRepository typeRepository;
 
     public Collection <Member> getAllPlayers() {
         Collection <Member> players;
         players = memberRepository.findAll().stream()
                                     .filter(this::isPlayer)
                                     .collect(Collectors.toList());
+
         return players;
     }
 
     private boolean isPlayer(Member member) {
-        return member.getType().getDiscipline().equals("Skoki_narciarskie");
+        return  member.getType().getDiscipline().equals("Skoki narciarskie") ||
+                member.getType().getDiscipline().equals("Pływanie");
     }
 
     public void deleteById(long id) {
         memberRepository.deleteById(id);
     }
 
-    public void updateMember(Member member) {
-        memberRepository.getOne(member.getId()).setName(member.getName());
-        memberRepository.getOne(member.getId()).getType().setDiscipline(member.getType().getDiscipline());
-        memberRepository.save(member);
+    public void updateMember(long id, String name, String discipline) {
+        memberRepository.getOne(id).setName(name);
+        Type tempType = typeRepository.findByDiscipline(discipline);
+        memberRepository.getOne(id).setType(tempType);
+        memberRepository.save(memberRepository.getOne(id));
     }
 }
