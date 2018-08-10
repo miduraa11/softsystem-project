@@ -13,13 +13,14 @@
   </div>
 </div>
 
-<h2>Team List</h2>
+<h2 style="padding-top: 20px">Team List</h2>
 
 <table class="table table-sm" id="myTable">
   <thead>
   <tr>
       <th scope="col">ID</th>
       <th scope="col" onclick="sortTable(0)">Nazwa drużyny</th>
+      <th scope="col">Dyscyplina</th>
       <th scope="col"></th>
       <th scope="col"></th>
   </tr>
@@ -32,9 +33,13 @@
       <td >
         {{team.name}}
       </td>
+      <td >
+        {{team.type.discipline}}
+      </td>
       <td><button type="button" class="btn btn-warning btn-sm" (click)="openDialogEdit(team.id, team.name)">Edytuj</button></td>
         <td><button type="button" class="btn btn-danger btn-sm" (click)="openDialogDelete(team.id)">Usuń</button></td>
   </tr>
   </tbody>
 </table>
 <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="openDialogAdd()">Dodaj nową drużynę</button></nav>
+

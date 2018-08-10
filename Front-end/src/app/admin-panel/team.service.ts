@@ -17,6 +17,9 @@ export class TeamService {
   getAll(): Observable<any> {
     return this.http.get('//localhost:8080/edit-teams');
   }
+  getAllType(): Observable<any> {
+    return this.http.get('//localhost:8080/edit-teams/type');
+  }
 /*
   get(id: string) {
     return this.http.get('//localhost:8080/edit-teams' + '/' + id);

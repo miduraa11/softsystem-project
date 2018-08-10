@@ -2,11 +2,18 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 import { TeamService } from '../team.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '../../../../node_modules/@angular/material/dialog';
 import { Team } from '../../model/team';
+import { Type } from '../../model/type';
 
 export interface DialogData {
   id: number;
   name: string;
   pName: string;
+  type: Type;
+}
+
+export interface Food {
+  value: string;
+  viewValue: string;
 }
 //list teams
 
@@ -19,13 +26,22 @@ export class EditTeamsComponent implements OnInit {
   
   id: number;
   teams: Array<any>;
+  types: Array<any>;
   name: string;
+
+  foods: Food[] = [
+    {value: 'steak-0', viewValue: 'Steak'},
+    {value: 'pizza-1', viewValue: 'Pizza'},
+    {value: 'tacos-2', viewValue: 'Tacos'}
+  ];
+
 
   constructor(private teamService: TeamService, public dialog: MatDialog) { }
 
 
   ngOnInit() {
     this.teamService.getAll().subscribe(data =>{this.teams = data});
+    this.teamService.getAllType().subscribe(data =>{this.types = data});
     }
 
   openDialogDelete(id: number): void {
@@ -107,7 +123,7 @@ export class EditTeamsModalDelete {
 export class EditTeamsModalAdd {
 
   name: string;
-  team: Team = { id : 0, name : ""};
+  team: Team = { id : 0, name : "", type: null};
   
 
   constructor(private teamService: TeamService,
@@ -141,7 +157,7 @@ export class EditTeamsModalEdit {
 
   name: string;
   id: number;
-  team: Team = { id : 0, name : ""};
+  team: Team = { id : 0, name : "", type: null};
   
 
   constructor(private teamService: TeamService,
