@@ -6,6 +6,7 @@ import { Team } from '../../model/team';
 export interface DialogData {
   id: number;
   name: string;
+  pName: string;
 }
 //list teams
 
@@ -49,13 +50,11 @@ export class EditTeamsComponent implements OnInit {
     });
   }
 
-  openDialogEdit(id: number): void{
-    console.log("dzialadodawanie");
-    console.log(id);
+  openDialogEdit(id: number, pName: string): void{
     const dialogRef = this.dialog.open(EditTeamsModalEdit, {
       width: '800px',
       height: '350px',
-      data: {name: this.name}
+      data: {name: this.name, pName, id}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -149,13 +148,18 @@ export class EditTeamsModalEdit {
     public dialogRef: MatDialogRef<EditTeamsModalEdit>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
+  ngOnInit() {
+    this.data.name = this.data.pName;
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
   
-  editTeam(name: string) {
-    this.team.name= name; 
-    this.teamService.addTeam(this.team.name)
+  editTeam(name: string, id: number) {
+    this.team.name = name;
+    this.team.id = id; 
+    this.teamService.editTeam(this.team.name, this.team.id)
       .subscribe(
         data => {
           this.dialogRef.close();

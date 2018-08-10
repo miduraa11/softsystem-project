@@ -2,7 +2,9 @@ package com.softsystem.Backend.Service;
 
 import com.softsystem.Backend.DTO.MemberDTO;
 import com.softsystem.Backend.Model.Member;
+import com.softsystem.Backend.Model.Type;
 import com.softsystem.Backend.Repository.MemberRepository;
+import com.softsystem.Backend.Repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ public class MemberService {
 
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private TypeRepository typeRepository;
 
     public MemberService(MemberRepository memberRepository){
         this.memberRepository=memberRepository;
@@ -28,14 +32,16 @@ public class MemberService {
 
     public void addTeam(String name){
         Member member = new Member();
-        // member.setType(MemberType.Team);
+        Type type = typeRepository.getOne((long)1);
         member.setName(name);
+        member.setType(type);
 
         memberRepository.saveAndFlush(member);
     }
 
-    public void editMember(Member member, long id){
-        member.setId(id);
+    public void editMember(String name, long id){
+        Member member = memberRepository.getOne(id);
+        member.setName(name);
         memberRepository.save(member);
     }
 

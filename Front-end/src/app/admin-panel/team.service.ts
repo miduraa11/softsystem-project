@@ -40,6 +40,9 @@ export class TeamService {
     console.log(team);
      return this.http.post(`${this.baseUrl}/${team}`,{responseType: 'text'});
   }
+  editTeam(team: string, id: number){
+     return this.http.post(`${this.baseUrl}/${id}/${team}`,{responseType: 'text'});
+  }
 
 }
 /*
