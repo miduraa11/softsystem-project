@@ -29,7 +29,7 @@ export class EditTeamsComponent implements OnInit {
     }
 
   openDialogDelete(id: number): void {
-      const dialogRef = this.dialog.open(EditTeamsModal, {
+      const dialogRef = this.dialog.open(EditTeamsModalDelete, {
         width: '400px',
         data: {id: id}
       });
@@ -70,15 +70,15 @@ export class EditTeamsComponent implements OnInit {
 //Delete Team
 
 @Component({
-  selector: 'edit-teams-modal',
-  templateUrl: './edit-teams-modal.html',
+  selector: 'edit-teams-modal-delete',
+  templateUrl: './edit-teams-modal-delete.html',
 })
-export class EditTeamsModal {
+export class EditTeamsModalDelete {
 
   @Input() team: Team;
 
   constructor(private teamService: TeamService,
-    public dialogRef: MatDialogRef<EditTeamsModal>,
+    public dialogRef: MatDialogRef<EditTeamsModalDelete>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   onNoClick(): void {
