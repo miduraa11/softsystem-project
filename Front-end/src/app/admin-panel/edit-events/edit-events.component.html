@@ -28,7 +28,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let event of events">
+    <tr *ngFor="let event of events?.events">
         <th scope="row">{{event.id}}</th>
         <td>{{event.name}}</td>
         <td>{{event.beginDate | date: "dd-MM-yyyy"}}</td>
@@ -40,6 +40,7 @@
     </tr>
     </tbody>
 </table>
-<nav><a routerLink="#" class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true">Dodaj nowe wydarzenie</a></nav>
+<button type="button" class="btn btn-primary btn-md btn-block btn-success" (click)="openCreateDialog(data)">Dodaj nowe wydarzenie</button>
+
 
 

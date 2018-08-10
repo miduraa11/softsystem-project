@@ -1,14 +1,48 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { EventService } from '../../event.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '../../../../node_modules/@angular/material/dialog';
-import { Event } from '../../model/event';
 
 export interface DialogData {
   id: number;
 }
 
+export interface DialogDataAdd {
+  event: Event;
+  member: Member;
+  type: Type;
+}
+
 export interface DialogDataEdit {
   event: Event;
+}
+
+export interface DialogData {
+  id: number;
+}
+
+export interface Event {
+	id: number;
+	name: string;
+	beginDate: string;
+	endDate: string;
+	active: boolean;
+	result: string;
+}
+
+export interface Member {
+	id: number;
+  name: string;
+}
+
+export interface Type {
+	id: number;
+	discipline: string;
+}
+
+export interface EventData {
+	events: Event[];
+	members: Member[];
+	types: Type[];
 }
 
 @Component({
@@ -19,14 +53,16 @@ export interface DialogDataEdit {
 export class EditEventsComponent implements OnInit {
   
   id: number;
- 
-  events: Array<any>;
-
+  event: Event;
+  member: Member;
+  type: Type;
+  events: EventData;
+  selectedMembers: Member[];
   constructor(private eventService: EventService, public dialog: MatDialog) { }
 
 
   ngOnInit() {
-        this.eventService.getAll().subscribe(data => {
+        this.eventService.getAll().subscribe(data => { console.log(data)
         this.events = data;
       });
     }
@@ -45,6 +81,17 @@ export class EditEventsComponent implements OnInit {
       const dialogRef = this.dialog.open(EditEventModal, {
         width: '600px',
         data: {event: event}
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+
+    }
+
+    openCreateDialog(event: Event, member: Member[], type: Type): void{
+      const dialogRef = this.dialog.open(CreateEventModal, {
+        width: '600px',
+        data: {event: event, member: member, type: type}
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
@@ -96,6 +143,9 @@ export class EditEventModal {
 
   @Input() event: Event;
 
+  members: EventData;
+  types: EventData;
+
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<EditEventModal>,
     @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit) {}
@@ -104,9 +154,57 @@ export class EditEventModal {
     this.dialogRef.close();
   }
 
+  ngOnInit() {
+    this.eventService.getAll().subscribe(data => { console.log(data)
+    this.types = data;
+    this.members = data;
+  });
+}
+
   editEvent() {
         
   }
+
+}
+
+
+
+@Component({
+  selector: 'create-event-modal',
+  templateUrl: './create-event-modal.html',
+  styleUrls: ['./edit-events.component.css']
+})
+export class CreateEventModal {
+
+  members: EventData;
+  types: EventData;
+
+  constructor(private eventService: EventService,
+    public dialogRef: MatDialogRef<CreateEventModal>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataAdd) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  ngOnInit() {
+    this.eventService.getAll().subscribe(data => { console.log(data)
+    this.types = data;
+    this.members = data;
+  });
+}
+
+
+addEvent() {
+  this.eventService.addEvent(this.data.event, this.data.member, this.data.type)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.dialogRef.close();
+          window.location.reload();
+        },
+        error => console.log(error));
+}
 
 }
 

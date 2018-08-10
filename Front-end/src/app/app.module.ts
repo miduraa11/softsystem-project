@@ -13,7 +13,7 @@ import { BetsComponent } from './bets/bets.component';
 import { ResultsComponent } from './results/results.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AlertModule } from 'ngx-bootstrap';
-import { EditEventsComponent, DeleteEventModal, EditEventModal} from './admin-panel/edit-events/edit-events.component';
+import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal} from './admin-panel/edit-events/edit-events.component';
 import { EditTeamsComponent } from './admin-panel/edit-teams/edit-teams.component';
 import { EditPlayersComponent } from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
@@ -38,7 +38,8 @@ const routes: Routes = [
     EditPlayersComponent,
     EditUsersComponent,
     DeleteEventModal,
-    EditEventModal
+    EditEventModal,
+    CreateEventModal
   ],
   imports: [
     FormsModule,
@@ -53,7 +54,7 @@ const routes: Routes = [
     MatDialogModule,
     MatSelectModule
   ],
-  entryComponents: [DeleteEventModal, EditEventModal],
+  entryComponents: [DeleteEventModal, EditEventModal, CreateEventModal],
   providers: [EventService],
   bootstrap: [AppComponent]
 })

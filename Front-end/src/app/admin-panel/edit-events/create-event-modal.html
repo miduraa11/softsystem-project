@@ -1,0 +1,48 @@
+<form>
+        <div class="form-group">
+          <b>Nazwa wydarzenia</b>
+          <input type="text" class="form-control" placeholder="Wprowadź nazwę wydarzenia" [(ngModel)]="data.event.name" name="name">
+        </div>
+      
+        <div class="form-group">
+          <label for="beginDate"><b>Data rozpoczęcia</b></label>
+          <input type="date" class="form-control" id="beginDate" placeholder="Wprowad datę rozpoczęcia" [(ngModel)]="data.event.beginDate" name="begin">
+        </div>
+      
+        <div class="form-group">
+          <label for="endDate"><b>Data zakończenia</b></label>
+          <input type="date" class="form-control" id="endDate" placeholder="Wprowad datę zakończenia" [(ngModel)]="data.event.endDate" name="end">
+        </div>
+      
+        <p><b>Dyscyplina</b></p>
+        <div class="form-group">
+          <mat-select placeholder="Wybierz dyscypline" [(ngModel)]="data.type.discipline" name="discipline">
+            <mat-option *ngFor="let type of types?.types" [value]="type">{{type.discipline}}</mat-option>
+          </mat-select>
+        </div>
+      
+        <p><b>Drużyny lub uczestnicy biorący udział w wydarzeniu</b></p>
+        <div class="form-group" >
+          <mat-select placeholder="Drużyny lub uczestnicy" multiple [(ngModel)]="data.member" name="members"> 
+            <mat-option *ngFor="let member of members?.members" [value]="member">{{member.name}}</mat-option>
+          </mat-select>
+        </div>
+      
+        <p><b>Status wydarzenia</b></p>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="active" id="option1" value="true" checked [(ngModel)]="data.event.active" name="status">
+          <label class="form-check-label" for="option1">
+            Aktywne wydarzenie
+          </label>
+        </div>
+      
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" name="active" id="option2" value="false" name="status">
+          <label class="form-check-label" for="optnion2">
+            Nieaktywne wydarzenie
+          </label>
+        </div>
+      
+        <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="addEvent(data)">Dodaj nowe wydarzenie</button>
+        <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onNoClick()">Anuluj</button>
+      </form>

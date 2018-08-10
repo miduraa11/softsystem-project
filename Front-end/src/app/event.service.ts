@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { Member, Type, Event } from './admin-panel/edit-events/edit-events.component';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,11 @@ export class EventService {
 
   deleteEvent(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+  }
+
+  addEvent(event: Event, member: Member, type: Type): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${event}/${member}/${type}`, { responseType: 'text' });
+
   }
 
 }

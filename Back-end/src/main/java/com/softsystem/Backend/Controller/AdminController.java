@@ -6,8 +6,10 @@ import com.softsystem.Backend.Model.Type;
 import com.softsystem.Backend.Service.EventService;
 import com.softsystem.Backend.Service.MemberService;
 import com.softsystem.Backend.Service.TypeService;
+import com.softsystem.Backend.TransferData.EventData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +26,18 @@ public class AdminController {
     TypeService typeService;
 
     @GetMapping("/edit-events")
-    public List<Event> getAllEvents() {
+    public EventData getAllEvents() {
+
         List<Event> events = new ArrayList<>();
+        List<Member> members = new ArrayList<>();
+        List<Type> types = new ArrayList<>();
         eventService.findAll().forEach(events::add);
-        return events;
+        memberService.findAll().forEach(members::add);
+        typeService.findAll().forEach(types::add);
+
+        EventData eventData = new EventData(events, members, types);
+
+        return eventData;
     }
 
 
