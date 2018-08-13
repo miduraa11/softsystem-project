@@ -1,4 +1,5 @@
-export class Type{
+export class Type {
     id: number;
-    discipline: string;
+    discipline: String;
+
 }

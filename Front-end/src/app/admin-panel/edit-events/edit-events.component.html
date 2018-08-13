@@ -1,6 +1,6 @@
 <div class="row mt-4">
   <div class="col-sm">
-    <nav><a routerLink="/edit-events" class="btn btn-lg btn-outline-primary " role="button" aria-pressed="true">Wydarzenia</a></nav>
+    <nav><a routerLink="/edit-events" class="btn btn-lg btn-outline-primary active" role="button" aria-pressed="true">Wydarzenia</a></nav>
   </div>
   <div class="col-sm">
     <nav><a routerLink="/edit-teams" class="btn btn-lg btn-outline-primary " role="button" aria-pressed="true">Drużyny</a></nav>
@@ -13,6 +13,33 @@
   </div>
 </div>
 
-<p>
-  edit-events works!
-</p>
+
+<table class="table table-sm" id="myTable">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nazwa</th>
+        <th scope="col">Rozpoczęcie</th>
+        <th scope="col">Zakończnie</th>
+        <th scope="col">Status</th>
+        <th scope="col">Wynik</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let event of events?.events">
+        <th scope="row">{{event.id}}</th>
+        <td>{{event.name}}</td>
+        <td>{{event.beginDate | date: "dd-MM-yyyy"}}</td>
+        <td>{{event.endDate | date: "dd-MM-yyyy"}}</td>
+        <td>{{event.active}}</td>
+        <td>{{event.result}}</td>
+        <td><button type="button" class="btn btn-warning btn-sm" (click)="openEditDialog(event)">Edytuj</button></td>
+        <td><button type="button" class="btn btn-danger btn-sm" (click)="openDeleteDialog(event.id)">Usuń</button></td>
+    </tr>
+    </tbody>
+</table>
+<button type="button" class="btn btn-primary btn-md btn-block btn-success" (click)="openCreateDialog()">Dodaj nowe wydarzenie</button>
+

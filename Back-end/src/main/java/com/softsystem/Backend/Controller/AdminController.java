@@ -1,29 +1,98 @@
 package com.softsystem.Backend.Controller;
 
-import com.softsystem.Backend.DTO.MemberDTO;
+import com.softsystem.Backend.Model.Event;
 import com.softsystem.Backend.Model.Member;
+import com.softsystem.Backend.Model.Type;
+import com.softsystem.Backend.Service.EventService;
 import com.softsystem.Backend.Service.MemberService;
+import com.softsystem.Backend.Service.TypeService;
+import com.softsystem.Backend.TransferData.EventData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Collection;
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
-    private MemberService memberService;
+    EventService eventService;
+    @Autowired
+    MemberService memberService;
+    @Autowired
+    TypeService typeService;
+
+    @GetMapping("/edit-events")
+    public EventData getAllEvents() {
+
+        List<Event> events = new ArrayList<>();
+        List<Member> members = new ArrayList<>();
+        List<Type> types = new ArrayList<>();
+        eventService.findAll().forEach(events::add);
+        memberService.findAll().forEach(members::add);
+        typeService.findAll().forEach(types::add);
+
+        EventData eventData = new EventData(events, members, types);
+
+        return eventData;
+    }
+
+
+    @DeleteMapping("/edit-events/{id}")
+        public String adminEventDelete(@PathVariable(name="id")Long id) {
+            eventService.deleteEvent(id);
+            return "redirect:edit-events";
+    }
+
+    @GetMapping(value= "/edit-events/{id}}")
+    public Event adminUserEdit(@PathVariable Long id) {
+        Event event = eventService.getOne(id);
+        return event;
+    }
+
+    @PostMapping(value = "/edit-events/edit/{id}}")
+    public String editEvent(@PathVariable Long id, @ModelAttribute("updateEvent") Event updateEvent) {
+        eventService.updateEvent(updateEvent);
+        return "redirect:edit-events";
+    }
+
+    @PostMapping(value = "/edit-events/add")
+    public void addEvent(@RequestBody EventData eventData) {
+        eventService.addEvent(eventData.getEvents().get(0), eventData.getTypes().get(0), eventData.getMembers());
+    }
+
+    @GetMapping(value = "/edit-players")
+    public Collection<Member> showAllPlayers() {
+        return memberService.getAllPlayers();
+    }
+
+    @DeleteMapping("/edit-players/{id}")
+    public String deletePlayer(@PathVariable("id") long id) {
+        System.out.println("Delete Player with ID = " + id + "...");
+        memberService.deleteById(id);
+
+        return "redirect:edit-players";
+    }
+
+    @PostMapping(value= "/edit-players/edit/{id}/{name}/{discipline}")
+    public void updatePlayer(@PathVariable("id") long id, @PathVariable("name") String name, @PathVariable("discipline") String discipline) {
+        memberService.updateMember(id, name, discipline);
+    }
+
+    @GetMapping(value = "/edit-players/types")
+    public Collection<Type> showAllTypes() {
+        return typeService.getAllTypes();
+    }
+
+    @PostMapping(value= "/edit-players/add/{name}/{discipline}")
+    public void addPlayer(@PathVariable("name") String name, @PathVariable("discipline") String discipline) {
+        memberService.addMember(name, discipline);
+    }
 
     @GetMapping(value = "/edit-teams")
     public Collection<Member> showAllTeams(){
         return memberService.getAllTeams();
     }
-   /* @PostMapping(path = "/add")
-    public void addTeam(@RequestBody MemberDTO team){
-        memberService.addTeam(team);
-    }
-*/
 }

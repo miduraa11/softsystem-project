@@ -6,12 +6,32 @@
     <nav><a routerLink="/edit-teams" class="btn btn-lg btn-outline-primary " role="button" aria-pressed="true">Drużyny</a></nav>
   </div>
   <div class="col-sm">
-    <nav><a routerLink="/edit-players" class="btn btn-lg btn-outline-primary " role="button" aria-pressed="true">Zawodnicy</a></nav>
+    <nav><a routerLink="/edit-players" class="btn btn-lg btn-outline-primary active" role="button" aria-pressed="true">Zawodnicy</a></nav>
   </div>
   <div class="col-sm">
     <nav><a routerLink="/edit-users" class="btn btn-lg btn-outline-primary " role="button" aria-pressed="true">Użytkownicy</a></nav>
   </div>
 </div>
-<p>
-  edit-players works!
-</p>
+
+<table class="table table-sm" id="myTable">
+  <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Imię i Nazwisko</th>
+        <th scope="col">Dyscyplina</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let player of players">
+      <th scope="row">{{player.id}}</th>
+      <td>{{player.name}}</td>
+      <td>{{player.type.discipline}}</td>
+      <td><button mat-raised-button color="primary" (click)="openEditDialog(player.id, player.name, player.type.discipline)">Edytuj</button></td>
+      <td><button mat-raised-button color="warn" (click)="openDeleteDialog(player.id)">Usuń</button></td>
+  </tr>
+  </tbody>
+</table>
+
+<button mat-fab color="primary" (click)="openAddDialog()">Nowy</button>
