@@ -91,8 +91,8 @@ public class AdminController {
         memberService.addMember(name, discipline);
     }
 
-    @GetMapping(value = "/edit-teams")
-    public Collection<Member> showAllTeams(){
-        return memberService.getAllTeams();
-    }
+//    @GetMapping(value = "/edit-teams")
+//    public Collection<Member> showAllTeams(){
+//        return memberService.getAllTeams();
+//    }
 }

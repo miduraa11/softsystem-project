@@ -1,17 +1,16 @@
 package com.softsystem.Backend.Controller;
 
-import com.softsystem.Backend.DTO.MemberDTO;
 import com.softsystem.Backend.Model.Member;
 import com.softsystem.Backend.Service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class TeamController {
+
     @Autowired
     MemberService memberService;
 
@@ -32,12 +31,7 @@ public class TeamController {
     public void addTeam(@PathVariable("name")String name, @PathVariable("idType")Long idType){
         memberService.addTeam(name, idType);
     }
-    /*
-    @PutMapping(path = "edit-team/{id}")
-    public void editTeam(@RequestBody Member member, @PathVariable long id){
-        memberService.editMember(member, id);
-    }
-    */
+
     @PostMapping(path = "edit-teams/edit/{id}/{name}/{idType}")
     public void editTeam(@PathVariable("id")long id, @PathVariable("name")String name, @PathVariable("idType")long idType){
         memberService.editMember(name, id, idType);

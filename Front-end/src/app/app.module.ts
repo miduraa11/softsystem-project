@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { EventsComponent } from './events/events.component';
-import { EventDetailComponent } from './event-detail/event-detail.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MessagesComponent } from './messages/messages.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,14 +30,12 @@ import {MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule} fr
 import {MatSelectModule} from '@angular/material/select';
 
 const routes: Routes = [
-
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     EventsComponent,
-    EventDetailComponent,
     MessagesComponent,
     BetsComponent,
     ResultsComponent,
