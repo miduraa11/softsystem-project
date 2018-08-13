@@ -40,4 +40,9 @@ public class AdminController {
     public Collection<Type> showAllTypes() {
         return typeService.getAllTypes();
     }
+
+    @PostMapping(value= "/edit-players/add/{name}/{discipline}")
+    public void addPlayer(@PathVariable("name") String name, @PathVariable("discipline") String discipline) {
+        memberService.addMember(name, discipline);
+    }
 }

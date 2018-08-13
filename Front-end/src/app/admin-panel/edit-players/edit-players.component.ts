@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { PlayerService } from '../player.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Member } from '../../model/member';
+import { PlayerService } from '../player.service';
 import { TypeService } from '../type.service';
-import { Type } from '../../model/type';
 
 export interface DialogData {
   id: number;
@@ -20,9 +19,8 @@ export interface DialogData2 {
   templateUrl: './edit-players.component.html',
   styleUrls: ['./edit-players.component.css']
 })
-export class EditPlayersComponent implements OnInit {
-  
-  id: number;
+export class EditPlayersComponent implements OnInit {  
+
   players: Array<any>;
 
   constructor(private playerService: PlayerService, public dialog: MatDialog) {
@@ -34,7 +32,7 @@ export class EditPlayersComponent implements OnInit {
     });    
   }
 
-  openDialog(id: number): void {
+  openDeleteDialog(id: number): void {
     const dialogRef = this.dialog.open(RemovePlayerDialog, {
       width: '400px',
       data: { id: id }
@@ -49,6 +47,17 @@ export class EditPlayersComponent implements OnInit {
     const dialogRef = this.dialog.open(PlayerEditDialog, {
       width: '400px',
       data: { id: id, name: name, discipline: discipline }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openAddDialog(): void {
+    const dialogRef = this.dialog.open(AddPlayerDialog, {
+      width: '400px',
+      data: {id: null, name: null, discipline: null}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -91,7 +100,8 @@ export class PlayerEditDialog implements OnInit {
 
   types: Array<any>;
 
-  constructor( private typeService: TypeService, private playerService: PlayerService, public dialogRef: MatDialogRef<PlayerEditDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData2) {
+  constructor( private typeService: TypeService,
+    private playerService: PlayerService, public dialogRef: MatDialogRef<PlayerEditDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData2) {
   }
 
   onAnulujClick(): void {
@@ -106,6 +116,39 @@ export class PlayerEditDialog implements OnInit {
 
   onSaveClick(data: DialogData2): void {
     this.playerService.updatePlayer(data.id, data.name, data.discipline).subscribe(
+      data => { console.log("Success"); this.dialogRef.close(); window.location.reload(); },
+      error => console.log(error)      
+    );
+  }
+
+}
+
+@Component({
+  selector: 'new-player-dialog',
+  templateUrl: './new-player-dialog.html',
+})
+export class AddPlayerDialog implements OnInit {
+
+  types: Array<any>;
+
+  constructor( private typeService: TypeService,
+      private playerService: PlayerService,
+      public dialogRef: MatDialogRef<AddPlayerDialog>,
+      @Inject(MAT_DIALOG_DATA) public data: DialogData2) {
+  }
+
+  onAnulujClick(): void {
+    this.dialogRef.close();
+  }
+
+  ngOnInit() {
+    this.typeService.getTypes().subscribe(data =>{
+      this.types = data;
+    });
+  }
+
+  onAddClick(data: DialogData2): void {
+    this.playerService.addPlayer(data.name, data.discipline).subscribe(
       data => { console.log("Success"); this.dialogRef.close(); window.location.reload(); },
       error => console.log(error)      
     );

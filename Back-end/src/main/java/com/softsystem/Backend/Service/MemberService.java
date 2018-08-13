@@ -41,4 +41,12 @@ public class MemberService {
         memberRepository.getOne(id).setType(tempType);
         memberRepository.save(memberRepository.getOne(id));
     }
+
+    public void addMember(String name, String discipline) {
+        Member member = new Member();
+        member.setName(name);
+        Type tempType = typeRepository.findByDiscipline(discipline);
+        member.setType(tempType);
+        memberRepository.save(member);
+    }
 }

@@ -22,4 +22,8 @@ export class PlayerService {
     return this.http.delete(`${this.API}/edit-players/${id}`, { responseType: 'text' });
   }
 
+  addPlayer(name: String, discipline: String): Observable<any> {
+    return this.http.post(`${this.API}/edit-players/add/${name}/${discipline}`, { responseType: 'text' });
+  }
+
 }

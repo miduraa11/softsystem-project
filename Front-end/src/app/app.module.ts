@@ -16,7 +16,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { EditEventsComponent } from './admin-panel/edit-events/edit-events.component';
 import { EditTeamsComponent } from './admin-panel/edit-teams/edit-teams.component';
-import { EditPlayersComponent, RemovePlayerDialog, PlayerEditDialog} from './admin-panel/edit-players/edit-players.component';
+import { EditPlayersComponent, RemovePlayerDialog, PlayerEditDialog, AddPlayerDialog} from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
 import { PlayerService } from './admin-panel/player.service';
 import { MatListModule } from '@angular/material/list';
@@ -42,7 +42,8 @@ const routes: Routes = [
     EditPlayersComponent,
     EditUsersComponent,
     RemovePlayerDialog,
-    PlayerEditDialog
+    PlayerEditDialog,
+    AddPlayerDialog
   ],
   imports: [
     FormsModule,
@@ -60,7 +61,8 @@ const routes: Routes = [
   ],
   entryComponents: [
     RemovePlayerDialog,
-    PlayerEditDialog
+    PlayerEditDialog,
+    AddPlayerDialog
   ],
   providers: [PlayerService],
   bootstrap: [AppComponent]
