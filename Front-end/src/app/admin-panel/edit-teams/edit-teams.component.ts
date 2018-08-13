@@ -9,12 +9,10 @@ export interface DialogData {
   name: string;
   pName: string;
   type: Type;
+  types: Array<Type>;
 }
 
-export interface Food {
-  value: string;
-  viewValue: string;
-}
+
 //list teams
 
 @Component({
@@ -28,13 +26,6 @@ export class EditTeamsComponent implements OnInit {
   teams: Array<any>;
   types: Array<any>;
   name: string;
-
-  foods: Food[] = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
-
 
   constructor(private teamService: TeamService, public dialog: MatDialog) { }
 
@@ -54,11 +45,11 @@ export class EditTeamsComponent implements OnInit {
       });
     }
 
-  openDialogAdd(): void{
+  openDialogAdd(types: Array<Type> ): void{
     const dialogRef = this.dialog.open(EditTeamsModalAdd, {
       width: '800px',
       height: '350px',
-      data: {name: this.name}
+      data: {name: this.name, types}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -66,11 +57,11 @@ export class EditTeamsComponent implements OnInit {
     });
   }
 
-  openDialogEdit(id: number, pName: string): void{
+  openDialogEdit(id: number, pName: string, type: Type): void{
     const dialogRef = this.dialog.open(EditTeamsModalEdit, {
       width: '800px',
       height: '350px',
-      data: {name: this.name, pName, id}
+      data: {name: pName, id, type}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -124,19 +115,24 @@ export class EditTeamsModalAdd {
 
   name: string;
   team: Team = { id : 0, name : "", type: null};
+  types: Array<Type>;
   
 
   constructor(private teamService: TeamService,
     public dialogRef: MatDialogRef<EditTeamsModalAdd>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
+    
+  ngOnInit() {
+    this.teamService.getAllType().subscribe(data =>{this.types = data});
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
   
-  addTeam(name: string) {
+  addTeam(name: string, id_type: number) {
     this.team.name= name; 
-    this.teamService.addTeam(this.team.name)
+    this.team.type= this.types[id_type -1];
+    this.teamService.addTeam(this.team)
       .subscribe(
         data => {
           this.dialogRef.close();
@@ -154,28 +150,31 @@ export class EditTeamsModalAdd {
   templateUrl: './edit-teams-modal-edit.html',
 })
 export class EditTeamsModalEdit {
-
+  choosenTypeId: number;
   name: string;
   id: number;
+  type: Type;
+  types: Array<Type>;
   team: Team = { id : 0, name : "", type: null};
-  
 
   constructor(private teamService: TeamService,
     public dialogRef: MatDialogRef<EditTeamsModalEdit>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   ngOnInit() {
-    this.data.name = this.data.pName;
+    this.teamService.getAllType().subscribe(data =>{this.types = data});
+    this.choosenTypeId = this.data.type.id
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
   
-  editTeam(name: string, id: number) {
-    this.team.name = name;
-    this.team.id = id; 
-    this.teamService.editTeam(this.team.name, this.team.id)
+  editTeam() {
+    this.team.name = this.data.name;
+    this.team.id = this.data.id; 
+    this.team.type = this.types.find(x => x.id == this.choosenTypeId);
+    this.teamService.editTeam(this.team)
       .subscribe(
         data => {
           this.dialogRef.close();

@@ -28,9 +28,9 @@ public class TeamController {
         memberService.deleteMember(id);
         return "redirect:edit-teams";
     }
-    @PostMapping(path = "edit-teams/{name}")
-    public void addTeam(@PathVariable(name="name")String name){
-        memberService.addTeam(name);
+    @PostMapping(path = "edit-teams/add/{name}/{idType}")
+    public void addTeam(@PathVariable("name")String name, @PathVariable("idType")Long idType){
+        memberService.addTeam(name, idType);
     }
     /*
     @PutMapping(path = "edit-team/{id}")
@@ -38,9 +38,9 @@ public class TeamController {
         memberService.editMember(member, id);
     }
     */
-    @PostMapping(path = "edit-teams/{id}/{name}")
-    public void editTeam(@PathVariable("id")long id, @PathVariable("name")String name){
-        memberService.editMember(name, id);
+    @PostMapping(path = "edit-teams/edit/{id}/{name}/{idType}")
+    public void editTeam(@PathVariable("id")long id, @PathVariable("name")String name, @PathVariable("idType")long idType){
+        memberService.editMember(name, id, idType);
     }
 
 }

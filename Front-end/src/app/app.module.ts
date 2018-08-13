@@ -22,7 +22,7 @@ import { TeamService } from './admin-panel/team.service';
 import {MatDialogModule} from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule} from '@angular/material';
-
+import {MatSelectModule} from '@angular/material/select';
 
 const routes: Routes = [
 
@@ -61,6 +61,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatRippleModule,
+    MatSelectModule,
   ],
   entryComponents: [EditTeamsModalDelete, EditTeamsModalAdd, EditTeamsModalEdit],
   providers: [TeamService],

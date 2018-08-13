@@ -30,18 +30,20 @@ public class MemberService {
         return teams;
     }
 
-    public void addTeam(String name){
+    public void addTeam(String name, Long idType){
         Member member = new Member();
-        Type type = typeRepository.getOne((long)1);
+        Type type = typeRepository.getOne(idType);
         member.setName(name);
         member.setType(type);
 
         memberRepository.saveAndFlush(member);
     }
 
-    public void editMember(String name, long id){
+    public void editMember(String name, long id, long idType){
         Member member = memberRepository.getOne(id);
         member.setName(name);
+        Type type = typeRepository.getOne(idType);
+        member.setType(type);
         memberRepository.save(member);
     }
 
@@ -51,7 +53,8 @@ public class MemberService {
 
     private boolean isTeam(Member member){
         if (member.getType()!=null)
-            return member.getType().getId().equals((long)1);
+            return member.getType().getId().equals((long)1) ||
+                    member.getType().getId().equals((long)3);
         else return true;
     }
 }
