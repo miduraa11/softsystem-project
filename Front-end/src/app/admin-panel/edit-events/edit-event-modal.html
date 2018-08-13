@@ -1,56 +1,54 @@
 <form>
-  <div class="form-group">
-    <label for="eventName"><b>Nazwa wydarzenia</b></label>
-    <input type="tet" class="form-control" id="eventName" placeholder="Wprowadź nazwę wydarzenia">
-  </div>
+    <div class="form-group">
+      <label for="eventName"><b>Nazwa wydarzenia</b></label>
+      <input type="text" class="form-control" id="eventName" [(ngModel)]="data.event.name" name="eventNaame">
+    </div>
+  
+    <div class="form-group">
+      <label for="beginDate"><b>Data rozpoczęcia</b></label>
+      <input type="date" class="form-control" id="beginDate" [ngModel]="data.event.beginDate | date:'yyyy-MM-dd'" (ngModelChange)="data.event.beginDate = $event" name="begin">
+    </div>
+  
+    <div class="form-group">
+      <label for="endDate"><b>Data zakończenia</b></label>
+      <input type="date" class="form-control" id="endDate" [ngModel]="data.event.endDate | date:'yyyy-MM-dd'" (ngModelChange)="data.event.endDate = $event" name="begin" name="end">
+    </div>
+  
+    <p><b>Dyscyplina</b></p>
+    <div class="form-group">
+      <select name="typ" [(ngModel)]="data.event.type.discipline">
+        <option *ngFor="let type of types" [value]="type" >{{type.discipline}}</option>
+      </select>
+    </div>
+  
+    <p><b>Drużyny lub uczestnicy biorący udział w wydarzeniu</b></p>
+    <div class="form-group" >
+      <mat-select multiple [(ngModel)]="selectedMembers" name="selectedMembers"> 
+        <mat-option *ngFor="let member of members" [value]="member">{{member.name}}</mat-option>
+      </mat-select>
+    </div>
+  
+    <p><b>Status wydarzenia</b></p>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="active" id="option1" value="true" checked [(ngModel)]="data.event.active" name="status">
+      <label class="form-check-label" >
+        Aktywne wydarzenie
+      </label>
+    </div>
+  
+    <p><b>Zwycięzca wydarzenia</b></p>
+    <div class="form-group">
+      <mat-select placeholder="Zwycięzca">
+        <mat-option *ngFor="let member of members" [value]="member">{{member.name}}</mat-option>
+        <mat-option [value]="0">Remis</mat-option>
+      </mat-select>
+    </div>
 
-  <div class="form-group">
-    <label for="beginDate"><b>Data rozpoczęcia</b></label>
-    <input type="date" class="form-control" id="beginDate" placeholder="Wprowad datę rozpoczęcia">
-  </div>
 
-  <div class="form-group">
-    <label for="endDate"><b>Data zakończenia</b></label>
-    <input type="date" class="form-control" id="endDate" placeholder="Wprowad datę zakończenia">
-  </div>
-
-  <p><b>Dyscyplina</b></p>
-  <div class="form-group">
-    <mat-select placeholder="Wybierz dyscypline">
-      <mat-option *ngFor="let type of types?.types" [value]="type">{{type.discipline}}</mat-option>
-    </mat-select>
-  </div>
-
-  <p><b>Drużyny lub uczestnicy biorący udział w wydarzeniu</b></p>
-  <div class="form-group" >
-    <mat-select placeholder="Drużyny lub uczestnicy" multiple [(ngModel)]="selectedMembers" name="selectedMembers"> 
-      <mat-option *ngFor="let member of members?.members" [value]="member">{{member.name}}</mat-option>
-    </mat-select>
-  </div>
-
-  <p><b>Status wydarzenia</b></p>
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="active" id="option1" value="true" checked>
-    <label class="form-check-label" for="option1">
-      Aktywne wydarzenie
-    </label>
-  </div>
-
-  <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="active" id="option2" value="false">
-    <label class="form-check-label" for="optnion2">
-      Nieaktywne wydarzenie
-    </label>
-  </div>
-
-  <p><b>Zwycięzca wydarzenia</b></p>
-  <div class="form-group">
-    <mat-select placeholder="Zwycięzca">
-      <mat-option *ngFor="let member of members?.members" [value]="member">{{member.name}}</mat-option>
-      <mat-option [value]="0">Remis</mat-option>
-    </mat-select>
-  </div>
-
-  <button type="button" class="btn btn-success btn-lg btn-block btn-sm">Zapisz zmiany</button>
-  <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm">Anuluj</button>
+    <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="addEvent(event, selectedDiscipline, selectedMembers)">Zapisz zmiany</button>
+    <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm">Anuluj</button>
 </form>
+
+
+
+

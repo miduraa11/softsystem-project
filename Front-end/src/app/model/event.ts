@@ -1,6 +1,6 @@
 export class Event {
     id: number;
-    name: string;
+    name: String;
     beginDate: Date;
     endDate: Date;
     active: boolean;

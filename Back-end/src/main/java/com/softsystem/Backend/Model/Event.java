@@ -13,8 +13,7 @@ import java.util.Set;
 public class Event {
 
     @Id
-    @SequenceGenerator(name="event_id_sequence", sequenceName = "event_seq", initialValue=2, allocationSize=1)
-    @GeneratedValue(generator = "event_id_sequence", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_event")
     private long id;
 
@@ -43,7 +42,7 @@ public class Event {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "event_member", joinColumns = @JoinColumn(name = "id_event"), inverseJoinColumns = @JoinColumn(name = "id_member"))
-    private Set <Member> members;
+    private List <Member> members;
 
     public Event() {
     }
@@ -77,7 +76,7 @@ public class Event {
         return active;
     }
 
-    public String getresult() {
+    public String getResult() {
         return result;
     }
 
@@ -101,7 +100,23 @@ public class Event {
         this.active = active;
     }
 
-    public void setresult(String result) {
+    public void setResult(String result) {
         this.result = result;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Member> members) {
+        this.members = members;
     }
 }

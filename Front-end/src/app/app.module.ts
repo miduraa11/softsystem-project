@@ -21,6 +21,8 @@ import { EventService } from './event.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
 const routes: Routes = [
 
 ];
@@ -52,7 +54,8 @@ const routes: Routes = [
     AlertModule.forRoot(),
     NgbModule.forRoot(),
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
   ],
   entryComponents: [DeleteEventModal, EditEventModal, CreateEventModal],
   providers: [EventService],

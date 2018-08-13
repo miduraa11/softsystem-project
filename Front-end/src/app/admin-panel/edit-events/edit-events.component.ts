@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { EventService } from '../../event.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '../../../../node_modules/@angular/material/dialog';
+import { Event } from '../../model/event';
 
 export interface DialogData {
   id: number;
@@ -53,11 +54,11 @@ export interface EventData {
 export class EditEventsComponent implements OnInit {
   
   id: number;
-  event: Event;
+  event: Event = {id: null, name: null, active: null, endDate: null, beginDate: null, result: null, type: null};
   member: Member;
   type: Type;
   events: EventData;
-  selectedMembers: Member[];
+
   constructor(private eventService: EventService, public dialog: MatDialog) { }
 
 
@@ -88,14 +89,14 @@ export class EditEventsComponent implements OnInit {
 
     }
 
-    openCreateDialog(event: Event, member: Member[], type: Type): void{
+    openCreateDialog(): void{
       const dialogRef = this.dialog.open(CreateEventModal, {
-        width: '600px',
-        data: {event: event, member: member, type: type}
+        width: '600px'
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
       });
+
 
     }
 
@@ -145,7 +146,7 @@ export class EditEventModal {
 
   members: EventData;
   types: EventData;
-
+  
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<EditEventModal>,
     @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit) {}
@@ -156,14 +157,13 @@ export class EditEventModal {
 
   ngOnInit() {
     this.eventService.getAll().subscribe(data => { console.log(data)
-    this.types = data;
-    this.members = data;
+    this.types = data.types;
+    this.members = data.members;
   });
 }
 
-  editEvent() {
-        
-  }
+editEvent() {
+}
 
 }
 
@@ -176,12 +176,16 @@ export class EditEventModal {
 })
 export class CreateEventModal {
 
+  event: any = {};
+
   members: EventData;
   types: EventData;
+  selectedDiscipline: Type[];
+  selectedMembers: Member[];
 
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<CreateEventModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogDataAdd) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit) {}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -189,14 +193,13 @@ export class CreateEventModal {
 
   ngOnInit() {
     this.eventService.getAll().subscribe(data => { console.log(data)
-    this.types = data;
-    this.members = data;
+    this.types = data.types;
+    this.members = data.members;
   });
 }
 
-
 addEvent() {
-  this.eventService.addEvent(this.data.event, this.data.member, this.data.type)
+  this.eventService.addEvent(this.event, this.selectedDiscipline, this.selectedMembers)
       .subscribe(
         data => {
           console.log(data);
