@@ -14,7 +14,7 @@ import { BetsComponent } from './bets/bets.component';
 import { ResultsComponent } from './results/results.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AlertModule } from 'ngx-bootstrap';
-import { EditEventsComponent } from './admin-panel/edit-events/edit-events.component';
+import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal} from './admin-panel/edit-events/edit-events.component';
 import { EditTeamsComponent } from './admin-panel/edit-teams/edit-teams.component';
 import { EditPlayersComponent, RemovePlayerDialog, PlayerEditDialog, AddPlayerDialog} from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
@@ -22,7 +22,11 @@ import { PlayerService } from './admin-panel/player.service';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card'
-import { MatDialogModule } from '@angular/material';
+import { EventService } from './event.service';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 const routes: Routes = [
 
@@ -41,6 +45,9 @@ const routes: Routes = [
     EditTeamsComponent,
     EditPlayersComponent,
     EditUsersComponent,
+    DeleteEventModal,
+    EditEventModal,
+    CreateEventModal,
     RemovePlayerDialog,
     PlayerEditDialog,
     AddPlayerDialog
@@ -57,14 +64,21 @@ const routes: Routes = [
     MatListModule,
     MatButtonModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    NgbModule.forRoot(),
+    MatDialogModule,
+    MatSelectModule,
+    MatDatepickerModule,
   ],
   entryComponents: [
+    DeleteEventModal,
+    EditEventModal,
+    CreateEventModal,
     RemovePlayerDialog,
     PlayerEditDialog,
     AddPlayerDialog
   ],
-  providers: [PlayerService],
+  providers: [PlayerService, EventService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -48,5 +49,9 @@ public class MemberService {
         Type tempType = typeRepository.findByDiscipline(discipline);
         member.setType(tempType);
         memberRepository.save(member);
+    }
+
+    public List<Member> findAll() {
+        return memberRepository.findAll();
     }
 }

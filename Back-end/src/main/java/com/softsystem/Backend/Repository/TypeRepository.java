@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TypeRepository extends JpaRepository<Type, Long> {
+    @Query("SELECT t FROM Type t WHERE t.discipline = :discipline")
+    Type findByDiscipline(@Param("discipline") String discipline);
+
 
     @Query("SELECT t FROM Type t WHERE t.discipline = :discipline")
     Type findByDiscipline(@Param("discipline") String discipline);
