@@ -1,16 +1,20 @@
 <h2>Edycja drużyny: {{data.pName}}</h2>
 <div style="text-align: center">
     <div style="padding: 20px">
-            <input [(ngModel)]="data.name" placeholder="Nazwa drużyny" style="width: 400px">
+        <form class="example-form">
+            <mat-form-field class="example-full-width">
+                <input matInput name="name" [(ngModel)]="data.name" placeholder="Nazwa drużyny">
+            </mat-form-field>
+        </form>
     </div>
     <div>
         <mat-form-field>
             <mat-select placeholder="Dyscyplina"  [(ngModel)]="choosenTypeId">
-              <mat-option *ngFor="let type of types" [value]="type.id" >
-                {{type.discipline}}
-              </mat-option>
+                <mat-option *ngFor="let type of types" [value]="type.id" >
+                    {{type.discipline}}
+                </mat-option>
             </mat-select>
-          </mat-form-field>
+        </mat-form-field>
     </div>
     <div  style="padding: 20px">
         <button mat-button class="btn btn-success btn-md btn-space" style="width: 150px; margin-right: 50px" (click)="editTeam()">Zapisz</button>

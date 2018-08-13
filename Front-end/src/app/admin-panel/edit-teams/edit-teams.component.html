@@ -36,9 +36,9 @@
       <td >
         {{team.type.discipline}}
       </td>
-      <td><button type="button" class="btn btn-warning btn-sm" (click)="openDialogEdit(team.id, team.name, team.type)">Edytuj</button></td>
+      <td><button type="button" class="btn btn-warning btn-sm"  (click)="openDialogEdit(team.id, team.name, team.type)">Edytuj</button></td>
         <td><button type="button" class="btn btn-danger btn-sm" (click)="openDialogDelete(team.id)">Usuń</button></td>
   </tr>
   </tbody>
 </table>
-<nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="openDialogAdd(types)">Dodaj nową drużynę</button></nav>
+<nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="openDialogAdd()">Dodaj nową drużynę</button></nav>

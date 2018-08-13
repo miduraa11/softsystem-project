@@ -11,8 +11,6 @@ export class TeamService {
  
   private baseUrl = 'http://localhost:8080/edit-teams';
  
-  //team : Member = { name: ""} 
-
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
@@ -21,21 +19,7 @@ export class TeamService {
   getAllType(): Observable<any> {
     return this.http.get('//localhost:8080/edit-teams/type');
   }
-/*
-  get(id: string) {
-    return this.http.get('//localhost:8080/edit-teams' + '/' + id);
-  }
 
-  save(team: any): Observable<any> {
-    let result: Observable<Object>;
-    if (team['href']) {
-      result = this.http.put(team.href, team);
-    } else {
-      result = this.http.post(this.CAR_API, team);
-    }
-    return result;
-  }
-*/
   deleteTeam(id : number) : Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`,{responseType: 'text'});
   }
@@ -52,8 +36,3 @@ export class TeamService {
   }
 
 }
-/*
-interface Member{
-  name: String;
-}
-*/
