@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Potwierdzenie akcji</h1>
+<div mat-dialog-content>
+  <p>Czy na pewno chcesz usunąć wybranego zawodnika ? Operacji tej nie można cofnąć !</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onAnulujClick()">Anuluj</button>
+  <button mat-flat-button color='warn' (click)="onDeleteClick()">Usuń</button>
+</div>

@@ -22,7 +22,7 @@ export class EventService {
   }
 
   addEvent(event: Event, selectedDiscipline, selectedMembers: Member[]): Observable<any> {
-    const eventData: EventData = {events: [event], types: [selectedDiscipline], members: selectedMembers} 
+    const eventData: EventData = {events: [event], types: [selectedDiscipline], members: selectedMembers}
     return this.http.post(`${this.baseUrl}/add`, eventData);
   }
 

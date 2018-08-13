@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Edycja Zawodnika</h1>
+<div mat-dialog-content>
+    <section>
+        <label class="validation-message">Id</label>
+        <input style="width: 350px" class="form-control" type="text" placeholder={{data.id}} readonly>
+        <div class="form-group">
+            <label class="validation-message">Imie i Nazwisko*</label>
+            <input style="width: 350px" [(ngModel)]="data.name" type="text" class="form-control" placeholder="Imie i Nazwisko"/>
+        </div>
+        <label style="width: 350px">Dyscyplina*</label>
+        <select class="form-control" [(ngModel)]="data.discipline">
+            <option selected hidden>{{data.discipline}}</option>
+            <option *ngFor="let type of types">{{type.discipline}}</option>
+        </select>
+    </section>
+</div>
+<div>* - pola wymagane</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onAnulujClick()">Anuluj</button>
+  <button mat-flat-button color='primary' (click)="onSaveClick(data)">Zapisz</button>
+</div>
