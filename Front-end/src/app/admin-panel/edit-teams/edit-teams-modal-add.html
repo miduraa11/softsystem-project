@@ -1,0 +1,25 @@
+<h2>Dodawanie nowej drużyny</h2>
+<div style="text-align: center">
+    
+    <div>
+        <form class="example-form">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Nazwa drużyny" [(ngModel)]="data.name" name="name">
+            </mat-form-field>
+        </form>
+    </div>
+    <div>
+        <mat-form-field>
+            <mat-select placeholder="Dyscyplina"  [(ngModel)]="choosenTypeId">
+                <mat-option *ngFor="let type of types" [value]="type.id">
+                    {{type.discipline}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div  style="padding: 20px">
+        <button mat-button class="btn btn-success btn-md btn-space" style="width: 150px; margin-right: 50px" (click)="addTeam()">Zapisz</button>
+        <button mat-button class="btn btn-danger btn-sm" (click)="onNoClick()" style="width: 150px; margin-left: 50px">Anuluj</button>
+    </div>
+</div>

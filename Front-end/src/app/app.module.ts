@@ -15,18 +15,20 @@ import { ResultsComponent } from './results/results.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal} from './admin-panel/edit-events/edit-events.component';
-import { EditTeamsComponent } from './admin-panel/edit-teams/edit-teams.component';
+import { EditTeamsComponent, EditTeamsModalDelete, EditTeamsModalAdd, EditTeamsModalEdit } from './admin-panel/edit-teams/edit-teams.component';
 import { EditPlayersComponent, RemovePlayerDialog, PlayerEditDialog, AddPlayerDialog} from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
 import { PlayerService } from './admin-panel/player.service';
 import { MatListModule } from '@angular/material/list';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card'
 import { EventService } from './event.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { TeamService } from './admin-panel/team.service';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule} from '@angular/material';
+import {MatSelectModule} from '@angular/material/select';
 
 const routes: Routes = [
 
@@ -50,7 +52,11 @@ const routes: Routes = [
     CreateEventModal,
     RemovePlayerDialog,
     PlayerEditDialog,
-    AddPlayerDialog
+    AddPlayerDialog,
+    EditTeamsModalDelete,
+    EditTeamsModalAdd,
+    EditTeamsModalEdit,
+
   ],
   imports: [
     FormsModule,
@@ -64,11 +70,14 @@ const routes: Routes = [
     MatListModule,
     MatButtonModule,
     MatCardModule,
-    MatDialogModule,
     NgbModule.forRoot(),
     MatDialogModule,
     MatSelectModule,
     MatDatepickerModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRippleModule,
   ],
   entryComponents: [
     DeleteEventModal,
@@ -76,9 +85,16 @@ const routes: Routes = [
     CreateEventModal,
     RemovePlayerDialog,
     PlayerEditDialog,
-    AddPlayerDialog
+    AddPlayerDialog,
+    EditTeamsModalDelete,
+    EditTeamsModalAdd,
+    EditTeamsModalEdit
   ],
-  providers: [PlayerService, EventService],
+  providers: [
+    PlayerService,
+    EventService,
+    TeamService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

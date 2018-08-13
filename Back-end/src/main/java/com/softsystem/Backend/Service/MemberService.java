@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -53,5 +54,39 @@ public class MemberService {
 
     public List<Member> findAll() {
         return memberRepository.findAll();
+    }
+
+    public Collection <Member> getAllTeams(){
+        Collection<Member> teams;
+        teams = memberRepository.findAll().stream().filter(this::isTeam).collect(Collectors.toList());
+        return teams;
+    }
+
+    public void addTeam(String name, Long idType){
+        Member member = new Member();
+        Type type = typeRepository.getOne(idType);
+        member.setName(name);
+        member.setType(type);
+
+        memberRepository.saveAndFlush(member);
+    }
+
+    public void editMember(String name, long id, long idType){
+        Member member = memberRepository.getOne(id);
+        member.setName(name);
+        Type type = typeRepository.getOne(idType);
+        member.setType(type);
+        memberRepository.save(member);
+    }
+
+    public void deleteMember(Long id){
+        memberRepository.deleteById(id);
+    }
+
+    private boolean isTeam(Member member){
+        if (member.getType()!=null)
+            return member.getType().getId().equals((long)1) ||
+                    member.getType().getId().equals((long)3);
+        else return true;
     }
 }

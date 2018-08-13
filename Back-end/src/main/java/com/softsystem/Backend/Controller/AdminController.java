@@ -90,4 +90,9 @@ public class AdminController {
     public void addPlayer(@PathVariable("name") String name, @PathVariable("discipline") String discipline) {
         memberService.addMember(name, discipline);
     }
+
+    @GetMapping(value = "/edit-teams")
+    public Collection<Member> showAllTeams(){
+        return memberService.getAllTeams();
+    }
 }

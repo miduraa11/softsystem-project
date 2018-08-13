@@ -32,4 +32,9 @@ public class TypeService {
         return typeRepository.findAll();
     }
 
+    public Collection<Type> getAllType(){
+        Collection<Type> types;
+        types = typeRepository.findAll().stream().collect(Collectors.toList());
+        return types;
+    }
 }
