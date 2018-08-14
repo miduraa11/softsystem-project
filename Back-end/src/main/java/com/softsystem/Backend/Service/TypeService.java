@@ -14,7 +14,7 @@ public class TypeService {
     @Autowired
     private TypeRepository typeRepository;
 
-    public Collection <Type> getAllTypes() {
+    public Collection <Type> getAllIndividualTypes() {
         Collection<Type> types;
         types = typeRepository.findAll().stream()
                 .filter(this::isSingle)
@@ -24,17 +24,27 @@ public class TypeService {
     }
 
     private boolean isSingle(Type type) {
-        return  type.getDiscipline().equals("Skoki narciarskie") ||
-                type.getDiscipline().equals("Pływanie");
+
+        return  type.isIndividual();
+    }
+
+    private boolean isMultiple(Type type) {
+
+        return  !type.isIndividual();
     }
 
     public List<Type> findAll() {
+
         return typeRepository.findAll();
     }
 
-    public Collection<Type> getAllType(){
+    public Collection<Type> getAllTeamTypes() {
         Collection<Type> types;
-        types = typeRepository.findAll().stream().collect(Collectors.toList());
+        types = typeRepository.findAll().stream()
+                .filter(this::isMultiple)
+                .collect(Collectors.toList());
+
         return types;
     }
+
 }

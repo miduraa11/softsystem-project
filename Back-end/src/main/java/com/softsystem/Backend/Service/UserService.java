@@ -1,4 +1,8 @@
 package com.softsystem.Backend.Service;
 
-public interface UserService {
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+
 }
