@@ -1,0 +1,50 @@
+<h3>Panel rejestracyjny</h3>
+<div style="width: 600px; margin-left: auto; margin-right: auto">
+<form>
+  <mat-form-field class="example-full-width" style="width: 600px">
+    <input matInput placeholder="Imię" [formControl]="firstNameFormControl"
+           [errorStateMatcher]="matcherFirstName">
+    <mat-error *ngIf="firstNameFormControl.hasError('minlength') && !firstNameFormControl.hasError('required')">
+      Proszę wpisać <strong>poprawne</strong> imię!
+    </mat-error>
+    <mat-error *ngIf="firstNameFormControl.hasError('required')">
+      Imię jest <strong>wymagane</strong>!
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" style="width: 600px">
+    <input matInput placeholder="Nazwisko" [formControl]="lastNameFormControl"
+           [errorStateMatcher]="matcherLastName">
+    <mat-error *ngIf="lastNameFormControl.hasError('minlength') && !lastNameFormControl.hasError('required')">
+      Proszę wpisać <strong>poprawne</strong> nazwisko!
+    </mat-error>
+    <mat-error *ngIf="lastNameFormControl.hasError('required')">
+      Nazwisko jest <strong>wymagane</strong>!
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" style="width: 600px">
+    <input matInput placeholder="Adres e-mail" [formControl]="emailFormControl"
+           [errorStateMatcher]="matcherEmail">
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Proszę wpisać <strong>poprawny</strong> adres e-mail
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Adres e-mail jest <strong>wymagany</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <div class="form-group">
+    <label for="password"><b>Hasło:</b></label>
+    <input type="tet" class="form-control"  placeholder="Wprowadź hasło" [(ngModel)]="user.password" name="password">
+  </div>
+  <div class="form-group">
+    <label for="repeatPassword"><b>Powtórz hasło:</b></label>
+    <input type="tet" class="form-control"  placeholder="Powtórz hasło" [(ngModel)]="repeatPassword" name="repeatPassword">
+  </div>
+  <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="addUser()">Zarejestruj się</button></nav>
+</form>
+</div>
+
+
+

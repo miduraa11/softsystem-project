@@ -9,8 +9,7 @@ import java.util.Set;
 public class User {
 
     @Id
-    @SequenceGenerator(name="user_id_sequence", sequenceName = "user_seq", initialValue = 2, allocationSize = 1)
-    @GeneratedValue(generator = "user_id_sequence", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
     private long id;
 
@@ -82,5 +81,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

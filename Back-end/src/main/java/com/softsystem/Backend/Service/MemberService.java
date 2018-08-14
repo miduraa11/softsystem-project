@@ -86,7 +86,7 @@ public class MemberService {
     private boolean isTeam(Member member){
         if (member.getType()!=null)
             return member.getType().getId().equals((long)1) ||
-                    member.getType().getId().equals((long)3);
+                    member.getType().getId().equals((long)4);
         else return true;
     }
 }

@@ -8,6 +8,7 @@ import { EditEventsComponent }  from './admin-panel/edit-events/edit-events.comp
 import { EditPlayersComponent } from './admin-panel/edit-players/edit-players.component';
 import { EditTeamsComponent }   from './admin-panel/edit-teams/edit-teams.component';
 import { EditUsersComponent }   from './admin-panel/edit-users/edit-users.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 const routes: Routes = [
   { path: 'events', component: EventsComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'edit-players', component: EditPlayersComponent },
   { path: 'edit-teams', component: EditTeamsComponent },
   { path: 'edit-users', component: EditUsersComponent },
+  { path: 'registration', component: RegistrationComponent },
 ];
 
 @NgModule({
