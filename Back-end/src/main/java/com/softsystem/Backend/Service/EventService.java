@@ -8,7 +8,9 @@ import com.softsystem.Backend.Repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -58,6 +60,23 @@ public class EventService {
         newEvent.setType(type);
         newEvent.setMembers(selectedMembers);
         eventRepository.save(newEvent);
+    }
+
+    public List<Event> findActiveEvents() {
+
+        List<Event> list = new ArrayList<>();
+
+        list =  eventRepository.findAll()
+                .stream()
+                .filter(this::isActive)
+                .collect(Collectors.toList());
+
+        return list;
+    }
+
+    private boolean isActive(Event event) {
+
+        return event.isActive();
     }
 
 }

@@ -26,4 +26,9 @@ export class EventService {
     return this.http.post(`${this.baseUrl}/add`, eventData);
   }
 
+  getActiveEvents(): Observable<any> {
+    return this.http.get('http://localhost:8080/events');
+  }
+
+
 }
