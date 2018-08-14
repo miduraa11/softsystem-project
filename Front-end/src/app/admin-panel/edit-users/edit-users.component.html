@@ -13,6 +13,23 @@
   </div>
 </div>
 
-<p>
-  edit-users works!
-</p>
+<table class="table table-sm" id="myTable">
+  <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Email</th>
+        <th scope="col">Imie</th>
+        <th scope="col">Nazwisko</th>
+        <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users">
+      <th scope="row">{{user.id}}</th>
+      <td>{{user.email}}</td>
+      <td>{{user.firstName}}</td>
+      <td>{{user.lastName}}</td>
+      <td><button mat-raised-button color="warn" (click)="openDeleteDialog(user.id)">Usuń</button></td>
+  </tr>
+  </tbody>
+</table>

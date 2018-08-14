@@ -93,9 +93,9 @@ export class EditTeamsModalDelete {
       .subscribe(
         data => {
           this.dialogRef.close();
+          window.location.reload();
         },
         error => console.log(error));
-        window.location.reload();
   }
 
 }
@@ -171,9 +171,8 @@ export class EditTeamsModalEdit {
       .subscribe(
         data => {
           this.dialogRef.close();
+          window.location.reload();
         },
-        error => console.log(error));
-        window.location.reload();
-      
+        error => console.log(error));      
   }
 }
