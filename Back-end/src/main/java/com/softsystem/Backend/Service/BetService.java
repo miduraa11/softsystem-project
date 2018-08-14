@@ -1,4 +1,8 @@
 package com.softsystem.Backend.Service;
 
-public interface BetService {
+import org.springframework.stereotype.Service;
+
+@Service
+public class BetService {
+
 }

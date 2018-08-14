@@ -92,6 +92,8 @@ const routes: Routes = [
     EventService,
     TeamService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

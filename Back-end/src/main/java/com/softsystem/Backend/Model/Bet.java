@@ -1,14 +1,12 @@
 package com.softsystem.Backend.Model;
 
 import javax.persistence.*;
-import java.awt.*;
 
 @Entity
 @Table(name = "Bet")
 public class Bet {
     @Id
-    @SequenceGenerator(name="bet_id_sequence", sequenceName = "bet_seq", initialValue = 2, allocationSize = 1)
-    @GeneratedValue(generator = "bet_id_sequence", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_bet")
     private long id;
 
