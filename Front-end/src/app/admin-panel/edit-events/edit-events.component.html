@@ -13,33 +13,29 @@
   </div>
 </div>
 
-
-<table class="table table-sm" id="myTable">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nazwa</th>
-        <th scope="col">Rozpoczęcie</th>
-        <th scope="col">Zakończnie</th>
-        <th scope="col">Status</th>
-        <th scope="col">Wynik</th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let event of events?.events">
-        <th scope="row">{{event.id}}</th>
-        <td>{{event.name}}</td>
-        <td>{{event.beginDate | date: "dd-MM-yyyy"}}</td>
-        <td>{{event.endDate | date: "dd-MM-yyyy"}}</td>
-        <td>{{event.active}}</td>
-        <td>{{event.result}}</td>
-        <td><button type="button" class="btn btn-warning btn-sm" (click)="openEditDialog(event)">Edytuj</button></td>
-        <td><button type="button" class="btn btn-danger btn-sm" (click)="openDeleteDialog(event.id)">Usuń</button></td>
-    </tr>
-    </tbody>
+<table width="100%">
+<tr *ngFor="let event of events?.events">
+  <td width="90%">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <b>{{event.name}}</b>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <b>Data rozpoczęcia wydarzenia:</b> {{event.beginDate | date: "dd.MM.yyyy"}} <br>
+        <b>Data zakończenia wydarzenia:</b> {{event.endDate | date: "dd.MM.yyyy"}} <br>
+        <b>Drużyny biorące udział w wydarzeniu:</b>
+        <ul>
+          <li *ngFor="let member of event.members">{{member.name}}<br></li>
+        </ul>
+        <b>Wydarzenie jest aktywne: </b>{{event.active}}<br>
+        <b>Wynik: </b>{{event.result}}<br>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </td>
+  <td><button type="button" class="btn btn-warning btn-sm" (click)="openEditDialog(event)">Edytuj</button></td>
+  <td><button type="button" class="btn btn-danger btn-sm" (click)="openDeleteDialog(event.id)">Usuń</button></td>
+</tr>
 </table>
 <button type="button" class="btn btn-primary btn-md btn-block btn-success" (click)="openCreateDialog()">Dodaj nowe wydarzenie</button>
-

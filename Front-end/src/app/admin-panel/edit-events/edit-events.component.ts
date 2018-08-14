@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, ViewChild } from '@angular/core';
 import { EventService } from '../../event.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '../../../../node_modules/@angular/material/dialog';
 import { Event } from '../../model/event';
@@ -54,12 +54,13 @@ export interface EventData {
 export class EditEventsComponent implements OnInit {
   
   id: number;
-  event: Event = {id: null, name: null, active: null, endDate: null, beginDate: null, result: null, type: null};
+  event: Event = {id: null, name: null, active: null, endDate: null, beginDate: null, result: null, type: null, members: null};
   member: Member;
   type: Type;
   events: EventData;
+  selectedMembers: Member[];
 
-  constructor(private eventService: EventService, public dialog: MatDialog) { }
+  constructor(private eventService: EventService, public dialog: MatDialog) {}
 
 
   ngOnInit() {
@@ -81,7 +82,7 @@ export class EditEventsComponent implements OnInit {
     openEditDialog(event: Event): void{
       const dialogRef = this.dialog.open(EditEventModal, {
         width: '600px',
-        data: {event: event}
+        data: {event: event},
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
@@ -142,11 +143,14 @@ export class DeleteEventModal {
 })
 export class EditEventModal {
 
-  @Input() event: Event;
-
+  event: Event;
   members: EventData;
   types: EventData;
-  
+  choosenTypeId: number;
+  choosenMemberId: number[];
+  selectedDiscipline: Type;
+  selectedMembers: Member[];
+
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<EditEventModal>,
     @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit) {}
@@ -157,12 +161,25 @@ export class EditEventModal {
 
   ngOnInit() {
     this.eventService.getAll().subscribe(data => { console.log(data)
+    this.event = this.data.event;
     this.types = data.types;
     this.members = data.members;
+    this.choosenTypeId = this.data.event.type.id;  
+    this.choosenMemberId = this.data.event.members.map(x => x.id);
   });
 }
 
 editEvent() {
+  this.selectedDiscipline = this.types.find(x => this.choosenTypeId === x.id)
+  this.selectedMembers = this.members.filter(x => this.choosenMemberId.some(y => y == x.id))
+  this.eventService.updateEvent(this.event, this.selectedDiscipline, this.selectedMembers)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.dialogRef.close();
+          window.location.reload();
+        },
+        error => console.log(error));
 }
 
 }
@@ -185,7 +202,8 @@ export class CreateEventModal {
 
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<CreateEventModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit) {
+    }
 
   onNoClick(): void {
     this.dialogRef.close();

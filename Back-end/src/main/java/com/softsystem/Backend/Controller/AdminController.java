@@ -52,10 +52,9 @@ public class AdminController {
         return event;
     }
 
-    @PostMapping(value = "/edit-events/edit/{id}}")
-    public String editEvent(@PathVariable Long id, @ModelAttribute("updateEvent") Event updateEvent) {
-        eventService.updateEvent(updateEvent);
-        return "redirect:edit-events";
+    @PostMapping(value= "/edit-events/edit")
+    public void updateEvent(@RequestBody EventData eventData) {
+        eventService.updateEvent(eventData.getEvents().get(0), eventData.getTypes().get(0), eventData.getMembers());
     }
 
     @PostMapping(value = "/edit-events/add")
@@ -91,8 +90,4 @@ public class AdminController {
         memberService.addMember(name, discipline);
     }
 
-//    @GetMapping(value = "/edit-teams")
-//    public Collection<Member> showAllTeams(){
-//        return memberService.getAllTeams();
-//    }
 }

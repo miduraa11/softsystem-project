@@ -16,15 +16,15 @@
   
     <p><b>Dyscyplina</b></p>
     <div class="form-group">
-      <select name="typ" [(ngModel)]="data.event.type.discipline">
-        <option *ngFor="let type of types" [value]="type" >{{type.discipline}}</option>
-      </select>
+      <mat-select name="typ" [(ngModel)]="choosenTypeId">
+        <mat-option *ngFor="let type of types" [value]="type.id">{{type.discipline}}</mat-option>
+      </mat-select>
     </div>
   
     <p><b>Drużyny lub uczestnicy biorący udział w wydarzeniu</b></p>
     <div class="form-group" >
-      <mat-select multiple [(ngModel)]="selectedMembers" name="selectedMembers"> 
-        <mat-option *ngFor="let member of members" [value]="member">{{member.name}}</mat-option>
+      <mat-select multiple name="selectedMembers" [(ngModel)]="choosenMemberId" > 
+        <mat-option *ngFor="let member of members" [value]="member.id">{{member.name}}</mat-option>
       </mat-select>
     </div>
   
@@ -38,15 +38,20 @@
   
     <p><b>Zwycięzca wydarzenia</b></p>
     <div class="form-group">
-      <mat-select placeholder="Zwycięzca">
-        <mat-option *ngFor="let member of members" [value]="member">{{member.name}}</mat-option>
+      <mat-select placeholder="Zwycięzca" name="winner">
+        <mat-option *ngFor="let member of data.event.members">{{member.name}}</mat-option>
         <mat-option [value]="0">Remis</mat-option>
       </mat-select>
     </div>
 
+    <p><b>Wynik</b></p>
+    <div class="form-group">
+        <input type="text" name="score" pattern="[0-9]+\-[0-9]" title="Three letter country code">
+    </div>
 
-    <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="addEvent(event, selectedDiscipline, selectedMembers)">Zapisz zmiany</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm">Anuluj</button>
+
+    <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="editEvent(event, selectedDiscipline, selectedMembers)">Zapisz zmiany</button>
+    <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onNoClick()">Anuluj</button>
 </form>
 
 

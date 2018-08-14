@@ -1,3 +1,6 @@
+import { Type } from "./type";
+import { Member } from "./member";
+
 export class Event {
     id: number;
     name: String;
@@ -5,5 +8,6 @@ export class Event {
     endDate: Date;
     active: boolean;
     result: string;
-    type: number;
+    type: Type;
+    members: Member[];
 }
