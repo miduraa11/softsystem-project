@@ -3,9 +3,11 @@ package com.softsystem.Backend.Controller;
 import com.softsystem.Backend.Model.Event;
 import com.softsystem.Backend.Model.Member;
 import com.softsystem.Backend.Model.Type;
+import com.softsystem.Backend.Model.User;
 import com.softsystem.Backend.Service.EventService;
 import com.softsystem.Backend.Service.MemberService;
 import com.softsystem.Backend.Service.TypeService;
+import com.softsystem.Backend.Service.UserService;
 import com.softsystem.Backend.TransferData.EventData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,8 @@ public class AdminController {
     MemberService memberService;
     @Autowired
     TypeService typeService;
+    @Autowired
+    UserService userService;
 
     /*------------------*/
     /*----- Events -----*/
@@ -134,4 +138,20 @@ public class AdminController {
         return types;
     }
 
+    /*------------------*/
+    /*----- Users ------*/
+    /*------------------*/
+
+    @GetMapping(value = "/edit-users")
+    public List<User> showAllUsers() {
+        List<User> users = new ArrayList<>();
+        userService.getAllUsers().forEach(users::add);
+
+        return users;
+    }
+
+    @DeleteMapping("/edit-users/delete/{id}")
+    public void deleteUser(@PathVariable("id") long id) {
+        userService.deleteById(id);
+    }
 }
