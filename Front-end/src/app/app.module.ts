@@ -27,6 +27,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
+import {MatIconModule} from '@angular/material/icon';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 const routes: Routes = [
 ];
@@ -73,6 +75,8 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatRippleModule,
+    MatIconModule,
+    MatCheckboxModule,
   ],
   entryComponents: [
     DeleteEventModal,

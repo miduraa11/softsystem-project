@@ -29,12 +29,9 @@
         </div>
       
         <p><b>Status wydarzenia</b></p>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="active" id="option1" value="true" checked [(ngModel)]="event.active" name="status">
-          <label class="form-check-label" for="option1">
-            Aktywne wydarzenie
-          </label>
-        </div>
+    <div class="form-check form-check-inline">
+     <mat-checkbox name="active" [(ngModel)]="event.active">Aktywne</mat-checkbox>
+    </div>
       
         <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="addEvent(event, selectedDiscipline, selectedMembers)">Zapisz zmiany</button>
         <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm">Anuluj</button>

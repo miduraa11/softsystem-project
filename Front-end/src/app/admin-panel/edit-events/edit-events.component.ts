@@ -2,6 +2,8 @@ import { Component, OnInit, Inject, Input, ViewChild } from '@angular/core';
 import { EventService } from '../../event.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '../../../../node_modules/@angular/material/dialog';
 import { Event } from '../../model/event';
+import { Member } from '../../model/member';
+import { Type } from '../../model/type';
 
 export interface DialogData {
   id: number;
@@ -17,34 +19,6 @@ export interface DialogDataEdit {
   event: Event;
 }
 
-export interface DialogData {
-  id: number;
-}
-
-export interface Event {
-	id: number;
-	name: string;
-	beginDate: string;
-	endDate: string;
-	active: boolean;
-	result: string;
-}
-
-export interface Member {
-	id: number;
-  name: string;
-}
-
-export interface Type {
-	id: number;
-	discipline: string;
-}
-
-export interface EventData {
-	events: Event[];
-	members: Member[];
-	types: Type[];
-}
 
 @Component({
   selector: 'app-edit-events',
@@ -54,12 +28,11 @@ export interface EventData {
 export class EditEventsComponent implements OnInit {
   
   id: number;
-  event: Event = {id: null, name: null, active: null, endDate: null, beginDate: null, result: null, type: null, members: null};
   member: Member;
   type: Type;
-  events: EventData;
+  events: Event[];
   selectedMembers: Member[];
-
+  copyOfEvent: Event;
   constructor(private eventService: EventService, public dialog: MatDialog) {}
 
 
@@ -144,8 +117,8 @@ export class DeleteEventModal {
 export class EditEventModal {
 
   event: Event;
-  members: EventData;
-  types: EventData;
+  members: Member[];
+  types: Type[];
   choosenTypeId: number;
   choosenMemberId: number[];
   selectedDiscipline: Type;
@@ -156,7 +129,9 @@ export class EditEventModal {
     @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit) {}
 
   onNoClick(): void {
+    this.event = Object.assign({}, this.event);
     this.dialogRef.close();
+    window.location.reload();
   }
 
   ngOnInit() {
@@ -195,8 +170,8 @@ export class CreateEventModal {
 
   event: any = {};
 
-  members: EventData;
-  types: EventData;
+  members: Member[];
+  types: Type[];
   selectedDiscipline: Type[];
   selectedMembers: Member[];
 

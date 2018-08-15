@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Member, Type, EventData} from './admin-panel/edit-events/edit-events.component';
 import { Event } from './model/event';
+import { Member } from './model/member';
+import { Type } from './model/type';
 
+export interface EventData {
+  events: Event[];
+  members: Member[];
+  types: Type[];
+}
 @Injectable({
   providedIn: 'root'
 })

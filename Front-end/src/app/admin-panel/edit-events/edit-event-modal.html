@@ -30,27 +30,25 @@
   
     <p><b>Status wydarzenia</b></p>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="active" id="option1" value="true" checked [(ngModel)]="data.event.active" name="status">
-      <label class="form-check-label" >
-        Aktywne wydarzenie
-      </label>
+     <mat-checkbox name="active" [(ngModel)]="data.event.active">Aktywne</mat-checkbox>
     </div>
   
     <p><b>Zwycięzca wydarzenia</b></p>
     <div class="form-group">
-      <mat-select placeholder="Zwycięzca" name="winner">
-        <mat-option *ngFor="let member of data.event.members">{{member.name}}</mat-option>
+      <mat-select placeholder="Zwycięzca">
+        <mat-option *ngFor="let member of data.event.members" [value]="member.id" [(ngModel)]="eventWinner" name="winner">{{member.id}}</mat-option>
         <mat-option [value]="0">Remis</mat-option>
       </mat-select>
     </div>
 
-    <p><b>Wynik</b></p>
+    <p><b>Wynik</b><mat-icon data-toggle="tooltip" data-placement="right" 
+      title="Wynik proszę wpisać w przykładowym formacie - 2-1. W przypadku wydarzenia, w którym nie jest to wymagane jak np. skoki narciarskie proszę zostawić puste pole.">info</mat-icon></p>
     <div class="form-group">
-        <input type="text" name="score" pattern="[0-9]+\-[0-9]" title="Three letter country code">
+        <input type="text" name="score">
     </div>
 
-
-    <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="editEvent(event, selectedDiscipline, selectedMembers)">Zapisz zmiany</button>
+<!-- bez selectedDiscipline i selectedMembers dziala -->
+    <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="editEvent()">Zapisz zmiany</button>
     <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onNoClick()">Anuluj</button>
 </form>
 
