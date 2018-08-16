@@ -7,8 +7,8 @@ import com.softsystem.Backend.Repository.EventRepository;
 import com.softsystem.Backend.Repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -18,21 +18,14 @@ public class EventService {
     @Autowired
     private TypeRepository typeRepository;
 
-    public EventService(EventRepository eventRepository, TypeRepository typeRepository) {
-        this.eventRepository = eventRepository;
-        this.typeRepository = typeRepository;
-    }
-
     public List<Event> findAll() {
 
         return eventRepository.findAll();
     }
 
-
     public void deleteEvent(Long id) {
         eventRepository.deleteById(id);
     }
-
 
     public Event getOne(Long id) {
 
@@ -53,11 +46,6 @@ public class EventService {
        eventRepository.getOne(event.getId()).setType(type);
        eventRepository.getOne(event.getId()).setMembers(selectedMembers);
        eventRepository.save(eventRepository.getOne(event.getId()));
-
-        //memberRepository.getOne(id).setName(name);
-//        Type tempType = typeRepository.findByDiscipline(discipline);
-//        memberRepository.getOne(id).setType(tempType);
-//        memberRepository.save(memberRepository.getOne(id));
     }
 
     public void addEvent(Event event, Type selectedDiscipline, List<Member> selectedMembers) {
@@ -72,6 +60,29 @@ public class EventService {
         newEvent.setType(type);
         newEvent.setMembers(selectedMembers);
         eventRepository.save(newEvent);
+    }
+
+    public List<Event> findActiveEvents(String chosenDiscipline) {
+        List<Event> eventList;
+        if(chosenDiscipline.equals("Wszystkie")) {
+            eventList = eventRepository.findAll()
+                    .stream()
+                    .filter(this::isActive)
+                    .collect(Collectors.toList());
+        } else {
+            eventList = eventRepository.findAll()
+                    .stream()
+                    .filter(this::isActive)
+                    .filter(x -> x.getType().getDiscipline().equals(chosenDiscipline))
+                    .collect(Collectors.toList());
+        }
+
+        return eventList;
+    }
+
+    private boolean isActive(Event event) {
+
+        return event.isActive();
     }
 
 }

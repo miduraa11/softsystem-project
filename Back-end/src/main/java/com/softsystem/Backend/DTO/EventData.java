@@ -1,4 +1,4 @@
-package com.softsystem.Backend.TransferData;
+package com.softsystem.Backend.DTO;
 
 import com.softsystem.Backend.Model.Event;
 import com.softsystem.Backend.Model.Member;
@@ -44,6 +44,5 @@ public class EventData {
 
     public EventData() {
     }
-
 
 }
