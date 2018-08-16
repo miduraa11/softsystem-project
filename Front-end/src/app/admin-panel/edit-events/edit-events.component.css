@@ -13,8 +13,20 @@
   }
   .form-check{
     margin-bottom: 25px;
-
   }
 
+  .createButton{
+    width: 100%;
+    margin-top: 10px;
+    background: linear-gradient(to bottom right, #009933, #1aff66);
+  }
+
+  .editButton {
+    background: linear-gradient(to bottom right, #ff6600, #ffcc00);
+  }
+
+  .deleteButton {
+    background: linear-gradient(to bottom right, #cc0000, #ff5c33);
+  }
 
 

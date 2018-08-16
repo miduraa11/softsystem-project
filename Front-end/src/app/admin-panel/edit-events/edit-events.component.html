@@ -35,8 +35,8 @@
       </mat-expansion-panel>
     </mat-accordion>
   </td>
-  <td><button type="button" class="btn btn-warning btn-sm" (click)="openEditDialog(event)">Edytuj</button></td>
-  <td><button type="button" class="btn btn-danger btn-sm" (click)="openDeleteDialog(event.id)">Usuń</button></td>
+  <td><button mat-raised-button class="editButton" (click)="openEditDialog(event)">Edytuj</button></td>
+  <td><button mat-raised-button class="deleteButton" (click)="openDeleteDialog(event.id)">Usuń</button></td>
 </tr>
 </table>
-<button type="button" class="btn btn-primary btn-md btn-block btn-success" (click)="openCreateDialog()">Dodaj nowe wydarzenie</button>
+<button mat-flat-button class="createButton" (click)="openCreateDialog()">Dodaj nowe wydarzenie</button>
