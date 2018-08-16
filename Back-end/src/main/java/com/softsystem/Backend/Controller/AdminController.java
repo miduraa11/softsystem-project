@@ -66,12 +66,12 @@ public class AdminController {
         eventService.updateEvent(eventData.getEvents().get(0), eventData.getTypes().get(0), eventData.getMembers());
 
     }
-  
-    @PostMapping(value = "/edit-events/edit/{id}}")
-    public String editEvent(@PathVariable Long id, @ModelAttribute("updateEvent") Event updateEvent) {
-        eventService.updateEvent(updateEvent);
-        return "redirect:edit-events";
-    }
+
+//    @PostMapping(value = "/edit-events/edit/{id}}")
+//    public String editEvent(@PathVariable Long id, @ModelAttribute("updateEvent") Event updateEvent) {
+//        eventService.updateEvent(updateEvent);
+//        return "redirect:edit-events";
+//    }
 
     @PostMapping(value = "/edit-events/add")
     public void addEvent(@RequestBody EventData eventData) {

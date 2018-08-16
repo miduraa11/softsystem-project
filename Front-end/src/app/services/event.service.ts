@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Event } from './model/event';
-import { Member } from './model/member';
-import { Type } from './model/type';
+import { Event } from '../model/event';
+import { Member } from '../model/member';
+import { Type } from '../model/type';
 
 export interface EventData {
   events: Event[];

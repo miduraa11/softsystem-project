@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Input, ViewChild } from '@angular/core';
-import { EventService } from '../../event.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '../../../../node_modules/@angular/material/dialog';
+import { EventService } from '../../services/event.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Event } from '../../model/event';
 import { Member } from '../../model/member';
 import { Type } from '../../model/type';
