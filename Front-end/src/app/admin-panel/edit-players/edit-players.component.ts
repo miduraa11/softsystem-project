@@ -73,8 +73,6 @@ export class EditPlayersComponent implements OnInit {
 })
 export class RemovePlayerDialog {
 
-  @Input() player: Member;
-
   constructor( private playerService: PlayerService, public dialogRef: MatDialogRef<RemovePlayerDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
 
   }

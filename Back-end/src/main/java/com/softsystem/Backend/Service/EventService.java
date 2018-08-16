@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class EventService {
+
     @Autowired
     private EventRepository eventRepository;
     @Autowired
@@ -23,14 +24,19 @@ public class EventService {
     }
 
     public List<Event> findAll() {
+
         return eventRepository.findAll();
     }
 
 
-    public void deleteEvent(Long id) {  eventRepository.deleteById(id);    }
+    public void deleteEvent(Long id) {
+        eventRepository.deleteById(id);
+    }
 
 
-    public Event getOne(Long id) { return eventRepository.getOne(id);
+    public Event getOne(Long id) {
+
+        return eventRepository.getOne(id);
     }
 
 
@@ -66,6 +72,6 @@ public class EventService {
         newEvent.setType(type);
         newEvent.setMembers(selectedMembers);
         eventRepository.save(newEvent);
-
     }
+
 }
