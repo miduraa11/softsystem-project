@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'edit-players', component: EditPlayersComponent },
   { path: 'edit-teams', component: EditTeamsComponent },
   { path: 'edit-users', component: EditUsersComponent },
+  
 ];
 
 @NgModule({

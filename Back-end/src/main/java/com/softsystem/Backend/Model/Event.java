@@ -6,7 +6,6 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "Event")
@@ -15,7 +14,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_event")
-    private long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -29,8 +28,11 @@ public class Event {
     @Column(name = "active")
     private boolean active;
 
-    @Column(name = "result")
-    private String result;
+    @Column(name = "winner")
+    private String winner;
+
+    @Column(name = "score")
+    private String score;
 
     @JoinColumn(name = "id_type")
     @ManyToOne
@@ -47,13 +49,14 @@ public class Event {
     public Event() {
     }
 
-    public Event(Long id, String name, Date beginDate, Date endDate, boolean active, String result) {
+    public Event(Long id, String name, Date beginDate, Date endDate, boolean active, String winner, String score) {
         this.id = id;
         this.name = name;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.active = active;
-        this.result = result;
+        this.winner = winner;
+        this.score = score;
     }
 
     public Long getId() {
@@ -76,8 +79,8 @@ public class Event {
         return active;
     }
 
-    public String getResult() {
-        return result;
+    public String getWinner() {
+        return winner;
     }
 
     public void setId(Long id) {
@@ -100,8 +103,16 @@ public class Event {
         this.active = active;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setWinner(String winner) {
+        this.winner = winner;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 
     public Type getType() {

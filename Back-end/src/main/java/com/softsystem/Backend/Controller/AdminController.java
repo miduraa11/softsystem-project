@@ -60,10 +60,16 @@ public class AdminController {
         return event;
     }
 
+
+    @PostMapping(value= "/edit-events/edit")
+    public void updateEvent(@RequestBody EventData eventData) {
+        eventService.updateEvent(eventData.getEvents().get(0), eventData.getTypes().get(0), eventData.getMembers());
+
+    }
+  
     @PostMapping(value = "/edit-events/edit/{id}}")
     public String editEvent(@PathVariable Long id, @ModelAttribute("updateEvent") Event updateEvent) {
         eventService.updateEvent(updateEvent);
-
         return "redirect:edit-events";
     }
 
@@ -111,7 +117,6 @@ public class AdminController {
     public List<Member> getAllTeam() {
         List<Member> teams = new ArrayList<>();
         memberService.getAllTeams().forEach(teams::add);
-
         return teams;
     }
 
@@ -134,7 +139,6 @@ public class AdminController {
     public List<Type> getAllTeamTypes() {
         List<Type> types = new ArrayList<>();
         typeService.getAllTeamTypes().forEach(types::add);
-
         return types;
     }
 
@@ -146,7 +150,6 @@ public class AdminController {
     public List<User> showAllUsers() {
         List<User> users = new ArrayList<>();
         userService.getAllUsers().forEach(users::add);
-
         return users;
     }
 
@@ -154,4 +157,5 @@ public class AdminController {
     public void deleteUser(@PathVariable("id") long id) {
         userService.deleteById(id);
     }
+
 }
