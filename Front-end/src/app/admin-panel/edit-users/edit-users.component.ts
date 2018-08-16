@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { UserService } from '../user.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '../../../../node_modules/@angular/material';
+import { UserService } from '../../services/user.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export interface DialogData {
   id: number;

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Member } from '../../model/member';
-import { PlayerService } from '../player.service';
-import { TypeService } from '../type.service';
+import { PlayerService } from '../../services/player.service';
+import { TypeService } from '../../services/type.service';
 
 export interface DialogData {
   id: number;

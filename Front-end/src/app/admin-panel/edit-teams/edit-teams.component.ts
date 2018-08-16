@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
-import { TeamService } from '../team.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '../../../../node_modules/@angular/material/dialog';
+import { TeamService } from '../../services/team.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Team } from '../../model/team';
 import { Type } from '../../model/type';
 

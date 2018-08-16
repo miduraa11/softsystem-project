@@ -34,15 +34,29 @@ public class EventService {
     }
 
 
-    public void updateEvent(Event event) {
-        this.getOne(event.getId()).setName(event.getName());
-        this.getOne(event.getId()).setName(event.getName());
-        eventRepository.save(this.getOne(event.getId()));
+    public void updateEvent(Event event, Type selectedDiscipline, List<Member> selectedMembers) {
+       eventRepository.getOne(event.getId()).setName(event.getName());
+       eventRepository.getOne(event.getId()).setBeginDate(event.getBeginDate());
+       eventRepository.getOne(event.getId()).setEndDate(event.getEndDate());
+       eventRepository.getOne(event.getId()).setActive(event.isActive());
+       eventRepository.getOne(event.getId()).setBeginDate(event.getBeginDate());
+       eventRepository.getOne(event.getId()).setScore(event.getScore());
+       eventRepository.getOne(event.getId()).setWinner(event.getWinner());
+       Type type;
+       type = typeRepository.findByDiscipline(selectedDiscipline.getDiscipline());
+       eventRepository.getOne(event.getId()).setType(type);
+       eventRepository.getOne(event.getId()).setMembers(selectedMembers);
+       eventRepository.save(eventRepository.getOne(event.getId()));
+
+        //memberRepository.getOne(id).setName(name);
+//        Type tempType = typeRepository.findByDiscipline(discipline);
+//        memberRepository.getOne(id).setType(tempType);
+//        memberRepository.save(memberRepository.getOne(id));
     }
 
     public void addEvent(Event event, Type selectedDiscipline, List<Member> selectedMembers) {
         Event newEvent = new Event();
-        Type type = new Type();
+        Type type;
         Member members = new Member();
         newEvent.setName(event.getName());
         newEvent.setBeginDate(event.getBeginDate());
