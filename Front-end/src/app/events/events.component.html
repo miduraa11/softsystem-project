@@ -1,5 +1,12 @@
 <h2>Aktualnie dostępne wydarzenia</h2>
 
+<label for="FormControlSelectDiscipline">Wybierz dyscyplinę, z której wydarzenia Cię interesują:</label>
+<select class="form-control" id="FormControlSelectDiscipline" [(ngModel)]="chosenDiscipline" (change)="updateList(chosenDiscipline)">
+    <option selected hidden>{{chosenDiscipline}}</option>
+    <option>Wszystkie</option>
+    <option *ngFor="let type of types">{{type.discipline}}</option>
+</select>
+
 <div class="card" *ngFor="let event of events">
     <div class="card-header">
         <b>{{event.name}}</b>
@@ -13,4 +20,4 @@
         <p class="card-text">od {{event.beginDate | date: "dd-MM-yyyy"}} do {{event.endDate | date: "dd-MM-yyyy"}}</p>
         <a class="btn btn-success">Postaw zakład!</a>
     </div>
-  </div>
+</div>

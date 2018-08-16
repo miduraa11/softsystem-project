@@ -7,7 +7,6 @@ import com.softsystem.Backend.Repository.EventRepository;
 import com.softsystem.Backend.Repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,21 +19,14 @@ public class EventService {
     @Autowired
     private TypeRepository typeRepository;
 
-    public EventService(EventRepository eventRepository, TypeRepository typeRepository) {
-        this.eventRepository = eventRepository;
-        this.typeRepository = typeRepository;
-    }
-
     public List<Event> findAll() {
 
         return eventRepository.findAll();
     }
 
-
     public void deleteEvent(Long id) {
         eventRepository.deleteById(id);
     }
-
 
     public Event getOne(Long id) {
 
@@ -62,16 +54,22 @@ public class EventService {
         eventRepository.save(newEvent);
     }
 
-    public List<Event> findActiveEvents() {
+    public List<Event> findActiveEvents(String chosenDiscipline) {
+        List<Event> eventList;
+        if(chosenDiscipline.equals("Wszystkie")) {
+            eventList = eventRepository.findAll()
+                    .stream()
+                    .filter(this::isActive)
+                    .collect(Collectors.toList());
+        } else {
+            eventList = eventRepository.findAll()
+                    .stream()
+                    .filter(this::isActive)
+                    .filter(x -> x.getType().getDiscipline().equals(chosenDiscipline))
+                    .collect(Collectors.toList());
+        }
 
-        List<Event> list = new ArrayList<>();
-
-        list =  eventRepository.findAll()
-                .stream()
-                .filter(this::isActive)
-                .collect(Collectors.toList());
-
-        return list;
+        return eventList;
     }
 
     private boolean isActive(Event event) {

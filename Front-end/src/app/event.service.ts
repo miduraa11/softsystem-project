@@ -10,11 +10,12 @@ import { Event } from './model/event';
 export class EventService {
 
   private baseUrl = 'http://localhost:8080/edit-events';
-
+  private activeEventsAPI = 'http://localhost:8080/events';
+  
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
-    return this.http.get('http://localhost:8080/edit-events');
+    return this.http.get(`${this.baseUrl}`);
   }
 
   deleteEvent(id: number): Observable<any> {
@@ -27,8 +28,11 @@ export class EventService {
   }
 
   getActiveEvents(): Observable<any> {
-    return this.http.get('http://localhost:8080/events');
+    return this.http.get(`${this.activeEventsAPI}`);
   }
 
+  giveChosenDiscipline(chosenDiscipline: String): Observable<any> {
+    return this.http.post(`${this.activeEventsAPI}/${chosenDiscipline}`, { responseType: 'text' });
+  }
 
 }

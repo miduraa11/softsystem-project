@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../event.service';
+import { Type } from '../model/type';
+import { Event } from '../model/event';
 
 @Component({
   selector: 'app-events',
@@ -9,15 +11,37 @@ import { EventService } from '../event.service';
 export class EventsComponent implements OnInit {
  
   events: Event[];
- 
+  types: Type[];
+  chosenDiscipline: String = "Wszystkie";
+  i: number;
+
   constructor(private eventService: EventService) {
 
   }
  
-  ngOnInit() {
-    this.eventService.getActiveEvents().subscribe(data => { console.log(data)
-      this.events = data;
-    });
+  ngOnInit() {  
+    this.eventService.giveChosenDiscipline(this.chosenDiscipline).subscribe(
+      data => { console.log("Success"),
+      this.eventService.getActiveEvents().subscribe(data => {
+        this.events = data.events;
+        this.types = data.types;
+        this.chosenDiscipline = data.chosenDiscipline;
+      })},
+      error => console.log(error)      
+    );
+  }
+
+  updateList(chosenDiscipline: String): void {
+    this.chosenDiscipline = chosenDiscipline;
+    this.eventService.giveChosenDiscipline(this.chosenDiscipline).subscribe(
+      data => { console.log("Success"),
+      this.eventService.getActiveEvents().subscribe(data => {
+        this.events = data.events;
+        this.types = data.types;
+        this.chosenDiscipline = data.chosenDiscipline;
+      })},
+      error => console.log(error)
+    );
   }
 
 }

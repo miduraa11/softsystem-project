@@ -8,7 +8,7 @@ import com.softsystem.Backend.Service.EventService;
 import com.softsystem.Backend.Service.MemberService;
 import com.softsystem.Backend.Service.TypeService;
 import com.softsystem.Backend.Service.UserService;
-import com.softsystem.Backend.TransferData.EventData;
+import com.softsystem.Backend.DTO.EventData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
