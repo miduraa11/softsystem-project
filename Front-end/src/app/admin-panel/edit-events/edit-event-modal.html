@@ -35,16 +35,17 @@
   
     <p><b>Zwycięzca wydarzenia</b></p>
     <div class="form-group">
-      <mat-select placeholder="Zwycięzca">
-        <mat-option *ngFor="let member of data.event.members" [value]="member.id" [(ngModel)]="eventWinner" name="winner">{{member.id}}</mat-option>
+      <mat-select placeholder="Zwycięzca" [(ngModel)]="data.event.winner" name="winner">
+        <mat-option *ngFor="let member of data.event.members" [value]="member.name">{{member.name}}</mat-option>
         <mat-option [value]="0">Remis</mat-option>
       </mat-select>
     </div>
 
     <p><b>Wynik</b><mat-icon data-toggle="tooltip" data-placement="right" 
-      title="Wynik proszę wpisać w przykładowym formacie - 2-1. W przypadku wydarzenia, w którym nie jest to wymagane jak np. skoki narciarskie proszę zostawić puste pole.">info</mat-icon></p>
+      title="Wynik proszę wpisać w przykładowym formacie - 2-1. 
+W przypadku wydarzenia, w którym nie jest to wymagane jak np. skoki narciarskie proszę zostawić puste pole.">info</mat-icon></p>
     <div class="form-group">
-        <input type="text" name="score">
+        <input type="text" name="score" id="score" [(ngModel)]="data.event.score" name="score">
     </div>
 
 <!-- bez selectedDiscipline i selectedMembers dziala -->

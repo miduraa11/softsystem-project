@@ -40,6 +40,8 @@ public class EventService {
        eventRepository.getOne(event.getId()).setEndDate(event.getEndDate());
        eventRepository.getOne(event.getId()).setActive(event.isActive());
        eventRepository.getOne(event.getId()).setBeginDate(event.getBeginDate());
+       eventRepository.getOne(event.getId()).setScore(event.getScore());
+       eventRepository.getOne(event.getId()).setWinner(event.getWinner());
        Type type;
        type = typeRepository.findByDiscipline(selectedDiscipline.getDiscipline());
        eventRepository.getOne(event.getId()).setType(type);

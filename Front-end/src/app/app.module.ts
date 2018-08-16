@@ -32,7 +32,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 
 const routes: Routes = [
 ];
-
+  
 @NgModule({
   declarations: [
     AppComponent,
@@ -92,7 +92,7 @@ const routes: Routes = [
   providers: [
     PlayerService,
     EventService,
-    TeamService
+    TeamService,
   ],
   bootstrap: [AppComponent]
 })
