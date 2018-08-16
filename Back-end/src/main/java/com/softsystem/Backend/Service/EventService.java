@@ -7,7 +7,6 @@ import com.softsystem.Backend.Repository.EventRepository;
 import com.softsystem.Backend.Repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,11 +46,6 @@ public class EventService {
        eventRepository.getOne(event.getId()).setType(type);
        eventRepository.getOne(event.getId()).setMembers(selectedMembers);
        eventRepository.save(eventRepository.getOne(event.getId()));
-
-        //memberRepository.getOne(id).setName(name);
-//        Type tempType = typeRepository.findByDiscipline(discipline);
-//        memberRepository.getOne(id).setType(tempType);
-//        memberRepository.save(memberRepository.getOne(id));
     }
 
     public void addEvent(Event event, Type selectedDiscipline, List<Member> selectedMembers) {
