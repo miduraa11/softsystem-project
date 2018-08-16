@@ -12,8 +12,15 @@ public class RegistrationController {
     @Autowired
     UserService userService;
 
-    @PostMapping(value ="registration/add/{userFirstName}/{userLastName}/{userEmail}/{userPassword}")
-    public void addUser(@PathVariable("userFirstName")String userFirstName, @PathVariable("userLastName")String userLastName,@PathVariable("userEmail") String userEmail, @PathVariable("userPassword")String userPassword){
-        userService.addUser(userFirstName, userLastName, userEmail, userPassword);
+    @PostMapping(value ="registration/add/{userLogin}/{userFirstName}/{userLastName}/{userEmail}/{userPassword}")
+    public void addUser(@PathVariable("userLogin")String userLogin, @PathVariable("userFirstName")String userFirstName, @PathVariable("userLastName")String userLastName,@PathVariable("userEmail") String userEmail, @PathVariable("userPassword")String userPassword){
+        userService.addUser(userLogin, userFirstName, userLastName, userEmail, userPassword);
     }
+
+    @GetMapping(value = "registration/loginExist/{login}")
+    public  boolean emailExist(@PathVariable("login")String login){
+        return userService.emailExist(login);
+    }
+
+
 }

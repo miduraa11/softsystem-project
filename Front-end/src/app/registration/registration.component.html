@@ -24,6 +24,17 @@
   </mat-form-field>
 
   <mat-form-field class="example-full-width" style="width: 600px">
+    <input matInput placeholder="Login" [formControl]="loginFormControl"
+           [errorStateMatcher]="matcherLogin">
+    <mat-error *ngIf="loginFormControl.hasError('pattern') && !loginFormControl.hasError('required')">
+      Proszę wpisać <strong>poprawne</strong> login (od 3 do 20 znaków, litery i cyfry)!
+    </mat-error>
+    <mat-error *ngIf="loginFormControl.hasError('required')">
+      Login jest <strong>wymagany</strong>!
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" style="width: 600px">
     <input matInput placeholder="Adres e-mail" [formControl]="emailFormControl"
            [errorStateMatcher]="matcherEmail">
     <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
@@ -58,7 +69,7 @@
       Powtórzenie hasła jest <strong>wymagane</strong>!
     </mat-error>
   </mat-form-field>
-  <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="addUser()">Zarejestruj się</button></nav>
+  <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="loginExist()">Zarejestruj się</button></nav>
 </form>
 </div>
 
