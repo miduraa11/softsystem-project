@@ -4,7 +4,7 @@
   <mat-form-field class="example-full-width" style="width: 600px">
     <input matInput placeholder="Imię" [formControl]="firstNameFormControl"
            [errorStateMatcher]="matcherFirstName">
-    <mat-error *ngIf="firstNameFormControl.hasError('minlength') && !firstNameFormControl.hasError('required')">
+    <mat-error *ngIf="firstNameFormControl.hasError('pattern') && !firstNameFormControl.hasError('required')">
       Proszę wpisać <strong>poprawne</strong> imię!
     </mat-error>
     <mat-error *ngIf="firstNameFormControl.hasError('required')">
@@ -15,7 +15,7 @@
   <mat-form-field class="example-full-width" style="width: 600px">
     <input matInput placeholder="Nazwisko" [formControl]="lastNameFormControl"
            [errorStateMatcher]="matcherLastName">
-    <mat-error *ngIf="lastNameFormControl.hasError('minlength') && !lastNameFormControl.hasError('required')">
+    <mat-error *ngIf="lastNameFormControl.hasError('pattern') && !lastNameFormControl.hasError('required')">
       Proszę wpisać <strong>poprawne</strong> nazwisko!
     </mat-error>
     <mat-error *ngIf="lastNameFormControl.hasError('required')">
@@ -34,14 +34,30 @@
     </mat-error>
   </mat-form-field>
 
-  <div class="form-group">
-    <label for="password"><b>Hasło:</b></label>
-    <input type="tet" class="form-control"  placeholder="Wprowadź hasło" [(ngModel)]="user.password" name="password">
-  </div>
-  <div class="form-group">
-    <label for="repeatPassword"><b>Powtórz hasło:</b></label>
-    <input type="tet" class="form-control"  placeholder="Powtórz hasło" [(ngModel)]="repeatPassword" name="repeatPassword">
-  </div>
+  <mat-form-field class="example-full-width" style="width: 600px">
+    <input matInput type="password" placeholder="Hasło" [formControl]="passwordFormControl"
+           [errorStateMatcher]="matcherPassword">
+    <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required') && !passwordFormControl.hasError('minlength')">
+      Hasło musi <strong>być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
+    </mat-error>
+    <mat-error *ngIf="passwordFormControl.hasError('required')">
+      Hasło jest <strong>wymagane</strong>!
+    </mat-error>
+    <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+      Hasło musi zawierać <strong>minimum 8 znaków i być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" style="width: 600px; padding-bottom: 20px">
+    <input matInput type="Password" placeholder="Powtórz hasło" [formControl]="confirmPasswordFormControl" pattern="{{passwordFormControl.value}}"
+           [errorStateMatcher]="matcherConfirmPassword">
+    <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
+      Podane hasła są <strong>różne</strong> !
+    </mat-error>
+    <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
+      Powtórzenie hasła jest <strong>wymagane</strong>!
+    </mat-error>
+  </mat-form-field>
   <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="addUser()">Zarejestruj się</button></nav>
 </form>
 </div>
