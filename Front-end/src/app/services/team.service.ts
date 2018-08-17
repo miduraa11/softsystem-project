@@ -24,13 +24,10 @@ export class TeamService {
   }
 
   addTeam(team: Team): Observable<any> {
-    console.log(team.name);
-    console.log(team.type.id);
-     return this.http.post(`${this.baseUrl}/add/${team.name}/${team.type.id}`, {responseType: 'text'});
+    return this.http.post(`${this.baseUrl}/add/${team.name}/${team.type.id}`, {responseType: 'text'});
   }
-  editTeam(team: Team): Observable<any> {
-    console.log(team.name);
-    console.log(team.type.discipline);
+
+  editTeam(team: Team): Observable<any>{
      return this.http.post(`${this.baseUrl}/edit/${team.id}/${team.name}/${team.type.id}`,{responseType: 'text'});
   }
 
