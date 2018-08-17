@@ -22,9 +22,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class RegistrationComponent implements OnInit {
 
   user: User = { id: 0, login: "", firstName: "", lastName: "", email: "", password: ""};
-  existLogin: boolean;// = false;
-  dane: any;
-  password: string = "";
+  existLogin: any = false;
 
 //email
   emailFormControl = new FormControl('', [
@@ -35,7 +33,7 @@ export class RegistrationComponent implements OnInit {
 //firstName
   firstNameFormControl = new FormControl('', [
     Validators.required,
-    Validators.pattern('^[a-zA-Z-]{3,30}$'),
+    Validators.pattern('^[a-zA-Z-śćżąęółńźŹŚĆŻĄĘÓŁŃ]{3,30}$'),
   ]);
   matcherFirstName = new MyErrorStateMatcher();
 
@@ -49,7 +47,7 @@ export class RegistrationComponent implements OnInit {
 //lastName
   lastNameFormControl = new FormControl('', [
     Validators.required,
-    Validators.pattern('^[a-zA-Z-]{3,50}$'),
+    Validators.pattern('^[a-zA-Z-śćżąęółńźŹŚĆŻĄĘÓŁŃ]{3,50}$'),
   ]);
   matcherLastName = new MyErrorStateMatcher();
 //password
@@ -71,12 +69,13 @@ export class RegistrationComponent implements OnInit {
   }
 
   loginExist(){
-    //this.registrationService.postLoginExist(this.loginFormControl.value);
-    this.registrationService.getLoginExist(this.loginFormControl.value).subscribe(data =>{this.existLogin = data});
-    if(!this.existLogin)
+    this.registrationService.getLoginExist(this.loginFormControl.value).subscribe(data =>{
+      this.existLogin = data
+      if(!this.existLogin)
       this.addUser();
     else
-      alert("Podany login już istnieje!");
+      alert("Podany login już istnieje!\nProszę podać inny lub zalogować się na istniejące konto.");
+    });
   }
 
 

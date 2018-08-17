@@ -12,13 +12,9 @@ export class RegistrationService {
   
   constructor(private http: HttpClient) { }
   
-  getLoginExist(login: boolean): Observable<any> {
+  getLoginExist(login: string): Observable<any> {
     return this.http.get(`//localhost:8080/registration/loginExist/${login}`);
   }
-
-  // postLoginExist(login: string): Observable<any> {
-  //   return this.http.post(`//localhost:8080/registration/loginExist/${login}`,{responseType: 'text'});
-  // }
 
   addUser(user: User){
     return this.http.post(`${this.baseUrl}/add/${user.login}/${user.firstName}/${user.lastName}/${user.email}/${user.password}`,{responseType: 'text'});

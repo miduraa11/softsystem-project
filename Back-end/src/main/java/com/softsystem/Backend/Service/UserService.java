@@ -14,7 +14,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public boolean emailExist(String login){
+    public Object emailExist(String login){
         Optional<User> users;
         users = userRepository.findByLogin(login);
         if(users.equals(Optional.empty()))

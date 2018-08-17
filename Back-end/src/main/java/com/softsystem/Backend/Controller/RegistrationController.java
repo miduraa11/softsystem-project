@@ -18,7 +18,7 @@ public class RegistrationController {
     }
 
     @GetMapping(value = "registration/loginExist/{login}")
-    public  boolean emailExist(@PathVariable("login")String login){
+    public  Object emailExist(@PathVariable("login")String login){
         return userService.emailExist(login);
     }
 
