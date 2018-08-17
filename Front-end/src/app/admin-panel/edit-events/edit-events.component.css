@@ -1,20 +1,29 @@
 .mt-4 {
-    margin-top: 5 !important;
-    margin-left: 25px;
-  }
+  margin-top: 5 !important;
+  margin-left: 25px;
+}
 
-  table{
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
+table{
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
 
-  .form-group{
-    margin-top: 10px;
-  }
-  .form-check{
-    margin-bottom: 25px;
+.form-group{
+  margin-top: 10px;
+}
+.form-check{
+  margin-bottom: 25px;
 
-  }
+}
 
+.test {
+  margin-top: 10px;
+}
 
+.button {
+  margin-top: 10px;
+}
 
+.btn {
+  margin-top: 20px;
+}

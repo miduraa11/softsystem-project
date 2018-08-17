@@ -13,11 +13,13 @@
   </div>
 </div>
 
+<button type="button" class="btn btn-primary btn-md btn-block btn-success" (click)="openCreateDialog()">Dodaj nowe wydarzenie</button>
+
 <table width="100%">
 <tr *ngFor="let event of events?.events">
   <td width="90%">
     <mat-accordion>
-      <mat-expansion-panel>
+      <mat-expansion-panel class="test">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <b>{{event.name}}</b>
@@ -35,8 +37,7 @@
       </mat-expansion-panel>
     </mat-accordion>
   </td>
-  <td><button type="button" class="btn btn-warning btn-sm" (click)="openEditDialog(event)">Edytuj</button></td>
-  <td><button type="button" class="btn btn-danger btn-sm" (click)="openDeleteDialog(event.id)">Usuń</button></td>
+  <td><button class="button" type="button" mat-raised-button color="primary" (click)="openEditDialog(event)">Edytuj</button></td>
+  <td><button class="button" type="button" mat-raised-button color="warn" (click)="openDeleteDialog(event.id)">Usuń</button></td>
 </tr>
 </table>
-<button type="button" class="btn btn-primary btn-md btn-block btn-success" (click)="openCreateDialog()">Dodaj nowe wydarzenie</button>

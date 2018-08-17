@@ -1,14 +1,23 @@
 .mt-4 {
-    margin-top: 5 !important;
-    margin-left: 25px;
-  }
-  .example-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-  }
-  
-  .example-full-width {
-    width: 100%;
-    text-align: center;
-  }
+  margin-top: 5 !important;
+  margin-left: 25px;
+}
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+  text-align: center;
+}
+
+.table {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+.btn {
+  margin-top: 20px;
+}
