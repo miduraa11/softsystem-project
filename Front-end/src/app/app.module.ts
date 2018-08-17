@@ -30,6 +30,8 @@ import {MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule} fr
 import {MatSelectModule} from '@angular/material/select';
 import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationService } from './registration/registration.service';
+import { LoginComponent } from './login/login.component';
+import { LoginService } from './login/login.service';
 
 const routes: Routes = [
 ];
@@ -56,6 +58,7 @@ const routes: Routes = [
     EditTeamsModalAdd,
     EditTeamsModalEdit,
     RegistrationComponent,
+    LoginComponent,
 
   ],
   imports: [
@@ -94,7 +97,8 @@ const routes: Routes = [
     PlayerService,
     EventService,
     TeamService,
-    RegistrationService
+    RegistrationService,
+    LoginService,
   ],
   bootstrap: [AppComponent]
 })
