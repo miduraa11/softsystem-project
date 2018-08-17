@@ -1,32 +1,29 @@
 .mt-4 {
-    margin-top: 5 !important;
-    margin-left: 25px;
-  }
+  margin-top: 5px !important;
+  margin-left: 25px;
+}
 
-  table{
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
+table{
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
 
-  .form-group{
-    margin-top: 10px;
-  }
-  .form-check{
-    margin-bottom: 25px;
-  }
+.form-group{
+  margin-top: 10px;
+}
+.form-check{
+  margin-bottom: 25px;
 
-  .createButton{
-    width: 100%;
-    margin-top: 10px;
-    background: linear-gradient(to bottom right, #009933, #1aff66);
-  }
+}
 
-  .editButton {
-    background: linear-gradient(to bottom right, #ff6600, #ffcc00);
-  }
+.test {
+  margin-top: 10px;
+}
 
-  .deleteButton {
-    background: linear-gradient(to bottom right, #cc0000, #ff5c33);
-  }
+.button {
+  margin-top: 10px;
+}
 
-
+.btn {
+  margin-top: 20px;
+}

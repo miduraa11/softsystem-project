@@ -37,7 +37,7 @@ export class EditEventsComponent implements OnInit {
 
 
   ngOnInit() {
-        this.eventService.getAll().subscribe(data => { console.log(data)
+        this.eventService.getAll().subscribe(data => {
         this.events = data;
       });
     }
@@ -99,7 +99,6 @@ export class DeleteEventModal {
     this.eventService.deleteEvent(this.data.id)
       .subscribe(
         data => {
-          console.log(data);
           this.dialogRef.close();
           window.location.reload();
         },
@@ -136,31 +135,28 @@ export class EditEventModal {
   }
 
   ngOnInit() {
-    this.eventService.getAll().subscribe(data => { console.log(data)
-    this.event = this.data.event;
-    this.types = data.types;
-    this.members = data.members;
-    this.choosenTypeId = this.data.event.type.id;  
-    this.choosenMemberId = this.data.event.members.map(x => x.id);
-  });
+    this.eventService.getAll().subscribe(data => {
+      this.event = this.data.event;
+      this.types = data.types;
+      this.members = data.members;
+      this.choosenTypeId = this.data.event.type.id;  
+      this.choosenMemberId = this.data.event.members.map(x => x.id);
+    });
+  }
+
+  editEvent() {
+    this.selectedDiscipline = this.types.find(x => this.choosenTypeId === x.id)
+    this.selectedMembers = this.members.filter(x => this.choosenMemberId.some(y => y == x.id))
+    this.eventService.updateEvent(this.event, this.selectedDiscipline, this.selectedMembers)
+        .subscribe(
+          data => {
+            this.dialogRef.close();
+            window.location.reload();
+          },
+          error => console.log(error));
+  }
+
 }
-
-editEvent() {
-  this.selectedDiscipline = this.types.find(x => this.choosenTypeId === x.id)
-  this.selectedMembers = this.members.filter(x => this.choosenMemberId.some(y => y == x.id))
-  this.eventService.updateEvent(this.event, this.selectedDiscipline, this.selectedMembers)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error));
-}
-
-}
-
-
 
 @Component({
   selector: 'create-event-modal',
@@ -186,22 +182,22 @@ export class CreateEventModal {
   }
 
   ngOnInit() {
-    this.eventService.getAll().subscribe(data => { console.log(data)
-    this.types = data.types;
-    this.members = data.members;
-  });
-}
+    this.eventService.getAll().subscribe(data => {
+      this.types = data.types;
+      this.members = data.members;
+    });
+  }
 
-addEvent() {
-  this.eventService.addEvent(this.event, this.selectedDiscipline, this.selectedMembers)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error));
-}
+  addEvent() {
+    this.eventService.addEvent(this.event, this.selectedDiscipline, this.selectedMembers)
+        .subscribe(
+          data => {
+            console.log(data);
+            this.dialogRef.close();
+            window.location.reload();
+          },
+          error => console.log(error));
+  }
 
 }
 

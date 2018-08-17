@@ -16,11 +16,12 @@ export interface EventData {
 export class EventService {
 
   private baseUrl = 'http://localhost:8080/edit-events';
+  private activeEventsAPI = 'http://localhost:8080/events';
 
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
-    return this.http.get('http://localhost:8080/edit-events');
+    return this.http.get(`${this.baseUrl}`);
   }
 
   deleteEvent(id: number): Observable<any> {
@@ -35,6 +36,14 @@ export class EventService {
   updateEvent(event: Event, selectedDiscipline, selectedMembers: Member[]): Observable<any> {
     const updateData: EventData = {events: [event], types: [selectedDiscipline], members: selectedMembers}
     return this.http.post(`${this.baseUrl}/edit`, updateData);
+  }
+
+  getActiveEvents(): Observable<any> {
+    return this.http.get(`${this.activeEventsAPI}`);
+  }
+
+  giveChosenParams(chosenDiscipline: String, chosenStatus: String): Observable<any> {
+    return this.http.post(`${this.activeEventsAPI}/${chosenDiscipline}/${chosenStatus}`, { responseType: 'text' });
   }
 
 }

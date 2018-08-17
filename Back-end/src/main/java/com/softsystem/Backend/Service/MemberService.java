@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -21,8 +22,8 @@ public class MemberService {
     public Collection <Member> getAllPlayers() {
         Collection <Member> players;
         players = memberRepository.findAll().stream()
-                .filter(this::isPlayer)
-                .collect(Collectors.toList());
+                                    .filter(this::isPlayer)
+                                    .collect(Collectors.toList());
 
         return players;
     }
@@ -86,10 +87,7 @@ public class MemberService {
     }
 
     private boolean isTeam(Member member) {
-//        if (member.getType()!=null)
-//            return member.getType().getId().equals((long)1) ||
-//                    member.getType().getId().equals((long)3);
-//        else return true;
+
         return !member.getType().isIndividual();
     }
 

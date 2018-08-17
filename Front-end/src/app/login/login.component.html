@@ -1,15 +1,29 @@
-<h2>Login</h2>
+<h3>Panel logowania</h3>
+<div style="width: 600px; margin-left: auto; margin-right: auto">
 <form>
-    <div class="form-group">
-        <label for="login">Login</label>
-        <input type="text" class="form-control"  [(ngModel)]="userLogin" name="login"/>
-    </div>
-    <div class="form-group">
-        <label for="password">Hasło</label>
-        <input type="password" class="form-control" [(ngModel)]="userPassword" name="password"/>
-    </div>
-    <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary" (click)="login()">Login</button>
-       <a [routerLink]="['/register']" class="btn btn-link">Register</a>
-    </div>
+
+  <mat-form-field class="example-full-width" style="width: 600px">
+    <input matInput placeholder="Login" [formControl]="loginFormControl" [(ngModel)]="userLogin"
+           [errorStateMatcher]="matcherLogin">
+    <mat-error *ngIf="loginFormControl.hasError('required')">
+      Login jest <strong>wymagany</strong>!
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" style="width: 600px; padding-bottom: 20px">
+    <input matInput type="password" placeholder="Hasło" [formControl]="passwordFormControl" [(ngModel)]="userPassword"
+           [errorStateMatcher]="matcherPassword">
+    <mat-error *ngIf="passwordFormControl.hasError('required')">
+      Hasło jest <strong>wymagane</strong>!
+    </mat-error>
+  </mat-form-field>
+
+  <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="login()">Zarejestruj się</button></nav>
 </form>
+<h5 style="text-align: center; padding-top: 20px">
+    Nie masz jeszcze konta?
+    <a href="/registration">
+      Zarejestruj sie!
+    </a>
+</h5>
+</div>
