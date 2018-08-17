@@ -21,4 +21,25 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public boolean authUser(String login, String password) {
+        User user;
+        user = userRepository.getUserByLogin(login);
+        if(user == null){
+            return false;
+        }
+        String userPassword = user.getPassword();
+        if(password.equals(userPassword)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Long getUserId(String login){
+        User user;
+        Long userId;
+        user = userRepository.getUserByLogin(login);
+        userId = user.getId();
+        return userId;
+    }
 }
