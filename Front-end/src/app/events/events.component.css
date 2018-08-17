@@ -46,6 +46,15 @@
     border-radius: 4px 0 0 4px;
   }
 
-  .card{
-    margin-top: 20px;
+  .table {
+    margin-top: 25px;
+  }
+
+  .notbold {
+    font-weight:normal;
+  }
+
+  .caption {
+    margin-top: 15px;
+    margin-bottom: 15px;
   }
