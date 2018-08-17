@@ -1,17 +1,21 @@
 package com.softsystem.Backend.Service;
 
+import com.softsystem.Backend.Model.Role;
 import com.softsystem.Backend.Model.User;
+import com.softsystem.Backend.Repository.RoleRepository;
 import com.softsystem.Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 @Service
 public class UserService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    RoleRepository roleRepository;
 
     public List<User> getAllUsers() {
 
@@ -38,6 +42,8 @@ public class UserService {
         user.setLastName(userLastName);
         user.setEmail(userEmail);
         user.setPassword(userPassword);
+        List<Role> role = roleRepository.findByName();
+        user.setRoles(role);
         userRepository.save(user);
     }
 
