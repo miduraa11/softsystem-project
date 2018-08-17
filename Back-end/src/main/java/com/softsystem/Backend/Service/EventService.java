@@ -91,19 +91,6 @@ public class EventService {
             }
         }
 
-//        if(chosenDiscipline.equals("Wszystkie")) {
-//            eventList = eventRepository.findAll()
-//                    .stream()
-//                    .filter((this::isActive))
-//                    .collect(Collectors.toList());
-//        } else {
-//            eventList = eventRepository.findAll()
-//                    .stream()
-//                    .filter(this::isActive)
-//                    .filter(x -> x.getType().getDiscipline().equals(chosenDiscipline))
-//                    .collect(Collectors.toList());
-//        }
-
         return eventList;
     }
 
