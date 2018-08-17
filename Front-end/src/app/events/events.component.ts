@@ -13,32 +13,35 @@ export class EventsComponent implements OnInit {
   events: Event[];
   types: Type[];
   chosenDiscipline: String = "Wszystkie";
-  i: number;
+  chosenStatus: String = "Wszystkie";
 
   constructor(private eventService: EventService) {
 
   }
  
   ngOnInit() {  
-    this.eventService.giveChosenDiscipline(this.chosenDiscipline).subscribe(
+    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(
       data => { console.log("Success"),
       this.eventService.getActiveEvents().subscribe(data => {
         this.events = data.events;
         this.types = data.types;
         this.chosenDiscipline = data.chosenDiscipline;
+        this.chosenStatus = data.chosenStatus;
       })},
       error => console.log(error)      
     );
   }
 
-  updateList(chosenDiscipline: String): void {
+  updateList(chosenDiscipline: String, chosenStatus: String): void {
     this.chosenDiscipline = chosenDiscipline;
-    this.eventService.giveChosenDiscipline(this.chosenDiscipline).subscribe(
+    this.chosenStatus = chosenStatus;
+    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(
       data => { console.log("Success"),
       this.eventService.getActiveEvents().subscribe(data => {
         this.events = data.events;
         this.types = data.types;
         this.chosenDiscipline = data.chosenDiscipline;
+        this.chosenStatus = data.chosenStatus;
       })},
       error => console.log(error)
     );

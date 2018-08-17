@@ -23,21 +23,23 @@ public class EventsController {
     TypeService typeService;
 
     private String chosenDiscipline;
+    private String chosenStatus;
 
     @GetMapping("/events")
     public ActiveEventsDTO getActiveEvents() {
         List<Event> events = new ArrayList<>();
         List<Type> types = new ArrayList<>();
-        eventService.findActiveEvents(this.chosenDiscipline).forEach(events::add);
+        eventService.findMatchingEvents(this.chosenDiscipline, this.chosenStatus).forEach(events::add);
         typeService.findAll().forEach(types::add);
-        ActiveEventsDTO activeEventsDTO = new ActiveEventsDTO(events, types, this.chosenDiscipline);
+        ActiveEventsDTO activeEventsDTO = new ActiveEventsDTO(events, types, this.chosenDiscipline, this.chosenStatus);
 
         return activeEventsDTO;
     }
 
-    @PostMapping(value = "/events/{chosenDiscipline}")
-    public void getChosenDiscipline(@PathVariable("chosenDiscipline") String chosenDiscipline) {
+    @PostMapping(value = "/events/{chosenDiscipline}/{chosenStatus}")
+    public void getChosenParams(@PathVariable("chosenDiscipline") String chosenDiscipline, @PathVariable("chosenStatus") String chosenStatus) {
         this.chosenDiscipline = chosenDiscipline;
+        this.chosenStatus = chosenStatus;
     }
 
 }
