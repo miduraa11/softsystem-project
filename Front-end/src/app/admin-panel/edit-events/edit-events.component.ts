@@ -84,13 +84,14 @@ export class EditEventsComponent implements OnInit {
 })
 export class DeleteEventModal {
 
-  @Input() event: Event;
+  event: Event;
 
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<DeleteEventModal>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   onNoClick(): void {
+    
     this.dialogRef.close();
   }
 

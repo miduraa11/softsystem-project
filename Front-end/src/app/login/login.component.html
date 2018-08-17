@@ -3,7 +3,7 @@
 <form>
 
   <mat-form-field class="example-full-width" style="width: 600px">
-    <input matInput placeholder="Login" [formControl]="loginFormControl"
+    <input matInput placeholder="Login" [formControl]="loginFormControl" [(ngModel)]="userLogin"
            [errorStateMatcher]="matcherLogin">
     <mat-error *ngIf="loginFormControl.hasError('required')">
       Login jest <strong>wymagany</strong>!
@@ -11,14 +11,14 @@
   </mat-form-field>
 
   <mat-form-field class="example-full-width" style="width: 600px; padding-bottom: 20px">
-    <input matInput type="password" placeholder="Hasło" [formControl]="passwordFormControl"
+    <input matInput type="password" placeholder="Hasło" [formControl]="passwordFormControl" [(ngModel)]="userPassword"
            [errorStateMatcher]="matcherPassword">
     <mat-error *ngIf="passwordFormControl.hasError('required')">
       Hasło jest <strong>wymagane</strong>!
     </mat-error>
   </mat-form-field>
 
-  <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="onLogin()">Zarejestruj się</button></nav>
+  <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="login()">Zarejestruj się</button></nav>
 </form>
 <h5 style="text-align: center; padding-top: 20px">
     Nie masz jeszcze konta?

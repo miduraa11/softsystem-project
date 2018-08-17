@@ -13,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: 'events', component: EventsComponent },
+  { path: 'home', component: EventsComponent },
   { path: 'bets', component: BetsComponent },
   { path: 'admin-panel', component: AdminPanelComponent },
   { path: 'results', component: ResultsComponent },

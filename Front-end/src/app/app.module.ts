@@ -34,6 +34,8 @@ import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationService } from './registration/registration.service';
 import { LoginComponent } from './login/login.component';
 import { LoginService } from './login/login.service';
+import { LocalStorageService } from './services/localStorage';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const routes: Routes = [
 ];
@@ -60,8 +62,8 @@ const routes: Routes = [
     EditTeamsModalEdit,
     RemoveUserDialog,
     RegistrationComponent,
-    LoginComponent,
-
+    RemoveUserDialog,
+    LoginComponent
   ],
   imports: [
     FormsModule,
@@ -85,6 +87,7 @@ const routes: Routes = [
     MatRippleModule,
     MatIconModule,
     MatCheckboxModule,
+    MatSnackBarModule
   ],
   entryComponents: [
     DeleteEventModal,
@@ -105,6 +108,7 @@ const routes: Routes = [
     UserService,
     RegistrationService,
     LoginService,
+    LocalStorageService,
   ],
   bootstrap: [
     AppComponent
