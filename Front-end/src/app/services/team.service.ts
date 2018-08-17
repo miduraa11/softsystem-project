@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Team } from '../model/team';
-import { Type } from '../../../node_modules/@angular/compiler/src/core';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +23,11 @@ export class TeamService {
     return this.http.delete(`${this.baseUrl}/${id}`,{responseType: 'text'});
   }
 
-  addTeam(team: Team){
-     return this.http.post(`${this.baseUrl}/add/${team.name}/${team.type.id}`,{responseType: 'text'});
+  addTeam(team: Team): Observable<any> {
+    return this.http.post(`${this.baseUrl}/add/${team.name}/${team.type.id}`, {responseType: 'text'});
   }
-  editTeam(team: Team){
+
+  editTeam(team: Team): Observable<any>{
      return this.http.post(`${this.baseUrl}/edit/${team.id}/${team.name}/${team.type.id}`,{responseType: 'text'});
   }
 

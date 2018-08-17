@@ -16,37 +16,41 @@
   
     <p><b>Dyscyplina</b></p>
     <div class="form-group">
-      <select name="typ" [(ngModel)]="data.event.type.discipline">
-        <option *ngFor="let type of types" [value]="type" >{{type.discipline}}</option>
-      </select>
+      <mat-select name="typ" [(ngModel)]="choosenTypeId">
+        <mat-option *ngFor="let type of types" [value]="type.id">{{type.discipline}}</mat-option>
+      </mat-select>
     </div>
   
     <p><b>Drużyny lub uczestnicy biorący udział w wydarzeniu</b></p>
     <div class="form-group" >
-      <mat-select multiple [(ngModel)]="selectedMembers" name="selectedMembers"> 
-        <mat-option *ngFor="let member of members" [value]="member">{{member.name}}</mat-option>
+      <mat-select multiple name="selectedMembers" [(ngModel)]="choosenMemberId" > 
+        <mat-option *ngFor="let member of members" [value]="member.id">{{member.name}}</mat-option>
       </mat-select>
     </div>
   
     <p><b>Status wydarzenia</b></p>
     <div class="form-check form-check-inline">
-      <input class="form-check-input" type="radio" name="active" id="option1" value="true" checked [(ngModel)]="data.event.active" name="status">
-      <label class="form-check-label" >
-        Aktywne wydarzenie
-      </label>
+     <mat-checkbox name="active" [(ngModel)]="data.event.active">Aktywne</mat-checkbox>
     </div>
   
     <p><b>Zwycięzca wydarzenia</b></p>
     <div class="form-group">
-      <mat-select placeholder="Zwycięzca">
-        <mat-option *ngFor="let member of members" [value]="member">{{member.name}}</mat-option>
+      <mat-select placeholder="Zwycięzca" [(ngModel)]="data.event.winner" name="winner">
+        <mat-option *ngFor="let member of data.event.members" [value]="member.name">{{member.name}}</mat-option>
         <mat-option [value]="0">Remis</mat-option>
       </mat-select>
     </div>
 
+    <p><b>Wynik</b><mat-icon data-toggle="tooltip" data-placement="right" 
+      title="Wynik proszę wpisać w przykładowym formacie - 2-1. 
+W przypadku wydarzenia, w którym nie jest to wymagane jak np. skoki narciarskie proszę zostawić puste pole.">info</mat-icon></p>
+    <div class="form-group">
+        <input type="text" name="score" id="score" [(ngModel)]="data.event.score" name="score">
+    </div>
 
-    <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="addEvent(event, selectedDiscipline, selectedMembers)">Zapisz zmiany</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm">Anuluj</button>
+<!-- bez selectedDiscipline i selectedMembers dziala -->
+    <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="editEvent()">Zapisz zmiany</button>
+    <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onNoClick()">Anuluj</button>
 </form>
 
 

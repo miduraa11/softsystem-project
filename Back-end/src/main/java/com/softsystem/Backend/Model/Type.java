@@ -8,13 +8,15 @@ import java.util.List;
 public class Type {
 
     @Id
-    @SequenceGenerator(name="type_id_sequence", sequenceName = "type_seq", initialValue=2, allocationSize=1)
-    @GeneratedValue(generator = "type_id_sequence", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_type")
     private long id;
 
     @Column(name = "discipline")
     private String discipline;
+
+    @Column(name = "individual")
+    private boolean individual;
 
     @OneToMany(mappedBy = "type")
     private List <Member> members;
@@ -43,5 +45,13 @@ public class Type {
 
     public void setDiscipline(String discipline) {
         this.discipline = discipline;
+    }
+
+    public boolean isIndividual() {
+        return individual;
+    }
+
+    public void setIndividual(boolean individual) {
+        this.individual = individual;
     }
 }

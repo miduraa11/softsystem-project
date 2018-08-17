@@ -4,15 +4,23 @@ import com.softsystem.Backend.Model.User;
 import com.softsystem.Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.List;
 import java.util.Optional;
-
 
 @Service
 public class UserService {
 
     @Autowired
     UserRepository userRepository;
+
+    public List<User> getAllUsers() {
+
+        return userRepository.findAllUsers();
+    }
+
+    public void deleteById(long id) {
+        userRepository.deleteById(id);
+    }
 
     public Object emailExist(String login){
         Optional<User> users;
@@ -25,11 +33,6 @@ public class UserService {
 
     public void addUser(String userLogin, String userFirstName, String userLastName, String userEmail, String userPassword){
         User user = new User();
-        /*
-        Optional<User> users;
-        users = userRepository.findByLogin(userLogin);
-        if(users.equals(Optional.empty()))
-        */
         user.setLogin(userLogin);
         user.setFirstName(userFirstName);
         user.setLastName(userLastName);
@@ -37,4 +40,5 @@ public class UserService {
         user.setPassword(userPassword);
         userRepository.save(user);
     }
+
 }

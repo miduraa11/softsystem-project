@@ -29,8 +29,8 @@ public class MemberService {
     }
 
     private boolean isPlayer(Member member) {
-        return  member.getType().getDiscipline().equals("Skoki narciarskie") ||
-                member.getType().getDiscipline().equals("Pływanie");
+
+        return member.getType().isIndividual();
     }
 
     public void deleteById(long id) {
@@ -53,25 +53,28 @@ public class MemberService {
     }
 
     public List<Member> findAll() {
+
         return memberRepository.findAll();
     }
 
-    public Collection <Member> getAllTeams(){
+    public Collection <Member> getAllTeams() {
         Collection<Member> teams;
-        teams = memberRepository.findAll().stream().filter(this::isTeam).collect(Collectors.toList());
+        teams = memberRepository.findAll().stream()
+                .filter(this::isTeam)
+                .collect(Collectors.toList());
+
         return teams;
     }
 
-    public void addTeam(String name, Long idType){
+    public void addTeam(String name, Long idType) {
         Member member = new Member();
         Type type = typeRepository.getOne(idType);
         member.setName(name);
         member.setType(type);
-
-        memberRepository.saveAndFlush(member);
+        memberRepository.save(member);
     }
 
-    public void editMember(String name, long id, long idType){
+    public void editMember(String name, long id, long idType) {
         Member member = memberRepository.getOne(id);
         member.setName(name);
         Type type = typeRepository.getOne(idType);
@@ -79,14 +82,13 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public void deleteMember(Long id){
+    public void deleteMember(Long id) {
         memberRepository.deleteById(id);
     }
 
-    private boolean isTeam(Member member){
-        if (member.getType()!=null)
-            return member.getType().getId().equals((long)1) ||
-                    member.getType().getId().equals((long)4);
-        else return true;
+    private boolean isTeam(Member member) {
+
+        return !member.getType().isIndividual();
     }
+
 }
