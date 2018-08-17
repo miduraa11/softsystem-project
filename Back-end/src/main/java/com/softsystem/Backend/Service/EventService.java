@@ -62,27 +62,54 @@ public class EventService {
         eventRepository.save(newEvent);
     }
 
-    public List<Event> findActiveEvents(String chosenDiscipline) {
+    public List<Event> findMatchingEvents(String chosenDiscipline, String chosenStatus) {
         List<Event> eventList;
+        boolean active;
+
         if(chosenDiscipline.equals("Wszystkie")) {
-            eventList = eventRepository.findAll()
-                    .stream()
-                    .filter(this::isActive)
-                    .collect(Collectors.toList());
+            if(chosenStatus.equals("Wszystkie")) {
+                eventList = eventRepository.findAll();
+            } else {
+                active = this.isActive(chosenStatus);
+                eventList = eventRepository.findAll()
+                        .stream().filter(x -> x.isActive() == active)
+                        .collect(Collectors.toList());
+            }
         } else {
-            eventList = eventRepository.findAll()
-                    .stream()
-                    .filter(this::isActive)
-                    .filter(x -> x.getType().getDiscipline().equals(chosenDiscipline))
-                    .collect(Collectors.toList());
+            if (chosenStatus.equals("Wszystkie")) {
+                eventList = eventRepository.findAll()
+                        .stream()
+                        .filter(x -> x.getType().getDiscipline().equals(chosenDiscipline))
+                        .collect(Collectors.toList());
+            } else {
+                active = this.isActive(chosenStatus);
+                eventList = eventRepository.findAll()
+                        .stream()
+                        .filter(x -> x.isActive() == active)
+                        .filter(x -> x.getType().getDiscipline().equals(chosenDiscipline))
+                        .collect(Collectors.toList());
+            }
         }
+
+//        if(chosenDiscipline.equals("Wszystkie")) {
+//            eventList = eventRepository.findAll()
+//                    .stream()
+//                    .filter((this::isActive))
+//                    .collect(Collectors.toList());
+//        } else {
+//            eventList = eventRepository.findAll()
+//                    .stream()
+//                    .filter(this::isActive)
+//                    .filter(x -> x.getType().getDiscipline().equals(chosenDiscipline))
+//                    .collect(Collectors.toList());
+//        }
 
         return eventList;
     }
 
-    private boolean isActive(Event event) {
-
-        return event.isActive();
+    private boolean isActive(String chosenStatus) {
+        if(chosenStatus.equals("Aktywne")) { return true; }
+        else { return false; }
     }
 
 }

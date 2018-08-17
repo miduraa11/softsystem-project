@@ -37,7 +37,7 @@ export class EditEventsComponent implements OnInit {
 
 
   ngOnInit() {
-        this.eventService.getAll().subscribe(data => { console.log(data)
+        this.eventService.getAll().subscribe(data => {
         this.events = data;
       });
     }

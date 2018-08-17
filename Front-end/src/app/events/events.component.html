@@ -1,23 +1,56 @@
-<h2>Aktualnie dostępne wydarzenia</h2>
+<h2 class="caption">Aktualnie dostępne wydarzenia</h2>
 
-<label for="FormControlSelectDiscipline">Wybierz dyscyplinę, z której wydarzenia Cię interesują:</label>
-<select class="form-control" id="FormControlSelectDiscipline" [(ngModel)]="chosenDiscipline" (change)="updateList(chosenDiscipline)">
-    <option selected hidden>{{chosenDiscipline}}</option>
-    <option>Wszystkie</option>
-    <option *ngFor="let type of types">{{type.discipline}}</option>
-</select>
+<table class="table-condensed" width="100%">
+    <b><label>Filtry:</label></b>
+    <tr>
+        <th class="notbold" for="FormControlSelectActive">Status:</th>
+        <th class="notbold" for="FormControlSelectDiscipline">Dyscyplina:</th>
+    </tr>
+    <tr>
+        <td>
+            <select class="form-control" id="FormControlSelectActive" [(ngModel)]="chosenStatus" (change)="updateList(chosenDiscipline, chosenStatus)">
+                    <option selected hidden>{{chosenStatus}}</option>
+                    <option>Wszystkie</option>
+                    <option>Aktywne</option>
+                    <option>Zakończone</option>
+            </select>
+        </td>
+        <td>
+            <select class="form-control" id="FormControlSelectDiscipline" [(ngModel)]="chosenDiscipline" (change)="updateList(chosenDiscipline, chosenStatus)">
+                    <option selected hidden>{{chosenDiscipline}}</option>
+                    <option>Wszystkie</option>
+                    <option *ngFor="let type of types">{{type.discipline}}</option>
+            </select>
+        </td>
+    </tr>
+</table>
 
-<div class="card" *ngFor="let event of events">
-    <div class="card-header">
-        <b>{{event.name}}</b>
-    </div>
-    <div class="card-body">
-        <p class="card-text"><b>Dyscyplina:</b></p>
-        <p class="card-text">{{event.type.discipline}}</p>
-        <p class="card-text"><b>Uczestnicy:</b></p>
-        <p class="card-text" *ngFor="let member of event.members">{{member.name}}</p>
-        <p class="card-text"><b>Czas trwania:</b></p>
-        <p class="card-text">od {{event.beginDate | date: "dd-MM-yyyy"}} do {{event.endDate | date: "dd-MM-yyyy"}}</p>
-        <a class="btn btn-success">Postaw zakład!</a>
-    </div>
-</div>
+<table class="table" width="100%">
+    <b><label>Wydarzenia:</label></b>
+    <tr *ngFor="let event of events">
+      <td width="90%">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <b>{{event.name}}</b>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <b>Data rozpoczęcia wydarzenia:</b> {{event.beginDate | date: "dd.MM.yyyy"}} <br>
+            <b>Data zakończenia wydarzenia:</b> {{event.endDate | date: "dd.MM.yyyy"}} <br>
+            <b>Uczestnicy biorący udział w wydarzeniu:</b>
+            <ul>
+                <li *ngFor="let member of event.members">{{member.name}}<br></li>
+            </ul>
+            <p *ngIf="event.active">
+                <a class="btn btn-success">Postaw zakład!</a>
+            </p>
+            <p *ngIf="!event.active">
+                <b>Zwycięzca: </b>{{event.winner}}<br>
+                <b>Wynik: </b>{{event.score}}<br>
+            </p>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </td>
+    </tr>
+</table>

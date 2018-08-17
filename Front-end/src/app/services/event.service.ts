@@ -42,8 +42,8 @@ export class EventService {
     return this.http.get(`${this.activeEventsAPI}`);
   }
 
-  giveChosenDiscipline(chosenDiscipline: String): Observable<any> {
-    return this.http.post(`${this.activeEventsAPI}/${chosenDiscipline}`, { responseType: 'text' });
+  giveChosenParams(chosenDiscipline: String, chosenStatus: String): Observable<any> {
+    return this.http.post(`${this.activeEventsAPI}/${chosenDiscipline}/${chosenStatus}`, { responseType: 'text' });
   }
 
 }
