@@ -16,10 +16,10 @@
 <button type="button" class="btn btn-primary btn-md btn-block btn-success" (click)="openCreateDialog()">Dodaj nowe wydarzenie</button>
 
 <table width="100%">
-<tr *ngFor="let event of events?.events">
+<tr *ngFor="let event of events">
   <td width="90%">
     <mat-accordion>
-      <mat-expansion-panel class="test">
+      <mat-expansion-panel class="expansionpanel">
         <mat-expansion-panel-header>
           <mat-panel-title>
             <b>{{event.name}}</b>
@@ -27,6 +27,7 @@
         </mat-expansion-panel-header>
         <b>Data rozpoczęcia wydarzenia:</b> {{event.beginDate | date: "dd.MM.yyyy"}} <br>
         <b>Data zakończenia wydarzenia:</b> {{event.endDate | date: "dd.MM.yyyy"}} <br>
+        <b>Dyscyplina:</b> {{event.type.discipline}} <br>
         <b>Drużyny biorące udział w wydarzeniu:</b>
         <ul>
           <li *ngFor="let member of event.members">{{member.name}}<br></li>

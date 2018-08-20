@@ -7,7 +7,8 @@ export class Event {
     beginDate: Date;
     endDate: Date;
     active: boolean;
-    result: string;
+    result: String;
     type: Type;
     members: Member[];
+    winner: String;
 }

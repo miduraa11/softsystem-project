@@ -6,10 +6,11 @@ import { Member } from '../model/member';
 import { Type } from '../model/type';
 
 export interface EventData {
-  events: Event[];
+  event: Event;
   members: Member[];
   types: Type[];
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,24 +19,30 @@ export class EventService {
   private baseUrl = 'http://localhost:8080/edit-events';
   private activeEventsAPI = 'http://localhost:8080/events';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
 
-  getAll(): Observable<any> {
+  }
+
+  getAllEvents(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);
+  }
+
+  getTypesAndMembers(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/info`);
   }
 
   deleteEvent(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
   }
 
-  addEvent(event: Event, selectedDiscipline, selectedMembers: Member[]): Observable<any> {
-    const eventData: EventData = {events: [event], types: [selectedDiscipline], members: selectedMembers}
+  addEvent(event: Event, selectedType: Type, selectedMembers: Member[]): Observable<any> {
+    const eventData: EventData = {event: event, types: [selectedType], members: selectedMembers}
     return this.http.post(`${this.baseUrl}/add`, eventData);
   }
 
-  updateEvent(event: Event, selectedDiscipline, selectedMembers: Member[]): Observable<any> {
-    const updateData: EventData = {events: [event], types: [selectedDiscipline], members: selectedMembers}
-    return this.http.post(`${this.baseUrl}/edit`, updateData);
+  updateEvent(event: Event, selectedType: Type, selectedMembers: Member[]): Observable<any> {
+    const eventData: EventData = {event: event, types: [selectedType], members: selectedMembers}
+    return this.http.post(`${this.baseUrl}/edit`, eventData);
   }
 
   getActiveEvents(): Observable<any> {
