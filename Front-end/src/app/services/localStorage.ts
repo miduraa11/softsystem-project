@@ -15,4 +15,7 @@ export class LocalStorageService {
     return this.http.get(`${this.baseUrl}/${userLogin}/${userPassword}`, { responseType: 'text' });
   }
 
+  getUserRole(userId: any): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${userId}`, { responseType: 'text' });
+  }
 }

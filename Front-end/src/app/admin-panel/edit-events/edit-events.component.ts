@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { EventService } from '../../services/event.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Event } from '../../model/event';
@@ -25,6 +25,7 @@ export interface DialogDataEdit {
   templateUrl: './edit-events.component.html',
   styleUrls: ['./edit-events.component.css']
 })
+
 export class EditEventsComponent implements OnInit {
   
   id: number;
@@ -33,6 +34,7 @@ export class EditEventsComponent implements OnInit {
   events: Event[];
   selectedMembers: Member[];
   copyOfEvent: Event;
+
   constructor(private eventService: EventService, public dialog: MatDialog) {}
 
 

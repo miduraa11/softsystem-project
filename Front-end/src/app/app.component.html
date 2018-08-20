@@ -1,13 +1,15 @@
 <div class="container">
-    <ul>
-        <li style="float:left"><img src="assets/img/btb_logo.png"></li>
-        <li><nav><a routerLink="/login">Zaloguj</a></nav></li>
-        <li><nav><a routerLink="/admin-panel">Admin panel</a></nav></li>
-        <li><nav><a routerLink="/results">Wyniki</a></nav></li>
-        <li><nav><a routerLink="/bets">Moje zakłady</a></nav></li>
-        <li><nav><a routerLink="/events">Wydarzenia</a></nav></li>
-    </ul>
-
-    <router-outlet></router-outlet>
+    
+    <div class="navigationBar fixed" *ngIf="isActive">
+        <ul>
+            <li style="float:left"><nav><a routerLink="/home">Home</a></nav></li>
+            <li><nav><a routerLink="/login" (click)="logout()">Wyloguj</a></nav></li>
+            <li *ngIf="isAdmin"><nav><a routerLink="/admin-panel">Admin panel</a></nav></li>
+            <li><nav><a routerLink="/results">Wyniki</a></nav></li>
+            <li><nav><a routerLink="/bets">Moje zakłady</a></nav></li>
+            <li><nav><a routerLink="/events">Wydarzenia</a></nav></li>
+        </ul>
+    </div>
+        <router-outlet></router-outlet>
 </div>
 

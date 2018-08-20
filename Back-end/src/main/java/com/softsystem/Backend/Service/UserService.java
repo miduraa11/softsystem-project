@@ -68,4 +68,6 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public String getUserRole(Long userId) { return userRepository.getRoleByUser(userId);
+    }
 }

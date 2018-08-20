@@ -25,17 +25,17 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TeamService } from './services/team.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule} from '@angular/material';
-import {MatSelectModule} from '@angular/material/select';
-import {MatIconModule} from '@angular/material/icon';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule} from '@angular/material';
+import { MatSelectModule} from '@angular/material/select';
+import { MatIconModule} from '@angular/material/icon';
+import { MatCheckboxModule} from '@angular/material/checkbox';
 import { UserService } from './services/user.service';
 import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationService } from './registration/registration.service';
 import { LoginComponent } from './login/login.component';
-import { LoginService } from './login/login.service';
 import { LocalStorageService } from './services/localStorage';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
 ];
@@ -63,7 +63,8 @@ const routes: Routes = [
     RemoveUserDialog,
     RegistrationComponent,
     RemoveUserDialog,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     FormsModule,
@@ -87,7 +88,8 @@ const routes: Routes = [
     MatRippleModule,
     MatIconModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    BrowserAnimationsModule
   ],
   entryComponents: [
     DeleteEventModal,
@@ -107,7 +109,6 @@ const routes: Routes = [
     TeamService,
     UserService,
     RegistrationService,
-    LoginService,
     LocalStorageService,
   ],
   bootstrap: [
