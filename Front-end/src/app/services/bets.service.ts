@@ -11,7 +11,7 @@ export class BetsService {
 
   constructor(private http: HttpClient) { }
 
-  getAllBets(): Observable<any> {
-    return this.http.get(`${this.baseUrl}`);
+  getAllBetsById(currentUser: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${currentUser}`);
   }
 }

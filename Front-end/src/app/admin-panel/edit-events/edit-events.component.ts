@@ -146,6 +146,7 @@ export class EditEventModal {
     });
   }
 
+
   editEvent() {
     this.selectedDiscipline = this.types.find(x => this.choosenTypeId === x.id)
     this.selectedMembers = this.members.filter(x => this.choosenMemberId.some(y => y == x.id))

@@ -9,7 +9,6 @@ import { EventsComponent } from './events/events.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
 import { BetsComponent } from './bets/bets.component';
-import { ResultsComponent } from './results/results.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal} from './admin-panel/edit-events/edit-events.component';
@@ -45,7 +44,6 @@ const routes: Routes = [
     AppComponent,
     EventsComponent,
     BetsComponent,
-    ResultsComponent,
     AdminPanelComponent,
     EditEventsComponent,
     EditTeamsComponent,
