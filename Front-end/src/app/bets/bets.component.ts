@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BetsService } from '../services/bets.service';
+import { Bet } from '../model/bet';
 
 @Component({
   selector: 'app-bets',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BetsComponent implements OnInit {
 
-  constructor() { }
+  bets: Bet[];
+
+  constructor(private betsService: BetsService) { }
 
   ngOnInit() {
+    this.betsService.getAllBets().subscribe(data => { console.log(data);
+        this.bets = data;
+      });
   }
 
 }

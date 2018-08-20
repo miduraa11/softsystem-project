@@ -14,10 +14,17 @@ public class Bet {
     private Float amount;
 
     @Column(name = "betResult")
-    private String betResult;
+    private boolean betResult;
 
     @Column(name = "prize")
     private Float prize;
+
+    @Column(name = "result")
+    private String result;
+
+    @JoinColumn(name = "id_member")
+    @ManyToOne
+    private Member member;
 
     @JoinColumn(name = "id_event")
     @ManyToOne
@@ -31,10 +38,11 @@ public class Bet {
     public Bet() {
     }
 
-    public Bet(Float amount, String betResult, Float prize) {
+    public Bet(Float amount, boolean betResult, Float prize, String result) {
         this.amount = amount;
         this.betResult = betResult;
         this.prize = prize;
+        this.result = result;
     }
 
     public Long getId() {
@@ -53,11 +61,11 @@ public class Bet {
         this.amount = amount;
     }
 
-    public String getBetResult() {
+    public boolean getBetResult() {
         return betResult;
     }
 
-    public void setBetResult(String betResult) {
+    public void setBetResult(boolean betResult) {
         this.betResult = betResult;
     }
 
@@ -67,5 +75,21 @@ public class Bet {
 
     public void setPrize(Float prize) {
         this.prize = prize;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
     }
 }
