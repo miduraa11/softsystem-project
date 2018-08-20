@@ -21,4 +21,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByLogin(@Param("login") String login);
 
     User getUserByLogin(String login);
+
+    @Query("SELECT r.name FROM User u JOIN u.roles r WHERE u.id = :userId AND NOT r.name='user'")
+    String getRoleByUser(@Param("userId")Long userId);
 }

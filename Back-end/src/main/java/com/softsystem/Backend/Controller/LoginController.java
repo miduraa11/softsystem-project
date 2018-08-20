@@ -30,4 +30,13 @@ public class LoginController {
         }
         return id;
     }
+
+    @GetMapping(value= "/login/{userId}")
+    public Object getUserRole(@PathVariable Long userId) {
+
+        String userRole = userService.getUserRole(userId);
+        System.out.println(userRole);
+        return userRole;
+    }
+
 }

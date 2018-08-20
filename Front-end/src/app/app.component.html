@@ -4,14 +4,12 @@
         <ul>
             <li style="float:left"><nav><a routerLink="/home">Home</a></nav></li>
             <li><nav><a routerLink="/login" (click)="logout()">Wyloguj</a></nav></li>
-            <li><nav><a routerLink="/admin-panel">Admin panel</a></nav></li>
+            <li *ngIf="isAdmin"><nav><a routerLink="/admin-panel">Admin panel</a></nav></li>
             <li><nav><a routerLink="/results">Wyniki</a></nav></li>
             <li><nav><a routerLink="/bets">Moje zakłady</a></nav></li>
             <li><nav><a routerLink="/events">Wydarzenia</a></nav></li>
         </ul>
     </div>
-    <main [@routerTransition]="getState(o)">
-        <router-outlet #o="outlet"></router-outlet>
-      </main>
+        <router-outlet></router-outlet>
 </div>
 
