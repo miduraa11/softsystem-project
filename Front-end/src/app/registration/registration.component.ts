@@ -3,8 +3,8 @@ import { User } from '../model/user';
 import { RegistrationService } from './registration.service';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {Md5} from 'ts-md5/dist/md5';
-import { Router } from '../../../node_modules/@angular/router';
+import {Md5} from 'ts-md5';
+import { Router } from '@angular/router';
 
 //Validation 
 export class MyErrorStateMatcher implements ErrorStateMatcher {

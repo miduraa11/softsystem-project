@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from '../services/localStorage';
-import { Router } from '../../../node_modules/@angular/router';
-import { MatSnackBar } from '../../../node_modules/@angular/material';
-import {Md5} from 'ts-md5/dist/md5';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
+import {Md5} from 'ts-md5';
 
 
 
