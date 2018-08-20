@@ -53,4 +53,5 @@ export class EventService {
     return this.http.post(`${this.activeEventsAPI}/${chosenDiscipline}/${chosenStatus}`, { responseType: 'text' });
   }
 
+
 }
