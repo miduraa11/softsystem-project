@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { EventService } from '../../services/event.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Event } from '../../model/event';
@@ -31,6 +31,7 @@ export interface DialogDataCreate {
   templateUrl: './edit-events.component.html',
   styleUrls: ['./edit-events.component.css']
 })
+
 export class EditEventsComponent implements OnInit {
   
   events: Event[];
@@ -92,18 +93,16 @@ export class EditEventsComponent implements OnInit {
 })
 export class DeleteEventModal {
 
-  constructor(private eventService: EventService,
+constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<DeleteEventModal>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {
+  ) { }
 
-  }
-
-  onCancelClick(): void {
+onCancelClick(): void {   
     this.dialogRef.close();
-  }
+}
 
-  deleteEvent() {
+deleteEvent() {
     this.eventService.deleteEvent(this.data.id).subscribe(
       data => {
         this.dialogRef.close();

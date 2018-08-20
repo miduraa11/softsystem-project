@@ -10,9 +10,11 @@ import { EditTeamsComponent }   from './admin-panel/edit-teams/edit-teams.compon
 import { EditUsersComponent }   from './admin-panel/edit-users/edit-users.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: 'events', component: EventsComponent },
+  { path: 'app-component', component: EventsComponent },
   { path: 'bets', component: BetsComponent },
   { path: 'admin-panel', component: AdminPanelComponent },
   { path: 'results', component: ResultsComponent },
@@ -22,6 +24,8 @@ const routes: Routes = [
   { path: 'edit-users', component: EditUsersComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 
 @NgModule({
