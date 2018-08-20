@@ -9,13 +9,19 @@ export interface DialogData {
   id: number;
 }
 
-export interface DialogDataAdd {
-  event: Event;
-  member: Member;
+export interface DialogDataEdit {
+  id: number;
+  name: String;
+  beginDate: Date;
+  endDate: Date;
   type: Type;
+  members: Member[];
+  active: boolean;
+  winner: String;
+  result: String;
 }
 
-export interface DialogDataEdit {
+export interface DialogDataCreate {
   event: Event;
 }
 
@@ -27,54 +33,56 @@ export interface DialogDataEdit {
 })
 export class EditEventsComponent implements OnInit {
   
-  id: number;
-  member: Member;
-  type: Type;
   events: Event[];
-  selectedMembers: Member[];
-  copyOfEvent: Event;
-  constructor(private eventService: EventService, public dialog: MatDialog) {}
 
+  constructor(private eventService: EventService, public dialog: MatDialog) {
+
+  }
 
   ngOnInit() {
-        this.eventService.getAll().subscribe(data => {
-        this.events = data;
-      });
-    }
+    this.eventService.getAllEvents().subscribe(data => {
+      this.events = data;
+    });
+  }
 
-    openDeleteDialog(id: number): void {
-      const dialogRef = this.dialog.open(DeleteEventModal, {
-        width: '400px',
-        data: {id: id}
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });
-    }
+  openDeleteDialog(id: number): void {
+    const dialogRef = this.dialog.open(DeleteEventModal, {
+      width: '400px',
+      data: {id: id}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
-    openEditDialog(event: Event): void{
-      const dialogRef = this.dialog.open(EditEventModal, {
-        width: '600px',
-        data: {event: event},
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });
+  openEditDialog(event: Event): void {
+    const dialogRef = this.dialog.open(EditEventModal, {
+      width: '600px',
+      data: {
+        id: event.id,
+        name: event.name,
+        beginDate: event.beginDate,
+        endDate: event.endDate,
+        type: event.type,
+        members: event.members,
+        active: event.active,
+        winner: event.winner,
+        result: event.result
+      },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
-    }
-
-    openCreateDialog(): void{
-      const dialogRef = this.dialog.open(CreateEventModal, {
-        width: '600px'
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });
-
-
-    }
-
-
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(CreateEventModal, {
+      width: '600px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
 }
 
@@ -84,34 +92,31 @@ export class EditEventsComponent implements OnInit {
 })
 export class DeleteEventModal {
 
-  @Input() event: Event;
-
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<DeleteEventModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {
 
-  onNoClick(): void {
+  }
+
+  onCancelClick(): void {
     this.dialogRef.close();
   }
 
   deleteEvent() {
-    this.eventService.deleteEvent(this.data.id)
-      .subscribe(
-        data => {
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error));
-        
+    this.eventService.deleteEvent(this.data.id).subscribe(
+      data => {
+        this.dialogRef.close();
+        window.location.reload();
+      },
+      error => console.log(error));        
   }
 
 }
 
-
 @Component({
   selector: 'edit-event-modal',
-  templateUrl: './edit-event-modal.html',
-  styleUrls: ['./edit-events.component.css']
+  templateUrl: './edit-event-modal.html'
 })
 export class EditEventModal {
 
@@ -120,33 +125,32 @@ export class EditEventModal {
   types: Type[];
   choosenTypeId: number;
   choosenMemberId: number[];
-  selectedDiscipline: Type;
+  selectedType: Type;
   selectedMembers: Member[];
 
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<EditEventModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit
+  ) { }
 
-  onNoClick(): void {
-    this.event = Object.assign({}, this.event);
+  onCancelClick(): void {
     this.dialogRef.close();
-    window.location.reload();
   }
 
   ngOnInit() {
-    this.eventService.getAll().subscribe(data => {
-      this.event = this.data.event;
+    this.event = { id: this.data.id, name: this.data.name, beginDate: this.data.beginDate, endDate: this.data.endDate, active: this.data.active, result: this.data.result, type: this.data.type, members: this.data.members, winner: this.data.winner };
+    this.eventService.getTypesAndMembers().subscribe(data => {
       this.types = data.types;
       this.members = data.members;
-      this.choosenTypeId = this.data.event.type.id;  
-      this.choosenMemberId = this.data.event.members.map(x => x.id);
+      this.choosenTypeId = this.data.type.id;
+      this.choosenMemberId = this.data.members.map(x => x.id);
     });
   }
 
   editEvent() {
-    this.selectedDiscipline = this.types.find(x => this.choosenTypeId === x.id)
-    this.selectedMembers = this.members.filter(x => this.choosenMemberId.some(y => y == x.id))
-    this.eventService.updateEvent(this.event, this.selectedDiscipline, this.selectedMembers)
+    this.selectedType = this.types.find(x => this.choosenTypeId === x.id);
+    this.selectedMembers = this.members.filter(x => this.choosenMemberId.some(y => y == x.id));
+    this.eventService.updateEvent(this.event, this.selectedType, this.selectedMembers)
         .subscribe(
           data => {
             this.dialogRef.close();
@@ -165,33 +169,31 @@ export class EditEventModal {
 export class CreateEventModal {
 
   event: any = {};
-
   members: Member[];
   types: Type[];
-  selectedDiscipline: Type[];
+  selectedType: Type;
   selectedMembers: Member[];
 
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<CreateEventModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataCreate) {
     }
 
-  onNoClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
 
   ngOnInit() {
-    this.eventService.getAll().subscribe(data => {
+    this.eventService.getTypesAndMembers().subscribe(data => {
       this.types = data.types;
       this.members = data.members;
     });
   }
 
   addEvent() {
-    this.eventService.addEvent(this.event, this.selectedDiscipline, this.selectedMembers)
+    this.eventService.addEvent(this.event, this.selectedType, this.selectedMembers)
         .subscribe(
           data => {
-            console.log(data);
             this.dialogRef.close();
             window.location.reload();
           },

@@ -5,20 +5,10 @@ import com.softsystem.Backend.Model.Member;
 import com.softsystem.Backend.Model.Type;
 import java.util.List;
 
-public class EventData {
+public class EditEventsDTO {
 
-    private List <Event> events;
     private List <Member> members;
     private List <Type> types;
-
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(List<Event> events) {
-        this.events = events;
-    }
 
     public List<Member> getMembers() {
         return members;
@@ -36,13 +26,12 @@ public class EventData {
         this.types = types;
     }
 
-    public EventData(List<Event> events, List<Member> members, List<Type> types) {
-        this.events = events;
+    public EditEventsDTO(List<Member> members, List<Type> types) {
         this.members = members;
         this.types = types;
     }
 
-    public EventData() {
+    public EditEventsDTO() {
     }
 
 }

@@ -1,5 +1,6 @@
 package com.softsystem.Backend.Controller;
 
+import com.softsystem.Backend.DTO.EventDataDTO;
 import com.softsystem.Backend.Model.Event;
 import com.softsystem.Backend.Model.Member;
 import com.softsystem.Backend.Model.Type;
@@ -8,7 +9,7 @@ import com.softsystem.Backend.Service.EventService;
 import com.softsystem.Backend.Service.MemberService;
 import com.softsystem.Backend.Service.TypeService;
 import com.softsystem.Backend.Service.UserService;
-import com.softsystem.Backend.DTO.EventData;
+import com.softsystem.Backend.DTO.EditEventsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
@@ -33,17 +34,22 @@ public class AdminController {
     /*------------------*/
 
     @GetMapping("/edit-events")
-    public EventData getAllEvents() {
-
+    public List<Event> getAllEvents() {
         List<Event> events = new ArrayList<>();
+        eventService.findAll().forEach(events::add);
+
+        return events;
+    }
+
+    @GetMapping("/edit-events/info")
+    public EditEventsDTO getTypesAndMembers() {
         List<Member> members = new ArrayList<>();
         List<Type> types = new ArrayList<>();
-        eventService.findAll().forEach(events::add);
         memberService.findAll().forEach(members::add);
         typeService.findAll().forEach(types::add);
-        EventData eventData = new EventData(events, members, types);
+        EditEventsDTO editEventsDTO = new EditEventsDTO(members, types);
 
-        return eventData;
+        return editEventsDTO;
     }
 
     @DeleteMapping("/edit-events/{id}")
@@ -62,14 +68,14 @@ public class AdminController {
 
 
     @PostMapping(value= "/edit-events/edit")
-    public void updateEvent(@RequestBody EventData eventData) {
-        eventService.updateEvent(eventData.getEvents().get(0), eventData.getTypes().get(0), eventData.getMembers());
+    public void updateEvent(@RequestBody EventDataDTO eventDataDTO) {
+        eventService.updateEvent(eventDataDTO.getEvent(), eventDataDTO.getTypes().get(0), eventDataDTO.getMembers());
 
     }
 
-    @PostMapping(value = "/edit-events/add")
-    public void addEvent(@RequestBody EventData eventData) {
-        eventService.addEvent(eventData.getEvents().get(0), eventData.getTypes().get(0), eventData.getMembers());
+    @PostMapping(value= "/edit-events/add")
+    public void addEvent(@RequestBody EventDataDTO eventDataDTO) {
+        eventService.addEvent(eventDataDTO.getEvent(), eventDataDTO.getTypes().get(0), eventDataDTO.getMembers());
     }
 
     /*-------------------*/
