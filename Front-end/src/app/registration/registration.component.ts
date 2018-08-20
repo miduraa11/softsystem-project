@@ -4,6 +4,7 @@ import { RegistrationService } from './registration.service';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {Md5} from 'ts-md5/dist/md5';
+import { Router } from '../../../node_modules/@angular/router';
 
 //Validation 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -63,7 +64,7 @@ export class RegistrationComponent implements OnInit {
   ]);
   matcherConfirmPassword = new MyErrorStateMatcher();
 
-  constructor(private registrationService: RegistrationService) { }
+  constructor(private registrationService: RegistrationService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -87,12 +88,10 @@ export class RegistrationComponent implements OnInit {
       this.user.login=this.loginFormControl.value;
       this.user.password= Md5.hashStr(this.passwordFormControl.value);
       this.registrationService.addUser(this.user).subscribe(
-        data => {
-          window.location.reload();
-        },
+
       error => console.log(error));
       alert("Rejestracja zakończona pomyślnie! \nWitaj "+ this.user.firstName + " w BTB.");
-      window.location.reload();}
+      this.router.navigate(['/login']);}
     else{
       alert("Błędnie wprowadzone dane!");
     }

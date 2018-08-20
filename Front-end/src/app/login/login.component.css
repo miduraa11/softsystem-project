@@ -1,0 +1,30 @@
+.content{
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 400px;
+  height: 340px;
+  border-radius: 0.5em;
+  border-color: rgb(39, 39, 39);
+  border-style: solid;
+  border-width: 1px;
+  background-image: linear-gradient(rgb(202, 202, 202), rgb(255, 255, 255), rgb(202, 202, 202));
+
+}
+
+form{
+    font: white;
+}
+
+h2{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn {
+    width: 350px;
+    margin: auto;
+}

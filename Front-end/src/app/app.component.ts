@@ -8,17 +8,31 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'SoftSystem - BTB';
-  // [hidden]="!myVar"
-  key: string = "User id";
+
+  title = 'BTB';
   isActive: boolean;
-  
+  key: string = "User id";
+  userId: any;
+
+  ngOnInit() {
+    this.userId = localStorage.getItem(this.key);
+
+    if(this.userId == null){
+      this.isActive = false;
+    } else{
+      this.isActive = true;
+    }
+    
+  }
+
 
   logout(){
     localStorage.setItem(this.key, "");
+    this.userId = localStorage.getItem(this.key);
+    window.location.reload();
     localStorage.clear();
+    
   }
-
 }
 
 
