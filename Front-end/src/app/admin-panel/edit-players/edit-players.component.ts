@@ -83,7 +83,7 @@ export class RemovePlayerDialog {
 
   onDeleteClick(): void {
     this.playerService.deletePlayer(this.data.id).subscribe(
-      data => { console.log(data);
+      data => {
         this.dialogRef.close();
         window.location.reload();
       },

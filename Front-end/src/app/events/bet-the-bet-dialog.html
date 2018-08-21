@@ -1,0 +1,34 @@
+<div mat-dialog-content>
+    <h6 mat-dialog-title>Szczegóły dotyczące wydarzenia:</h6>
+    <section>
+        <b>Nazwa wydarzenia:</b> {{event.name}} <br>
+        <b>Dyscyplina:</b> {{event.type.discipline}} <br>
+        <b>Data rozpoczęcia wydarzenia:</b> {{event.beginDate | date: "dd.MM.yyyy"}} <br>
+        <b>Data zakończenia wydarzenia:</b> {{event.endDate | date: "dd.MM.yyyy"}} <br>
+        <b>Uczestnicy biorący udział w wydarzeniu:</b>
+        <ul>
+            <li *ngFor="let member of event.members">{{member.name}}<br></li>
+        </ul>       
+    </section>
+    <h6 mat-dialog-title>Szczegóły dotyczące zakładu:</h6>
+    <section>
+        <div class="form-group">
+            <label class="validation-message">Kwota [zł]*</label>
+            <input style="width: 350px" [(ngModel)]="amount" type="text" class="form-control" placeholder="Podaj kwotę, na którą chcesz postawić zakład."/>
+        </div>
+        <label style="width: 350px">Twój typowany zwycięzca</label>
+        <select class="form-control" [(ngModel)]="chosenMember">
+            <option selected hidden>Wybierz uczestnika wydarzenia...</option>
+            <option *ngFor="let member of event.members" [value]="member.id">{{member.name}}</option>
+        </select>
+        <div class="form-group">
+                <label class="validation-message">Wynik [X-X]</label>
+                <input style="width: 350px" [(ngModel)]="result" type="text" class="form-control" placeholder="Podaj typowany przez Ciebie wynik."/>
+            </div>
+    </section>
+</div>
+<div>* - pola wymagane</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Anuluj</button>
+  <button class="btn btn-success" (click)="onBetClick(event, amount, chosenMember, result)">Postaw zakład!</button>
+</div>

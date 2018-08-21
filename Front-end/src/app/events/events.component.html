@@ -43,7 +43,7 @@
                 <li *ngFor="let member of event.members">{{member.name}}<br></li>
             </ul>
             <p *ngIf="event.active">
-                <a class="btn btn-success">Postaw zakład!</a>
+                <a class="btn btn-success" (click)="openBetDialog(event)">Postaw zakład!</a>
             </p>
             <p *ngIf="!event.active">
                 <b>Zwycięzca: </b>{{event.winner}}<br>

@@ -14,7 +14,7 @@ public class Bet {
     private Float amount;
 
     @Column(name = "betResult")
-    private boolean betResult;
+    private Boolean betResult;
 
     @Column(name = "prize")
     private Float prize;
@@ -61,11 +61,11 @@ public class Bet {
         this.amount = amount;
     }
 
-    public boolean getBetResult() {
+    public Boolean getBetResult() {
         return betResult;
     }
 
-    public void setBetResult(boolean betResult) {
+    public void setBetResult(Boolean betResult) {
         this.betResult = betResult;
     }
 
@@ -91,5 +91,21 @@ public class Bet {
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

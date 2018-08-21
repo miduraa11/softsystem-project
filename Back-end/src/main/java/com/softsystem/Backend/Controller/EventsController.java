@@ -1,8 +1,10 @@
 package com.softsystem.Backend.Controller;
 
 import com.softsystem.Backend.DTO.ActiveEventsDTO;
+import com.softsystem.Backend.DTO.BetDTO;
 import com.softsystem.Backend.Model.Event;
 import com.softsystem.Backend.Model.Type;
+import com.softsystem.Backend.Service.BetService;
 import com.softsystem.Backend.Service.EventService;
 import com.softsystem.Backend.Service.MemberService;
 import com.softsystem.Backend.Service.TypeService;
@@ -21,6 +23,8 @@ public class EventsController {
     MemberService memberService;
     @Autowired
     TypeService typeService;
+    @Autowired
+    BetService betService;
 
     private String chosenDiscipline;
     private String chosenStatus;
@@ -40,6 +44,11 @@ public class EventsController {
     public void getChosenParams(@PathVariable("chosenDiscipline") String chosenDiscipline, @PathVariable("chosenStatus") String chosenStatus) {
         this.chosenDiscipline = chosenDiscipline;
         this.chosenStatus = chosenStatus;
+    }
+
+    @PostMapping(value= "/events/addBet")
+    public void addBet(@RequestBody BetDTO betDTO) {
+        betService.addBet(betDTO.getCurrentUser(), betDTO.getEvent(), betDTO.getAmount(), betDTO.getChosenMember(), betDTO.getResult());
     }
 
 }

@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { EventService } from '../services/event.service';
 import { Type } from '../model/type';
 import { Event } from '../model/event';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '../../../node_modules/@angular/material';
+import { BetsService } from '../services/bets.service';
+import { Member } from '../model/member';
+
+export interface DialogData {
+  event: Event;
+  currentUser: number;
+}
 
 @Component({
   selector: 'app-events',
@@ -14,12 +22,15 @@ export class EventsComponent implements OnInit {
   types: Type[];
   chosenDiscipline: String = "Wszystkie";
   chosenStatus: String = "Wszystkie";
+  currentUser: number;
+  key: string = "User id";
 
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, public dialog: MatDialog) {
 
   }
  
-  ngOnInit() {  
+  ngOnInit() {
+    this.currentUser = Number(localStorage.getItem(this.key));
     this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(
       data => { console.log("Success"),
       this.eventService.getActiveEvents().subscribe(data => {
@@ -45,6 +56,51 @@ export class EventsComponent implements OnInit {
       })},
       error => console.log(error)
     );
+  }
+
+  openBetDialog(event: Event): void {
+    const dialogRef = this.dialog.open(BetTheBetDialog, {
+      width: '400px',
+      data: { event: event,  currentUser: this.currentUser}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+}
+
+@Component({
+  selector: 'bet-the-bet-dialog',
+  templateUrl: './bet-the-bet-dialog.html',
+})
+export class BetTheBetDialog implements OnInit {
+
+  event: Event;
+  amount: number;
+  chosenMember: number;
+  result: String;
+
+  constructor( private betService: BetsService, public dialogRef: MatDialogRef<BetTheBetDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+
+  }
+
+  ngOnInit() {
+    this.event = this.data.event;
+  }
+
+  onCancelClick(): void {
+    this.dialogRef.close();
+  }
+
+  onBetClick(event: Event, amount: number, chosenMember: number, result: String): void {
+    this.betService.addBet(this.data.currentUser, event, amount, chosenMember, result).subscribe(
+      data => {
+        this.dialogRef.close();
+      },
+      error => console.log(error)      
+    );  
   }
 
 }
