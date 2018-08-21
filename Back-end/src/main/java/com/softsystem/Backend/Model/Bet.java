@@ -14,10 +14,20 @@ public class Bet {
     private Float amount;
 
     @Column(name = "betResult")
-    private String betResult;
+    private Boolean betResult;
 
     @Column(name = "prize")
     private Float prize;
+
+    @Column(name = "result")
+    private String result;
+
+    @Column(name = "is_general")
+    private boolean isGeneral;
+
+    @JoinColumn(name = "id_member")
+    @ManyToOne
+    private Member member;
 
     @JoinColumn(name = "id_event")
     @ManyToOne
@@ -31,17 +41,18 @@ public class Bet {
     public Bet() {
     }
 
-    public Bet(Float amount, String betResult, Float prize) {
+    public Bet(Float amount, Boolean betResult, Float prize, String result) {
         this.amount = amount;
         this.betResult = betResult;
         this.prize = prize;
+        this.result = result;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -53,11 +64,11 @@ public class Bet {
         this.amount = amount;
     }
 
-    public String getBetResult() {
+    public Boolean getBetResult() {
         return betResult;
     }
 
-    public void setBetResult(String betResult) {
+    public void setBetResult(Boolean betResult) {
         this.betResult = betResult;
     }
 
@@ -67,5 +78,45 @@ public class Bet {
 
     public void setPrize(Float prize) {
         this.prize = prize;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public boolean isGeneral() {
+        return isGeneral;
+    }
+
+    public void setGeneral(boolean general) {
+        isGeneral = general;
     }
 }
