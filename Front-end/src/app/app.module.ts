@@ -35,6 +35,7 @@ import { LoginComponent } from './login/login.component';
 import { LocalStorageService } from './services/localStorage';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HomeComponent } from './home/home.component';
+import { BetsService } from './services/bets.service';
 
 const routes: Routes = [
 ];
@@ -108,6 +109,7 @@ const routes: Routes = [
     UserService,
     RegistrationService,
     LocalStorageService,
+    BetsService,
   ],
   bootstrap: [
     AppComponent

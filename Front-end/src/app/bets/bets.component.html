@@ -1,5 +1,23 @@
+<h2>Moje zakłady:</h2>
+<table class="table-condensed" width="100%">
+<b><label>Filtry:</label></b>
+<tr>
+    <th class="notbold" for="FormControlSelectActive">Status:</th>
+</tr>
+<tr>
+    <td>
+        <select class="form-control" id="FormControlSelectActive" [(ngModel)]="chosenStatus" (change)="updateList(chosenStatus)">
+                <option selected hidden>{{chosenStatus}}</option>
+                <option>Wszystkie</option>
+                <option>Wygrane</option>
+                <option>Przegrane</option>
+                <option>Trwające</option>
+        </select>
+    </td>
+</tr>
+</table>
+
 <table class="table" width="100%">
-  <b><label>Moje zakłady:</label></b>
   <tr *ngFor="let bet of bets">
     <td width="90%">
       <mat-accordion>
@@ -10,6 +28,7 @@
               </mat-panel-title>
           </mat-expansion-panel-header>
           <b>Status:</b> {{bet.event.active}}<br>
+          <b>Czy wygrałes?:</b> {{bet.betResult}}<br>
           <b>Obstawiona drużyna lub zawodnik:</b> {{bet.member.name}} <br>
           <b>Dokładny wynik:</b> {{bet.result}}<br>
           <b>Wkład:</b> {{bet.amount}} zł<br>

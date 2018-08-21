@@ -14,4 +14,12 @@ export class BetsService {
   getAllBetsById(currentUser: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${currentUser}`);
   }
+
+  getActiveBets(): Observable<any> {
+    return this.http.get(`${this.baseUrl}`);
+  }
+
+  giveChosenParams(chosenStatus: String, currentUser: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${chosenStatus}/${currentUser}`, { responseType: 'text' });
+  }
 }
