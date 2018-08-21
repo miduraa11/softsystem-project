@@ -12,7 +12,7 @@ export class BetsComponent implements OnInit {
   bets: Bet[];
   key: string = "User id";
   currentUser: number;
-
+  chosenStatus: String = "Wszystkie";
 
   constructor(private betsService: BetsService) { }
 
@@ -21,6 +21,19 @@ export class BetsComponent implements OnInit {
     this.betsService.getAllBetsById(this.currentUser).subscribe(data => { console.log(data);
         this.bets = data;
       });
+  }
+
+  updateList(chosenStatus: String): void {
+
+    this.chosenStatus = chosenStatus;
+    this.betsService.giveChosenParams(this.chosenStatus, this.currentUser).subscribe(
+      data => { console.log("Success"),
+      this.betsService.getActiveBets().subscribe(data => {
+        this.bets = data;
+        this.chosenStatus = chosenStatus;
+      })},
+      error => console.log(error)
+    );
   }
 
 }

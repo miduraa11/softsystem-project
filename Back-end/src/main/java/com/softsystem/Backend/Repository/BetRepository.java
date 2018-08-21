@@ -14,6 +14,6 @@ import java.util.List;
 public interface BetRepository extends JpaRepository<Bet, Long> {
 
     @Query("SELECT b FROM Bet b JOIN b.user br WHERE br.id = :userId")
-    Collection<Bet> findAllBetsByUserId(@Param("userId") Long userId);
+    List<Bet> findAllBetsByUserId(@Param("userId") Long userId);
 
 }
