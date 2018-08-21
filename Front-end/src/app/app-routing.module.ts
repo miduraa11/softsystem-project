@@ -7,6 +7,7 @@ import { ResultsComponent }     from './results/results.component';
 import { EditEventsComponent }  from './admin-panel/edit-events/edit-events.component';
 import { EditPlayersComponent } from './admin-panel/edit-players/edit-players.component';
 import { EditTeamsComponent }   from './admin-panel/edit-teams/edit-teams.component';
+import { EditDisciplineComponent }   from './admin-panel/edit-discipline/edit-discipline.component';
 import { EditUsersComponent }   from './admin-panel/edit-users/edit-users.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'edit-events', component: EditEventsComponent },
   { path: 'edit-players', component: EditPlayersComponent },
   { path: 'edit-teams', component: EditTeamsComponent },
+  { path: 'edit-discipline', component: EditDisciplineComponent },
   { path: 'edit-users', component: EditUsersComponent },
   { path: 'registration', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },

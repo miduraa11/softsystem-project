@@ -14,6 +14,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal} from './admin-panel/edit-events/edit-events.component';
 import { EditTeamsComponent, EditTeamsModalDelete, EditTeamsModalAdd, EditTeamsModalEdit } from './admin-panel/edit-teams/edit-teams.component';
+import { EditDisciplineComponent, EditDisciplineModalDelete, EditDisciplineModalAdd, EditDisciplineModalEdit } from './admin-panel/edit-discipline/edit-discipline.component';
 import { EditPlayersComponent, RemovePlayerDialog, PlayerEditDialog, AddPlayerDialog} from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent, RemoveUserDialog } from './admin-panel/edit-users/edit-users.component';
 import { PlayerService } from './services/player.service';
@@ -23,6 +24,7 @@ import { EventService } from './services/event.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TeamService } from './services/team.service';
+import { DisciplineService } from './services/discipline.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule} from '@angular/material';
@@ -49,6 +51,7 @@ const routes: Routes = [
     AdminPanelComponent,
     EditEventsComponent,
     EditTeamsComponent,
+    EditDisciplineComponent,
     EditPlayersComponent,
     EditUsersComponent,
     DeleteEventModal,
@@ -60,6 +63,9 @@ const routes: Routes = [
     EditTeamsModalDelete,
     EditTeamsModalAdd,
     EditTeamsModalEdit,
+    EditDisciplineModalDelete,
+    EditDisciplineModalAdd,
+    EditDisciplineModalEdit,
     RemoveUserDialog,
     RegistrationComponent,
     RemoveUserDialog,
@@ -101,12 +107,16 @@ const routes: Routes = [
     EditTeamsModalDelete,
     EditTeamsModalAdd,
     EditTeamsModalEdit,
+    EditDisciplineModalDelete,
+    EditDisciplineModalAdd,
+    EditDisciplineModalEdit,
     RemoveUserDialog
   ],
   providers: [
     PlayerService,
     EventService,
     TeamService,
+    DisciplineService,
     UserService,
     RegistrationService,
     LocalStorageService,

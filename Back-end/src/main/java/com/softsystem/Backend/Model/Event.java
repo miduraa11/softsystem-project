@@ -34,15 +34,17 @@ public class Event {
     @Column(name = "score")
     private String score;
 
-    @JoinColumn(name = "id_type")
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "id_type")
     private Type type;
 
     @OneToMany(mappedBy = "event")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     private List<Bet> bets;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(name = "event_member", joinColumns = @JoinColumn(name = "id_event"), inverseJoinColumns = @JoinColumn(name = "id_member"))
     private List <Member> members;
 

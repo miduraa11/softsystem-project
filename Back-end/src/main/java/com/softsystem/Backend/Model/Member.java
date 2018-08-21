@@ -1,6 +1,10 @@
 package com.softsystem.Backend.Model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "Member")
@@ -14,9 +18,14 @@ public class Member {
     @Column(name = "name")
     private String name;
 
-    @JoinColumn(name = "id_type")
     @ManyToOne
+    @JoinColumn(name = "id_type")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Type type;
+
+    @ManyToMany(mappedBy = "members")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<Event> events;
 
     public Member() {
     }
