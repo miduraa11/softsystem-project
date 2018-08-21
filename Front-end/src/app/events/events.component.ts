@@ -11,14 +11,6 @@ export interface DialogData {
   currentUser: number;
 }
 
-//Validation 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
-
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
@@ -66,8 +58,19 @@ export class EventsComponent implements OnInit {
     );
   }
 
-  openBetDialog(event: Event): void {
-    const dialogRef = this.dialog.open(BetTheBetDialog, {
+  openGeneralBetDialog(event: Event): void {
+    const dialogRef = this.dialog.open(BetTheBetGeneralDialog, {
+      width: '450px',
+      data: { event: event,  currentUser: this.currentUser}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDetailBetDialog(event: Event): void {
+    const dialogRef = this.dialog.open(BetTheBetDetailDialog, {
       width: '450px',
       data: { event: event,  currentUser: this.currentUser}
     });
@@ -79,16 +82,90 @@ export class EventsComponent implements OnInit {
 
 }
 
+//Validation 
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
 @Component({
-  selector: 'bet-the-bet-dialog',
-  templateUrl: './bet-the-bet-dialog.html',
+  selector: 'bet-the-bet-general-dialog',
+  templateUrl: './bet-the-bet-general-dialog.html',
 })
-export class BetTheBetDialog implements OnInit {
+export class BetTheBetGeneralDialog implements OnInit {
+
+  event: Event;
+  amount: number;
+  chosenMember: number;
+  result: String = "";
+  betType: number = 0;
+
+  //amount
+  amountFormControl = new FormControl('', [
+    Validators.required,
+    Validators.pattern("^\\d+\\.\\d{0,2}$"),
+  ]);
+  matcherAmount = new MyErrorStateMatcher();
+
+  //member
+  memberFormControl = new FormControl('', [
+    Validators.required,
+  ]);
+  matcherMember = new MyErrorStateMatcher();
+
+  constructor( private betService: BetsService, public dialogRef: MatDialogRef<BetTheBetGeneralDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog) {
+
+  }
+
+  ngOnInit() {
+    this.event = this.data.event;
+  }
+
+  onCancelClick(): void {
+    this.dialogRef.close();
+  }
+
+  onBetClick(event : Event): void {
+    if(this.amountFormControl.errors==null && this.memberFormControl.errors==null) {
+      this.amount = this.amountFormControl.value;
+      this.chosenMember = this.memberFormControl.value;
+      this.betService.addBet(this.data.currentUser, event, this.amount, this.chosenMember, this.result, this.betType).subscribe(
+        data => {
+          this.openConfirmDialog();
+          this.dialogRef.close();
+        },
+        error => console.log(error)
+      );
+    } else {
+      alert("Błędnie wprowadzone dane!");
+    }
+  }
+
+  openConfirmDialog(): void {
+    const dialogRef = this.dialog.open(BetTheBetConfirmDialog, {
+      width: '400px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+}
+
+@Component({
+  selector: 'bet-the-bet-detail-dialog',
+  templateUrl: './bet-the-bet-detail-dialog.html',
+})
+export class BetTheBetDetailDialog implements OnInit {
 
   event: Event;
   amount: number;
   chosenMember: number;
   result: String;
+  betType: number = 1;
 
   //amount
   amountFormControl = new FormControl('', [
@@ -110,7 +187,7 @@ export class BetTheBetDialog implements OnInit {
   ]);
   matcherResult = new MyErrorStateMatcher();
 
-  constructor( private betService: BetsService, public dialogRef: MatDialogRef<BetTheBetDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog) {
+  constructor( private betService: BetsService, public dialogRef: MatDialogRef<BetTheBetDetailDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData, public dialog: MatDialog) {
 
   }
 
@@ -127,7 +204,7 @@ export class BetTheBetDialog implements OnInit {
       this.amount = this.amountFormControl.value;
       this.chosenMember = this.memberFormControl.value;
       this.result = this.resultFormControl.value;
-      this.betService.addBet(this.data.currentUser, event, this.amount, this.chosenMember, this.result).subscribe(
+      this.betService.addBet(this.data.currentUser, event, this.amount, this.chosenMember, this.result, this.betType).subscribe(
         data => {
           this.openConfirmDialog();
           this.dialogRef.close();

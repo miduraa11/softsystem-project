@@ -43,7 +43,10 @@
                 <li *ngFor="let member of event.members">{{member.name}}<br></li>
             </ul>
             <p *ngIf="event.active">
-                <a class="btn btn-success" (click)="openBetDialog(event)">Postaw zakład!</a>
+                <a class="btn btn-success" (click)="openGeneralBetDialog(event)">Postaw zakład ogólny!</a>
+                <mat-icon data-toggle="tooltip" data-placement="right" title="Zakład ogólny dotyczy wyboru jedynie zwycięzcy wydarzenia">info</mat-icon>
+                <a class="btn btn-success" (click)="openDetailBetDialog(event)">Postaw zakład szczegółowy!</a>
+                <mat-icon data-toggle="tooltip" data-placement="right" title="Zakład szczegółowy dotyczy podania dokładnego wyniku wydarzenia">info</mat-icon>
             </p>
             <p *ngIf="!event.active">
                 <b>Zwycięzca: </b>{{event.winner}}<br>

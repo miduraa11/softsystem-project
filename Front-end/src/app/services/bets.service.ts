@@ -10,6 +10,7 @@ export interface BetData {
   amount: number;
   chosenMember: number;
   result: String;
+  betType: number;
 }
 
 @Injectable({
@@ -26,8 +27,8 @@ export class BetsService {
     return this.http.get(`${this.baseUrl}`);
   }
 
-  addBet(currentUser: number, event: Event, amount: number, chosenMember: number, result: String): Observable<any> {
-    const betData: BetData = {event: event, currentUser: currentUser, amount: amount, chosenMember: chosenMember, result: result}
+  addBet(currentUser: number, event: Event, amount: number, chosenMember: number, result: String, betType: number): Observable<any> {
+    const betData: BetData = {event: event, currentUser: currentUser, amount: amount, chosenMember: chosenMember, result: result, betType: betType}
     return this.http.post(`${this.addUrl}`, betData);
   }
 }

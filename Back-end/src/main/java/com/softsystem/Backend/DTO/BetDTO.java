@@ -10,13 +10,15 @@ public class BetDTO {
     private float amount;
     private long chosenMember;
     private String result;
+    private int betType;
 
-    public BetDTO(long currentUser, Event event, float amount, long chosenMember, String result) {
+    public BetDTO(long currentUser, Event event, float amount, long chosenMember, String result, int betType) {
         this.currentUser = currentUser;
         this.event = event;
         this.amount = amount;
         this.chosenMember = chosenMember;
         this.result = result;
+        this.betType = betType;
     }
 
     public BetDTO() {
@@ -60,5 +62,13 @@ public class BetDTO {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public int getBetType() {
+        return betType;
+    }
+
+    public void setBetType(int betType) {
+        this.betType = betType;
     }
 }

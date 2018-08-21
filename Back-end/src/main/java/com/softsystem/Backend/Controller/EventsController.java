@@ -48,7 +48,7 @@ public class EventsController {
 
     @PostMapping(value= "/events/addBet")
     public void addBet(@RequestBody BetDTO betDTO) {
-        betService.addBet(betDTO.getCurrentUser(), betDTO.getEvent(), betDTO.getAmount(), betDTO.getChosenMember(), betDTO.getResult());
+        betService.addBet(betDTO.getCurrentUser(), betDTO.getEvent(), betDTO.getAmount(), betDTO.getChosenMember(), betDTO.getResult(), betDTO.getBetType());
     }
 
 }
