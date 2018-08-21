@@ -22,6 +22,9 @@ public class Bet {
     @Column(name = "result")
     private String result;
 
+    @Column(name = "is_general")
+    private boolean isGeneral;
+
     @JoinColumn(name = "id_member")
     @ManyToOne
     private Member member;
@@ -45,11 +48,11 @@ public class Bet {
         this.result = result;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -99,5 +102,21 @@ public class Bet {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public boolean isGeneral() {
+        return isGeneral;
+    }
+
+    public void setGeneral(boolean general) {
+        isGeneral = general;
     }
 }
