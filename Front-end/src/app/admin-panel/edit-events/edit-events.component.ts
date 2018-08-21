@@ -113,6 +113,7 @@ deleteEvent() {
 
 }
 
+
 @Component({
   selector: 'edit-event-modal',
   templateUrl: './edit-event-modal.html'
@@ -146,6 +147,7 @@ export class EditEventModal {
     });
   }
 
+
   editEvent() {
     this.selectedType = this.types.find(x => this.choosenTypeId === x.id);
     this.selectedMembers = this.members.filter(x => this.choosenMemberId.some(y => y == x.id));
@@ -153,6 +155,7 @@ export class EditEventModal {
         .subscribe(
           data => {
             this.dialogRef.close();
+            
             window.location.reload();
           },
           error => console.log(error));

@@ -41,7 +41,7 @@ public class Bet {
     public Bet() {
     }
 
-    public Bet(Float amount, boolean betResult, Float prize, String result) {
+    public Bet(Float amount, Boolean betResult, Float prize, String result) {
         this.amount = amount;
         this.betResult = betResult;
         this.prize = prize;
