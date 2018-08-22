@@ -47,8 +47,7 @@ export class AppComponent {
     this.userId = localStorage.getItem(this.key);
     this.userRole = null;
     window.location.reload();
-    localStorage.clear();
-    
+    localStorage.clear();    
   }
 }
 

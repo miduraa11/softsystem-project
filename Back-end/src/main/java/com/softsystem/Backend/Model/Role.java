@@ -1,24 +1,24 @@
 package com.softsystem.Backend.Model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "Role")
 public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rol_user")
-    private long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
 
-    public Role() {
-    }
-
     public Role(String name) {
         this.name = name;
+    }
+
+    public Role() {
     }
 
     public Long getId() {

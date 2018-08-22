@@ -26,7 +26,7 @@ import { TeamService } from './services/team.service';
 import { DisciplineService } from './services/discipline.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule} from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatNativeDateModule} from '@angular/material';
 import { MatSelectModule} from '@angular/material/select';
 import { MatIconModule} from '@angular/material/icon';
 import { MatCheckboxModule} from '@angular/material/checkbox';
@@ -72,7 +72,7 @@ const routes: Routes = [
     HomeComponent,
     BetTheBetGeneralDialog,
     BetTheBetDetailDialog,
-    BetTheBetConfirmDialog
+    BetTheBetConfirmDialog,
   ],
   imports: [
     FormsModule,
@@ -97,7 +97,8 @@ const routes: Routes = [
     MatIconModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatNativeDateModule
   ],
   entryComponents: [
     DeleteEventModal,

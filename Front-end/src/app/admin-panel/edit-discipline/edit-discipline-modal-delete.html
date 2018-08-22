@@ -1,8 +1,8 @@
 <h1 mat-dialog-title>Potwierdzenie</h1>
 <div mat-dialog-content>
-  <p>Czy na pewno chcesz usunąć wybraną dyscyplinę?</p>
+  <p>Czy na pewno chcesz usunąć wybraną dyscyplinę?<br> Operacji tej nie można cofnąć!</p>
 </div>
 <div mat-dialog-actions>
-  <button mat-button class="btn btn-success btn-md btn-space" style="margin: 5px; width: 100px" (click)="onNoClick()">Nie</button>
-  <button mat-button class="btn btn-danger btn-sm btn-space" style="margin: 5px; width: 100px" (click)="deleteDiscipline()">Tak</button>
+  <button mat-button (click)="onNoClick()">Anuluj</button>
+  <button mat-flat-button color='warn' (click)="deleteDiscipline()">Usuń</button>
 </div>

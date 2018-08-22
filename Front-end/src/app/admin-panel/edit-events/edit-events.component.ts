@@ -4,6 +4,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Event } from '../../model/event';
 import { Member } from '../../model/member';
 import { Type } from '../../model/type';
+import { ErrorStateMatcher } from '../../../../node_modules/@angular/material';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '../../../../node_modules/@angular/forms';
 
 export interface DialogData {
   id: number;
@@ -30,7 +32,7 @@ export interface DialogDataCreate {
   selector: 'app-edit-events',
   templateUrl: './edit-events.component.html',
   styleUrls: ['./edit-events.component.css']
-})
+})  
 
 export class EditEventsComponent implements OnInit {
   
@@ -78,7 +80,7 @@ export class EditEventsComponent implements OnInit {
 
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(CreateEventModal, {
-      width: '600px'
+      width: '450px'
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -176,6 +178,37 @@ export class CreateEventModal {
   selectedType: Type;
   selectedMembers: Member[];
 
+    //eventName
+    eventNameFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherEventName = new MyErrorStateMatcher();
+
+    //beginDate
+    beginDateFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherBeginDate = new MyErrorStateMatcher();
+    
+    //endDate
+    endDateFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherEndDate = new MyErrorStateMatcher();
+
+    //selectedDiscipline
+    selectedDisciplineFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherSelectedDiscipline = new MyErrorStateMatcher();
+    
+    //selectedMembers
+    selectedMembersFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherSelectedMembers = new MyErrorStateMatcher();
+
+
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<CreateEventModal>,
     @Inject(MAT_DIALOG_DATA) public data: DialogDataCreate) {
@@ -193,15 +226,37 @@ export class CreateEventModal {
   }
 
   addEvent() {
-    this.eventService.addEvent(this.event, this.selectedType, this.selectedMembers)
+
+    if(this.eventNameFormControl.errors==null 
+      && this.beginDateFormControl.errors==null 
+      && this.endDateFormControl.errors==null
+      && this.selectedDisciplineFormControl.errors==null
+      && this.selectedMembersFormControl.errors==null) {
+      this.event.name = this.eventNameFormControl.value;
+      this.event.beginDate = this.beginDateFormControl.value;
+      this.event.endDate = this.endDateFormControl.value;
+      this.selectedType = this.selectedDisciplineFormControl.value;
+      this.selectedMembers = this.selectedMembersFormControl.value;
+      this.eventService.addEvent(this.event, this.selectedType, this.selectedMembers)
         .subscribe(
           data => {
             this.dialogRef.close();
             window.location.reload();
           },
           error => console.log(error));
+    } else {
+      alert("Błędnie wprowadzone dane!");
+    }
+    
   }
 
+}
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
 }
 
 

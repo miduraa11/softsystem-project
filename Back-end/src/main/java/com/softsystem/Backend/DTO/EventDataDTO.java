@@ -8,12 +8,25 @@ import java.util.List;
 public class EventDataDTO {
 
     private Event event;
-    private List <Member> members;
-    private List <Type> types;
+    private List<Member> members;
+    private List<Type> types;
 
-    public Event getEvent() { return event; }
+    public EventDataDTO(Event event, List<Member> members, List<Type> types) {
+        this.event = event;
+        this.members = members;
+        this.types = types;
+    }
 
-    public void setEvent(Event event) { this.event = event; }
+    public EventDataDTO() {
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
 
     public List<Member> getMembers() {
         return members;
@@ -29,15 +42,6 @@ public class EventDataDTO {
 
     public void setTypes(List<Type> types) {
         this.types = types;
-    }
-
-    public EventDataDTO(Event event, List<Member> members, List<Type> types) {
-        this.event = event;
-        this.members = members;
-        this.types = types;
-    }
-
-    public EventDataDTO() {
     }
 
 }

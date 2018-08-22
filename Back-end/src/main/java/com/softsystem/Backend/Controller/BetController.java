@@ -21,12 +21,10 @@ public class BetController {
     private Long currentUser;
 
     @GetMapping(value = "/bets/{userId}")
-    public List<Bet> showAllBets(@PathVariable(name="userId")Long userId) {
+    public List<Bet> showAllBets(@PathVariable(name="userId") Long userId) {
 
         return betService.showAllBets(userId);
     }
-
-
 
     @GetMapping("/bets")
     public List<Bet> getActiveBets() {
@@ -42,15 +40,11 @@ public class BetController {
         this.chosenStatus = chosenStatus;
         this.currentUser = currentUser;
     }
-
-    @GetMapping("/prize")
-    public double calPrize(){//(@PathVariable(name="id")Long id){
-        long id = 5;
-        betService.calPrize(2);
-        betService.calPrize(3);
-        betService.calPrize(4);
-        betService.calPrize(6);
-        return betService.calPrize(id);
-    }
+//
+//    @GetMapping("/prize")
+//    public double calPrize(){//(@PathVariable(name="id")Long id){
+//
+//        return betService.calPrize(id);
+//    }
 
 }

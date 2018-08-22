@@ -37,7 +37,7 @@ public class EventService {
        eventRepository.getOne(event.getId()).setName(event.getName());
        eventRepository.getOne(event.getId()).setBeginDate(event.getBeginDate());
        eventRepository.getOne(event.getId()).setEndDate(event.getEndDate());
-       eventRepository.getOne(event.getId()).setActive(event.isActive());
+       eventRepository.getOne(event.getId()).setActive(event.getActive());
        eventRepository.getOne(event.getId()).setBeginDate(event.getBeginDate());
        eventRepository.getOne(event.getId()).setScore(event.getScore());
        eventRepository.getOne(event.getId()).setWinner(event.getWinner());
@@ -55,7 +55,7 @@ public class EventService {
         newEvent.setName(event.getName());
         newEvent.setBeginDate(event.getBeginDate());
         newEvent.setEndDate(event.getEndDate());
-        newEvent.setActive(event.isActive());
+        newEvent.setActive(event.getActive());
         type = typeRepository.findByDiscipline(selectedDiscipline.getDiscipline());
         newEvent.setType(type);
         newEvent.setMembers(selectedMembers);
@@ -64,7 +64,7 @@ public class EventService {
 
     public List<Event> findMatchingEvents(String chosenDiscipline, String chosenStatus) {
         List<Event> eventList;
-        boolean active;
+        Boolean active;
 
         if(chosenDiscipline.equals("Wszystkie")) {
             if(chosenStatus.equals("Wszystkie")) {
@@ -72,7 +72,7 @@ public class EventService {
             } else {
                 active = this.isActive(chosenStatus);
                 eventList = eventRepository.findAll()
-                        .stream().filter(x -> x.isActive() == active)
+                        .stream().filter(x -> x.getActive() == active)
                         .collect(Collectors.toList());
             }
         } else {
@@ -85,7 +85,7 @@ public class EventService {
                 active = this.isActive(chosenStatus);
                 eventList = eventRepository.findAll()
                         .stream()
-                        .filter(x -> x.isActive() == active)
+                        .filter(x -> x.getActive() == active)
                         .filter(x -> x.getType().getDiscipline().equals(chosenDiscipline))
                         .collect(Collectors.toList());
             }

@@ -24,6 +24,14 @@ table{
   margin-top: 10px;
 }
 
+.matBtn {
+  width: 100%;
+  margin-top: 40px;
+  background-color: green;
+  color: white;
+}
+
 .btn {
+  width: 100%;
   margin-top: 20px;
 }

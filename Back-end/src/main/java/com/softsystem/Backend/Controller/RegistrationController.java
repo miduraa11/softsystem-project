@@ -21,5 +21,4 @@ public class RegistrationController {
         return userService.emailExist(login);
     }
 
-
 }

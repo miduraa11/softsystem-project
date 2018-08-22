@@ -26,14 +26,14 @@ public class TypeService {
         return types;
     }
 
-    private boolean isSingle(Type type) {
+    private Boolean isSingle(Type type) {
 
-        return  type.isIndividual();
+        return  type.getIndividual();
     }
 
-    private boolean isMultiple(Type type) {
+    private Boolean isMultiple(Type type) {
 
-        return  !type.isIndividual();
+        return  !type.getIndividual();
     }
 
     public List<Type> findAll() {
