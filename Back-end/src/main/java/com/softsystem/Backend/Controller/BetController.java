@@ -40,15 +40,11 @@ public class BetController {
         this.chosenStatus = chosenStatus;
         this.currentUser = currentUser;
     }
-
-    @GetMapping("/prize")
-    public double calPrize(){//(@PathVariable(name="id")Long id){
-        long id = 5;
-        betService.calPrize(2);
-        betService.calPrize(3);
-        betService.calPrize(4);
-        betService.calPrize(6);
-        return betService.calPrize(id);
-    }
+//
+//    @GetMapping("/prize")
+//    public double calPrize(){//(@PathVariable(name="id")Long id){
+//
+//        return betService.calPrize(id);
+//    }
 
 }

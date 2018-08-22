@@ -83,7 +83,7 @@ public class BetService {
     }
 
 
-    public double[] sumPrize(long idEvent){
+    public double[] sumPrize(Long idEvent){
         double prize[] = new double[3];
         prize[0]=0.0;
         prize[1]=0.0;
@@ -95,7 +95,7 @@ public class BetService {
                 prize[0]= prize[0] + bet.getAmount();
                 if(bet.getBetResult()==true) {
                     prize[1]= prize[1] + bet.getAmount();
-                    if(bet.isGeneral()==false)
+                    if(bet.getGeneral()==false)
                         prize[2]= prize[2] + bet.getAmount();
                 }
             }
@@ -103,7 +103,7 @@ public class BetService {
         return prize;
     }
 
-    public double calPrize(long idEvent){
+    public double calPrize(Long idEvent){
         double bonusPrize;
         double withoutBonusPrize;
         double sumPrize[] = sumPrize(idEvent);
