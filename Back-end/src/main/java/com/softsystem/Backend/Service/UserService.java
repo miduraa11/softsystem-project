@@ -70,4 +70,21 @@ public class UserService {
 
     public String getUserRole(Long userId) { return userRepository.getRoleByUser(userId);
     }
+
+    public User getUserById(Long id){
+        User user = userRepository.findByIdUser(id);
+        user.setPassword("");
+        return user;
+    }
+
+    public Object changePassword(Long id, String currentPassword, String password){
+        User user = userRepository.getOne(id);
+        if (user.getPassword().equals(currentPassword)) {
+            user.setPassword(password);
+            userRepository.save(user);
+            return true;
+        }
+        else return false;
+    }
+
 }

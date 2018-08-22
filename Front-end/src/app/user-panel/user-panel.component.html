@@ -1,0 +1,63 @@
+<mat-accordion>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b><u>Moje dane</u></b>
+      </mat-panel-title>
+      <mat-panel-description>
+        Login: {{this.user.login}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+      <p><b>Imię:</b> {{this.user.firstName}}</p> 
+      <p><b>Nazwisko:</b> {{this.user.lastName}}</p> 
+      <p><b>E-mail:</b> {{this.user.email}}</p> 
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b><u>Zmiana hasła</u></b>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div style="width: 350px;">
+
+      <mat-form-field class="example-full-width" style="width: 350px">
+          <input matInput type="password" placeholder="Aktualne hasło" [formControl]="currentPasswordFormControl" [errorStateMatcher]="matcherCurrentPassword">
+          <mat-error *ngIf="currentPasswordFormControl.hasError('required')">
+              Podanie obecnego hasła jest <strong>wymagane</strong>!
+          </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field class="example-full-width" style="width: 350px">
+          <input matInput type="password" placeholder="Nowe hasło" [formControl]="passwordFormControl" [errorStateMatcher]="matcherPassword">
+          <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required') && !passwordFormControl.hasError('minlength')">
+            Hasło musi <strong>być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
+          </mat-error>
+          <mat-error *ngIf="passwordFormControl.hasError('required')">
+            Nowe hasło jest <strong>wymagane</strong>!
+          </mat-error>
+          <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+            Hasło musi zawierać <strong>minimum 8 znaków i być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
+          </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field class="example-full-width" style="width: 350px; padding-bottom: 20px">
+          <input matInput type="Password" placeholder="Powtórz nowe hasło" [formControl]="confirmPasswordFormControl" pattern="{{passwordFormControl.value}}" [errorStateMatcher]="matcherConfirmPassword">
+          <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
+            Podane hasła są <strong>różne</strong> !
+          </mat-error>
+          <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
+            Powtórzenie nowego hasła jest <strong>wymagane</strong>!
+          </mat-error>
+      </mat-form-field>
+
+      <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="save()">Zapisz zmiany</button></nav>
+    </div>
+
+
+
+
+  </mat-expansion-panel>
+
+</mat-accordion>
