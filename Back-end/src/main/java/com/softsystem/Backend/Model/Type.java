@@ -1,6 +1,9 @@
 package com.softsystem.Backend.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -21,10 +24,12 @@ public class Type {
 
     @OneToMany(mappedBy = "type")
     @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Member> members;
 
     @OneToMany(mappedBy = "type")
     @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Event> events;
 
     public Type(String discipline, Boolean individual, List<Member> members, List<Event> events) {
