@@ -35,7 +35,6 @@ public class LoginController {
     public Object getUserRole(@PathVariable Long userId) {
 
         String userRole = userService.getUserRole(userId);
-        System.out.println(userRole);
         return userRole;
     }
 

@@ -5,11 +5,10 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { EventsComponent } from './events/events.component';
+import { EventsComponent, BetTheBetGeneralDialog, BetTheBetDetailDialog, BetTheBetConfirmDialog } from './events/events.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
 import { BetsComponent } from './bets/bets.component';
-import { ResultsComponent } from './results/results.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal} from './admin-panel/edit-events/edit-events.component';
@@ -38,6 +37,7 @@ import { LoginComponent } from './login/login.component';
 import { LocalStorageService } from './services/localStorage';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HomeComponent } from './home/home.component';
+import { BetsService } from './services/bets.service';
 
 const routes: Routes = [
 ];
@@ -47,7 +47,6 @@ const routes: Routes = [
     AppComponent,
     EventsComponent,
     BetsComponent,
-    ResultsComponent,
     AdminPanelComponent,
     EditEventsComponent,
     EditTeamsComponent,
@@ -70,7 +69,10 @@ const routes: Routes = [
     RegistrationComponent,
     RemoveUserDialog,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    BetTheBetGeneralDialog,
+    BetTheBetDetailDialog,
+    BetTheBetConfirmDialog
   ],
   imports: [
     FormsModule,
@@ -107,10 +109,13 @@ const routes: Routes = [
     EditTeamsModalDelete,
     EditTeamsModalAdd,
     EditTeamsModalEdit,
+    RemoveUserDialog,
+    BetTheBetGeneralDialog,
+    BetTheBetDetailDialog,
+    BetTheBetConfirmDialog,
     EditDisciplineModalDelete,
     EditDisciplineModalAdd,
     EditDisciplineModalEdit,
-    RemoveUserDialog
   ],
   providers: [
     PlayerService,
@@ -120,6 +125,7 @@ const routes: Routes = [
     UserService,
     RegistrationService,
     LocalStorageService,
+    BetsService,
   ],
   bootstrap: [
     AppComponent
