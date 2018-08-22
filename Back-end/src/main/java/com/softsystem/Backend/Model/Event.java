@@ -1,11 +1,11 @@
 package com.softsystem.Backend.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
 
 @Entity
 @Table(name = "Event")
@@ -26,7 +26,7 @@ public class Event {
     private Date endDate;
 
     @Column(name = "active")
-    private boolean active;
+    private Boolean active;
 
     @Column(name = "winner")
     private String winner;
@@ -39,68 +39,71 @@ public class Event {
     private Type type;
 
     @OneToMany(mappedBy = "event")
+    @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Bet> bets;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "event_member", joinColumns = @JoinColumn(name = "id_event"), inverseJoinColumns = @JoinColumn(name = "id_member"))
-    private List <Member> members;
+    private List<Member> members;
 
-    public Event() {
-    }
-
-    public Event(Long id, String name, Date beginDate, Date endDate, boolean active, String winner, String score) {
-        this.id = id;
+    public Event(String name, Date beginDate, Date endDate, Boolean active, String winner, String score, Type type, List<Bet> bets, List<Member> members) {
         this.name = name;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.active = active;
         this.winner = winner;
         this.score = score;
+        this.type = type;
+        this.bets = bets;
+        this.members = members;
+    }
+
+    public Event() {
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Date getBeginDate() {
-        return beginDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public String getWinner() {
-        return winner;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public Date getBeginDate() {
+        return beginDate;
+    }
+
     public void setBeginDate(Date beginDate) {
         this.beginDate = beginDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
     }
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
-    public void setActive(boolean active) {
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public String getWinner() {
+        return winner;
     }
 
     public void setWinner(String winner) {
@@ -121,6 +124,14 @@ public class Event {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public List<Bet> getBets() {
+        return bets;
+    }
+
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
     }
 
     public List<Member> getMembers() {

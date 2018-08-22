@@ -89,12 +89,12 @@ public class AdminController {
     }
 
     @DeleteMapping("/edit-players/{id}")
-    public void deletePlayer(@PathVariable("id") long id) {
+    public void deletePlayer(@PathVariable("id") Long id) {
         memberService.deleteById(id);
     }
 
     @PostMapping(value= "/edit-players/edit/{id}/{name}/{discipline}")
-    public void updatePlayer(@PathVariable("id") long id, @PathVariable("name") String name, @PathVariable("discipline") String discipline) {
+    public void updatePlayer(@PathVariable("id") Long id, @PathVariable("name") String name, @PathVariable("discipline") String discipline) {
         memberService.updateMember(id, name, discipline);
     }
 
@@ -121,7 +121,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/edit-teams/{id}")
-    public void adminTeamDelete(@PathVariable(name="id")Long id) {
+    public void adminTeamDelete(@PathVariable(name="id") Long id) {
         memberService.deleteMember(id);
     }
 
@@ -131,7 +131,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "edit-teams/edit/{id}/{name}/{idType}")
-    public void editTeam(@PathVariable("id")long id, @PathVariable("name")String name, @PathVariable("idType") Long idType) {
+    public void editTeam(@PathVariable("id") Long id, @PathVariable("name")String name, @PathVariable("idType") Long idType) {
         memberService.editMember(name, id, idType);
     }
 
@@ -154,7 +154,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/edit-users/delete/{id}")
-    public void deleteUser(@PathVariable("id") long id) {
+    public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteById(id);
     }
 

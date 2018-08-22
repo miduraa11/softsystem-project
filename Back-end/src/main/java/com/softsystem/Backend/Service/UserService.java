@@ -6,7 +6,6 @@ import com.softsystem.Backend.Repository.RoleRepository;
 import com.softsystem.Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
@@ -22,11 +21,11 @@ public class UserService {
         return userRepository.findAllUsers();
     }
 
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 
-    public boolean authUser(String login, String password) {
+    public Boolean authUser(String login, String password) {
         User user;
         user = userRepository.getUserByLogin(login);
         if(user == null){
@@ -68,6 +67,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public String getUserRole(Long userId) { return userRepository.getRoleByUser(userId);
-    }
+    public String getUserRole(Long userId) { return userRepository.getRoleByUser(userId); }
+
 }

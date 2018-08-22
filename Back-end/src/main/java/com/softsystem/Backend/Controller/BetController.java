@@ -1,15 +1,10 @@
 package com.softsystem.Backend.Controller;
 
 import com.softsystem.Backend.Model.Bet;
-import com.softsystem.Backend.Model.Event;
 import com.softsystem.Backend.Service.BetService;
-import com.softsystem.Backend.Service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -24,12 +19,10 @@ public class BetController {
     private Long currentUser;
 
     @GetMapping(value = "/bets/{userId}")
-    public List<Bet> showAllBets(@PathVariable(name="userId")Long userId) {
+    public List<Bet> showAllBets(@PathVariable(name="userId") Long userId) {
 
         return betService.showAllBets(userId);
     }
-
-
 
     @GetMapping("/bets")
     public List<Bet> getActiveBets() {

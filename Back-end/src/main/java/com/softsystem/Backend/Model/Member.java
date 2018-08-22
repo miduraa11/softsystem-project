@@ -9,7 +9,7 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_member")
-    private long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
@@ -18,30 +18,35 @@ public class Member {
     @ManyToOne
     private Type type;
 
+    public Member(String name, Type type) {
+        this.name = name;
+        this.type = type;
+    }
+
     public Member() {
     }
 
-    public Member(String name) {
-        this.name = name;
+    public Long getId() {
+        return id;
     }
 
-    public long getId() {
-        return id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public Type getType() { return type; }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setType(Type type) { this.type = type; }
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 }
