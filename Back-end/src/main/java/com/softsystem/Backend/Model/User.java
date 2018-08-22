@@ -27,7 +27,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private List <Bet> bets;
 
     @ManyToMany(fetch = FetchType.LAZY)

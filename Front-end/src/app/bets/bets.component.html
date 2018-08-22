@@ -27,12 +27,11 @@
                   <b>{{bet.event.name}}</b>
               </mat-panel-title>
           </mat-expansion-panel-header>
-          <b>Status:</b> {{bet.event.active}}<br>
-          <b>Czy wygrałes?:</b> {{bet.betResult}}<br>
+          <b>Czy wygrałes?</b> {{bet.betResult}}<br>
           <b>Obstawiona drużyna lub zawodnik:</b> {{bet.member.name}} <br>
           <b>Dokładny wynik:</b> {{bet.result}}<br>
-          <b>Wkład:</b> {{bet.amount}} zł<br>
-          <b>Wygrana:</b> {{bet.prize}} zł<br>
+          <b>Wkład:</b> {{bet.amount | currency : "PLN "}}<br>
+          <b>Wygrana:</b> {{bet.prize | currency : "PLN "}}<br>
         </mat-expansion-panel>
       </mat-accordion>
     </td>
