@@ -14,7 +14,12 @@ public class BetController {
     BetService betService;
 
     @GetMapping("/prize")
-    public double getPrize(){
-        return betService.calPrize(1);
+    public double calPrize(){//(@PathVariable(name="id")Long id){
+        long id = 5;
+        betService.calPrize(2);
+        betService.calPrize(3);
+        betService.calPrize(4);
+        betService.calPrize(6);
+        return betService.calPrize(id);
     }
 }

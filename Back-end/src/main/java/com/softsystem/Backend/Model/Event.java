@@ -14,6 +14,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_event")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Long id;
 
     @Column(name = "name")
@@ -40,7 +41,7 @@ public class Event {
     private Type type;
 
     @OneToMany(mappedBy = "event")
-    //@OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Bet> bets;
 
     @ManyToMany(fetch = FetchType.LAZY)

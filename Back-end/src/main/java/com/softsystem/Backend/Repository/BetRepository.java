@@ -13,8 +13,11 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
     Bet[] allPrize(@Param("eventId")Long eventId);
 
     @Query("SELECT b FROM Bet b JOIN b.event e WHERE e.id = :eventId AND b.isGeneral = TRUE AND b.betResult = TRUE")
-    Bet[] allIsGeneral(@Param("eventId")Long eventId);
+    Bet[] getAllIsGeneral(@Param("eventId")Long eventId);
 
     @Query("SELECT b FROM Bet b JOIN b.event e WHERE e.id = :eventId AND b.isGeneral = FALSE AND b.betResult = TRUE")
-    Bet[] allIsNotGeneral(@Param("eventId")Long eventId);
+    Bet[] getAllIsNotGeneral(@Param("eventId")Long eventId);
+
+    @Query("SELECT b FROM Bet b JOIN b.event e WHERE e.id = :eventId")
+    Bet[] getAllByEvent(@Param("eventId")Long eventId);
 }
