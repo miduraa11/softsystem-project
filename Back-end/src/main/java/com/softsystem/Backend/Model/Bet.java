@@ -1,5 +1,8 @@
 package com.softsystem.Backend.Model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -32,6 +35,7 @@ public class Bet {
 
     @JoinColumn(name = "id_event")
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Event event;
 
     @JoinColumn(name = "id_user")

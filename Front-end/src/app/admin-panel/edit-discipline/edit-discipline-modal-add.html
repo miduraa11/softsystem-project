@@ -1,0 +1,15 @@
+<h2>Dodawanie nowej dyscypliny</h2>
+<form>
+    <div class="form-group">
+        <label for="disciplineName"><b>Nazwa dyscypliny</b></label>
+        <input type="tet" class="form-control"  placeholder="Wprowadź nazwę dyscypliny" [(ngModel)]="discipline.discipline" name="disciplineNaame">
+    </div>
+    <p><b>Rodzaj</b></p>
+    <div class="form-check form-check-inline">
+     <mat-checkbox name="individual" [(ngModel)]="discipline.individual">Indywidualna</mat-checkbox>
+    </div>
+    <div>
+    <button mat-button class="btn btn-success btn-md btn-space" style="width: 150px; float: left; margin: 6px"  (click)="addDiscipline()">Zapisz</button>
+    <button mat-button class="btn btn-danger btn-sm btn-space" (click)="onNoClick()" style="width: 150px; float:left; margin: 6px">Anuluj</button>
+    </div>
+</form>

@@ -143,6 +143,33 @@ public class AdminController {
     }
 
     /*------------------*/
+    /*----- Disciplines ------*/
+    /*------------------*/
+
+    @GetMapping("/edit-discipline")
+    public List<Type> getAllDiscipline() {
+        List<Type> disciplines = new ArrayList<>();
+        typeService.getAllDisciplines().forEach(disciplines::add);
+        return disciplines;
+    }
+
+    @DeleteMapping("/edit-discipline/{id}")
+    public void adminDisciplineDelete(@PathVariable(name="id")Long id) {
+        typeService.deleteDiscipline(id);
+    }
+
+    @PostMapping(value = "edit-discipline/add/{discipline}/{individual}")
+    public void addDiscipline(@PathVariable("discipline") String discipline, @PathVariable("individual") boolean individual) {
+        typeService.addDiscipline(discipline, individual);
+    }
+
+    @PostMapping(value = "edit-discipline/edit/{id}/{discipline}/{individual}")
+    public void editDiscipline(@PathVariable("id")long id, @PathVariable("discipline")String discipline, @PathVariable("individual") boolean individual) {
+        typeService.editDiscipline(discipline, id, individual);
+    }
+
+
+    /*------------------*/
     /*----- Users ------*/
     /*------------------*/
 

@@ -1,7 +1,6 @@
 package com.softsystem.Backend.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -77,4 +76,5 @@ public class Type {
     public void setEvents(List<Event> events) {
         this.events = events;
     }
+
 }
