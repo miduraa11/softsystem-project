@@ -1,5 +1,7 @@
 package com.softsystem.Backend.Model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,6 +12,7 @@ public class Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_type")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private long id;
 
     @Column(name = "discipline")
@@ -18,10 +21,12 @@ public class Type {
     @Column(name = "individual")
     private boolean individual;
 
-    @OneToMany(mappedBy = "type")
+    @OneToMany(mappedBy = "type" )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List <Member> members;
 
     @OneToMany(mappedBy = "type")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List <Event> events;
 
     public Type() {
