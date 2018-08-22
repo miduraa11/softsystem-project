@@ -82,28 +82,29 @@ public class BetService {
         else { return null; }
     }
 
+    public void resolveBets(Event event) {
+        int i;
+        Bet bets[] = betRepository.getAllByEvent(event.getId());
 
-    public double[] sumPrize(Long idEvent){
-        double prize[] = new double[3];
-        prize[0]=0.0;
-        prize[1]=0.0;
-        prize[2]=0.0;
-        if(!betRepository.findById(idEvent).equals(Optional.empty()))
-        {
-            Bet sum[] = betRepository.allPrize(idEvent);
-            for (Bet bet:sum) {
-                prize[0]= prize[0] + bet.getAmount();
-                if(bet.getBetResult()==true) {
-                    prize[1]= prize[1] + bet.getAmount();
-                    if(bet.getGeneral()==false)
-                        prize[2]= prize[2] + bet.getAmount();
+
+        if(bets.length != 0) {
+            for(i = 0; i < bets.length; i++) {
+                Bet currentBet = bets[i];
+                if(currentBet.getGeneral()) {
+                    if (currentBet.getMember().getName().equals(event.getWinner())) { currentBet.setBetResult(true); }
+                    else { currentBet.setBetResult(false); }
+                } else {
+                    if(currentBet.getMember().getName().equals(event.getWinner()) && currentBet.getResult().equals(event.getScore())) {currentBet.setBetResult(true); }
+                    else {currentBet.setBetResult(false); }
                 }
+                betRepository.save(currentBet);
             }
+            this.callPrizes(event.getId());
         }
-        return prize;
+
     }
 
-    public double calPrize(Long idEvent){
+    private void callPrizes(Long idEvent){
         double bonusPrize;
         double withoutBonusPrize;
         double sumPrize[] = sumPrize(idEvent);
@@ -149,6 +150,26 @@ public class BetService {
                 }
             }
         }
-        return sumPrize[0]-sumPrize[1];
     }
+
+    private double[] sumPrize(Long idEvent){
+        double prize[] = new double[3];
+        prize[0]=0.0;
+        prize[1]=0.0;
+        prize[2]=0.0;
+        if(betRepository.getAllByEvent(idEvent).length != 0)
+        {
+            Bet sum[] = betRepository.allPrize(idEvent);
+            for (Bet bet:sum) {
+                prize[0]= prize[0] + bet.getAmount();
+                if(bet.getBetResult()==true) {
+                    prize[1]= prize[1] + bet.getAmount();
+                    if(bet.getGeneral()==false)
+                        prize[2]= prize[2] + bet.getAmount();
+                }
+            }
+        }
+        return prize;
+    }
+
 }

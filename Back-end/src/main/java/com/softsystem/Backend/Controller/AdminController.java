@@ -5,10 +5,7 @@ import com.softsystem.Backend.Model.Event;
 import com.softsystem.Backend.Model.Member;
 import com.softsystem.Backend.Model.Type;
 import com.softsystem.Backend.Model.User;
-import com.softsystem.Backend.Service.EventService;
-import com.softsystem.Backend.Service.MemberService;
-import com.softsystem.Backend.Service.TypeService;
-import com.softsystem.Backend.Service.UserService;
+import com.softsystem.Backend.Service.*;
 import com.softsystem.Backend.DTO.EditEventsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +25,8 @@ public class AdminController {
     TypeService typeService;
     @Autowired
     UserService userService;
+    @Autowired
+    BetService betService;
 
     /*------------------*/
     /*----- Events -----*/
@@ -71,6 +70,11 @@ public class AdminController {
     public void updateEvent(@RequestBody EventDataDTO eventDataDTO) {
         eventService.updateEvent(eventDataDTO.getEvent(), eventDataDTO.getTypes().get(0), eventDataDTO.getMembers());
 
+        // Tu się zaczyna logika
+
+        if(!eventDataDTO.getEvent().getActive()) {
+            betService.resolveBets(eventDataDTO.getEvent());
+        }
     }
 
     @PostMapping(value= "/edit-events/add")
@@ -143,7 +147,7 @@ public class AdminController {
     }
 
     /*------------------*/
-    /*----- Disciplines ------*/
+    /*--- Disciplines --*/
     /*------------------*/
 
     @GetMapping("/edit-discipline")
@@ -167,7 +171,6 @@ public class AdminController {
     public void editDiscipline(@PathVariable("id")long id, @PathVariable("discipline")String discipline, @PathVariable("individual") boolean individual) {
         typeService.editDiscipline(discipline, id, individual);
     }
-
 
     /*------------------*/
     /*----- Users ------*/
