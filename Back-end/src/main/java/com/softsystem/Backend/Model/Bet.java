@@ -8,25 +8,26 @@ import javax.persistence.*;
 @Entity
 @Table(name = "Bet")
 public class Bet {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_bet")
-    private long id;
+    private Long id;
 
     @Column(name = "amount")
-    private Float amount;
+    private float amount;
 
     @Column(name = "betResult")
     private Boolean betResult;
 
     @Column(name = "prize")
-    private Float prize;
+    private float prize;
 
     @Column(name = "result")
     private String result;
 
     @Column(name = "is_general")
-    private boolean isGeneral;
+    private Boolean isGeneral;
 
     @JoinColumn(name = "id_member")
     @ManyToOne
@@ -41,30 +42,33 @@ public class Bet {
     @ManyToOne
     private User user;
 
-
-    public Bet() {
-    }
-
-    public Bet(Float amount, Boolean betResult, Float prize, String result) {
+    public Bet(float amount, Boolean betResult, float prize, String result, Boolean isGeneral, Member member, Event event, User user) {
         this.amount = amount;
         this.betResult = betResult;
         this.prize = prize;
         this.result = result;
+        this.isGeneral = isGeneral;
+        this.member = member;
+        this.event = event;
+        this.user = user;
     }
 
-    public long getId() {
+    public Bet() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Float getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(Float amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
@@ -76,11 +80,11 @@ public class Bet {
         this.betResult = betResult;
     }
 
-    public Float getPrize() {
+    public float getPrize() {
         return prize;
     }
 
-    public void setPrize(Float prize) {
+    public void setPrize(float prize) {
         this.prize = prize;
     }
 
@@ -90,6 +94,14 @@ public class Bet {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public Boolean getGeneral() {
+        return isGeneral;
+    }
+
+    public void setGeneral(Boolean general) {
+        isGeneral = general;
     }
 
     public Member getMember() {
@@ -116,11 +128,4 @@ public class Bet {
         this.user = user;
     }
 
-    public boolean isGeneral() {
-        return isGeneral;
-    }
-
-    public void setGeneral(boolean general) {
-        isGeneral = general;
-    }
 }

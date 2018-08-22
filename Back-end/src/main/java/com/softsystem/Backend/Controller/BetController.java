@@ -21,12 +21,10 @@ public class BetController {
     private Long currentUser;
 
     @GetMapping(value = "/bets/{userId}")
-    public List<Bet> showAllBets(@PathVariable(name="userId")Long userId) {
+    public List<Bet> showAllBets(@PathVariable(name="userId") Long userId) {
 
         return betService.showAllBets(userId);
     }
-
-
 
     @GetMapping("/bets")
     public List<Bet> getActiveBets() {

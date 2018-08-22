@@ -1,7 +1,6 @@
 package com.softsystem.Backend.Model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,51 +11,70 @@ public class Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_type")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private long id;
+    private Long id;
 
     @Column(name = "discipline")
     private String discipline;
 
     @Column(name = "individual")
-    private boolean individual;
-
-    @OneToMany(mappedBy = "type" )
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List <Member> members;
+    private Boolean individual;
 
     @OneToMany(mappedBy = "type")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List <Event> events;
+    @JsonIgnore
+    private List<Member> members;
 
-    public Type() {
+    @OneToMany(mappedBy = "type")
+    @JsonIgnore
+    private List<Event> events;
+
+    public Type(String discipline, Boolean individual, List<Member> members, List<Event> events) {
+        this.discipline = discipline;
+        this.individual = individual;
+        this.members = members;
+        this.events = events;
     }
 
-    public Type(String discipline) {
-        this.discipline = discipline;
+    public Type() {
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getDiscipline() {
-        return discipline;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDiscipline() {
+        return discipline;
     }
 
     public void setDiscipline(String discipline) {
         this.discipline = discipline;
     }
 
-    public boolean isIndividual() {
+    public Boolean getIndividual() {
         return individual;
     }
 
-    public void setIndividual(boolean individual) {
+    public void setIndividual(Boolean individual) {
         this.individual = individual;
     }
+
+    public List<Member> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Member> members) {
+        this.members = members;
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
 }

@@ -1,18 +1,17 @@
 package com.softsystem.Backend.DTO;
 
 import com.softsystem.Backend.Model.Event;
-import com.softsystem.Backend.Model.Member;
 
 public class BetDTO {
 
-    private long currentUser;
+    private Long currentUser;
     private Event event;
     private float amount;
-    private long chosenMember;
+    private Long chosenMember;
     private String result;
     private int betType;
 
-    public BetDTO(long currentUser, Event event, float amount, long chosenMember, String result, int betType) {
+    public BetDTO(Long currentUser, Event event, float amount, Long chosenMember, String result, int betType) {
         this.currentUser = currentUser;
         this.event = event;
         this.amount = amount;
@@ -24,11 +23,11 @@ public class BetDTO {
     public BetDTO() {
     }
 
-    public long getCurrentUser() {
+    public Long getCurrentUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(long currentUser) {
+    public void setCurrentUser(Long currentUser) {
         this.currentUser = currentUser;
     }
 
@@ -48,11 +47,11 @@ public class BetDTO {
         this.amount = amount;
     }
 
-    public long getChosenMember() {
+    public Long getChosenMember() {
         return chosenMember;
     }
 
-    public void setChosenMember(long chosenMember) {
+    public void setChosenMember(Long chosenMember) {
         this.chosenMember = chosenMember;
     }
 

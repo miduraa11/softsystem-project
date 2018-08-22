@@ -24,7 +24,7 @@ public class BetService {
     @Autowired
     private MemberRepository memberRepository;
 
-    public void addBet(long currentUser, Event event, float amount, long chosenMember, String result, int betType) {
+    public void addBet(Long currentUser, Event event, float amount, Long chosenMember, String result, int betType) {
         if(betType == 0) {
             Bet newBet = new Bet();
             newBet.setUser(userRepository.getOne(currentUser));
@@ -79,7 +79,7 @@ public class BetService {
     private Boolean isActive(String chosenStatus) {
         if(chosenStatus.equals("Wygrane")) { return true; }
         else if (chosenStatus.equals("Przegrane")){ return false; }
-        else { return null;}
+        else { return null; }
     }
 
 
