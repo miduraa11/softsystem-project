@@ -23,6 +23,12 @@ export interface DialogDataEdit {
   result: String;
 }
 
+export interface UserList {
+  userFirstName: string;
+  userLastName: string;
+  userPrize: number;
+}
+
 export interface DialogDataCreate {
   event: Event;
 }
@@ -36,6 +42,7 @@ export interface DialogDataCreate {
 
 export class EditEventsComponent implements OnInit {
   
+  eventIsFinished: boolean;
   events: Event[];
 
   constructor(private eventService: EventService, public dialog: MatDialog) {
@@ -46,6 +53,15 @@ export class EditEventsComponent implements OnInit {
     this.eventService.getAllEvents().subscribe(data => {
       this.events = data;
     });
+  }
+
+  eventStatus(winner: string){
+    if(winner!=null){
+      this.eventIsFinished = true;
+    } else {
+      this.eventIsFinished = false;
+    }
+    return this.eventIsFinished;
   }
 
   openDeleteDialog(id: number): void {
@@ -84,6 +100,13 @@ export class EditEventsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+    });
+  }
+
+  openUserListDialog(id: number){
+    const dialogRef = this.dialog.open(UserListModal, {
+      width: '500px',
+      data: {id: id}
     });
   }
 
@@ -237,6 +260,7 @@ export class CreateEventModal {
       this.event.endDate = this.endDateFormControl.value;
       this.selectedType = this.selectedDisciplineFormControl.value;
       this.selectedMembers = this.selectedMembersFormControl.value;
+      this.event.active = true;
       this.eventService.addEvent(this.event, this.selectedType, this.selectedMembers)
         .subscribe(
           data => {
@@ -249,6 +273,35 @@ export class CreateEventModal {
     }
     
   }
+
+}
+
+@Component({
+  selector: 'user-list-modal',
+  templateUrl: './user-list-modal.html',
+  styleUrls: ['./edit-events.component.css']
+})
+export class UserListModal {
+
+userList: UserList[];
+displayedColumns: string[] = ['userFirstName', 'userLastName', 'userPrize'];
+
+
+constructor(private eventService: EventService,
+    public dialogRef: MatDialogRef<UserListModal>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+ngOnInit(){
+   this.eventService.getUserList(this.data.id).subscribe(data => {
+    this.userList = data;
+    console.log(this.userList);
+   });
+}
+
+onCancelClick(): void {   
+    this.dialogRef.close();
+}
+
 
 }
 

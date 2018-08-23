@@ -38,6 +38,7 @@
         <b>Wydarzenie jest aktywne: </b>{{event.active}}<br>
         <b>Zwycięzca: </b>{{event.winner}}<br>
         <b>Wynik: </b>{{event.score}}<br>
+        <button type="button" class="btn btn-info btn-sm" *ngIf="eventStatus(event.winner)" (click)="openUserListDialog(event.id)">Lista zwycięzców</button>
       </mat-expansion-panel>
     </mat-accordion>
   </td>

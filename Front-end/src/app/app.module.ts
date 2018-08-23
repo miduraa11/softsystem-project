@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BetsComponent } from './bets/bets.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AlertModule } from 'ngx-bootstrap';
-import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal} from './admin-panel/edit-events/edit-events.component';
+import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal, UserListModal} from './admin-panel/edit-events/edit-events.component';
 import { EditTeamsComponent, EditTeamsModalDelete, EditTeamsModalAdd, EditTeamsModalEdit } from './admin-panel/edit-teams/edit-teams.component';
 import { EditDisciplineComponent, EditDisciplineModalDelete, EditDisciplineModalAdd, EditDisciplineModalEdit } from './admin-panel/edit-discipline/edit-discipline.component';
 import { EditPlayersComponent, RemovePlayerDialog, PlayerEditDialog, AddPlayerDialog} from './admin-panel/edit-players/edit-players.component';
@@ -26,7 +26,7 @@ import { TeamService } from './services/team.service';
 import { DisciplineService } from './services/discipline.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatNativeDateModule} from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatRippleModule, MatNativeDateModule, MatTableModule} from '@angular/material';
 import { MatSelectModule} from '@angular/material/select';
 import { MatIconModule} from '@angular/material/icon';
 import { MatCheckboxModule} from '@angular/material/checkbox';
@@ -73,6 +73,7 @@ const routes: Routes = [
     BetTheBetGeneralDialog,
     BetTheBetDetailDialog,
     BetTheBetConfirmDialog,
+    UserListModal,
   ],
   imports: [
     FormsModule,
@@ -98,7 +99,8 @@ const routes: Routes = [
     MatCheckboxModule,
     MatSnackBarModule,
     BrowserAnimationsModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTableModule
   ],
   entryComponents: [
     DeleteEventModal,
@@ -117,6 +119,7 @@ const routes: Routes = [
     EditDisciplineModalDelete,
     EditDisciplineModalAdd,
     EditDisciplineModalEdit,
+    UserListModal,
   ],
   providers: [
     PlayerService,

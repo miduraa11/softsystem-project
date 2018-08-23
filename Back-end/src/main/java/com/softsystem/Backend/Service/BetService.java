@@ -151,4 +151,7 @@ public class BetService {
         }
         return sumPrize[0]-sumPrize[1];
     }
+
+    public Bet[] getAllBetsByEventId(Long eventId) { return betRepository.getAllByEvent(eventId);
+    }
 }

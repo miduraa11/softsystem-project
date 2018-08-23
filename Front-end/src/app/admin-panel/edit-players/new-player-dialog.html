@@ -1,21 +1,27 @@
 <h1 mat-dialog-title>Podaj dane nowego zawodnika</h1>
-<div mat-dialog-content>
-    <section>
-        <label class="validation-message">Id</label>
-        <input style="width: 350px" class="form-control" type="text" placeholder="Id generowane automatycznie ..." readonly>
-        <div class="form-group">
-            <label class="validation-message">Imie i Nazwisko*</label>
-            <input style="width: 350px" [(ngModel)]="data.name" type="text" class="form-control" placeholder="Podaj imie i nazwisko ..."/>
-        </div>
-        <label style="width: 350px">Dyscyplina*</label>
-        <select class="form-control" [(ngModel)]="data.discipline">
-            <option selected hidden>Wybierz dyscyplinę ...</option>
-            <option *ngFor="let type of types">{{type.discipline}}</option>
-        </select>
-    </section>
-</div>
-<div>* - pola wymagane</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onAnulujClick()">Anuluj</button>
-  <button mat-flat-button color='primary' (click)="onAddClick(data)">Dodaj</button>
-</div>
+
+<form>
+    <div class="form-group">
+        <mat-form-field class="example-full-width" style="width: 100%">            
+            <input matInput [formControl]="playerNameFormControl" [errorStateMatcher]="matcherPlayerName" style="width: 100%" placeholder="Podaj imię i nazwisko zawodnika"/>
+            <mat-error *ngIf="playerNameFormControl.hasError('required')">
+                Imię i nazwisko jest <strong>wymagane</strong>!
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="form-group">
+        <mat-form-field class="example-full-width" style="width: 100%"> 
+            <mat-select [formControl]="disciplineFormControl" [errorStateMatcher]="matcherDiscipline" style="width: 100%" placeholder="Wybierz dyscypline">
+                <mat-option *ngFor="let type of types" [value]="type.discipline" >{{type.discipline}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="disciplineFormControl.hasError('required')">
+                Dyscyplina jest <strong>wymagana</strong>!
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+</form>
+
+  <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="onAddClick(data)">Dodaj</button>
+  <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onAnulujClick()">Anuluj</button>

@@ -3,6 +3,6 @@
   <p>Czy na pewno chcesz usunąć wybranego użytkownika?<br> Operacji tej nie można cofnąć!</p>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onAnulujClick()">Anuluj</button>
-  <button mat-flat-button color='warn' (click)="onDeleteClick()">Usuń</button>
+  <button type="button" class="btn btn-danger btn-lg btn-block btn-sm" (click)="onDeleteClick()">Usuń</button>
+  <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onAnulujClick()">Anuluj</button>
 </div>
