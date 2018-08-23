@@ -43,8 +43,9 @@ import { UserPanelService } from './services/user-panel.service';
 import { FusionChartsModule } from 'angular-fusioncharts';
 import FusionCharts from 'fusioncharts/core';
 import AngularGauge from 'fusioncharts/viz/angulargauge';
+import MsLine from 'fusioncharts/viz/msline';
 
-FusionChartsModule.fcRoot(FusionCharts, AngularGauge);
+FusionChartsModule.fcRoot(FusionCharts, AngularGauge, MsLine);
 
 const routes: Routes = [
 ];

@@ -47,7 +47,10 @@ export class UserPanelComponent implements OnInit {
   password: any;
   account: number[]= [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
   chance: number=0.0;
-  dataSource: Object;
+  dataSourceGraph: Object;
+  dataSourceHistory: Object;
+  panelOpenGraph: boolean = false;
+  panelOpenHistory: boolean = false;
 
 
   constructor(private userPanelService: UserPanelService, private logout: AppComponent, private router: Router) { 
@@ -64,7 +67,7 @@ export class UserPanelComponent implements OnInit {
           this.chance = (this.account[4]/(this.account[4]+this.account[5]))*100;
         else
           this.chance = 50.0;
-          this.dataSource = {
+          this.dataSourceGraph = {
             "chart": {
               "caption": "Szanse wygranej w kolejnym zakładzie",
               "lowerlimit": "0",
@@ -118,6 +121,111 @@ export class UserPanelComponent implements OnInit {
           alert("Podałeś błędne dane!");
         }
       });
+  }
+
+  getHistory(){
+    this.userPanelService.getAccount(this.currentUser).subscribe(data => {
+
+      this.dataSourceHistory = {
+        "chart": {
+          "caption": "Twoja oś czasu",
+          "yaxisname": "",
+          "subcaption": "2018",
+          "showhovereffect": "1",
+          "numbersuffix": "PLN",
+          "drawcrossline": "1",
+          "plottooltext": "<b>$dataValue</b> of youth were on $seriesName",
+          "theme": "fusion"
+        },
+        "categories": [
+          {
+            "category": [{"label": "I"},{"label": "II"},{"label": "III"},{"label": "IV"},{"label": "V"},{"label": "VI"},{"label": "VII"},{"label": "VIII"},{"label": "IX"},{"label": "X"},{"label": "XI"},{"label": "XII"},]
+          }
+        ],
+        "dataset": [
+          {
+            "seriesname": "Zysk",
+            "data": [
+              {
+                "value": "62"
+              },
+              {
+                "value": "64"
+              },
+              {
+                "value": "64"
+              },
+              {
+                "value": "66"
+              },
+              {
+                "value": "78"
+              }
+            ]
+          },
+          {
+            "seriesname": "Strata",
+            "data": [
+              {
+                "value": "16"
+              },
+              {
+                "value": "-28"
+              },
+              {
+                "value": "34"
+              },
+              {
+                "value": "42"
+              },
+              {
+                "value": "54"
+              }
+            ]
+          },
+          {
+            "seriesname": "Saldo",
+            "data": [
+              {
+                "value": "20"
+              },
+              {
+                "value": "22"
+              },
+              {
+                "value": "27"
+              },
+              {
+                "value": "22"
+              },
+              {
+                "value": "29"
+              }
+            ]
+          },
+          {
+            "seriesname": "Twitter",
+            "data": [
+              {
+                "value": "18"
+              },
+              {
+                "value": "19"
+              },
+              {
+                "value": "21"
+              },
+              {
+                "value": "21"
+              },
+              {
+                "value": "24"
+              }
+            ]
+          }
+        ]
+    }
+    });
   }
 
 }
