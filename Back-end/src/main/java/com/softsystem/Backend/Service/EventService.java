@@ -105,13 +105,11 @@ public class EventService {
     public void checkEventsActivity() {
         List<Event> eventList;
         Date sysDate = new Date();
-        eventList = eventRepository.findAll()
-                .stream()
-                .filter(x -> x.getEndDate().before(sysDate))
-                .collect(Collectors.toList());
+        eventList = eventRepository.findAll();
         eventList.forEach(
                 x -> {
-                    x.setActive(false);
+                    if(x.getEndDate().before(sysDate)) { x.setActive(false); }
+                    if(x.getEndDate().after(sysDate)) { x.setActive(true); }
                     eventRepository.save(x);
                 }
 

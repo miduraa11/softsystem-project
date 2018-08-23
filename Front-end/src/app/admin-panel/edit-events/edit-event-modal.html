@@ -42,7 +42,8 @@
     </mat-error>
   </mat-form-field>
 
-  <button type="button" class="btn btn-warning btn-lg btn-block btn-sm" (click)="editEvent(0); resolveEventModal(event)">Zakończ wydarzenie i rozstrzygnij zakłady</button>
+  <button *ngIf=!event.active type="button" class="btn btn-warning btn-lg btn-block btn-sm" (click)="editEvent(0); resolveEventModal(event)">Zakończ wydarzenie i rozstrzygnij zakłady</button>
+  <button *ngIf=event.active disabled type="button" class="btn btn-warning btn-lg btn-block btn-sm" (click)="editEvent(0); resolveEventModal(event)">Zakończ wydarzenie i rozstrzygnij zakłady</button>
   <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="editEvent(1)">Zapisz zmiany</button>
   <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onCancelClick()">Anuluj</button>
 </form>
