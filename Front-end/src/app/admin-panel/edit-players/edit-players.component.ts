@@ -3,6 +3,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Member } from '../../model/member';
 import { PlayerService } from '../../services/player.service';
 import { TypeService } from '../../services/type.service';
+import { Validators, FormControl } from '../../../../node_modules/@angular/forms';
+import { MyErrorStateMatcher } from '../../registration/registration.component';
 
 export interface DialogData {
   id: number;
@@ -34,7 +36,7 @@ export class EditPlayersComponent implements OnInit {
 
   openDeleteDialog(id: number): void {
     const dialogRef = this.dialog.open(RemovePlayerDialog, {
-      width: '400px',
+      width: '450px',
       data: { id: id }
     });
 
@@ -45,7 +47,7 @@ export class EditPlayersComponent implements OnInit {
 
   openEditDialog(id: number, name: String, discipline: String): void {
     const dialogRef = this.dialog.open(PlayerEditDialog, {
-      width: '400px',
+      width: '450px',
       data: { id: id, name: name, discipline: discipline }
     });
 
@@ -56,7 +58,7 @@ export class EditPlayersComponent implements OnInit {
 
   openAddDialog(): void {
     const dialogRef = this.dialog.open(AddPlayerDialog, {
-      width: '400px',
+      width: '450px',
       data: {id: null, name: null, discipline: null}
     });
 
@@ -101,6 +103,18 @@ export class PlayerEditDialog implements OnInit {
 
   types: Array<any>;
 
+    //teamName
+    playerNameFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherTeamName = new MyErrorStateMatcher();
+
+     //discipline
+     disciplineFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherDiscipline = new MyErrorStateMatcher(); 
+
   constructor( private typeService: TypeService,
     private playerService: PlayerService, public dialogRef: MatDialogRef<PlayerEditDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData2) {
   }
@@ -112,14 +126,22 @@ export class PlayerEditDialog implements OnInit {
   ngOnInit() {
     this.typeService.getTypes().subscribe(data =>{
       this.types = data;
+      this.playerNameFormControl.setValue(this.data.name);
+      this.disciplineFormControl.setValue(this.data.discipline)
     });
   }
 
   onSaveClick(data: DialogData2): void {
+    if(this.playerNameFormControl.errors==null
+      && this.disciplineFormControl.errors==null) {
+      data.name = this.playerNameFormControl.value;
+      data.discipline = this.disciplineFormControl.value;
     this.playerService.updatePlayer(data.id, data.name, data.discipline).subscribe(
       data => { console.log("Success"); this.dialogRef.close(); window.location.reload(); },
-      error => console.log(error)      
-    );
+      error => console.log(error));
+    } else {
+      alert("Błędnie wprowadzone dane!");
+    }
   }
 
 }
@@ -132,6 +154,19 @@ export class AddPlayerDialog implements OnInit {
 
   types: Array<any>;
 
+    //teamName
+    playerNameFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherTeamName = new MyErrorStateMatcher();
+
+     //discipline
+     disciplineFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherDiscipline = new MyErrorStateMatcher(); 
+    
+    
   constructor( private typeService: TypeService,
       private playerService: PlayerService,
       public dialogRef: MatDialogRef<AddPlayerDialog>,
@@ -149,10 +184,16 @@ export class AddPlayerDialog implements OnInit {
   }
 
   onAddClick(data: DialogData2): void {
-    this.playerService.addPlayer(data.name, data.discipline).subscribe(
+    if(this.playerNameFormControl.errors==null
+      && this.disciplineFormControl.errors==null) {
+      this.data.name = this.playerNameFormControl.value;
+      this.data.discipline = this.disciplineFormControl.value;
+      this.playerService.addPlayer(data.name, data.discipline).subscribe(
       data => { console.log("Success"); this.dialogRef.close(); window.location.reload(); },
-      error => console.log(error)      
-    );
+      error => console.log(error));
+    } else {
+      alert("Błędnie wprowadzone dane!");
+    }
   }
 
 }

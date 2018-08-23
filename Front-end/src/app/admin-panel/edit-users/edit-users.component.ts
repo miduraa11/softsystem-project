@@ -27,7 +27,7 @@ export class EditUsersComponent implements OnInit {
 
   openDeleteDialog(id: number): void {
     const dialogRef = this.dialog.open(RemoveUserDialog, {
-      width: '400px',
+      width: '450px',
       data: { id: id }
     });
 

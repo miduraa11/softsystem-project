@@ -41,4 +41,5 @@ public class BetController {
         this.currentUser = currentUser;
     }
 
+
 }

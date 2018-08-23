@@ -2,6 +2,8 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 import { DisciplineService } from '../../services/discipline.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Type } from '../../model/type';
+import { FormControl, Validators } from '../../../../node_modules/@angular/forms';
+import { MyErrorStateMatcher } from '../../registration/registration.component';
 
 export interface DialogData {
   id: number;
@@ -30,7 +32,7 @@ export class EditDisciplineComponent implements OnInit {
 
   openDialogDelete(id: number): void {
       const dialogRef = this.dialog.open(EditDisciplineModalDelete, {
-        width: '400px',
+        width: '450px',
         data: {id}
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -40,8 +42,7 @@ export class EditDisciplineComponent implements OnInit {
 
   openDialogAdd(): void{
     const dialogRef = this.dialog.open(EditDisciplineModalAdd, {
-      width: '550px',
-      height: '350px',
+      width: '450px',
       data: {}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -51,8 +52,7 @@ export class EditDisciplineComponent implements OnInit {
 
   openDialogEdit(id: number, discipline: string, individual: boolean): void{
     const dialogRef = this.dialog.open(EditDisciplineModalEdit, {
-      width: '550px',
-      height: '350px',
+      width: '450px',
       data: {discipline, id, individual}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -102,6 +102,12 @@ export class EditDisciplineModalAdd {
 
   discipline: Type = { id : 0, discipline : "", individual: false};
 
+    //discipline
+    disciplineFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherDiscipline = new MyErrorStateMatcher();
+
   constructor(private disciplineService: DisciplineService,
     public dialogRef: MatDialogRef<EditDisciplineModalAdd>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
@@ -114,8 +120,8 @@ export class EditDisciplineModalAdd {
   }
   
   addDiscipline() {
-    //this.discipline.discipline= this.data.discipline; 
-    //this.discipline.individual = this.data.individual; 
+    if(this.disciplineFormControl.errors==null) {
+    this.discipline.discipline = this.disciplineFormControl.value;
     this.disciplineService.addDiscipline(this.discipline)
       .subscribe(
         data => {
@@ -123,7 +129,7 @@ export class EditDisciplineModalAdd {
           window.location.reload();
         },
         error => console.log(error));
-      
+      }
   }
 }
 
@@ -138,11 +144,19 @@ export class EditDisciplineModalEdit {
 
   discipline: Type = { id : 0, discipline : "", individual: null};
 
+    //discipline
+    disciplineFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherDiscipline = new MyErrorStateMatcher();
+
   constructor(private disciplineService: DisciplineService,
     public dialogRef: MatDialogRef<EditDisciplineModalEdit>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   ngOnInit() {
+    this.disciplineFormControl.setValue(this.data.discipline);
+    this.discipline.individual = this.data.individual;
   }
 
   onNoClick(): void {
@@ -150,7 +164,8 @@ export class EditDisciplineModalEdit {
   }
   
   editDiscipline() {
-    this.discipline.discipline = this.data.discipline;
+    if(this.disciplineFormControl.errors==null) {
+    this.discipline.discipline = this.disciplineFormControl.value;
     this.discipline.id = this.data.id; 
     this.discipline.individual = this.data.individual;
     this.disciplineService.editDiscipline(this.discipline)
@@ -159,6 +174,7 @@ export class EditDisciplineModalEdit {
           this.dialogRef.close();
           window.location.reload();
         },
-        error => console.log(error));      
+        error => console.log(error));     
+      } 
   }
 }

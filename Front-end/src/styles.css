@@ -2,7 +2,10 @@
 
 html, body { height: 100%; }
 body { 
+    color: white;
     margin: 0; 
     font-family: 'Roboto', sans-serif;
     background-image: url("assets/img/background.jpg");
+    background-repeat: round;
+    background-attachment: fixed;
 }

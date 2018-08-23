@@ -1,5 +1,6 @@
 package com.softsystem.Backend.Service;
 
+import com.softsystem.Backend.DTO.UserListDTO;
 import com.softsystem.Backend.Model.Role;
 import com.softsystem.Backend.Model.User;
 import com.softsystem.Backend.Repository.RoleRepository;

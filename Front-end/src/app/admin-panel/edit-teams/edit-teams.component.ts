@@ -3,6 +3,8 @@ import { TeamService } from '../../services/team.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Team } from '../../model/team';
 import { Type } from '../../model/type';
+import { Validators, FormControl } from '../../../../node_modules/@angular/forms';
+import { MyErrorStateMatcher } from '../edit-events/edit-events.component';
 
 export interface DialogData {
   id: number;
@@ -36,7 +38,7 @@ export class EditTeamsComponent implements OnInit {
 
   openDialogDelete(id: number): void {
       const dialogRef = this.dialog.open(EditTeamsModalDelete, {
-        width: '400px',
+        width: '450px',
         data: {id}
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -46,8 +48,7 @@ export class EditTeamsComponent implements OnInit {
 
   openDialogAdd(): void{
     const dialogRef = this.dialog.open(EditTeamsModalAdd, {
-      width: '550px',
-      height: '350px',
+      width: '450px',
       data: {name, types: this.types}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -57,8 +58,7 @@ export class EditTeamsComponent implements OnInit {
 
   openDialogEdit(id: number, name: string, type: Type): void{
     const dialogRef = this.dialog.open(EditTeamsModalEdit, {
-      width: '550px',
-      height: '350px',
+      width: '450px',
       data: {name, id, type}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -116,6 +116,18 @@ export class EditTeamsModalAdd {
   team: Team = { id : 0, name : "", type: null};
   types: Array<Type>;
   
+    //teamName
+    teamNameFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherTeamName = new MyErrorStateMatcher();
+
+     //discipline
+     disciplineFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherDiscipline = new MyErrorStateMatcher();   
+
 
   constructor(private teamService: TeamService,
     public dialogRef: MatDialogRef<EditTeamsModalAdd>,
@@ -129,8 +141,10 @@ export class EditTeamsModalAdd {
   }
   
   addTeam() {
-    this.team.name= this.data.name; 
-    this.team.type = this.types.find(x => x.id == this.choosenTypeId); 
+    if(this.teamNameFormControl.errors==null
+    && this.disciplineFormControl.errors==null) {
+    this.team.name= this.teamNameFormControl.value; 
+    this.team.type = this.types.find(x => x.id == this.disciplineFormControl.value); 
     this.teamService.addTeam(this.team)
       .subscribe(
         data => {
@@ -138,7 +152,9 @@ export class EditTeamsModalAdd {
           window.location.reload();
         },
         error => console.log(error));
-      
+      } else {
+        alert("Błędnie wprowadzone dane!");
+      }
   }
 }
 
@@ -154,6 +170,18 @@ export class EditTeamsModalEdit {
   types: Array<Type>;
   team: Team = { id : 0, name : "", type: null};
 
+    //teamName
+    teamNameFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherTeamName = new MyErrorStateMatcher();
+
+     //discipline
+     disciplineFormControl = new FormControl('', [
+      Validators.required,
+    ]);
+    matcherDiscipline = new MyErrorStateMatcher();  
+
   constructor(private teamService: TeamService,
     public dialogRef: MatDialogRef<EditTeamsModalEdit>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
@@ -161,6 +189,8 @@ export class EditTeamsModalEdit {
   ngOnInit() {
     this.teamService.getAllType().subscribe(data =>{this.types = data});
     this.choosenTypeId = this.data.type.id;
+    this.teamNameFormControl.setValue(this.data.name);
+    this.disciplineFormControl.setValue(this.data.type.id)
   }
 
   onNoClick(): void {
@@ -168,15 +198,18 @@ export class EditTeamsModalEdit {
   }
   
   editTeam() {
-    this.team.name = this.data.name;
+    if(this.teamNameFormControl.errors==null
+    && this.disciplineFormControl.errors==null) {
+    this.team.name= this.teamNameFormControl.value; 
+    this.team.type = this.types.find(x => x.id == this.disciplineFormControl.value);
     this.team.id = this.data.id; 
-    this.team.type = this.types.find(x => x.id == this.choosenTypeId);
     this.teamService.editTeam(this.team)
       .subscribe(
         data => {
           this.dialogRef.close();
           window.location.reload();
         },
-        error => console.log(error));      
+        error => console.log(error));
+      }      
   }
 }

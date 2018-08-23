@@ -1,13 +1,14 @@
 package com.softsystem.Backend.Service;
 
-import com.softsystem.Backend.Model.Event;
-import com.softsystem.Backend.Model.Member;
-import com.softsystem.Backend.Model.Type;
+import com.softsystem.Backend.DTO.UserListDTO;
+import com.softsystem.Backend.Model.*;
 import com.softsystem.Backend.Repository.EventRepository;
 import com.softsystem.Backend.Repository.TypeRepository;
+import com.softsystem.Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,8 @@ public class EventService {
     private EventRepository eventRepository;
     @Autowired
     private TypeRepository typeRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Event> findAll() {
 
@@ -116,4 +119,25 @@ public class EventService {
         );
     }
 
+    public List<UserListDTO> getAllWinners(List<Bet> bet) {
+        List listOfWinners = new ArrayList();
+        List<Bet> betList;
+
+        betList = bet
+                .stream()
+                .filter(x -> x.getBetResult() == true)
+                .collect(Collectors.toList());
+
+        int betListSize = betList.size();
+
+        for (int i = 0; i < betListSize; ++i){
+            User currentUser;
+            float prize;
+            currentUser = betList.get(i).getUser();
+            prize = betList.get(i).getPrize();
+            UserListDTO currentDTO = new UserListDTO(currentUser.getFirstName(), currentUser.getLastName(), prize);
+            listOfWinners.add(currentDTO);
+        }
+        return listOfWinners;
+    }
 }
