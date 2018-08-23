@@ -24,6 +24,7 @@
         <mat-form-field class="example-full-width" style="width: 400px">            
             <mat-select matSelect [formControl]="memberFormControl" [errorStateMatcher]="matcherMember" style="width: 400px" placeholder="Wybierz przewidywanego przez Ciebie zwycięzce.">
                 <mat-option *ngFor="let member of event.members" [value]="member.id">{{member.name}}</mat-option>
+                <mat-option [value]=-1>Remis</mat-option>
             </mat-select>
             <mat-error *ngIf="memberFormControl.hasError('required')">
                 Zwycięzca jest <strong>wymagany</strong>!

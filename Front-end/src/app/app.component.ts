@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { LocalStorageService } from './services/localStorage';
-
-
+import { EventService } from './services/event.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +16,7 @@ export class AppComponent {
   isAdmin: boolean;
   userRole: any;
 
-  constructor(private localStorageService: LocalStorageService){}
+  constructor(private localStorageService: LocalStorageService, private eventService: EventService) {}
 
 
   ngOnInit() {
@@ -28,7 +27,7 @@ export class AppComponent {
     } else{
       this.isActive = true;
       
-      this.localStorageService.getUserRole(this.userId).subscribe(data => { console.log(data);
+      this.localStorageService.getUserRole(this.userId).subscribe(data => {
         this.userRole = data;
     
         if(this.userRole == "admin"){
@@ -38,6 +37,10 @@ export class AppComponent {
         }
         });
     }
+
+    this.eventService.checkEventsActivity().subscribe(
+      error => console.log(error)
+    )
     
   }
 

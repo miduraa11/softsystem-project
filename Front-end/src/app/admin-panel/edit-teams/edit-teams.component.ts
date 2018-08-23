@@ -95,7 +95,11 @@ export class EditTeamsModalDelete {
           this.dialogRef.close();
           window.location.reload();
         },
-        error => console.log(error));
+        error => {
+          console.log(error);          
+        }
+      );
+        
   }
 
 }
