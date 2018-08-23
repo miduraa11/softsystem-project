@@ -1,14 +1,14 @@
 package com.softsystem.Backend.Service;
 
+import com.softsystem.Backend.DTO.UserListDTO;
 import com.softsystem.Backend.Model.Bet;
 import com.softsystem.Backend.Model.Role;
 import com.softsystem.Backend.Model.User;
-import com.softsystem.Backend.Repository.BetRepository;
 import com.softsystem.Backend.Repository.RoleRepository;
+import com.softsystem.Backend.Repository.BetRepository;
 import com.softsystem.Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
@@ -26,11 +26,11 @@ public class UserService {
         return userRepository.findAllUsers();
     }
 
-    public void deleteById(long id) {
+    public void deleteById(Long id) {
         userRepository.deleteById(id);
     }
 
-    public boolean authUser(String login, String password) {
+    public Boolean authUser(String login, String password) {
         User user;
         user = userRepository.getUserByLogin(login);
         if(user == null){
@@ -72,8 +72,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public String getUserRole(Long userId) { return userRepository.getRoleByUser(userId);
-    }
+    public String getUserRole(Long userId) { return userRepository.getRoleByUser(userId); }
 
     public User getUserById(Long id){
         User user = userRepository.findByIdUser(id);
@@ -115,5 +114,4 @@ public class UserService {
         account[1]=-account[1];
         return account;
     }
-
 }

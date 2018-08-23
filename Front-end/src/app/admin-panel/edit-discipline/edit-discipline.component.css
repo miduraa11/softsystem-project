@@ -10,14 +10,22 @@
 
 .example-full-width {
   width: 100%;
-  text-align: center;
 }
 
 .table {
-  margin-top: 20px;
+  margin-top: 40px;
   margin-bottom: 50px;
+  background-color: aliceblue;
+}
+
+.matBtn {
+  width: 100%;
+  margin-top: 40px;
+  background-color: green;
+  color: white;
 }
 
 .btn {
+  width: 100%;
   margin-top: 20px;
 }

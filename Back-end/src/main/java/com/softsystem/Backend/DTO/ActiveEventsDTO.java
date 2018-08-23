@@ -7,7 +7,7 @@ import java.util.List;
 public class ActiveEventsDTO {
 
     private List<Event> events;
-    private List <Type> types;
+    private List<Type> types;
     private String chosenDiscipline;
     private String chosenStatus;
 
@@ -19,7 +19,6 @@ public class ActiveEventsDTO {
     }
 
     public ActiveEventsDTO() {
-
     }
 
     public List<Event> getEvents() {
@@ -38,11 +37,19 @@ public class ActiveEventsDTO {
         this.types = types;
     }
 
-    public String getChosenDiscipline() { return chosenDiscipline; }
+    public String getChosenDiscipline() {
+        return chosenDiscipline;
+    }
 
-    public void setChosenDiscipline(String chosenDiscipline) { this.chosenDiscipline = chosenDiscipline; }
+    public void setChosenDiscipline(String chosenDiscipline) {
+        this.chosenDiscipline = chosenDiscipline;
+    }
 
-    public String getChosenStatus() { return chosenStatus; }
+    public String getChosenStatus() {
+        return chosenStatus;
+    }
 
-    public void setChosenStatus(String chosenStatus) { this.chosenStatus = chosenStatus; }
+    public void setChosenStatus(String chosenStatus) {
+        this.chosenStatus = chosenStatus;
+    }
 }

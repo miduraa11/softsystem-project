@@ -9,7 +9,6 @@ import com.softsystem.Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,31 +23,25 @@ public class BetService {
     @Autowired
     private MemberRepository memberRepository;
 
-    public void addBet(long currentUser, Event event, float amount, long chosenMember, String result, int betType) {
+    public void addBet(Long currentUser, Event event, float amount, Long chosenMember, String result, int betType) {
+        Bet newBet = new Bet();
+        newBet.setUser(userRepository.getOne(currentUser));
+        newBet.setEvent(eventRepository.getOne(event.getId()));
+        if(chosenMember != -1) { newBet.setMember(memberRepository.getOne(chosenMember)); }
+        else { newBet.setMember(null); }
+        newBet.setBetResult(null);
+        newBet.setAmount(amount);
         if(betType == 0) {
-            Bet newBet = new Bet();
-            newBet.setUser(userRepository.getOne(currentUser));
-            newBet.setEvent(eventRepository.getOne(event.getId()));
-            newBet.setMember(memberRepository.getOne(chosenMember));
-            newBet.setAmount(amount);
             newBet.setGeneral(true);
-            newBet.setBetResult(null);
             betRepository.saveAndFlush(newBet);
         } else {
-            Bet newBet = new Bet();
-            newBet.setUser(userRepository.getOne(currentUser));
-            newBet.setEvent(eventRepository.getOne(event.getId()));
-            newBet.setMember(memberRepository.getOne(chosenMember));
-            newBet.setAmount(amount);
             newBet.setResult(result);
             newBet.setGeneral(false);
-            newBet.setBetResult(null);
             betRepository.saveAndFlush(newBet);
         }
     }
 
-    public List<Bet> showAllBets(Long userId) { return betRepository.findAllBetsByUserId(userId);
-    }
+    public List<Bet> showAllBets(Long userId) { return betRepository.findAllBetsByUserId(userId); }
 
     public List<Bet> findMatchingBets(String chosenStatus, Long currentUser) {
         List<Bet> betList;
@@ -79,31 +72,42 @@ public class BetService {
     private Boolean isActive(String chosenStatus) {
         if(chosenStatus.equals("Wygrane")) { return true; }
         else if (chosenStatus.equals("Przegrane")){ return false; }
-        else { return null;}
+        else { return null; }
     }
 
+    public void resolveBets(Event event) {
+        int i;
+        Bet bets[] = betRepository.getAllByEvent(event.getId());
 
-    public double[] sumPrize(long idEvent){
-        double prize[] = new double[3];
-        prize[0]=0.0;
-        prize[1]=0.0;
-        prize[2]=0.0;
-        if(!betRepository.findById(idEvent).equals(Optional.empty()))
-        {
-            Bet sum[] = betRepository.allPrize(idEvent);
-            for (Bet bet:sum) {
-                prize[0]= prize[0] + bet.getAmount();
-                if(bet.getBetResult()==true) {
-                    prize[1]= prize[1] + bet.getAmount();
-                    if(bet.isGeneral()==false)
-                        prize[2]= prize[2] + bet.getAmount();
+
+        if(bets.length != 0) {
+            for(i = 0; i < bets.length; i++) {
+                Bet currentBet = bets[i];
+                if(currentBet.getGeneral()) {
+                    if(currentBet.getMember() == null) {
+                        if(event.getWinner().equals("Remis")) { currentBet.setBetResult(true); }
+                        else { currentBet.setBetResult(false); }
+                    } else {
+                        if(currentBet.getMember().getName().equals(event.getWinner())) { currentBet.setBetResult(true); }
+                        else { currentBet.setBetResult(false); }
+                    }
+                } else {
+                    if(currentBet.getMember() == null) {
+                        if(event.getWinner().equals("Remis") && currentBet.getResult().equals(event.getScore())) {currentBet.setBetResult(true); }
+                        else { currentBet.setBetResult(false); }
+                    } else {
+                        if(currentBet.getMember().getName().equals(event.getWinner()) && currentBet.getResult().equals(event.getScore())) {currentBet.setBetResult(true); }
+                        else { currentBet.setBetResult(false); }
+                    }
                 }
+                betRepository.save(currentBet);
             }
+            this.callPrizes(event.getId());
         }
-        return prize;
+
     }
 
-    public double calPrize(long idEvent){
+    private void callPrizes(Long idEvent){
         double bonusPrize;
         double withoutBonusPrize;
         double sumPrize[] = sumPrize(idEvent);
@@ -149,6 +153,28 @@ public class BetService {
                 }
             }
         }
-        return sumPrize[0]-sumPrize[1];
+    }
+
+    private double[] sumPrize(Long idEvent){
+        double prize[] = new double[3];
+        prize[0]=0.0;
+        prize[1]=0.0;
+        prize[2]=0.0;
+        if(betRepository.getAllByEvent(idEvent).length != 0)
+        {
+            Bet sum[] = betRepository.allPrize(idEvent);
+            for (Bet bet:sum) {
+                prize[0]= prize[0] + bet.getAmount();
+                if(bet.getBetResult()==true) {
+                    prize[1]= prize[1] + bet.getAmount();
+                    if(bet.getGeneral()==false)
+                        prize[2]= prize[2] + bet.getAmount();
+                }
+            }
+        }
+        return prize;
+    }
+
+    public Bet[] getAllBetsByEventId(Long eventId) { return betRepository.getAllByEvent(eventId);
     }
 }

@@ -1,18 +1,14 @@
 package com.softsystem.Backend.Controller;
 
 import com.softsystem.Backend.DTO.EventDataDTO;
-import com.softsystem.Backend.Model.Event;
-import com.softsystem.Backend.Model.Member;
-import com.softsystem.Backend.Model.Type;
-import com.softsystem.Backend.Model.User;
-import com.softsystem.Backend.Service.EventService;
-import com.softsystem.Backend.Service.MemberService;
-import com.softsystem.Backend.Service.TypeService;
-import com.softsystem.Backend.Service.UserService;
+import com.softsystem.Backend.DTO.UserListDTO;
+import com.softsystem.Backend.Model.*;
+import com.softsystem.Backend.Service.*;
 import com.softsystem.Backend.DTO.EditEventsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Collection;
 
@@ -28,6 +24,8 @@ public class AdminController {
     TypeService typeService;
     @Autowired
     UserService userService;
+    @Autowired
+    BetService betService;
 
     /*------------------*/
     /*----- Events -----*/
@@ -78,6 +76,20 @@ public class AdminController {
         eventService.addEvent(eventDataDTO.getEvent(), eventDataDTO.getTypes().get(0), eventDataDTO.getMembers());
     }
 
+    @PostMapping(value = "/edit-events/resolve")
+    public void resolveEvent(@RequestBody Event event) {
+        eventService.resolve(event);
+        betService.resolveBets(event);
+    }
+
+    @GetMapping("/edit-events/userList/{eventId}")
+    public List<UserListDTO> getUserList(@PathVariable(name="eventId")Long eventId) {
+        List<Bet> bet;
+        bet = Arrays.asList(betService.getAllBetsByEventId(eventId));
+
+        return eventService.getAllWinners(bet);
+    }
+
     /*-------------------*/
     /*----- Players -----*/
     /*-------------------*/
@@ -89,12 +101,12 @@ public class AdminController {
     }
 
     @DeleteMapping("/edit-players/{id}")
-    public void deletePlayer(@PathVariable("id") long id) {
+    public void deletePlayer(@PathVariable("id") Long id) {
         memberService.deleteById(id);
     }
 
     @PostMapping(value= "/edit-players/edit/{id}/{name}/{discipline}")
-    public void updatePlayer(@PathVariable("id") long id, @PathVariable("name") String name, @PathVariable("discipline") String discipline) {
+    public void updatePlayer(@PathVariable("id") Long id, @PathVariable("name") String name, @PathVariable("discipline") String discipline) {
         memberService.updateMember(id, name, discipline);
     }
 
@@ -121,7 +133,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/edit-teams/{id}")
-    public void adminTeamDelete(@PathVariable(name="id")Long id) {
+    public void adminTeamDelete(@PathVariable(name="id") Long id) {
         memberService.deleteMember(id);
     }
 
@@ -131,7 +143,7 @@ public class AdminController {
     }
 
     @PostMapping(value = "edit-teams/edit/{id}/{name}/{idType}")
-    public void editTeam(@PathVariable("id")long id, @PathVariable("name")String name, @PathVariable("idType") Long idType) {
+    public void editTeam(@PathVariable("id") Long id, @PathVariable("name")String name, @PathVariable("idType") Long idType) {
         memberService.editMember(name, id, idType);
     }
 
@@ -143,7 +155,7 @@ public class AdminController {
     }
 
     /*------------------*/
-    /*----- Disciplines ------*/
+    /*--- Disciplines --*/
     /*------------------*/
 
     @GetMapping("/edit-discipline")
@@ -168,7 +180,6 @@ public class AdminController {
         typeService.editDiscipline(discipline, id, individual);
     }
 
-
     /*------------------*/
     /*----- Users ------*/
     /*------------------*/
@@ -181,7 +192,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/edit-users/delete/{id}")
-    public void deleteUser(@PathVariable("id") long id) {
+    public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteById(id);
     }
 
