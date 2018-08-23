@@ -6,7 +6,6 @@ import { Member } from '../../model/member';
 import { Type } from '../../model/type';
 import { ErrorStateMatcher } from '../../../../node_modules/@angular/material';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '../../../../node_modules/@angular/forms';
-import { moment } from '../../../../node_modules/ngx-bootstrap/chronos/test/chain';
 
 //Validation 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -115,8 +114,6 @@ export class EditEventModal {
   event: Event;
   members: Member[];
   types: Type[];
-
-
   choosenTypeId: number;
   choosenMemberId: number[];
   selectedType: Type;
@@ -281,7 +278,8 @@ export class ResolveEventModal {
   }
 
   onResolveClick(): void {
-    this.event.winner = this.memberFormControl.value;
+    if(this.memberFormControl.value == -1) { this.event.winner = "Remis"; }
+    else { this.event.winner = this.memberFormControl.value; }
     this.event.score = this.resultFormControl.value;
     this.eventService.resolveEvent(this.event).subscribe(
       data => {

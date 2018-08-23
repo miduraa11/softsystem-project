@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BetsService } from '../services/bets.service';
 import { Bet } from '../model/bet';
+import { Member } from '../model/member';
 
 @Component({
   selector: 'app-bets',
@@ -14,13 +15,21 @@ export class BetsComponent implements OnInit {
   currentUser: number;
   chosenStatus: String = "Wszystkie";
 
+
   constructor(private betsService: BetsService) { }
 
   ngOnInit() {
     this.currentUser = Number(localStorage.getItem(this.key));
     this.betsService.getAllBetsById(this.currentUser).subscribe(data => {
         this.bets = data;
-      });
+        for(var i = 0; i < this.bets.length; i++) {
+          if(this.bets[i].member == null) { 
+            this.bets[i].member = new Member;
+            this.bets[i].member.name = "Remis";
+          }
+        }
+      }
+    );
   }
 
   updateList(chosenStatus: String): void {

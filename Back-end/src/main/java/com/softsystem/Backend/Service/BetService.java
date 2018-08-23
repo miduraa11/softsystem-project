@@ -9,7 +9,6 @@ import com.softsystem.Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,30 +24,24 @@ public class BetService {
     private MemberRepository memberRepository;
 
     public void addBet(Long currentUser, Event event, float amount, Long chosenMember, String result, int betType) {
+        Bet newBet = new Bet();
+        newBet.setUser(userRepository.getOne(currentUser));
+        newBet.setEvent(eventRepository.getOne(event.getId()));
+        if(chosenMember != -1) { newBet.setMember(memberRepository.getOne(chosenMember)); }
+        else { newBet.setMember(null); }
+        newBet.setBetResult(null);
+        newBet.setAmount(amount);
         if(betType == 0) {
-            Bet newBet = new Bet();
-            newBet.setUser(userRepository.getOne(currentUser));
-            newBet.setEvent(eventRepository.getOne(event.getId()));
-            newBet.setMember(memberRepository.getOne(chosenMember));
-            newBet.setAmount(amount);
             newBet.setGeneral(true);
-            newBet.setBetResult(null);
             betRepository.saveAndFlush(newBet);
         } else {
-            Bet newBet = new Bet();
-            newBet.setUser(userRepository.getOne(currentUser));
-            newBet.setEvent(eventRepository.getOne(event.getId()));
-            newBet.setMember(memberRepository.getOne(chosenMember));
-            newBet.setAmount(amount);
             newBet.setResult(result);
             newBet.setGeneral(false);
-            newBet.setBetResult(null);
             betRepository.saveAndFlush(newBet);
         }
     }
 
-    public List<Bet> showAllBets(Long userId) { return betRepository.findAllBetsByUserId(userId);
-    }
+    public List<Bet> showAllBets(Long userId) { return betRepository.findAllBetsByUserId(userId); }
 
     public List<Bet> findMatchingBets(String chosenStatus, Long currentUser) {
         List<Bet> betList;
@@ -91,11 +84,21 @@ public class BetService {
             for(i = 0; i < bets.length; i++) {
                 Bet currentBet = bets[i];
                 if(currentBet.getGeneral()) {
-                    if (currentBet.getMember().getName().equals(event.getWinner())) { currentBet.setBetResult(true); }
-                    else { currentBet.setBetResult(false); }
+                    if(currentBet.getMember() == null) {
+                        if(event.getWinner().equals("Remis")) { currentBet.setBetResult(true); }
+                        else { currentBet.setBetResult(false); }
+                    } else {
+                        if(currentBet.getMember().getName().equals(event.getWinner())) { currentBet.setBetResult(true); }
+                        else { currentBet.setBetResult(false); }
+                    }
                 } else {
-                    if(currentBet.getMember().getName().equals(event.getWinner()) && currentBet.getResult().equals(event.getScore())) {currentBet.setBetResult(true); }
-                    else {currentBet.setBetResult(false); }
+                    if(currentBet.getMember() == null) {
+                        if(event.getWinner().equals("Remis") && currentBet.getResult().equals(event.getScore())) {currentBet.setBetResult(true); }
+                        else { currentBet.setBetResult(false); }
+                    } else {
+                        if(currentBet.getMember().getName().equals(event.getWinner()) && currentBet.getResult().equals(event.getScore())) {currentBet.setBetResult(true); }
+                        else { currentBet.setBetResult(false); }
+                    }
                 }
                 betRepository.save(currentBet);
             }
