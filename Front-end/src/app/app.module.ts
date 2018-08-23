@@ -8,7 +8,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EventsComponent, BetTheBetGeneralDialog, BetTheBetDetailDialog, BetTheBetConfirmDialog } from './events/events.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
-import { BetsComponent } from './bets/bets.component';
+import { BetsComponent, InfoDialog } from './bets/bets.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal, ResolveEventModal} from './admin-panel/edit-events/edit-events.component';
@@ -73,7 +73,8 @@ const routes: Routes = [
     HomeComponent,
     BetTheBetGeneralDialog,
     BetTheBetDetailDialog,
-    BetTheBetConfirmDialog
+    BetTheBetConfirmDialog,
+    InfoDialog
   ],
   imports: [
     FormsModule,
@@ -119,6 +120,7 @@ const routes: Routes = [
     EditDisciplineModalDelete,
     EditDisciplineModalAdd,
     EditDisciplineModalEdit,
+    InfoDialog
   ],
   providers: [
     PlayerService,

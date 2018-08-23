@@ -3,7 +3,8 @@ import { Member } from "./member";
 export class Bet {
     id: number;
     amount: number;
-    betResult: String;
+    betResult: Boolean;
     prize: number;
     member: Member;
+    general: Boolean;
 }
