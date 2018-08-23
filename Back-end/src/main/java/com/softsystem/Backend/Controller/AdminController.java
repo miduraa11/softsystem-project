@@ -76,6 +76,12 @@ public class AdminController {
         eventService.addEvent(eventDataDTO.getEvent(), eventDataDTO.getTypes().get(0), eventDataDTO.getMembers());
     }
 
+    @PostMapping(value = "/edit-events/resolve")
+    public void resolveEvent(@RequestBody Event event) {
+        eventService.resolve(event);
+        betService.resolveBets(event);
+    }
+
     @GetMapping("/edit-events/userList/{eventId}")
     public List<UserListDTO> getUserList(@PathVariable(name="eventId")Long eventId) {
         List<Bet> bet;
@@ -149,7 +155,7 @@ public class AdminController {
     }
 
     /*------------------*/
-    /*----- Disciplines ------*/
+    /*--- Disciplines --*/
     /*------------------*/
 
     @GetMapping("/edit-discipline")
@@ -173,7 +179,6 @@ public class AdminController {
     public void editDiscipline(@PathVariable("id")long id, @PathVariable("discipline")String discipline, @PathVariable("individual") boolean individual) {
         typeService.editDiscipline(discipline, id, individual);
     }
-
 
     /*------------------*/
     /*----- Users ------*/

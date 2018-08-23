@@ -8,10 +8,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { EventsComponent, BetTheBetGeneralDialog, BetTheBetDetailDialog, BetTheBetConfirmDialog } from './events/events.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
-import { BetsComponent } from './bets/bets.component';
+import { BetsComponent, InfoDialog } from './bets/bets.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AlertModule } from 'ngx-bootstrap';
-import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal, UserListModal} from './admin-panel/edit-events/edit-events.component';
+import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal, UserListModal, ResolveEventModal} from './admin-panel/edit-events/edit-events.component';
 import { EditTeamsComponent, EditTeamsModalDelete, EditTeamsModalAdd, EditTeamsModalEdit } from './admin-panel/edit-teams/edit-teams.component';
 import { EditDisciplineComponent, EditDisciplineModalDelete, EditDisciplineModalAdd, EditDisciplineModalEdit } from './admin-panel/edit-discipline/edit-discipline.component';
 import { EditPlayersComponent, RemovePlayerDialog, PlayerEditDialog, AddPlayerDialog} from './admin-panel/edit-players/edit-players.component';
@@ -56,6 +56,7 @@ const routes: Routes = [
     DeleteEventModal,
     EditEventModal,
     CreateEventModal,
+    ResolveEventModal,
     RemovePlayerDialog,
     PlayerEditDialog,
     AddPlayerDialog,
@@ -74,6 +75,7 @@ const routes: Routes = [
     BetTheBetDetailDialog,
     BetTheBetConfirmDialog,
     UserListModal,
+    InfoDialog,
   ],
   imports: [
     FormsModule,
@@ -100,12 +102,13 @@ const routes: Routes = [
     MatSnackBarModule,
     BrowserAnimationsModule,
     MatNativeDateModule,
-    MatTableModule
+    MatTableModule,
   ],
   entryComponents: [
     DeleteEventModal,
     EditEventModal,
     CreateEventModal,
+    ResolveEventModal,
     RemovePlayerDialog,
     PlayerEditDialog,
     AddPlayerDialog,
@@ -120,6 +123,7 @@ const routes: Routes = [
     EditDisciplineModalAdd,
     EditDisciplineModalEdit,
     UserListModal,
+    InfoDialog,
   ],
   providers: [
     PlayerService,

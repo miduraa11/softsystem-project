@@ -7,7 +7,7 @@ import com.softsystem.Backend.Repository.TypeRepository;
 import com.softsystem.Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,10 +41,6 @@ public class EventService {
        eventRepository.getOne(event.getId()).setName(event.getName());
        eventRepository.getOne(event.getId()).setBeginDate(event.getBeginDate());
        eventRepository.getOne(event.getId()).setEndDate(event.getEndDate());
-       eventRepository.getOne(event.getId()).setActive(event.getActive());
-       eventRepository.getOne(event.getId()).setBeginDate(event.getBeginDate());
-       eventRepository.getOne(event.getId()).setScore(event.getScore());
-       eventRepository.getOne(event.getId()).setWinner(event.getWinner());
        Type type;
        type = typeRepository.findByDiscipline(selectedDiscipline.getDiscipline());
        eventRepository.getOne(event.getId()).setType(type);
@@ -64,6 +60,12 @@ public class EventService {
         newEvent.setType(type);
         newEvent.setMembers(selectedMembers);
         eventRepository.save(newEvent);
+    }
+
+    public void resolve(Event event) {
+        eventRepository.getOne(event.getId()).setWinner(event.getWinner());
+        eventRepository.getOne(event.getId()).setScore(event.getScore());
+        eventRepository.save(eventRepository.getOne(event.getId()));
     }
 
     public List<Event> findMatchingEvents(String chosenDiscipline, String chosenStatus) {
@@ -101,6 +103,20 @@ public class EventService {
     private boolean isActive(String chosenStatus) {
         if(chosenStatus.equals("Aktywne")) { return true; }
         else { return false; }
+    }
+
+    public void checkEventsActivity() {
+        List<Event> eventList;
+        Date sysDate = new Date();
+        eventList = eventRepository.findAll();
+        eventList.forEach(
+                x -> {
+                    if(x.getEndDate().before(sysDate)) { x.setActive(false); }
+                    if(x.getEndDate().after(sysDate)) { x.setActive(true); }
+                    eventRepository.save(x);
+                }
+
+        );
     }
 
     public List<UserListDTO> getAllWinners(List<Bet> bet) {
