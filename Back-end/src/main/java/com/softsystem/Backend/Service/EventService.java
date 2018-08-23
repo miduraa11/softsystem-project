@@ -7,6 +7,7 @@ import com.softsystem.Backend.Repository.EventRepository;
 import com.softsystem.Backend.Repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,10 +38,6 @@ public class EventService {
        eventRepository.getOne(event.getId()).setName(event.getName());
        eventRepository.getOne(event.getId()).setBeginDate(event.getBeginDate());
        eventRepository.getOne(event.getId()).setEndDate(event.getEndDate());
-       eventRepository.getOne(event.getId()).setActive(event.getActive());
-       eventRepository.getOne(event.getId()).setBeginDate(event.getBeginDate());
-       eventRepository.getOne(event.getId()).setScore(event.getScore());
-       eventRepository.getOne(event.getId()).setWinner(event.getWinner());
        Type type;
        type = typeRepository.findByDiscipline(selectedDiscipline.getDiscipline());
        eventRepository.getOne(event.getId()).setType(type);
@@ -65,7 +62,6 @@ public class EventService {
     public void resolve(Event event) {
         eventRepository.getOne(event.getId()).setWinner(event.getWinner());
         eventRepository.getOne(event.getId()).setScore(event.getScore());
-        eventRepository.getOne(event.getId()).setActive(false);
         eventRepository.save(eventRepository.getOne(event.getId()));
     }
 
@@ -104,6 +100,22 @@ public class EventService {
     private boolean isActive(String chosenStatus) {
         if(chosenStatus.equals("Aktywne")) { return true; }
         else { return false; }
+    }
+
+    public void checkEventsActivity() {
+        List<Event> eventList;
+        Date sysDate = new Date();
+        eventList = eventRepository.findAll()
+                .stream()
+                .filter(x -> x.getEndDate().before(sysDate))
+                .collect(Collectors.toList());
+        eventList.forEach(
+                x -> {
+                    x.setActive(false);
+                    eventRepository.save(x);
+                }
+
+        );
     }
 
 }

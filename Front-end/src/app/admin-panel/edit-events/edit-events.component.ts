@@ -188,6 +188,9 @@ export class EditEventModal {
         .subscribe(
           data => {
             this.dialogRef.close();
+            this.eventService.checkEventsActivity().subscribe(
+              error => console.log(error)
+            )
             if(flag) { window.location.reload(); }
           },
           error => console.log(error));

@@ -57,4 +57,8 @@ export class EventService {
     return this.http.post(`${this.baseUrl}/resolve`, event);
   }
 
+  checkEventsActivity(): Observable<any> {
+    return this.http.post(`http://localhost:8080/checkEventsActivity`, { responseType: 'text' });
+  }
+
 }
