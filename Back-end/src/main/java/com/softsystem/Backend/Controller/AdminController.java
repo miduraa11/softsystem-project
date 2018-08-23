@@ -70,16 +70,17 @@ public class AdminController {
     public void updateEvent(@RequestBody EventDataDTO eventDataDTO) {
         eventService.updateEvent(eventDataDTO.getEvent(), eventDataDTO.getTypes().get(0), eventDataDTO.getMembers());
 
-        // Tu się zaczyna logika
-
-        if(!eventDataDTO.getEvent().getActive()) {
-            betService.resolveBets(eventDataDTO.getEvent());
-        }
     }
 
     @PostMapping(value= "/edit-events/add")
     public void addEvent(@RequestBody EventDataDTO eventDataDTO) {
         eventService.addEvent(eventDataDTO.getEvent(), eventDataDTO.getTypes().get(0), eventDataDTO.getMembers());
+    }
+
+    @PostMapping(value = "/edit-events/resolve")
+    public void resolveEvent(@RequestBody Event event) {
+        eventService.resolve(event);
+        betService.resolveBets(event);
     }
 
     /*-------------------*/

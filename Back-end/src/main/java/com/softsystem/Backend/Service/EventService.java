@@ -62,6 +62,13 @@ public class EventService {
         eventRepository.save(newEvent);
     }
 
+    public void resolve(Event event) {
+        eventRepository.getOne(event.getId()).setWinner(event.getWinner());
+        eventRepository.getOne(event.getId()).setScore(event.getScore());
+        eventRepository.getOne(event.getId()).setActive(false);
+        eventRepository.save(eventRepository.getOne(event.getId()));
+    }
+
     public List<Event> findMatchingEvents(String chosenDiscipline, String chosenStatus) {
         List<Event> eventList;
         Boolean active;

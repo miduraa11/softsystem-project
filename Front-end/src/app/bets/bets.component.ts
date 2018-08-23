@@ -18,7 +18,7 @@ export class BetsComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = Number(localStorage.getItem(this.key));
-    this.betsService.getAllBetsById(this.currentUser).subscribe(data => { console.log(data);
+    this.betsService.getAllBetsById(this.currentUser).subscribe(data => {
         this.bets = data;
       });
   }

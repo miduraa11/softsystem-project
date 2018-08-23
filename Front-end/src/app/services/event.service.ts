@@ -53,5 +53,8 @@ export class EventService {
     return this.http.post(`${this.activeEventsAPI}/${chosenDiscipline}/${chosenStatus}`, { responseType: 'text' });
   }
 
+  resolveEvent(event: Event): Observable<any> {
+    return this.http.post(`${this.baseUrl}/resolve`, event);
+  }
 
 }

@@ -1,53 +1,48 @@
 <form>
-    <div class="form-group">
-      <label for="eventName"><b>Nazwa wydarzenia</b></label>
-      <input type="text" class="form-control" name="eventName" [(ngModel)]="event.name">
-    </div>
-  
-    <div class="form-group">
-      <label for="beginDate"><b>Data rozpoczęcia</b></label>
-      <input type="date" class="form-control" [ngModel]="this.event.beginDate | date:'yyyy-MM-dd'" (ngModelChange)="this.event.beginDate = $event" name="beginDate">
-    </div>
-  
-    <div class="form-group">
-      <label for="endDate"><b>Data zakończenia</b></label>
-      <input type="date" class="form-control" [ngModel]="this.data.endDate | date:'yyyy-MM-dd'" (ngModelChange)="this.event.endDate = $event" name="endDate">
-    </div>
-  
-    <p><b>Dyscyplina</b></p>
-    <div class="form-group">
-      <mat-select name="typ" [(ngModel)]="choosenTypeId">
+  <mat-form-field class="example-full-width" style="width: 100%">  
+    <input matInput [formControl]="nameFormControl" [errorStateMatcher]="matcherName" style="width: 100%" placeholder="Nazwa wydarzenia"/>
+    <mat-error *ngIf="nameFormControl.hasError('required')">
+      Nazwa jest <strong>wymagana</strong>!
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" style="width: 100%">
+    <input matInput [matDatepicker]="picker1" [formControl]="beginDateFormControl" [errorStateMatcher]="matcherBeginDate" style="width: 100%" placeholder="Data rozpoczęcia">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+    <mat-error *ngIf="beginDateFormControl.hasError('required')">
+      Data rozpoczęcia jest <strong>wymagana</strong>!
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" style="width: 100%">
+    <input matInput [matDatepicker]="picker2" [formControl]="endDateFormControl" [errorStateMatcher]="matcherEndDate" style="width: 100%" placeholder="Data zakończenia">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+    <mat-error *ngIf="endDateFormControl.hasError('required')">
+      Data zakończenia jest <strong>wymagana</strong>!
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width" style="width: 100%">            
+    <mat-select matSelect [formControl]="disciplineFormControl" [errorStateMatcher]="matcherDiscipline" style="width: 100%" placeholder="Dyscyplina">
         <mat-option *ngFor="let type of types" [value]="type.id">{{type.discipline}}</mat-option>
-      </mat-select>
-    </div>
+    </mat-select>
+    <mat-error *ngIf="disciplineFormControl.hasError('required')">
+        Dyscyplina jest <strong>wymagana</strong>!
+    </mat-error>
+  </mat-form-field>
   
-    <p><b>Drużyny lub uczestnicy biorący udział w wydarzeniu</b></p>
-    <div class="form-group" >
-      <mat-select multiple name="selectedMembers" [(ngModel)]="choosenMemberId" > 
-        <mat-option *ngFor="let member of members" [value]="member.id">{{member.name}}</mat-option>
-      </mat-select>
-    </div>
-  
-    <p><b>Status wydarzenia</b></p>
-    <div class="form-check form-check-inline">
-     <mat-checkbox name="active" [(ngModel)]="this.event.active">Aktywne</mat-checkbox>
-    </div>
-  
-    <p><b>Zwycięzca wydarzenia</b></p>
-    <div class="form-group">
-      <mat-select placeholder="Zwycięzca" [(ngModel)]="this.event.winner" name="winner">
-        <mat-option *ngFor="let member of data.members" [value]="member.name">{{member.name}}</mat-option>
-        <mat-option [value]="0">Remis</mat-option>
-      </mat-select>
-    </div>
+  <mat-form-field class="example-full-width" style="width: 100%">            
+    <mat-select matSelect multiple [formControl]="membersFormControl" [errorStateMatcher]="matcherMembers" style="width: 100%" placeholder="Drużyny lub uczestnicy biorący udział w wydarzeniu"> 
+      <mat-option *ngFor="let member of members" [value]="member.id">{{member.name}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="membersFormControl.hasError('required')">
+        Wybór druzyn biorących udzial w wydarzeniu jest <strong>wymagany</strong>!
+    </mat-error>
+  </mat-form-field>
 
-    <p><b>Wynik</b><mat-icon data-toggle="tooltip" data-placement="right" 
-      title="Wynik proszę wpisać w przykładowym formacie - 2-1. 
-W przypadku wydarzenia, w którym nie jest to wymagane jak np. skoki narciarskie proszę zostawić puste pole.">info</mat-icon></p>
-    <div class="form-group">
-        <input type="text" [(ngModel)]="this.event.score" name="score">
-    </div>
-
-    <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="editEvent()">Zapisz zmiany</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onCancelClick()">Anuluj</button>
+  <button type="button" class="btn btn-warning btn-lg btn-block btn-sm" (click)="editEvent(0); resolveEventModal(event)">Zakończ wydarzenie i rozstrzygnij zakłady</button>
+  <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="editEvent(1)">Zapisz zmiany</button>
+  <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onCancelClick()">Anuluj</button>
 </form>
