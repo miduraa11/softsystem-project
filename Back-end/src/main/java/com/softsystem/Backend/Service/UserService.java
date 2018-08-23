@@ -1,9 +1,11 @@
 package com.softsystem.Backend.Service;
 
 import com.softsystem.Backend.DTO.UserListDTO;
+import com.softsystem.Backend.Model.Bet;
 import com.softsystem.Backend.Model.Role;
 import com.softsystem.Backend.Model.User;
 import com.softsystem.Backend.Repository.RoleRepository;
+import com.softsystem.Backend.Repository.BetRepository;
 import com.softsystem.Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    BetRepository betRepository;
 
     public List<User> getAllUsers() {
 
@@ -70,4 +74,44 @@ public class UserService {
 
     public String getUserRole(Long userId) { return userRepository.getRoleByUser(userId); }
 
+    public User getUserById(Long id){
+        User user = userRepository.findByIdUser(id);
+        user.setPassword("");
+        return user;
+    }
+
+    public Object changePassword(Long id, String currentPassword, String password){
+        User user = userRepository.getOne(id);
+        if (user.getPassword().equals(currentPassword)) {
+            user.setPassword(password);
+            userRepository.save(user);
+            return true;
+        }
+        else return false;
+    }
+
+    public Object getAccount(Long id){
+        double account[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        Bet bets[] = betRepository.getAllByUser(id);
+        for (Bet bet: bets) {
+            if(bet.getBetResult()==null) {
+                account[3] = account[3] + bet.getAmount();
+                account[6]=account[6]+1;
+                continue;
+            }
+            if(bet.getPrize()==0.0) {
+                account[1] = account[1] + bet.getAmount();
+                account[5]=account[5]+1;
+                continue;
+            }
+            if(bet.getPrize()>0.0){
+                account[0]=account[0]+bet.getPrize();
+                account[4]=account[4]+1;
+                continue;
+            }
+        }
+        account[2]=account[0]-account[1];
+        account[1]=-account[1];
+        return account;
+    }
 }

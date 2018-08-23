@@ -1,0 +1,47 @@
+.win{
+    color: rgb(0, 163, 0); 
+}
+.loss{
+    color: rgb(212, 0, 0); 
+}
+.blue{
+    color: rgb(0, 119, 255); 
+}
+h4{
+    font-size: 16px
+}
+.paddingLeft{
+    padding-left: 8px;
+}
+.center{
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+}
+.formPassword{
+    width: 100%;
+    padding-bottom: 20px;
+}
+fusioncharts{
+    font-size: 30px;
+}
+.divLeft{
+    float:left;
+    width: 40%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.centerLine{
+    min-height: 200px;
+    float:left;
+    margin-right: 5%;
+    margin-left: 5%;
+    border-right-style: solid;
+    border-right-color: rgb(207, 207, 207);
+    border-right-width: 2px;
+}
+mat-list-item{
+    border-bottom-style: solid;
+    border-bottom-color: rgb(207, 207, 207);
+    border-bottom-width: 1px;
+}

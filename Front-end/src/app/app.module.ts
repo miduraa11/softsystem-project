@@ -38,6 +38,14 @@ import { LocalStorageService } from './services/localStorage';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HomeComponent } from './home/home.component';
 import { BetsService } from './services/bets.service';
+import { UserPanelComponent } from './user-panel/user-panel.component';
+import { UserPanelService } from './services/user-panel.service';
+import { FusionChartsModule } from 'angular-fusioncharts';
+import FusionCharts from 'fusioncharts/core';
+import AngularGauge from 'fusioncharts/viz/angulargauge';
+import MsLine from 'fusioncharts/viz/msline';
+
+FusionChartsModule.fcRoot(FusionCharts, AngularGauge, MsLine);
 
 const routes: Routes = [
 ];
@@ -76,6 +84,7 @@ const routes: Routes = [
     BetTheBetConfirmDialog,
     UserListModal,
     InfoDialog,
+    UserPanelComponent
   ],
   imports: [
     FormsModule,
@@ -103,6 +112,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     MatNativeDateModule,
     MatTableModule,
+    FusionChartsModule,
   ],
   entryComponents: [
     DeleteEventModal,
@@ -134,6 +144,7 @@ const routes: Routes = [
     RegistrationService,
     LocalStorageService,
     BetsService,
+    UserPanelService,
   ],
   bootstrap: [
     AppComponent

@@ -11,6 +11,7 @@ import { EditUsersComponent }   from './admin-panel/edit-users/edit-users.compon
 import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { UserPanelComponent } from './user-panel/user-panel.component';
 
 const routes: Routes = [
   { path: 'events', component: EventsComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'user-panel', component: UserPanelComponent },
 ];
 
 @NgModule({
