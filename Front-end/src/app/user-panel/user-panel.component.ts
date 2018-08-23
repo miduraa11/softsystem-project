@@ -45,13 +45,62 @@ export class UserPanelComponent implements OnInit {
   currentUser: number;
   currentPassword: any;
   password: any;
+  account: number[]= [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+  chance: number=0.0;
+  dataSource: Object;
 
-  constructor(private userPanelService: UserPanelService, private logout: AppComponent, private router: Router) { }
-  panelOpenState = false;
+
+  constructor(private userPanelService: UserPanelService, private logout: AppComponent, private router: Router) { 
+  }
+
   ngOnInit() {
     this.currentUser = Number(localStorage.getItem(this.key));
     this.userPanelService.getUserById(this.currentUser).subscribe(data => {
         this.user = data;
+      });
+    this.userPanelService.getAccount(this.currentUser).subscribe(data => {
+        this.account = data;
+        if((this.account[4]+this.account[5])>=4.0)
+          this.chance = (this.account[4]/(this.account[4]+this.account[5]))*100;
+        else
+          this.chance = 50.0;
+          this.dataSource = {
+            "chart": {
+              "caption": "Szanse wygranej w kolejnym zakładzie",
+              "lowerlimit": "0",
+              "upperlimit": "100",
+              "showvalue": "5",
+              "numbersuffix": "%",
+              "theme": "candy",
+              "showtooltip": "0"
+            },
+            "colorrange": {
+              "color": [
+                {
+                  "minvalue": "0",
+                  "maxvalue": "33",
+                  "code": "#F2726F"
+                },
+                {
+                  "minvalue": "33",
+                  "maxvalue": "66",
+                  "code": "#FFC533"
+                },
+                {
+                  "minvalue": "66",
+                  "maxvalue": "100",
+                  "code": "#62B58F"
+                }
+              ]
+            },
+            "dials": {
+              "dial": [
+                {
+                  "value": this.chance
+                }
+              ]
+            }
+          }; 
       });
   }
 

@@ -3,33 +3,35 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <b><u>Moje dane</u></b>
+        <h4><b><u>Moje dane</u></b></h4>
       </mat-panel-title>
       <mat-panel-description>
-        Login: {{this.user.login}}
+        <h4>Login: {{this.user.login}}</h4>
       </mat-panel-description>
     </mat-expansion-panel-header>
-      <p><b>Imię:</b> {{this.user.firstName}}</p> 
-      <p><b>Nazwisko:</b> {{this.user.lastName}}</p> 
-      <p><b>E-mail:</b> {{this.user.email}}</p> 
+    <mat-list role="list">
+        <mat-list-item role="listitem"><b>Imię:</b> <div class="paddingLeft">{{this.user.firstName}}</div></mat-list-item>
+        <mat-list-item role="listitem"><b>Nazwisko:</b> <div class="paddingLeft">{{this.user.lastName}}</div></mat-list-item>
+        <mat-list-item role="listitem"><b>E-mail:</b> <div class="paddingLeft">{{this.user.email}}</div></mat-list-item>
+    </mat-list>
   </mat-expansion-panel>
 
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <b><u>Zmiana hasła</u></b>
+        <h4><b><u>Zmiana hasła</u></b></h4>
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <div style="width: 350px;">
 
-      <mat-form-field class="example-full-width" style="width: 350px">
+    <div class="center">
+      <mat-form-field class="example-full-width formPassword">
           <input matInput type="password" placeholder="Aktualne hasło" [formControl]="currentPasswordFormControl" [errorStateMatcher]="matcherCurrentPassword">
           <mat-error *ngIf="currentPasswordFormControl.hasError('required')">
               Podanie obecnego hasła jest <strong>wymagane</strong>!
           </mat-error>
       </mat-form-field>
       
-      <mat-form-field class="example-full-width" style="width: 350px">
+      <mat-form-field class="example-full-width formPassword">
           <input matInput type="password" placeholder="Nowe hasło" [formControl]="passwordFormControl" [errorStateMatcher]="matcherPassword">
           <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required') && !passwordFormControl.hasError('minlength')">
             Hasło musi <strong>być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
@@ -42,7 +44,7 @@
           </mat-error>
       </mat-form-field>
       
-      <mat-form-field class="example-full-width" style="width: 350px; padding-bottom: 20px">
+      <mat-form-field class="example-full-width formPassword">
           <input matInput type="Password" placeholder="Powtórz nowe hasło" [formControl]="confirmPasswordFormControl" pattern="{{passwordFormControl.value}}" [errorStateMatcher]="matcherConfirmPassword">
           <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
             Podane hasła są <strong>różne</strong> !
@@ -55,9 +57,53 @@
       <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="save()">Zapisz zmiany</button></nav>
     </div>
 
+  </mat-expansion-panel>
 
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h4><b><u>Moje konto</u></b></h4>
+      </mat-panel-title>
+      <mat-panel-description>
+        <h4 *ngIf="account[2]<0" class="loss">Stan rachunku: {{account[2].toFixed(2)}} PLN</h4>
+        <h4 *ngIf="account[2]>=0" class="win">Stan rachunku: {{account[2].toFixed(2)}} PLN</h4>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="divLeft">
+        <mat-list role="list">
+            <mat-list-item role="listitem">Wygrane: <div class="win paddingLeft"> {{account[0].toFixed(2)}} PLN</div> </mat-list-item>
+            <mat-list-item role="listitem">Przegrane: <div class="loss paddingLeft"> {{(-1*account[1]).toFixed(2)}} PLN</div></mat-list-item>
+            <mat-list-item role="listitem" *ngIf="account[2]<0">Saldo: <div class="loss paddingLeft"> {{account[2].toFixed(2)}} PLN</div></mat-list-item>
+            <mat-list-item role="listitem" *ngIf="account[2]>=0">Saldo: <div class="win paddingLeft"> {{account[2].toFixed(2)}} PLN</div></mat-list-item>
+            <mat-list-item role="listitem">Oczekujące: <div class="blue paddingLeft"> {{account[3].toFixed(2)}} PLN</div> </mat-list-item>
+          </mat-list>
+    </div>
+    <div class="centerLine"></div>
+    <div class="divLeft">
+      <mat-list role="list">
+        <mat-list-item role="listitem">Liczba wygranych zakładów: <div class="win paddingLeft"> {{account[4].toFixed(0)}}</div></mat-list-item>
+        <mat-list-item role="listitem">Liczba przegranych zakładów: <div class="loss paddingLeft"> {{account[5].toFixed(0)}}</div></mat-list-item>
+        <mat-list-item role="listitem">Liczba oczekujących zakładów: <div class="blue paddingLeft"> {{account[6].toFixed(0)}}</div></mat-list-item>
+      </mat-list>
+    </div>
+  <div style="clear:both;"></div>
+  </mat-expansion-panel>
 
-
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h4><b><u>Wykres szans</u></b></h4>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="center">
+      <fusioncharts
+        width="100%"
+        height="300px"
+        type="AngularGauge"
+        dataFormat="json"
+        [dataSource]="dataSource">
+      </fusioncharts>
+    </div>
   </mat-expansion-panel>
 
 </mat-accordion>

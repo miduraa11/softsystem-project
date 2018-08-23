@@ -40,6 +40,11 @@ import { HomeComponent } from './home/home.component';
 import { BetsService } from './services/bets.service';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { UserPanelService } from './services/user-panel.service';
+import { FusionChartsModule } from 'angular-fusioncharts';
+import FusionCharts from 'fusioncharts/core';
+import AngularGauge from 'fusioncharts/viz/angulargauge';
+
+FusionChartsModule.fcRoot(FusionCharts, AngularGauge);
 
 const routes: Routes = [
 ];
@@ -100,7 +105,9 @@ const routes: Routes = [
     MatIconModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    BrowserModule,
+    FusionChartsModule, 
   ],
   entryComponents: [
     DeleteEventModal,

@@ -21,4 +21,9 @@ public class UserController {
     public Object changePassword(@PathVariable("id")Long id, @PathVariable("currentPassword")String currentPassword, @PathVariable("password")String password){
         return userService.changePassword(id, currentPassword, password);
     }
+
+    @GetMapping(value = "/user-panel/account/{userId}")
+    public Object getAccount(@PathVariable(name="userId")Long userId) {
+        return userService.getAccount(userId);
+    }
 }

@@ -1,7 +1,9 @@
 package com.softsystem.Backend.Service;
 
+import com.softsystem.Backend.Model.Bet;
 import com.softsystem.Backend.Model.Role;
 import com.softsystem.Backend.Model.User;
+import com.softsystem.Backend.Repository.BetRepository;
 import com.softsystem.Backend.Repository.RoleRepository;
 import com.softsystem.Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
+    @Autowired
+    BetRepository betRepository;
 
     public List<User> getAllUsers() {
 
@@ -85,6 +89,31 @@ public class UserService {
             return true;
         }
         else return false;
+    }
+
+    public Object getAccount(Long id){
+        double account[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        Bet bets[] = betRepository.getAllByUser(id);
+        for (Bet bet: bets) {
+            if(bet.getBetResult()==null) {
+                account[3] = account[3] + bet.getAmount();
+                account[6]=account[6]+1;
+                continue;
+            }
+            if(bet.getPrize()==0.0) {
+                account[1] = account[1] + bet.getAmount();
+                account[5]=account[5]+1;
+                continue;
+            }
+            if(bet.getPrize()>0.0){
+                account[0]=account[0]+bet.getPrize();
+                account[4]=account[4]+1;
+                continue;
+            }
+        }
+        account[2]=account[0]-account[1];
+        account[1]=-account[1];
+        return account;
     }
 
 }
