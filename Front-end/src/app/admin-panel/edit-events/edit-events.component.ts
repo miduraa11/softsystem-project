@@ -8,6 +8,7 @@ import { ErrorStateMatcher } from '../../../../node_modules/@angular/material';
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
+// TODO to chyba będzie można usunąć potem
 //Validation
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -158,35 +159,23 @@ export class EditEventModal {
   selectedType: Type;
   selectedMembers: Member[];
 
-  //name
-  nameFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  matcherName = new MyErrorStateMatcher();
-
-  //begin date
-  beginDateFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  matcherBeginDate = new MyErrorStateMatcher();
-
-  //end date
-  endDateFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  matcherEndDate = new MyErrorStateMatcher();
-
-  //discipline
-  disciplineFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  matcherDiscipline = new MyErrorStateMatcher();
-
-  //members
-  membersFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  matcherMembers = new MyErrorStateMatcher();
+  editForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    beginDate: new FormControl('', [
+      Validators.required
+    ]),
+    endDate: new FormControl('', [
+      Validators.required
+    ]),
+    discipline: new FormControl('', [
+      Validators.required
+    ]),
+    members: new FormControl('', [
+      Validators.required
+    ]),
+  });
 
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<EditEventModal>,
@@ -208,25 +197,21 @@ export class EditEventModal {
       this.types = data.types;
       this.members = data.members;
     });
-    this.nameFormControl.setValue(this.event.name);
-    this.beginDateFormControl.setValue(this.event.beginDate);
-    this.endDateFormControl.setValue(this.event.endDate);
-    this.disciplineFormControl.setValue(this.event.type.id);
-    this.membersFormControl.setValue(this.event.members.map(x => x.id));
+    this.editForm.get('name').setValue(this.event.name);
+    this.editForm.get('beginDate').setValue(this.event.beginDate);
+    this.editForm.get('endDate').setValue(this.event.endDate);
+    this.editForm.get('discipline').setValue(this.event.type.id);
+    this.editForm.get('members').setValue(this.event.members.map(x => x.id));
   }
 
 
   editEvent(flag: number) {
-    if(this.nameFormControl.errors == null
-    && this.beginDateFormControl.errors == null
-    && this.endDateFormControl.errors == null
-    && this.disciplineFormControl.errors == null
-    && this.membersFormControl.errors == null) {
-      this.event.name = this.nameFormControl.value;
-      this.event.beginDate = this.beginDateFormControl.value;
-      this.event.endDate = this.endDateFormControl.value;
-      this.choosenTypeId = this.disciplineFormControl.value;
-      this.choosenMemberId = this.membersFormControl.value;
+    if(this.editForm.valid) {
+      this.event.name = this.editForm.get('name').value;
+      this.event.beginDate = this.editForm.get('beginDate').value;
+      this.event.endDate = this.editForm.get('endDate').value;
+      this.choosenTypeId = this.editForm.get('discipline').value;
+      this.choosenMemberId = this.editForm.get('members').value;
       this.selectedType = this.types.find(x => this.choosenTypeId === x.id);
       this.selectedMembers = this.members.filter(x => this.choosenMemberId.some(y => y == x.id));
       this.eventService.updateEvent(this.event, this.selectedType, this.selectedMembers).subscribe(
