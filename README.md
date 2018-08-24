@@ -19,8 +19,7 @@ Jest to system obsługujący **fikcyjne** zakłady bukmacherskie a jego założe
 
 ## Wykonali
 
-|                   |ASCII                                                             | 
 |-------------------|------------------------------------------------------------------|
-|Mateusz Miś	    | student informatyki                                              |
+|Mateusz Miś	      | student informatyki                                              |
 |Adam Midura        | student informatyki                                              |
-|Rafał Dziaczyński  |student automatyki i robotyki                                     |
+|Rafał Dziaczyński  | student automatyki i robotyki                                    |
