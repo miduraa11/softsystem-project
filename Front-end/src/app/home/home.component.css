@@ -10,7 +10,18 @@
   background-image: url("../../assets/img/btb-large.png");
  }
 
- 
-  
+ footer {
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    margin-left: 15%;
+    margin-right: 15%;
+    height:30px;
+    background: rgba(0, 0, 0, 0.3);
+}
 
-    
+.text {
+    color: white;
+    font-size: 110%;
+}

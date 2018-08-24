@@ -220,8 +220,8 @@ export class EditEventModal {
     if(this.nameFormControl.errors == null
     && this.beginDateFormControl.errors == null
     && this.endDateFormControl.errors == null
-    && this.disciplineFormControl == null
-    && this.membersFormControl == null) {
+    && this.disciplineFormControl.errors == null
+    && this.membersFormControl.errors == null) {
       this.event.name = this.nameFormControl.value;
       this.event.beginDate = this.beginDateFormControl.value;
       this.event.endDate = this.endDateFormControl.value;

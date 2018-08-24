@@ -1,8 +1,7 @@
-<div class="container">
-    
+<div class="container">   
     <div class="navigationBar fixed" *ngIf="isActive">
         <ul>
-            <li style="float:left"><nav><a routerLink="/home">Home</a></nav></li>
+            <li style="float:left"><nav><a routerLink="/home"><img class="homeImage" src="../assets/img/btb-small.png"></a></nav></li>
             <li style="float:left"><nav><a routerLink="/user-panel">Mój profil</a></nav></li>
             <li><nav><a routerLink="/login" (click)="logout()">Wyloguj</a></nav></li>
             <li *ngIf="isAdmin"><nav><a routerLink="/admin-panel">Admin panel</a></nav></li>
@@ -12,4 +11,3 @@
     </div>
         <router-outlet></router-outlet>
 </div>
-

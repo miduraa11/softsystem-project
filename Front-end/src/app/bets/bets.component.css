@@ -5,3 +5,8 @@ table{
 .notbold {
     font-weight:normal;
 }
+
+.caption {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

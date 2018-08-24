@@ -40,7 +40,7 @@ export class AppComponent {
 
     this.eventService.checkEventsActivity().subscribe(
       error => console.log(error)
-    )
+    );
     
   }
 

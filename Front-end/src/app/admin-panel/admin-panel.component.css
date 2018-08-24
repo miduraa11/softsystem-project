@@ -11,3 +11,10 @@
     width: 100%;
     margin-top: 20px;
   }
+
+  .BTBimage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 150px;
+  }
