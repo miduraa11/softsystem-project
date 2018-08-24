@@ -5,7 +5,7 @@ import { Event } from '../../model/event';
 import { Member } from '../../model/member';
 import { Type } from '../../model/type';
 import { ErrorStateMatcher } from '../../../../node_modules/@angular/material';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '../../../../node_modules/@angular/forms';
+import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
 //Validation
@@ -386,22 +386,20 @@ onCancelClick(): void {
 
   event: Event;
 
-  //member
-  memberFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  matcherMember = new MyErrorStateMatcher();
-
-  //result
-  resultFormControl = new FormControl('', [
-    Validators.required,
-    Validators.pattern("^\\d+\\-\\d{1,}$")
-  ]);
-  matcherResult = new MyErrorStateMatcher();
+  resolveForm = new FormGroup({
+    member: new FormControl('', [
+      Validators.required
+    ]),
+    result: new FormControl('', [
+      Validators.required,
+      Validators.pattern("^\\d+\\-\\d{1,}$")
+    ])
+  });
 
   constructor(public dialogRef: MatDialogRef<ResolveEventModal>,
-              private eventService: EventService,
-              @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit
+    private eventService: EventService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit,
+    public snackBar: MatSnackBar
   ) {
     this.event = this.data.event;
   }
@@ -411,19 +409,27 @@ onCancelClick(): void {
   }
 
   onResolveClick(): void {
-    if(this.memberFormControl.value == -1) { this.event.winner = "Remis"; }
-    else { this.event.winner = this.memberFormControl.value; }
-    this.event.score = this.resultFormControl.value;
-    this.eventService.resolveEvent(this.event).subscribe(
-      data => {
-        this.dialogRef.close();
-        window.location.reload();
-      },
-      error => console.log(error)
-    );
-
+    if(this.resolveForm.valid) {
+      if(this.resolveForm.get('member').value == -1) { this.event.winner = "Remis"; }
+      else { this.event.winner = this.resolveForm.get('member').value; }
+      this.event.score = this.resolveForm.get('result').value;
+      this.eventService.resolveEvent(this.event).subscribe(
+        data => {
+          this.dialogRef.close();
+          window.location.reload();
+        },
+        error => console.log(error)
+      );
+    } else {
+      this.openSnackBar();
+    }
   }
 
+  openSnackBar() {
+    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
+      duration: 3000
+    });
+  }
 }
 
 @Component({
