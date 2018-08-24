@@ -15,7 +15,7 @@ export class UserService {
   }
 
   deleteUser(id: number): Observable<any> {
-    return this.http.delete(`${this.API}/edit-users/delete/${id}`, { responseType: 'text' });
+    return this.http.get(`${this.API}/edit-users/delete/${id}`, { responseType: 'text' });
   }
 
 }

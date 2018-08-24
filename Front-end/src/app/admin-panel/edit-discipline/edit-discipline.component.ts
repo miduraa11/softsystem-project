@@ -71,22 +71,37 @@ export class EditDisciplineComponent implements OnInit {
 })
 export class EditDisciplineModalDelete {
 
+  error: number;
+
   constructor(private disciplineService: DisciplineService,
     public dialogRef: MatDialogRef<EditDisciplineModalDelete>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public dialog: MatDialog
+  ) {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   deleteDiscipline() {
-    this.disciplineService.deleteDiscipline(this.data.id)
-      .subscribe(
-        data => {
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error));
+    this.disciplineService.deleteDiscipline(this.data.id).subscribe(
+      data => {
+        this.error = data;
+        this.dialogRef.close();
+        if(this.error == 0) { window.location.reload(); }
+        else { this.openErrorInfoDialog(); }
+      },
+      error => console.log(error)
+    );
+  }
+
+  openErrorInfoDialog(): void {
+    const dialogRef = this.dialog.open(DisciplineErrorInfoDialog, {
+      width: '400px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }
@@ -177,4 +192,19 @@ export class EditDisciplineModalEdit {
         error => console.log(error));     
       } 
   }
+}
+
+@Component({
+  selector: 'error-info-dialog',
+  templateUrl: './error-info-dialog.html',
+})
+export class DisciplineErrorInfoDialog {
+
+  constructor(public dialogRef: MatDialogRef<DisciplineErrorInfoDialog>) {  
+  }
+
+  onOkClick(): void {
+    this.dialogRef.close();
+  }
+
 }

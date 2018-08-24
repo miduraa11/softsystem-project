@@ -27,15 +27,19 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    public void deleteEvent(Long id) {
-        eventRepository.deleteById(id);
+    public int deleteEvent(Long id) {
+        try {
+            eventRepository.deleteById(id);
+            return 0;
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     public Event getOne(Long id) {
 
         return eventRepository.getOne(id);
     }
-
 
     public void updateEvent(Event event, Type selectedDiscipline, List<Member> selectedMembers) {
        eventRepository.getOne(event.getId()).setName(event.getName());
@@ -130,7 +134,7 @@ public class EventService {
 
         int betListSize = betList.size();
 
-        for (int i = 0; i < betListSize; ++i){
+        for(int i = 0; i < betListSize; ++i) {
             User currentUser;
             float prize;
             currentUser = betList.get(i).getUser();

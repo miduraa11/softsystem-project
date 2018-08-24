@@ -6,6 +6,7 @@ import { Member } from '../../model/member';
 import { Type } from '../../model/type';
 import { ErrorStateMatcher } from '../../../../node_modules/@angular/material';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '../../../../node_modules/@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 //Validation
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -108,22 +109,37 @@ export class EditEventsComponent implements OnInit {
 })
 export class DeleteEventModal {
 
-constructor(private eventService: EventService,
+  error: number;
+
+  constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<DeleteEventModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public dialog: MatDialog
   ) { }
 
-onCancelClick(): void {   
-    this.dialogRef.close();
-}
+  onCancelClick(): void {   
+      this.dialogRef.close();
+  }
 
-deleteEvent() {
+  deleteEvent() {
     this.eventService.deleteEvent(this.data.id).subscribe(
       data => {
+        this.error = data;
         this.dialogRef.close();
-        window.location.reload();
+        if(this.error == 0) { window.location.reload(); }
+        else { this.openErrorInfoDialog(); }
       },
-      error => console.log(error));        
+      error => console.log(error)
+    );
+  }
+
+  openErrorInfoDialog(): void {
+    const dialogRef = this.dialog.open(EventErrorInfoDialog, {
+      width: '400px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }
@@ -175,7 +191,8 @@ export class EditEventModal {
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<EditEventModal>,
     @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar
   ) {
     this.event = this.data.event;
     this.event.beginDate = new Date(this.data.event.beginDate);
@@ -200,23 +217,37 @@ export class EditEventModal {
 
 
   editEvent(flag: number) {
-    this.event.name = this.nameFormControl.value;
-    this.event.beginDate = this.beginDateFormControl.value;
-    this.event.endDate = this.endDateFormControl.value;
-    this.choosenTypeId = this.disciplineFormControl.value;
-    this.choosenMemberId = this.membersFormControl.value;
-    this.selectedType = this.types.find(x => this.choosenTypeId === x.id);
-    this.selectedMembers = this.members.filter(x => this.choosenMemberId.some(y => y == x.id));
-    this.eventService.updateEvent(this.event, this.selectedType, this.selectedMembers)
-        .subscribe(
-          data => {
-            this.dialogRef.close();
-            this.eventService.checkEventsActivity().subscribe(
-              error => console.log(error)
-            )
-            if(flag) { window.location.reload(); }
-          },
-          error => console.log(error));
+    if(this.nameFormControl.errors == null
+    && this.beginDateFormControl.errors == null
+    && this.endDateFormControl.errors == null
+    && this.disciplineFormControl == null
+    && this.membersFormControl == null) {
+      this.event.name = this.nameFormControl.value;
+      this.event.beginDate = this.beginDateFormControl.value;
+      this.event.endDate = this.endDateFormControl.value;
+      this.choosenTypeId = this.disciplineFormControl.value;
+      this.choosenMemberId = this.membersFormControl.value;
+      this.selectedType = this.types.find(x => this.choosenTypeId === x.id);
+      this.selectedMembers = this.members.filter(x => this.choosenMemberId.some(y => y == x.id));
+      this.eventService.updateEvent(this.event, this.selectedType, this.selectedMembers).subscribe(
+        data => {
+          this.dialogRef.close();
+          this.eventService.checkEventsActivity().subscribe(
+            error => console.log(error)
+          )
+          if(flag) { window.location.reload(); }
+        },
+        error => console.log(error)
+      );
+    } else {
+      this.openSnackBar();
+    }
+  }
+
+  openSnackBar() {
+    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
+      duration: 3000
+    });
   }
 
   resolveEventModal(event: Event): void {
@@ -391,6 +422,21 @@ onCancelClick(): void {
       error => console.log(error)
     );
 
+  }
+
+}
+
+@Component({
+  selector: 'error-info-dialog',
+  templateUrl: './error-info-dialog.html',
+})
+export class EventErrorInfoDialog {
+
+  constructor(public dialogRef: MatDialogRef<EventErrorInfoDialog>) {  
+  }
+
+  onOkClick(): void {
+    this.dialogRef.close();
   }
 
 }

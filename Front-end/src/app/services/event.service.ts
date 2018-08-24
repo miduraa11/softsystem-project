@@ -32,7 +32,7 @@ export class EventService {
   }
 
   deleteEvent(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+    return this.http.get(`${this.baseUrl}/${id}`, { responseType: 'text' });
   }
 
   addEvent(event: Event, selectedType: Type, selectedMembers: Member[]): Observable<any> {

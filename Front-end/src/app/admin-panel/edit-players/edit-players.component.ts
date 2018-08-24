@@ -75,9 +75,13 @@ export class EditPlayersComponent implements OnInit {
 })
 export class RemovePlayerDialog {
 
-  constructor( private playerService: PlayerService, public dialogRef: MatDialogRef<RemovePlayerDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  error: number;
 
-  }
+  constructor(private playerService: PlayerService,
+    public dialogRef: MatDialogRef<RemovePlayerDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public dialog: MatDialog
+  ) { }
 
   onAnulujClick(): void {
     this.dialogRef.close();
@@ -86,11 +90,22 @@ export class RemovePlayerDialog {
   onDeleteClick(): void {
     this.playerService.deletePlayer(this.data.id).subscribe(
       data => {
+        this.error = data;
         this.dialogRef.close();
-        window.location.reload();
+        if(this.error == 0) { window.location.reload(); }
+        else { this.openErrorInfoDialog(); }
       },
-      error => console.log(error)      
-    );  
+      error => console.log(error)
+    );
+  }
+
+  openErrorInfoDialog(): void {
+    const dialogRef = this.dialog.open(PlayerErrorInfoDialog, {
+      width: '400px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }
@@ -194,6 +209,21 @@ export class AddPlayerDialog implements OnInit {
     } else {
       alert("Błędnie wprowadzone dane!");
     }
+  }
+
+}
+
+@Component({
+  selector: 'error-info-dialog',
+  templateUrl: './error-info-dialog.html',
+})
+export class PlayerErrorInfoDialog {
+
+  constructor(public dialogRef: MatDialogRef<PlayerErrorInfoDialog>) {  
+  }
+
+  onOkClick(): void {
+    this.dialogRef.close();
   }
 
 }

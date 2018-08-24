@@ -80,26 +80,39 @@ export class EditTeamsComponent implements OnInit {
 })
 export class EditTeamsModalDelete {
 
+  error: number;
+
   constructor(private teamService: TeamService,
     public dialogRef: MatDialogRef<EditTeamsModalDelete>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public dialog: MatDialog
+  ) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   deleteTeam() {
-    this.teamService.deleteTeam(this.data.id)
-      .subscribe(
-        data => {
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => {
-          console.log(error);          
-        }
-      );
-        
+    this.teamService.deleteTeam(this.data.id).subscribe(
+      data => {
+        this.error = data;
+        this.dialogRef.close();
+        if(this.error == 0) { window.location.reload(); }
+        else { this.openErrorInfoDialog(); }
+      },
+      error => {
+        console.log(error);          
+      }
+    );        
+  }
+
+  openErrorInfoDialog(): void {
+    const dialogRef = this.dialog.open(TeamErrorInfoDialog, {
+      width: '400px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }
@@ -212,4 +225,19 @@ export class EditTeamsModalEdit {
         error => console.log(error));
       }      
   }
+}
+
+@Component({
+  selector: 'error-info-dialog',
+  templateUrl: './error-info-dialog.html',
+})
+export class TeamErrorInfoDialog {
+
+  constructor(public dialogRef: MatDialogRef<TeamErrorInfoDialog>) {  
+  }
+
+  onOkClick(): void {
+    this.dialogRef.close();
+  }
+
 }

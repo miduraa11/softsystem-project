@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.hashPassword = Md5.hashStr(this.userPassword);
-    this.localStorageService.getUser(this.userLogin, this.hashPassword).subscribe(data => { console.log(data);
+    this.localStorageService.getUser(this.userLogin, this.hashPassword).subscribe(data => {
     this.id = data;
     localStorage.setItem(this.key, this.id);
     this.userId = localStorage.getItem(this.key);

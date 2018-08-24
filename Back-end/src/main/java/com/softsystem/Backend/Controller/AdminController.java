@@ -50,11 +50,10 @@ public class AdminController {
         return editEventsDTO;
     }
 
-    @DeleteMapping("/edit-events/{id}")
-    public String adminEventDelete(@PathVariable(name="id")Long id) {
-        eventService.deleteEvent(id);
+    @GetMapping("/edit-events/{id}")
+    public int adminEventDelete(@PathVariable(name="id")Long id) {
 
-        return "redirect:edit-events";
+        return eventService.deleteEvent(id);
     }
 
     @GetMapping(value= "/edit-events/{id}}")
@@ -100,9 +99,10 @@ public class AdminController {
         return memberService.getAllPlayers();
     }
 
-    @DeleteMapping("/edit-players/{id}")
-    public void deletePlayer(@PathVariable("id") Long id) {
-        memberService.deleteById(id);
+    @GetMapping("/edit-players/{id}")
+    public int deletePlayer(@PathVariable("id") Long id) {
+
+        return memberService.deleteById(id);
     }
 
     @PostMapping(value= "/edit-players/edit/{id}/{name}/{discipline}")
@@ -132,9 +132,10 @@ public class AdminController {
         return teams;
     }
 
-    @DeleteMapping("/edit-teams/{id}")
-    public void adminTeamDelete(@PathVariable(name="id") Long id) {
-        memberService.deleteMember(id);
+    @GetMapping("/edit-teams/{id}")
+    public int adminTeamDelete(@PathVariable(name="id") Long id) {
+
+        return memberService.deleteMember(id);
     }
 
     @PostMapping(value = "edit-teams/add/{name}/{idType}")
@@ -165,9 +166,10 @@ public class AdminController {
         return disciplines;
     }
 
-    @DeleteMapping("/edit-discipline/{id}")
-    public void adminDisciplineDelete(@PathVariable(name="id")Long id) {
-        typeService.deleteDiscipline(id);
+    @GetMapping("/edit-discipline/{id}")
+    public int adminDisciplineDelete(@PathVariable(name="id")Long id) {
+
+        return typeService.deleteDiscipline(id);
     }
 
     @PostMapping(value = "edit-discipline/add/{discipline}/{individual}")
@@ -191,9 +193,10 @@ public class AdminController {
         return users;
     }
 
-    @DeleteMapping("/edit-users/delete/{id}")
-    public void deleteUser(@PathVariable("id") Long id) {
-        userService.deleteById(id);
+    @GetMapping("/edit-users/delete/{id}")
+    public int deleteUser(@PathVariable("id") Long id) {
+
+        return userService.deleteById(id);
     }
 
 }

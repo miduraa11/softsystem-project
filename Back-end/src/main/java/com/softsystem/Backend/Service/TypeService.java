@@ -70,14 +70,13 @@ public class TypeService {
         typeRepository.save(discipline);
     }
 
-    public void deleteDiscipline(Long id) {
-        //Type type = typeRepository.getOne(id);
-        //typeRepository.delete(type);
-        typeRepository.deleteById(id);
-        //memberRepository.deleteAllByType(type);
-
-        //typeRepository.deleteById(id);
+    public int deleteDiscipline(Long id) {
+        try {
+            typeRepository.deleteById(id);
+            return 0;
+        } catch (Exception e) {
+            return -1;
+        }
     }
-
 
 }

@@ -19,7 +19,7 @@ export class PlayerService {
   }
 
   deletePlayer(id: number): Observable<any> {
-    return this.http.delete(`${this.API}/edit-players/${id}`, { responseType: 'text' });
+    return this.http.get(`${this.API}/edit-players/${id}`, { responseType: 'text' });
   }
 
   addPlayer(name: String, discipline: String): Observable<any> {

@@ -15,9 +15,9 @@ export class EditUsersComponent implements OnInit {
 
   users: Array<any>;
 
-  constructor(private userService: UserService, public dialog: MatDialog) { 
-
-  }
+  constructor(private userService: UserService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.userService.getUsers().subscribe(data => {
@@ -44,9 +44,13 @@ export class EditUsersComponent implements OnInit {
 })
 export class RemoveUserDialog {
 
-  constructor( private userService: UserService, public dialogRef: MatDialogRef<RemoveUserDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  error: number;
 
-  }
+  constructor(private userService: UserService,
+    public dialogRef: MatDialogRef<RemoveUserDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public dialog: MatDialog
+  ) { }
 
   onAnulujClick(): void {
     this.dialogRef.close();
@@ -54,11 +58,38 @@ export class RemoveUserDialog {
 
   onDeleteClick(): void {
     this.userService.deleteUser(this.data.id).subscribe(
-      data => { console.log(data); 
+      data => {
+        this.error = data;
         this.dialogRef.close();
-        window.location.reload(); },
+        if(this.error == 0) { window.location.reload(); }
+        else { this.openErrorInfoDialog(); }
+      },
       error => console.log(error)      
     );  
+  }
+
+  openErrorInfoDialog(): void {
+    const dialogRef = this.dialog.open(UserErrorInfoDialog, {
+      width: '400px',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+}
+
+@Component({
+  selector: 'error-info-dialog',
+  templateUrl: './error-info-dialog.html',
+})
+export class UserErrorInfoDialog {
+
+  constructor(public dialogRef: MatDialogRef<UserErrorInfoDialog>) {  
+  }
+
+  onOkClick(): void {
+    this.dialogRef.close();
   }
 
 }

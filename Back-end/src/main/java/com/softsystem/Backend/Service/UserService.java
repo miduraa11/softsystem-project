@@ -26,8 +26,13 @@ public class UserService {
         return userRepository.findAllUsers();
     }
 
-    public void deleteById(Long id) {
-        userRepository.deleteById(id);
+    public int deleteById(Long id) {
+        try {
+            userRepository.deleteById(id);
+            return 0;
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     public Boolean authUser(String login, String password) {

@@ -32,8 +32,13 @@ public class MemberService {
         return member.getType().getIndividual();
     }
 
-    public void deleteById(Long id) {
-        memberRepository.deleteById(id);
+    public int deleteById(Long id) {
+        try {
+            memberRepository.deleteById(id);
+            return 0;
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     public void updateMember(Long id, String name, String discipline) {
@@ -81,8 +86,13 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public void deleteMember(Long id) {
-        memberRepository.deleteById(id);
+    public int deleteMember(Long id) {
+        try {
+            memberRepository.deleteById(id);
+            return 0;
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     private boolean isTeam(Member member) {
