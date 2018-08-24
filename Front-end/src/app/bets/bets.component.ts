@@ -46,6 +46,12 @@ export class BetsComponent implements OnInit {
       data => { console.log("Success"),
       this.betsService.getActiveBets().subscribe(data => {
         this.bets = data;
+        for(var i = 0; i < this.bets.length; i++) {
+          if(this.bets[i].member == null) { 
+            this.bets[i].member = new Member;
+            this.bets[i].member.name = "Remis";
+          }
+        }
         this.chosenStatus = chosenStatus;
       })},
       error => console.log(error)
