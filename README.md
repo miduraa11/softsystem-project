@@ -11,6 +11,7 @@ Jest to system obsługujący **fikcyjne** zakłady bukmacherskie a jego założe
 - TypeScript
 - html
 - css
+
 **Technologie :**
 - Angular
 - Bootstrap
@@ -19,6 +20,7 @@ Jest to system obsługujący **fikcyjne** zakłady bukmacherskie a jego założe
 
 ## Wykonali
 
+|Imie i nazwisko    | Kierunek                                                         |
 |-------------------|------------------------------------------------------------------|
 |Mateusz Miś	      | student informatyki                                              |
 |Adam Midura        | student informatyki                                              |
