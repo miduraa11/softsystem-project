@@ -51,7 +51,8 @@ export class UserPanelComponent implements OnInit {
   dataSourceHistory: Object;
   panelOpenGraph: boolean = false;
   panelOpenHistory: boolean = false;
-
+  accountState: Array<any>=new Array(20);
+  result: Array<any>=new Array(20);
 
   constructor(private userPanelService: UserPanelService, private logout: AppComponent, private router: Router) { 
   }
@@ -63,47 +64,6 @@ export class UserPanelComponent implements OnInit {
       });
     this.userPanelService.getAccount(this.currentUser).subscribe(data => {
         this.account = data;
-        if((this.account[4]+this.account[5])>=4.0)
-          this.chance = (this.account[4]/(this.account[4]+this.account[5]))*100;
-        else
-          this.chance = 50.0;
-          this.dataSourceGraph = {
-            "chart": {
-              "caption": "Szanse wygranej w kolejnym zakładzie",
-              "lowerlimit": "0",
-              "upperlimit": "100",
-              "showvalue": "5",
-              "numbersuffix": "%",
-              "theme": "candy",
-              "showtooltip": "0"
-            },
-            "colorrange": {
-              "color": [
-                {
-                  "minvalue": "0",
-                  "maxvalue": "33",
-                  "code": "#F2726F"
-                },
-                {
-                  "minvalue": "33",
-                  "maxvalue": "66",
-                  "code": "#FFC533"
-                },
-                {
-                  "minvalue": "66",
-                  "maxvalue": "100",
-                  "code": "#62B58F"
-                }
-              ]
-            },
-            "dials": {
-              "dial": [
-                {
-                  "value": this.chance
-                }
-              ]
-            }
-          }; 
       });
   }
 
@@ -123,105 +83,57 @@ export class UserPanelComponent implements OnInit {
       });
   }
 
-  getHistory(){
-    this.userPanelService.getAccount(this.currentUser).subscribe(data => {
+  getGraph(){
+    if((this.account[4]+this.account[5])>=4.0)
+    this.chance = (this.account[4]/(this.account[4]+this.account[5]))*100;
+     else
+    this.chance = 50.0;
+    this.dataSourceGraph = {
+      "chart": {"caption": "Szanse wygranej w kolejnym zakładzie","lowerlimit": "0","upperlimit": "100","showvalue": "5","numbersuffix": "%","theme": "candy","showtooltip": "0"
+      },
+      "colorrange": {
+        "color": [
+          {"minvalue": "0", "maxvalue": "33","code": "#F2726F"},
+          {"minvalue": "33", "maxvalue": "66", "code": "#FFC533"},
+          {"minvalue": "66", "maxvalue": "100", "code": "#62B58F"}
+        ]
+      },
+      "dials": {"dial": [{"value": this.chance}]}
+    }; 
+  }
 
+  getHistory(){
+    this.userPanelService.getHistory(this.currentUser).subscribe(data => {
+      for (let index = 0; index < data[0][0]; index++) {
+        this.accountState[index]={value: data[data[0][0]-index][1]};
+        this.result[index]={value: data[data[0][0]-index][0]};
+      }
       this.dataSourceHistory = {
         "chart": {
           "caption": "Twoja oś czasu",
           "yaxisname": "",
-          "subcaption": "2018",
+          "subcaption": "dane z ostatnich 20 zakładów",
           "showhovereffect": "1",
           "numbersuffix": "PLN",
           "drawcrossline": "1",
-          "plottooltext": "<b>$dataValue</b> of youth were on $seriesName",
+          "plottooltext": "<b>$dataValue</b> $seriesName",
           "theme": "fusion"
         },
+        
         "categories": [
           {
-            "category": [{"label": "I"},{"label": "II"},{"label": "III"},{"label": "IV"},{"label": "V"},{"label": "VI"},{"label": "VII"},{"label": "VIII"},{"label": "IX"},{"label": "X"},{"label": "XI"},{"label": "XII"},]
+            "category": [{"label": "I"},{"label": "II"},{"label": "III"},{"label": "IV"},{"label": "V"},{"label": "VI"},{"label": "VII"},{"label": "VIII"},{"label": "IX"},{"label": "X"},{"label": "XI"},{"label": "XII"},{"label": "XIII"},{"label": "XIV"},{"label": "XV"},{"label": "XVI"},{"label": "XVII"},{"label": "XVIII"},{"label": "XIX"},{"label": "XX"}]
           }
         ],
         "dataset": [
           {
-            "seriesname": "Zysk",
-            "data": [
-              {
-                "value": "62"
-              },
-              {
-                "value": "64"
-              },
-              {
-                "value": "64"
-              },
-              {
-                "value": "66"
-              },
-              {
-                "value": "78"
-              }
-            ]
+            "seriesname": "Wynik zakładu",
+            "data": this.result
           },
+          
           {
-            "seriesname": "Strata",
-            "data": [
-              {
-                "value": "16"
-              },
-              {
-                "value": "-28"
-              },
-              {
-                "value": "34"
-              },
-              {
-                "value": "42"
-              },
-              {
-                "value": "54"
-              }
-            ]
-          },
-          {
-            "seriesname": "Saldo",
-            "data": [
-              {
-                "value": "20"
-              },
-              {
-                "value": "22"
-              },
-              {
-                "value": "27"
-              },
-              {
-                "value": "22"
-              },
-              {
-                "value": "29"
-              }
-            ]
-          },
-          {
-            "seriesname": "Twitter",
-            "data": [
-              {
-                "value": "18"
-              },
-              {
-                "value": "19"
-              },
-              {
-                "value": "21"
-              },
-              {
-                "value": "21"
-              },
-              {
-                "value": "24"
-              }
-            ]
+            "seriesname": "Stan konta",
+            "data": this.accountState
           }
         ]
     }

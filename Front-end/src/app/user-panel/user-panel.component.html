@@ -89,7 +89,7 @@
   <div style="clear:both;"></div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel (closed)="panelOpenGraph = false" (opened)="panelOpenGraph = true">
+  <mat-expansion-panel (closed)="panelOpenGraph = false" (opened)="panelOpenGraph = true; getGraph()">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <h4><b><u>Wykres szans</u></b></h4>
@@ -109,7 +109,7 @@
   <mat-expansion-panel (closed)="panelOpenHistory = false" (opened)="panelOpenHistory = true; getHistory()">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <h4><b><u>Historia zakładów</u></b></h4>
+        <h4><b><u>Statystyki</u></b></h4>
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="center">

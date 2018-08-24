@@ -26,4 +26,9 @@ public class UserController {
     public Object getAccount(@PathVariable(name="userId")Long userId) {
         return userService.getAccount(userId);
     }
+
+    @GetMapping(value = "/user-panel/history/{userId}")
+    public Object getHistory(@PathVariable(name="userId")Long userId) {
+        return userService.getHistory(userId);
+    }
 }
