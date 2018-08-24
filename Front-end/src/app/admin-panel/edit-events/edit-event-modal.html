@@ -12,7 +12,7 @@
     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
     <mat-datepicker #picker1></mat-datepicker>
     <mat-error *ngIf="beginDateFormControl.hasError('required')">
-      Data rozpoczęcia jest <strong>wymagana</strong>!
+      Data rozpoczęcia jest <strong>wymagana</strong> w poprawnym formacie!
     </mat-error>
   </mat-form-field>
 
@@ -21,7 +21,7 @@
     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
     <mat-datepicker #picker2></mat-datepicker>
     <mat-error *ngIf="endDateFormControl.hasError('required')">
-      Data zakończenia jest <strong>wymagana</strong>!
+      Data zakończenia jest <strong>wymagana</strong>w poprawnym formacie!
     </mat-error>
   </mat-form-field>
 

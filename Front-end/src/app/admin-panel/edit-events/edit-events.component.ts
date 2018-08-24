@@ -150,25 +150,25 @@ export class EditEventModal {
 
   //begin date
   beginDateFormControl = new FormControl('', [
-    Validators.required,
+    Validators.required
   ]);
   matcherBeginDate = new MyErrorStateMatcher();
 
   //end date
   endDateFormControl = new FormControl('', [
-    Validators.required,
+    Validators.required
   ]);
   matcherEndDate = new MyErrorStateMatcher();
 
   //discipline
   disciplineFormControl = new FormControl('', [
-    Validators.required,
+    Validators.required
   ]);
   matcherDiscipline = new MyErrorStateMatcher();
 
   //members
   membersFormControl = new FormControl('', [
-    Validators.required,
+    Validators.required
   ]);
   matcherMembers = new MyErrorStateMatcher();
 
@@ -244,36 +244,35 @@ export class CreateEventModal {
   selectedType: Type;
   selectedMembers: Member[];
 
-    //eventName
-    eventNameFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherEventName = new MyErrorStateMatcher();
+  //eventName
+  eventNameFormControl = new FormControl('', [
+    Validators.required
+  ]);
+  matcherEventName = new MyErrorStateMatcher();
 
-    //beginDate
-    beginDateFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherBeginDate = new MyErrorStateMatcher();
+  //beginDate
+  beginDateFormControl = new FormControl('', [
+    Validators.required
+  ]);
+  matcherBeginDate = new MyErrorStateMatcher();
 
-    //endDate
-    endDateFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherEndDate = new MyErrorStateMatcher();
+  //endDate
+  endDateFormControl = new FormControl('', [
+    Validators.required
+  ]);
+  matcherEndDate = new MyErrorStateMatcher();
 
-    //selectedDiscipline
-    selectedDisciplineFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherSelectedDiscipline = new MyErrorStateMatcher();
+  //selectedDiscipline
+  selectedDisciplineFormControl = new FormControl('', [
+    Validators.required
+  ]);
+  matcherSelectedDiscipline = new MyErrorStateMatcher();
 
-    //selectedMembers
-    selectedMembersFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherSelectedMembers = new MyErrorStateMatcher();
-
+  //selectedMembers
+  selectedMembersFormControl = new FormControl('', [
+    Validators.required
+  ]);
+  matcherSelectedMembers = new MyErrorStateMatcher();    
 
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<CreateEventModal>,
@@ -358,13 +357,14 @@ onCancelClick(): void {
 
   //member
   memberFormControl = new FormControl('', [
-    Validators.required,
+    Validators.required
   ]);
   matcherMember = new MyErrorStateMatcher();
 
   //result
   resultFormControl = new FormControl('', [
     Validators.required,
+    Validators.pattern("^\\d+\\-\\d{1,}$")
   ]);
   matcherResult = new MyErrorStateMatcher();
 
