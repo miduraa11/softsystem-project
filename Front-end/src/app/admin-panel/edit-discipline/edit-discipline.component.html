@@ -41,7 +41,7 @@
         <p *ngIf="!discipline.individual">Drużynowa</p>
       </td>
       
-      <td><button mat-raised-button color="primary" (click)="openDialogEdit(discipline.id, discipline.discipline, discipline.individual)">Edytuj</button></td>
+      <td><button mat-raised-button color="primary" (click)="openDialogEdit(discipline)">Edytuj</button></td>
       <td><button mat-raised-button color="warn" (click)="openDialogDelete(discipline.id)">Usuń</button></td>
   </tr>
   </tbody>

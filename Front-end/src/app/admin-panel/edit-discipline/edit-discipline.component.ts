@@ -13,9 +13,10 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 export interface DialogData {
+  type: Type;
+}
+export interface DialogDataDelete {
   id: number;
-  discipline: string;
-  individual: boolean;
 }
 
 @Component({
@@ -56,10 +57,10 @@ export class EditDisciplineComponent implements OnInit {
     });
   }
 
-  openDialogEdit(id: number, discipline: string, individual: boolean): void {
+  openDialogEdit(type: Type): void {
     const dialogRef = this.dialog.open(EditDisciplineModalEdit, {
       width: '450px',
-      data: {discipline, id, individual}
+      data: {type: type}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -79,7 +80,7 @@ export class EditDisciplineModalDelete {
 
   constructor(private disciplineService: DisciplineService,
     public dialogRef: MatDialogRef<EditDisciplineModalDelete>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataDelete,
     public dialog: MatDialog
   ) { }
 
@@ -165,8 +166,6 @@ export class EditDisciplineModalAdd {
 
 }
 
-//Edit discipline
-
 @Component({
   selector: 'edit-discipline-modal-edit',
   templateUrl: './edit-discipline-modal-edit.html',
@@ -174,21 +173,28 @@ export class EditDisciplineModalAdd {
 })
 export class EditDisciplineModalEdit {
 
-  discipline: Type = { id : 0, discipline : "", individual: null};
+  type: Type;
 
-    //discipline
-    disciplineFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherDiscipline = new MyErrorStateMatcher();
+  editForm = new FormGroup({
+    discipline: new FormControl('', [
+      Validators.required
+    ]),
+    individual: new FormControl('', [
+      Validators.required
+    ])
+  });
 
   constructor(private disciplineService: DisciplineService,
     public dialogRef: MatDialogRef<EditDisciplineModalEdit>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    public snackBar: MatSnackBar
+  ) { 
+    this.type = this.data.type;
+  }
 
   ngOnInit() {
-    this.disciplineFormControl.setValue(this.data.discipline);
-    this.discipline.individual = this.data.individual;
+    this.editForm.get('discipline').setValue(this.type.discipline);
+    this.editForm.get('individual').setValue(String(this.type.individual));
   }
 
   onNoClick(): void {
@@ -196,19 +202,27 @@ export class EditDisciplineModalEdit {
   }
   
   editDiscipline() {
-    if(this.disciplineFormControl.errors==null) {
-    this.discipline.discipline = this.disciplineFormControl.value;
-    this.discipline.id = this.data.id; 
-    this.discipline.individual = this.data.individual;
-    this.disciplineService.editDiscipline(this.discipline)
-      .subscribe(
+    if(this.editForm.valid) {
+      this.type.discipline = this.editForm.get('discipline').value;
+      this.type.individual = this.editForm.get('individual').value;
+      this.disciplineService.editDiscipline(this.type).subscribe(
         data => {
           this.dialogRef.close();
           window.location.reload();
         },
-        error => console.log(error));     
-      } 
+        error => console.log(error)
+      );     
+    } else {
+      this.openSnackBar();
+    }
   }
+
+  openSnackBar() {
+    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
+      duration: 3000
+    });
+  }
+
 }
 
 @Component({
