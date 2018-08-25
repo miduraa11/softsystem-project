@@ -12,11 +12,11 @@ import { BetsComponent, InfoDialog } from './bets/bets.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AdminDeleteObjectComponent, ErrorInfoDialog } from './admin-panel/admin-panel-delete-object.component';
 import { AlertModule } from 'ngx-bootstrap';
-import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal, UserListModal, ResolveEventModal, EventErrorInfoDialog } from './admin-panel/edit-events/edit-events.component';
-import { EditTeamsComponent, EditTeamsModalDelete, EditTeamsModalAdd, EditTeamsModalEdit, TeamErrorInfoDialog } from './admin-panel/edit-teams/edit-teams.component';
+import { EditEventsComponent, EditEventModal, CreateEventModal, UserListModal, ResolveEventModal } from './admin-panel/edit-events/edit-events.component';
+import { EditTeamsComponent, EditTeamsModalAdd, EditTeamsModalEdit } from './admin-panel/edit-teams/edit-teams.component';
 import { EditDisciplineComponent, EditDisciplineModalAdd, EditDisciplineModalEdit } from './admin-panel/edit-discipline/edit-discipline.component';
-import { EditPlayersComponent, RemovePlayerDialog, PlayerEditDialog, AddPlayerDialog, PlayerErrorInfoDialog} from './admin-panel/edit-players/edit-players.component';
-import { EditUsersComponent, RemoveUserDialog, UserErrorInfoDialog } from './admin-panel/edit-users/edit-users.component';
+import { EditPlayersComponent, PlayerEditDialog, AddPlayerDialog } from './admin-panel/edit-players/edit-players.component';
+import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
 import { PlayerService } from './services/player.service';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card'
@@ -65,25 +65,16 @@ const routes: Routes = [
     EditDisciplineComponent,
     EditPlayersComponent,
     EditUsersComponent,
-    DeleteEventModal,
     EditEventModal,
     CreateEventModal,
     ResolveEventModal,
-    EventErrorInfoDialog,
-    RemovePlayerDialog,
-    PlayerErrorInfoDialog,
     PlayerEditDialog,
     AddPlayerDialog,
-    EditTeamsModalDelete,
     EditTeamsModalAdd,
     EditTeamsModalEdit,
-    TeamErrorInfoDialog,
     EditDisciplineModalAdd,
     EditDisciplineModalEdit,
-    RemoveUserDialog,
-    UserErrorInfoDialog,
     RegistrationComponent,
-    RemoveUserDialog,
     LoginComponent,
     HomeComponent,
     BetTheBetGeneralDialog,
@@ -125,21 +116,13 @@ const routes: Routes = [
   entryComponents: [
     AdminDeleteObjectComponent,
     ErrorInfoDialog,
-    DeleteEventModal,
     EditEventModal,
     CreateEventModal,
     ResolveEventModal,
-    EventErrorInfoDialog,
-    RemovePlayerDialog,
-    PlayerErrorInfoDialog,
     PlayerEditDialog,
     AddPlayerDialog,
-    EditTeamsModalDelete,
     EditTeamsModalAdd,
     EditTeamsModalEdit,
-    TeamErrorInfoDialog,
-    RemoveUserDialog,
-    UserErrorInfoDialog,
     BetTheBetGeneralDialog,
     BetTheBetDetailDialog,
     BetTheBetConfirmDialog,

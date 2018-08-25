@@ -5,6 +5,7 @@ import { TypeService } from '../../services/type.service';
 import { Validators, FormControl, FormGroup } from '../../../../node_modules/@angular/forms';
 import { Member } from '../../model/member';
 import { Type } from '../../model/type';
+import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
 
 export interface DialogData {
   player: Member;
@@ -32,10 +33,10 @@ export class EditPlayersComponent implements OnInit {
     );    
   }
 
-  openDeleteDialog(player: Member): void {
-    const dialogRef = this.dialog.open(RemovePlayerDialog, {
+  openDeleteObjectDialog(object: any, flag: number): void {
+    const dialogRef = this.dialog.open(AdminDeleteObjectComponent, {
       width: '450px',
-      data: { player }
+      data: { object, flag }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -57,50 +58,6 @@ export class EditPlayersComponent implements OnInit {
   openAddDialog(): void {
     const dialogRef = this.dialog.open(AddPlayerDialog, {
       width: '450px'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-}
-
-@Component({
-  selector: 'remove-player-dialog',
-  templateUrl: './remove-player-dialog.html',
-})
-export class RemovePlayerDialog {
-
-  player: Member;
-  error: number;
-
-  constructor(private playerService: PlayerService,
-    public dialogRef: MatDialogRef<RemovePlayerDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialog: MatDialog
-  ) {
-    this.player = this.data.player;
-  }
-
-  onCancelClick(): void {
-    this.dialogRef.close();
-  }
-
-  onDeleteClick(): void {
-    this.playerService.deletePlayer(this.player).subscribe(
-      data => {
-        this.error = data;
-        this.dialogRef.close();
-        if(this.error == 0) { window.location.reload(); }
-        else { this.openErrorInfoDialog(); }
-      },
-      error => console.log(error)
-    );
-  }
-
-  openErrorInfoDialog(): void {
-    const dialogRef = this.dialog.open(PlayerErrorInfoDialog, {
-      width: '400px',
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -238,21 +195,6 @@ export class AddPlayerDialog implements OnInit {
     this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
       duration: 3000
     });
-  }
-
-}
-
-@Component({
-  selector: 'error-info-dialog',
-  templateUrl: './error-info-dialog.html',
-})
-export class PlayerErrorInfoDialog {
-
-  constructor(public dialogRef: MatDialogRef<PlayerErrorInfoDialog>) {  
-  }
-
-  onOkClick(): void {
-    this.dialogRef.close();
   }
 
 }

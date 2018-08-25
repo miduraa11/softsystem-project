@@ -1,9 +1,17 @@
 import { Component, Inject } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { DisciplineService } from "../services/discipline.service";
+import { EventService } from "../services/event.service";
+import { PlayerService } from "../services/player.service";
+import { TeamService } from "../services/team.service";
+import { UserService } from "../services/user.service";
 
 export interface DeleteObjectData {
     object: any;
+    flag: number;
+}
+
+export interface ErrorDialogData {
     flag: number;
 }
 
@@ -21,7 +29,11 @@ export class AdminDeleteObjectComponent {
     constructor(public dialogRef: MatDialogRef<AdminDeleteObjectComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DeleteObjectData,
         public dialog: MatDialog,        
-        private disciplineService: DisciplineService
+        private disciplineService: DisciplineService,
+        private eventService: EventService,
+        private playerService: PlayerService,
+        private teamService: TeamService,
+        private userService: UserService
     ) { 
         this.object = this.data.object;
         this.flag = this.data.flag;
@@ -39,9 +51,59 @@ export class AdminDeleteObjectComponent {
                         this.error = data;
                         this.dialogRef.close();
                         if(this.error == 0) { window.location.reload(); }
-                        else { this.openErrorInfoDialog(); }
+                        else { this.openErrorInfoDialog(this.flag); }
                     },
                     error => console.log(error)
+                );
+                break;
+            }
+            case 2: {
+                this.eventService.deleteEvent(this.object).subscribe(
+                    data => {
+                      this.error = data;
+                      this.dialogRef.close();
+                      if(this.error == 0) { window.location.reload(); }
+                      else { this.openErrorInfoDialog(this.flag); }
+                    },
+                    error => console.log(error)
+                );
+                break;
+            }
+            case 3: {
+                this.playerService.deletePlayer(this.object).subscribe(
+                    data => {
+                      this.error = data;
+                      this.dialogRef.close();
+                      if(this.error == 0) { window.location.reload(); }
+                      else { this.openErrorInfoDialog(this.flag); }
+                    },
+                    error => console.log(error)
+                );
+                break;
+            }
+            case 4: {
+                this.teamService.deleteTeam(this.object).subscribe(
+                    data => {
+                      this.error = data;
+                      this.dialogRef.close();
+                      if(this.error == 0) { window.location.reload(); }
+                      else { this.openErrorInfoDialog(this.flag); }
+                    },
+                    error => {
+                      console.log(error);          
+                    }
+                );
+                break;
+            }
+            case 5: {
+                this.userService.deleteUser(this.object).subscribe(
+                    data => {
+                      this.error = data;
+                      this.dialogRef.close();
+                      if(this.error == 0) { window.location.reload(); }
+                      else { this.openErrorInfoDialog(this.flag); }
+                    },
+                    error => console.log(error)      
                 );
                 break;
             }
@@ -52,9 +114,10 @@ export class AdminDeleteObjectComponent {
         }
     }
 
-    openErrorInfoDialog(): void {
+    openErrorInfoDialog(flag: number): void {
         const dialogRef = this.dialog.open(ErrorInfoDialog, {
         width: '400px',
+        data: { flag }
         });
         dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
@@ -69,7 +132,12 @@ export class AdminDeleteObjectComponent {
 })
 export class ErrorInfoDialog {
 
-    constructor(public dialogRef: MatDialogRef<ErrorInfoDialog>) {  
+    flag: number;
+
+    constructor(public dialogRef: MatDialogRef<ErrorInfoDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: ErrorDialogData
+    ) {
+        this.flag = this.data.flag;
     }
 
     onOkClick(): void {

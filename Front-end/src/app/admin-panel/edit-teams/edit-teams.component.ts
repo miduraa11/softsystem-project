@@ -5,6 +5,7 @@ import { Member } from '../../model/member';
 import { Type } from '../../model/type';
 import { Validators, FormControl, FormGroup } from '../../../../node_modules/@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
 
 export interface DialogData {
   team: Member;
@@ -32,10 +33,10 @@ export class EditTeamsComponent implements OnInit {
     );
   }
 
-  openDialogDelete(team: Member): void {
-    const dialogRef = this.dialog.open(EditTeamsModalDelete, {
+  openDeleteObjectDialog(object: any, flag: number): void {
+    const dialogRef = this.dialog.open(AdminDeleteObjectComponent, {
       width: '450px',
-      data: { team }
+      data: { object, flag }
     });
     dialogRef.afterClosed().subscribe(
       result => {
@@ -65,53 +66,6 @@ export class EditTeamsComponent implements OnInit {
         console.log('The dialog was closed');
       }
     );
-  }
-
-}
-
-@Component({
-  selector: 'edit-teams-modal-delete',
-  templateUrl: './edit-teams-modal-delete.html',
-  styleUrls: ['./edit-teams.component.css']
-})
-export class EditTeamsModalDelete {
-
-  team: Member;
-  error: number;
-
-  constructor(private teamService: TeamService,
-    public dialogRef: MatDialogRef<EditTeamsModalDelete>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialog: MatDialog
-  ) {
-    this.team = this.data.team;
-  }
-
-  onCancelClick(): void {
-    this.dialogRef.close();
-  }
-
-  deleteTeam() {
-    this.teamService.deleteTeam(this.team).subscribe(
-      data => {
-        this.error = data;
-        this.dialogRef.close();
-        if(this.error == 0) { window.location.reload(); }
-        else { this.openErrorInfoDialog(); }
-      },
-      error => {
-        console.log(error);          
-      }
-    );        
-  }
-
-  openErrorInfoDialog(): void {
-    const dialogRef = this.dialog.open(TeamErrorInfoDialog, {
-      width: '400px',
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
 
 }
@@ -241,21 +195,6 @@ export class EditTeamsModalEdit {
     this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
       duration: 3000
     });
-  }
-
-}
-
-@Component({
-  selector: 'error-info-dialog',
-  templateUrl: './error-info-dialog.html',
-})
-export class TeamErrorInfoDialog {
-
-  constructor(public dialogRef: MatDialogRef<TeamErrorInfoDialog>) {  
-  }
-
-  onOkClick(): void {
-    this.dialogRef.close();
   }
 
 }

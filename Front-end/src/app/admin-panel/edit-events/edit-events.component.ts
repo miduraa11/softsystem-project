@@ -6,6 +6,7 @@ import { Member } from '../../model/member';
 import { Type } from '../../model/type';
 import { FormControl, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
 
 export interface DialogData {
   event: Event;
@@ -40,10 +41,10 @@ export class EditEventsComponent implements OnInit {
     );
   }
 
-  openDeleteDialog(event: Event): void {
-    const dialogRef = this.dialog.open(DeleteEventModal, {
+  openDeleteObjectDialog(object: any, flag: number): void {
+    const dialogRef = this.dialog.open(AdminDeleteObjectComponent, {
       width: '400px',
-      data: { event }
+      data: { object, flag }
     });
     dialogRef.afterClosed().subscribe(
       result => {
@@ -79,50 +80,6 @@ export class EditEventsComponent implements OnInit {
     const dialogRef = this.dialog.open(UserListModal, {
       width: '500px',
       data: { event }
-    });
-  }
-
-}
-
-@Component({
-  selector: 'delete-event-modal',
-  templateUrl: './delete-event-modal.html',
-})
-export class DeleteEventModal {
-
-  event: Event;
-  error: number;
-
-  constructor(private eventService: EventService,
-    public dialogRef: MatDialogRef<DeleteEventModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialog: MatDialog
-  ) {
-    this.event = this.data.event;
-  }
-
-  onCancelClick(): void {   
-    this.dialogRef.close();
-  }
-
-  deleteEvent() {
-    this.eventService.deleteEvent(this.event).subscribe(
-      data => {
-        this.error = data;
-        this.dialogRef.close();
-        if(this.error == 0) { window.location.reload(); }
-        else { this.openErrorInfoDialog(); }
-      },
-      error => console.log(error)
-    );
-  }
-
-  openErrorInfoDialog(): void {
-    const dialogRef = this.dialog.open(EventErrorInfoDialog, {
-      width: '400px',
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 
@@ -392,21 +349,6 @@ export class ResolveEventModal {
     this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
       duration: 3000
     });
-  }
-
-}
-
-@Component({
-  selector: 'error-info-dialog',
-  templateUrl: './error-info-dialog.html',
-})
-export class EventErrorInfoDialog {
-
-  constructor(public dialogRef: MatDialogRef<EventErrorInfoDialog>) {  
-  }
-
-  onOkClick(): void {
-    this.dialogRef.close();
   }
 
 }

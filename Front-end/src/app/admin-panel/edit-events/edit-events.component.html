@@ -46,6 +46,6 @@
     <button *ngIf="event.winner == null" class="button" type="button" mat-raised-button color="primary" (click)="openEditDialog(event)">Edytuj</button>
     <button *ngIf="event.winner != null" disabled class="button" type="button" mat-raised-button color="primary" (click)="openEditDialog(event)">Edytuj</button>
   </td>
-  <td><button class="button" type="button" mat-raised-button color="warn" (click)="openDeleteDialog(event)">Usuń</button></td>
+  <td><button class="button" type="button" mat-raised-button color="warn" (click)="openDeleteObjectDialog(event, 2)">Usuń</button></td>
 </tr>
 </table>
