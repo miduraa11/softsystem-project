@@ -14,6 +14,11 @@ export interface DialogData {
   types: Array<Type>;
 }
 
+export interface DialogDataEdit {
+  member: Team;
+  types: Array<Type>;
+}
+
 @Component({
   selector: 'app-edit-teams',
   templateUrl: './edit-teams.component.html',
@@ -53,10 +58,10 @@ export class EditTeamsComponent implements OnInit {
     });
   }
 
-  openDialogEdit(id: number, name: string, type: Type): void {
+  openDialogEdit(member: Team): void {
     const dialogRef = this.dialog.open(EditTeamsModalEdit, {
       width: '450px',
-      data: {name, id, type}
+      data: {member: member}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -166,10 +171,8 @@ export class EditTeamsModalAdd {
       duration: 3000
     });
   }
-  
-}
 
-//Edit team
+}
 
 @Component({
   selector: 'edit-teams-modal-edit',
@@ -177,31 +180,33 @@ export class EditTeamsModalAdd {
   styleUrls: ['./edit-teams.component.css']
 })
 export class EditTeamsModalEdit {
-  choosenTypeId: number;
+
   types: Array<Type>;
-  team: Team = { id : 0, name : "", type: null};
+  team: Team;
 
-    //teamName
-    teamNameFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherTeamName = new MyErrorStateMatcher();
-
-     //discipline
-     disciplineFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherDiscipline = new MyErrorStateMatcher();  
+  editForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    discipline: new FormControl('', [
+      Validators.required
+    ])
+  });
 
   constructor(private teamService: TeamService,
     public dialogRef: MatDialogRef<EditTeamsModalEdit>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit,
+    public snackBar: MatSnackBar
+  ) {
+    this.team = this.data.member;
+  }
 
   ngOnInit() {
-    this.teamService.getAllType().subscribe(data =>{this.types = data});
-    this.choosenTypeId = this.data.type.id;
-    this.teamNameFormControl.setValue(this.data.name);
-    this.disciplineFormControl.setValue(this.data.type.id)
+    this.teamService.getAllType().subscribe(
+      data => { this.types = data }
+    );
+    this.editForm.get('name').setValue(this.team.name);
+    this.editForm.get('discipline').setValue(this.team.type.discipline);
   }
 
   onNoClick(): void {
@@ -209,20 +214,27 @@ export class EditTeamsModalEdit {
   }
   
   editTeam() {
-    if(this.teamNameFormControl.errors==null
-    && this.disciplineFormControl.errors==null) {
-    this.team.name= this.teamNameFormControl.value; 
-    this.team.type = this.types.find(x => x.id == this.disciplineFormControl.value);
-    this.team.id = this.data.id; 
-    this.teamService.editTeam(this.team)
-      .subscribe(
+    if(this.editForm.valid) {
+      this.team.name= this.editForm.get('name').value;
+      this.team.type.discipline = this.editForm.get('discipline').value;
+      this.teamService.editTeam(this.team).subscribe(
         data => {
           this.dialogRef.close();
           window.location.reload();
         },
-        error => console.log(error));
-      }      
+        error => console.log(error)
+      );
+    } else {
+      this.openSnackBar();
+    }   
   }
+
+  openSnackBar() {
+    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
+      duration: 3000
+    });
+  }
+
 }
 
 @Component({

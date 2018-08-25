@@ -78,13 +78,13 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public void editMember(String name, Long id, Long idType) {
-        Member member = memberRepository.getOne(id);
-        member.setName(name);
-        Type type = typeRepository.getOne(idType);
-        member.setType(type);
-        memberRepository.save(member);
-    }
+//    public void editMember(String name, Long id, Long idType) {
+//        Member member = memberRepository.getOne(id);
+//        member.setName(name);
+//        Type type = typeRepository.getOne(idType);
+//        member.setType(type);
+//        memberRepository.save(member);
+//    }
 
     public int deleteMember(Long id) {
         try {

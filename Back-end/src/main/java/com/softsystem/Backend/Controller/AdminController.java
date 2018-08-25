@@ -143,9 +143,9 @@ public class AdminController {
         memberService.addTeam(name, idType);
     }
 
-    @PostMapping(value = "edit-teams/edit/{id}/{name}/{idType}")
-    public void editTeam(@PathVariable("id") Long id, @PathVariable("name")String name, @PathVariable("idType") Long idType) {
-        memberService.editMember(name, id, idType);
+    @PostMapping(value = "edit-teams/edit/{id}/{name}/{discipline}")
+    public void editTeam(@PathVariable("id") Long id, @PathVariable("name")String name, @PathVariable("discipline") String discipline) {
+        memberService.updateMember(id, name, discipline);
     }
 
     @GetMapping("/edit-teams/type")
