@@ -1,6 +1,5 @@
 package com.softsystem.Backend.Controller;
 
-import com.softsystem.Backend.DTO.EventDataDTO;
 import com.softsystem.Backend.DTO.UserListDTO;
 import com.softsystem.Backend.Model.*;
 import com.softsystem.Backend.Service.*;

@@ -1,7 +1,6 @@
 package com.softsystem.Backend.Controller;
 
 import com.softsystem.Backend.DTO.ActiveEventsDTO;
-import com.softsystem.Backend.DTO.BetDTO;
 import com.softsystem.Backend.Model.Bet;
 import com.softsystem.Backend.Model.Event;
 import com.softsystem.Backend.Model.Type;
