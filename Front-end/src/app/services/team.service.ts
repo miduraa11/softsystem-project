@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Team } from '../model/team';
+import { Member } from '../model/member';
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +23,11 @@ export class TeamService {
     return this.http.get(`${this.baseUrl}/${id}`,{responseType: 'text'});
   }
 
-  addTeam(team: Team): Observable<any> {
+  addTeam(team: Member): Observable<any> {
     return this.http.post(`${this.baseUrl}/add/${team.name}/${team.type.discipline}`, {responseType: 'text'});
   }
 
-  editTeam(team: Team): Observable<any>{
+  editTeam(team: Member): Observable<any>{
      return this.http.post(`${this.baseUrl}/edit/${team.id}/${team.name}/${team.type.discipline}`,{responseType: 'text'});
   }
 

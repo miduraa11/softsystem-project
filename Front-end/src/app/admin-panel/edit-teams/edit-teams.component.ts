@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { TeamService } from '../../services/team.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Team } from '../../model/team';
+import { Member } from '../../model/member';
 import { Type } from '../../model/type';
 import { Validators, FormControl, FormGroup } from '../../../../node_modules/@angular/forms';
 import { MyErrorStateMatcher } from '../edit-events/edit-events.component';
@@ -15,7 +15,7 @@ export interface DialogData {
 }
 
 export interface DialogDataEdit {
-  member: Team;
+  member: Member;
   types: Array<Type>;
 }
 
@@ -58,7 +58,7 @@ export class EditTeamsComponent implements OnInit {
     });
   }
 
-  openDialogEdit(member: Team): void {
+  openDialogEdit(member: Member): void {
     const dialogRef = this.dialog.open(EditTeamsModalEdit, {
       width: '450px',
       data: {member: member}
@@ -122,7 +122,7 @@ export class EditTeamsModalDelete {
 export class EditTeamsModalAdd {
   
   choosenTypeId: number;
-  team: Team = new Team();
+  team: Member = new Member();
   types: Array<Type>;
 
   addForm = new FormGroup({
@@ -182,7 +182,7 @@ export class EditTeamsModalAdd {
 export class EditTeamsModalEdit {
 
   types: Array<Type>;
-  team: Team;
+  team: Member;
 
   editForm = new FormGroup({
     name: new FormControl('', [
