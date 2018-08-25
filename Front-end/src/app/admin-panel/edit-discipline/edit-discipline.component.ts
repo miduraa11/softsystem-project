@@ -2,16 +2,8 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 import { DisciplineService } from '../../services/discipline.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Type } from '../../model/type';
-import { FormControl, Validators, FormGroup, FormGroupDirective, NgForm } from '../../../../node_modules/@angular/forms';
-import { MatSnackBar, ErrorStateMatcher } from '@angular/material';
-
-// TODO: spróbować to usunąć bo na 100% jest nie potrzebne
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+import { FormControl, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 export interface DialogData {
   type: Type;

@@ -4,22 +4,13 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Event } from '../../model/event';
 import { Member } from '../../model/member';
 import { Type } from '../../model/type';
-import { FormControl, Validators, FormGroup, FormGroupDirective, NgForm } from '../../../../node_modules/@angular/forms';
-import { MatSnackBar, ErrorStateMatcher } from '@angular/material';
-
-// TODO: Spróbować to usunąć bo jest to nie potrzebne
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+import { FormControl, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
+import { MatSnackBar } from '@angular/material';
 
 export interface DialogData {
   event: Event;
 }
 
-// TODO: sprawdzić czy tego też się nie da usunąć
 export interface UserList {
   userFirstName: string;
   userLastName: string;

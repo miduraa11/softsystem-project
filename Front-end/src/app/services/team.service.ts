@@ -19,16 +19,16 @@ export class TeamService {
     return this.http.get('//localhost:8080/edit-teams/type');
   }
 
-  deleteTeam(id : number) : Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`,{responseType: 'text'});
+  deleteTeam(team: Member) : Observable<any> {
+    return this.http.get(`${this.baseUrl}/${team.id}`,{responseType: 'text'});
   }
 
   addTeam(team: Member): Observable<any> {
-    return this.http.post(`${this.baseUrl}/add/${team.name}/${team.type.discipline}`, {responseType: 'text'});
+    return this.http.post(`${this.baseUrl}/add`, team);
   }
 
   editTeam(team: Member): Observable<any>{
-     return this.http.post(`${this.baseUrl}/edit/${team.id}/${team.name}/${team.type.discipline}`,{responseType: 'text'});
+     return this.http.post(`${this.baseUrl}/edit`, team);
   }
 
 }

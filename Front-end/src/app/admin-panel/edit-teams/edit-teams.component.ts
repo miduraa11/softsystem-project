@@ -4,19 +4,10 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Member } from '../../model/member';
 import { Type } from '../../model/type';
 import { Validators, FormControl, FormGroup } from '../../../../node_modules/@angular/forms';
-import { MyErrorStateMatcher } from '../edit-events/edit-events.component';
 import { MatSnackBar } from '@angular/material';
 
 export interface DialogData {
-  id: number;
-  name: string;
-  type: Type;
-  types: Array<Type>;
-}
-
-export interface DialogDataEdit {
-  member: Member;
-  types: Array<Type>;
+  team: Member;
 }
 
 @Component({
@@ -26,46 +17,54 @@ export interface DialogDataEdit {
 })
 export class EditTeamsComponent implements OnInit {
   
-  teams: Array<any>;
-  types: Array<any>;
+  teams: Member[];
 
   constructor(private teamService: TeamService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    this.teamService.getAll().subscribe(data =>{this.teams = data});
-    this.teamService.getAllType().subscribe(data =>{this.types = data});
+    this.teamService.getAll().subscribe(
+      data => {
+        this.teams = data;
+      },
+      error => console.log(error)
+    );
   }
 
-  openDialogDelete(id: number): void {
+  openDialogDelete(team: Member): void {
     const dialogRef = this.dialog.open(EditTeamsModalDelete, {
       width: '450px',
-      data: {id}
+      data: { team }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe(
+      result => {
+        console.log('The dialog was closed');
+      }
+    );
   }
 
   openDialogAdd(): void {
     const dialogRef = this.dialog.open(EditTeamsModalAdd, {
-      width: '450px',
-      data: {name, types: this.types}
+      width: '450px'
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe(
+      result => {
+        console.log('The dialog was closed');
+      }
+    );
   }
 
-  openDialogEdit(member: Member): void {
+  openDialogEdit(team: Member): void {
     const dialogRef = this.dialog.open(EditTeamsModalEdit, {
       width: '450px',
-      data: {member: member}
+      data: { team }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe(
+      result => {
+        console.log('The dialog was closed');
+      }
+    );
   }
 
 }
@@ -77,20 +76,23 @@ export class EditTeamsComponent implements OnInit {
 })
 export class EditTeamsModalDelete {
 
+  team: Member;
   error: number;
 
   constructor(private teamService: TeamService,
     public dialogRef: MatDialogRef<EditTeamsModalDelete>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialog: MatDialog
-  ) { }
+  ) {
+    this.team = this.data.team;
+  }
 
-  onNoClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
 
   deleteTeam() {
-    this.teamService.deleteTeam(this.data.id).subscribe(
+    this.teamService.deleteTeam(this.team).subscribe(
       data => {
         this.error = data;
         this.dialogRef.close();
@@ -121,8 +123,7 @@ export class EditTeamsModalDelete {
 })
 export class EditTeamsModalAdd {
   
-  choosenTypeId: number;
-  team: Member = new Member();
+  team: Member;
   types: Array<Type>;
 
   addForm = new FormGroup({
@@ -136,24 +137,27 @@ export class EditTeamsModalAdd {
 
   constructor(private teamService: TeamService,
     public dialogRef: MatDialogRef<EditTeamsModalAdd>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public snackBar: MatSnackBar
-  ) { }
+  ) {
+    this.team = new Member();
+  }
     
-  ngOnInit() {
+  ngOnInit(): void {
     this.teamService.getAllType().subscribe(
-      data => { this.types = data }
+      data => {
+        this.types = data
+      }
     );
   }
 
-  onNoClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
   
-  addTeam() {
+  addTeam(): void {
     if(this.addForm.valid) {
-      this.team.name = this.addForm.get('name').value; 
-      this.team.type = this.addForm.get('discipline').value; 
+      this.team.name = this.addForm.get('name').value;
+      this.team.type = this.addForm.get('discipline').value;
       this.teamService.addTeam(this.team).subscribe(
         data => {
           this.dialogRef.close();
@@ -181,8 +185,9 @@ export class EditTeamsModalAdd {
 })
 export class EditTeamsModalEdit {
 
-  types: Array<Type>;
+  types: Type[];
   team: Member;
+  chosenType: number;
 
   editForm = new FormGroup({
     name: new FormControl('', [
@@ -195,28 +200,31 @@ export class EditTeamsModalEdit {
 
   constructor(private teamService: TeamService,
     public dialogRef: MatDialogRef<EditTeamsModalEdit>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public snackBar: MatSnackBar
   ) {
-    this.team = this.data.member;
+    this.team = this.data.team;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.teamService.getAllType().subscribe(
-      data => { this.types = data }
+      data => {
+        this.types = data
+      }
     );
     this.editForm.get('name').setValue(this.team.name);
-    this.editForm.get('discipline').setValue(this.team.type.discipline);
+    this.editForm.get('discipline').setValue(this.team.type.id);
   }
 
-  onNoClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
   
   editTeam() {
     if(this.editForm.valid) {
       this.team.name= this.editForm.get('name').value;
-      this.team.type.discipline = this.editForm.get('discipline').value;
+      this.chosenType = this.editForm.get('discipline').value;
+      this.team.type = this.types.find(x => this.chosenType == x.id);
       this.teamService.editTeam(this.team).subscribe(
         data => {
           this.dialogRef.close();
