@@ -1,20 +1,23 @@
 <h1 mat-dialog-title>Dodawanie nowej dyscypliny</h1>
-<form>
-    <div class="form-group">
-        <mat-form-field class="example-full-width" style="width: 100%">            
-            <input matInput [formControl]="disciplineFormControl" [errorStateMatcher]="matcherDiscipline" style="width: 100%" placeholder="Podaj nazwę dyscypliny"/>
-            <mat-error *ngIf="disciplineFormControl.hasError('required')">
-                Imię i nazwisko jest <strong>wymagane</strong>!
-            </mat-error>
-        </mat-form-field>
-    </div>
-    
-    <p><b>Rodzaj</b></p>
-    <div class="form-check form-check-inline">
-        <mat-checkbox name="individual" [(ngModel)]="discipline.individual">Indywidualna</mat-checkbox>
-    </div>
 
-</form>
+<form [formGroup]="addForm">
+
+    <mat-form-field class="example-full-width" style="width: 100%">            
+        <input matInput formControlName="discipline" style="width: 350px" placeholder="Podaj nazwę dyscypliny"/>
+        <mat-error>
+            Nazwa jest <strong>wymagana</strong>!
+        </mat-error>
+    </mat-form-field>
+
+    <mat-radio-group formControlName="individual">
+        <mat-radio-button value=true>Indywidualna</mat-radio-button>
+        <mat-radio-button value=false>Drużynowa</mat-radio-button>
+        <mat-error *ngIf="addForm.get('individual').hasError('required')">
+            Rodzaj jest <strong>wymagany</strong>!
+        </mat-error>
+    </mat-radio-group>
 
     <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="addDiscipline()">Dodaj dyscypline</button>
     <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onNoClick()">Anuluj</button>
+
+</form>
