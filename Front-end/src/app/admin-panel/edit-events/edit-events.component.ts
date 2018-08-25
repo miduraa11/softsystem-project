@@ -4,9 +4,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Event } from '../../model/event';
 import { Member } from '../../model/member';
 import { Type } from '../../model/type';
-import { ErrorStateMatcher } from '../../../../node_modules/@angular/material';
-import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { FormControl, Validators, FormGroup, FormGroupDirective, NgForm } from '../../../../node_modules/@angular/forms';
+import { MatSnackBar, ErrorStateMatcher } from '@angular/material';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -33,7 +32,6 @@ export interface DialogDataCreate {
   event: Event;
 }
 
-
 @Component({
   selector: 'app-edit-events',
   templateUrl: './edit-events.component.html',
@@ -45,9 +43,9 @@ export class EditEventsComponent implements OnInit {
   eventIsFinished: boolean;
   events: Event[];
 
-  constructor(private eventService: EventService, public dialog: MatDialog) {
-
-  }
+  constructor(private eventService: EventService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.eventService.getAllEvents().subscribe(data => {

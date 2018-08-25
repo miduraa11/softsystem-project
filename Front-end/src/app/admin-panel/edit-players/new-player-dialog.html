@@ -1,27 +1,24 @@
 <h1 mat-dialog-title>Podaj dane nowego zawodnika</h1>
 
-<form>
-    <div class="form-group">
-        <mat-form-field class="example-full-width" style="width: 100%">            
-            <input matInput [formControl]="playerNameFormControl" [errorStateMatcher]="matcherPlayerName" style="width: 100%" placeholder="Podaj imię i nazwisko zawodnika"/>
-            <mat-error *ngIf="playerNameFormControl.hasError('required')">
-                Imię i nazwisko jest <strong>wymagane</strong>!
-            </mat-error>
-        </mat-form-field>
-    </div>
+<form [formGroup]="addForm">
 
-    <div class="form-group">
-        <mat-form-field class="example-full-width" style="width: 100%"> 
-            <mat-select [formControl]="disciplineFormControl" [errorStateMatcher]="matcherDiscipline" style="width: 100%" placeholder="Wybierz dyscypline">
-                <mat-option *ngFor="let type of types" [value]="type.discipline" >{{type.discipline}}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="disciplineFormControl.hasError('required')">
-                Dyscyplina jest <strong>wymagana</strong>!
-            </mat-error>
-        </mat-form-field>
-    </div>
+    <mat-form-field class="example-full-width" style="width: 100%">            
+        <input matInput formControlName="name" style="width: 100%" placeholder="Podaj imię i nazwisko zawodnika"/>
+        <mat-error>
+            Imię i nazwisko jest <strong>wymagane</strong>!
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width" style="width: 100%"> 
+        <mat-select formControlName="discipline" style="width: 100%" placeholder="Wybierz dyscypline">
+            <mat-option *ngFor="let type of types" [value]="type.discipline" >{{type.discipline}}</mat-option>
+        </mat-select>
+        <mat-error>
+            Dyscyplina jest <strong>wymagana</strong>!
+        </mat-error>
+    </mat-form-field>
+
+    <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="onAddClick(data)">Dodaj</button>
+    <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onAnulujClick()">Anuluj</button>
 
 </form>
-
-  <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="onAddClick(data)">Dodaj</button>
-  <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onAnulujClick()">Anuluj</button>

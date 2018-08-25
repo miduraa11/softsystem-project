@@ -1,10 +1,8 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-import { Member } from '../../model/member';
 import { PlayerService } from '../../services/player.service';
 import { TypeService } from '../../services/type.service';
 import { Validators, FormControl, FormGroup } from '../../../../node_modules/@angular/forms';
-import { MyErrorStateMatcher } from '../../registration/registration.component';
 
 export interface DialogData {
   id: number;
@@ -181,46 +179,55 @@ export class AddPlayerDialog implements OnInit {
 
   types: Array<any>;
 
-    //teamName
-    playerNameFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherTeamName = new MyErrorStateMatcher();
-
-     //discipline
-     disciplineFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherDiscipline = new MyErrorStateMatcher(); 
-    
+  addForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    discipline: new FormControl('', [
+      Validators.required
+    ])
+  });    
     
   constructor( private typeService: TypeService,
-      private playerService: PlayerService,
-      public dialogRef: MatDialogRef<AddPlayerDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: DialogData2) {
-  }
+    private playerService: PlayerService,
+    public dialogRef: MatDialogRef<AddPlayerDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData2,
+    public snackBar: MatSnackBar
+    ) { }
 
   onAnulujClick(): void {
     this.dialogRef.close();
   }
 
   ngOnInit() {
-    this.typeService.getTypes().subscribe(data =>{
-      this.types = data;
-    });
+    this.typeService.getTypes().subscribe(
+      data =>{
+        this.types = data;
+      }
+    );
   }
 
   onAddClick(data: DialogData2): void {
-    if(this.playerNameFormControl.errors==null
-      && this.disciplineFormControl.errors==null) {
-      this.data.name = this.playerNameFormControl.value;
-      this.data.discipline = this.disciplineFormControl.value;
+    if(this.addForm.valid) {
+      this.data.name = this.addForm.get('name').value;
+      this.data.discipline = this.addForm.get('discipline').value;
       this.playerService.addPlayer(data.name, data.discipline).subscribe(
-      data => { console.log("Success"); this.dialogRef.close(); window.location.reload(); },
-      error => console.log(error));
+        data => {
+          console.log("Success");
+          this.dialogRef.close();
+          window.location.reload();
+        },
+        error => console.log(error)
+      );
     } else {
-      alert("Błędnie wprowadzone dane!");
+      this.openSnackBar();
     }
+  }
+
+  openSnackBar() {
+    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
+      duration: 3000
+    });
   }
 
 }
