@@ -24,7 +24,7 @@ export class TeamService {
   }
 
   addTeam(team: Team): Observable<any> {
-    return this.http.post(`${this.baseUrl}/add/${team.name}/${team.type.id}`, {responseType: 'text'});
+    return this.http.post(`${this.baseUrl}/add/${team.name}/${team.type.discipline}`, {responseType: 'text'});
   }
 
   editTeam(team: Team): Observable<any>{

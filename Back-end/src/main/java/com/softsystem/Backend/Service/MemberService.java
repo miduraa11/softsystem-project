@@ -20,19 +20,30 @@ public class MemberService {
 
     public Collection <Member> getAllPlayers() {
         Collection <Member> players;
-        players = memberRepository.findAll().stream()
-                                    .filter(this::isPlayer)
-                                    .collect(Collectors.toList());
+        players = memberRepository.findAll()
+                .stream()
+                .filter(this::isPlayer)
+                .collect(Collectors.toList());
 
         return players;
     }
 
-    private boolean isPlayer(Member member) {
+    public Collection <Member> getAllTeams() {
+        Collection<Member> teams;
+        teams = memberRepository.findAll()
+                .stream()
+                .filter(this::isTeam)
+                .collect(Collectors.toList());
 
-        return member.getType().getIndividual();
+        return teams;
     }
 
-    public int deleteById(Long id) {
+    public List<Member> findAll() {
+
+        return memberRepository.findAll();
+    }
+
+    public int deleteMember(Long id) {
         try {
             memberRepository.deleteById(id);
             return 0;
@@ -56,43 +67,9 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public List<Member> findAll() {
+    private boolean isPlayer(Member member) {
 
-        return memberRepository.findAll();
-    }
-
-    public Collection <Member> getAllTeams() {
-        Collection<Member> teams;
-        teams = memberRepository.findAll().stream()
-                .filter(this::isTeam)
-                .collect(Collectors.toList());
-
-        return teams;
-    }
-
-    public void addTeam(String name, Long idType) {
-        Member member = new Member();
-        Type type = typeRepository.getOne(idType);
-        member.setName(name);
-        member.setType(type);
-        memberRepository.save(member);
-    }
-
-//    public void editMember(String name, Long id, Long idType) {
-//        Member member = memberRepository.getOne(id);
-//        member.setName(name);
-//        Type type = typeRepository.getOne(idType);
-//        member.setType(type);
-//        memberRepository.save(member);
-//    }
-
-    public int deleteMember(Long id) {
-        try {
-            memberRepository.deleteById(id);
-            return 0;
-        } catch (Exception e) {
-            return -1;
-        }
+        return member.getType().getIndividual();
     }
 
     private boolean isTeam(Member member) {

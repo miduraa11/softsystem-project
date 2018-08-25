@@ -102,7 +102,7 @@ public class AdminController {
     @GetMapping("/edit-players/{id}")
     public int deletePlayer(@PathVariable("id") Long id) {
 
-        return memberService.deleteById(id);
+        return memberService.deleteMember(id);
     }
 
     @PostMapping(value= "/edit-players/edit/{id}/{name}/{discipline}")
@@ -138,9 +138,9 @@ public class AdminController {
         return memberService.deleteMember(id);
     }
 
-    @PostMapping(value = "edit-teams/add/{name}/{idType}")
-    public void addTeam(@PathVariable("name") String name, @PathVariable("idType") Long idType) {
-        memberService.addTeam(name, idType);
+    @PostMapping(value = "edit-teams/add/{name}/{discipline}")
+    public void addTeam(@PathVariable("name") String name, @PathVariable("discipline") String discipline) {
+        memberService.addMember(name, discipline);
     }
 
     @PostMapping(value = "edit-teams/edit/{id}/{name}/{discipline}")
