@@ -40,7 +40,7 @@ export class UserPanelComponent implements OnInit {
   ]);
   matcherConfirmPassword = new MyErrorStateMatcher();
 
-  user: User = {id: 0, login: "", firstName: "", lastName: "", email: "", password: ""};
+  user: User = new User();
   key: string = "User id";
   currentUser: number;
   currentPassword: any;

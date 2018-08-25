@@ -333,10 +333,9 @@ constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<UserListModal>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
-ngOnInit(){
+ngOnInit() {
    this.eventService.getUserList(this.data.id).subscribe(data => {
     this.userList = data;
-    console.log(this.userList);
    });
 }
 

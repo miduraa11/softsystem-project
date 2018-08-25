@@ -22,7 +22,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 export class RegistrationComponent implements OnInit {
 
-  user: User = { id: 0, login: "", firstName: "", lastName: "", email: "", password: ""};
+  user: User = new User();
   existLogin: any = false;
 
 //email

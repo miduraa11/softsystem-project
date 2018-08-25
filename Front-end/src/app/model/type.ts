@@ -1,6 +1,10 @@
+import { Member } from "./member";
+import { Event } from "./event";
+
 export class Type {
     id: number;
     discipline: String;
-    individual: boolean;
-
+    individual: Boolean;
+    members: Member[];
+    events: Event[];
 }
