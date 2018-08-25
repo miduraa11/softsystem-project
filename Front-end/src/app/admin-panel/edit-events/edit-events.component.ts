@@ -146,8 +146,8 @@ export class EditEventModal {
   event: Event;
   members: Member[];
   types: Type[];
-  choosenTypeId: number;
-  choosenMemberId: number[];
+  chosenTypeId: number;
+  chosenMemberId: number[];
 
   editForm = new FormGroup({
     name: new FormControl('', [
@@ -202,10 +202,10 @@ export class EditEventModal {
       this.event.name = this.editForm.get('name').value;
       this.event.beginDate = this.editForm.get('beginDate').value;
       this.event.endDate = this.editForm.get('endDate').value;
-      this.choosenTypeId = this.editForm.get('discipline').value;
-      this.choosenMemberId = this.editForm.get('members').value;
-      this.event.type = this.types.find(x => this.choosenTypeId === x.id);
-      this.event.members = this.members.filter(x => this.choosenMemberId.some(y => y == x.id));
+      this.chosenTypeId = this.editForm.get('discipline').value;
+      this.chosenMemberId = this.editForm.get('members').value;
+      this.event.type = this.types.find(x => this.chosenTypeId == x.id);
+      this.event.members = this.members.filter(x => this.chosenMemberId.some(y => y == x.id));
       this.eventService.updateEvent(this.event).subscribe(
         data => {
           this.dialogRef.close();

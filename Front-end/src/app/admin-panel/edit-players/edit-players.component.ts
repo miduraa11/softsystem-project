@@ -3,15 +3,11 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/
 import { PlayerService } from '../../services/player.service';
 import { TypeService } from '../../services/type.service';
 import { Validators, FormControl, FormGroup } from '../../../../node_modules/@angular/forms';
+import { Member } from '../../model/member';
+import { Type } from '../../model/type';
 
 export interface DialogData {
-  id: number;
-}
-
-export interface DialogData2 {
-  id: number;
-  name: String;
-  discipline: String;
+  player: Member;
 }
 
 @Component({
@@ -21,21 +17,25 @@ export interface DialogData2 {
 })
 export class EditPlayersComponent implements OnInit {  
 
-  players: Array<any>;
+  players: Member[];
 
-  constructor(private playerService: PlayerService, public dialog: MatDialog) {
-  }
+  constructor(private playerService: PlayerService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit() {
-    this.playerService.getPlayers().subscribe(data => {
-      this.players = data;
-    });    
+    this.playerService.getPlayers().subscribe(
+      data => {
+        this.players = data
+      },
+      error => console.log(error)
+    );    
   }
 
-  openDeleteDialog(id: number): void {
+  openDeleteDialog(player: Member): void {
     const dialogRef = this.dialog.open(RemovePlayerDialog, {
       width: '450px',
-      data: { id: id }
+      data: { player }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -43,10 +43,10 @@ export class EditPlayersComponent implements OnInit {
     });
   }
 
-  openEditDialog(id: number, name: String, discipline: String): void {
+  openEditDialog(player: Member): void {
     const dialogRef = this.dialog.open(PlayerEditDialog, {
       width: '450px',
-      data: { id: id, name: name, discipline: discipline }
+      data: { player }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -56,10 +56,8 @@ export class EditPlayersComponent implements OnInit {
 
   openAddDialog(): void {
     const dialogRef = this.dialog.open(AddPlayerDialog, {
-      width: '450px',
-      data: {id: null, name: null, discipline: null}
+      width: '450px'
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
@@ -73,20 +71,23 @@ export class EditPlayersComponent implements OnInit {
 })
 export class RemovePlayerDialog {
 
+  player: Member;
   error: number;
 
   constructor(private playerService: PlayerService,
     public dialogRef: MatDialogRef<RemovePlayerDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialog: MatDialog
-  ) { }
+  ) {
+    this.player = this.data.player;
+  }
 
-  onAnulujClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
 
   onDeleteClick(): void {
-    this.playerService.deletePlayer(this.data.id).subscribe(
+    this.playerService.deletePlayer(this.player).subscribe(
       data => {
         this.error = data;
         this.dialogRef.close();
@@ -114,8 +115,9 @@ export class RemovePlayerDialog {
 })
 export class PlayerEditDialog implements OnInit {
 
-  types: Array<any>;
-
+  player: Member;
+  chosenType: number;
+  types: Type[];
 
   editForm = new FormGroup({
     name: new FormControl('', [
@@ -129,28 +131,32 @@ export class PlayerEditDialog implements OnInit {
   constructor( private typeService: TypeService,
     private playerService: PlayerService,
     public dialogRef: MatDialogRef<PlayerEditDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData2,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public snackBar: MatSnackBar
-  ) { }
+  ) {
+    this.player = this.data.player;
+  }
 
-  onAnulujClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
 
   ngOnInit() {
     this.typeService.getTypes().subscribe(
       data => {
-      this.types = data;
-      this.editForm.get('name').setValue(this.data.name);
-      this.editForm.get('discipline').setValue(this.data.discipline);
-    });
+        this.types = data;
+      }
+    );
+    this.editForm.get('name').setValue(this.player.name);
+    this.editForm.get('discipline').setValue(this.player.type.id);
   }
 
-  onSaveClick(data: DialogData2): void {
+  onSaveClick(): void {
     if(this.editForm.valid) {
-      data.name = this.editForm.get('name').value;
-      data.discipline = this.editForm.get('discipline').value;
-      this.playerService.updatePlayer(data.id, data.name, data.discipline).subscribe(
+      this.player.name = this.editForm.get('name').value;
+      this.chosenType = this.editForm.get('discipline').value;
+      this.player.type = this.types.find(x => this.chosenType == x.id);
+      this.playerService.updatePlayer(this.player).subscribe(
         data => { 
           console.log("Success");
           this.dialogRef.close();
@@ -177,7 +183,8 @@ export class PlayerEditDialog implements OnInit {
 })
 export class AddPlayerDialog implements OnInit {
 
-  types: Array<any>;
+  player: Member;
+  types: Type[];
 
   addForm = new FormGroup({
     name: new FormControl('', [
@@ -191,27 +198,30 @@ export class AddPlayerDialog implements OnInit {
   constructor( private typeService: TypeService,
     private playerService: PlayerService,
     public dialogRef: MatDialogRef<AddPlayerDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData2,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public snackBar: MatSnackBar
-    ) { }
+  ) {
+    this.player = new Member();
+  }
 
-  onAnulujClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.typeService.getTypes().subscribe(
       data =>{
         this.types = data;
-      }
+      },
+      error => console.log(error)
     );
   }
 
-  onAddClick(data: DialogData2): void {
+  onAddClick(): void {
     if(this.addForm.valid) {
-      this.data.name = this.addForm.get('name').value;
-      this.data.discipline = this.addForm.get('discipline').value;
-      this.playerService.addPlayer(data.name, data.discipline).subscribe(
+      this.player.name = this.addForm.get('name').value;
+      this.player.type = this.addForm.get('discipline').value;
+      this.playerService.addPlayer(this.player).subscribe(
         data => {
           console.log("Success");
           this.dialogRef.close();

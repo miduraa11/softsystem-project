@@ -11,14 +11,14 @@
 
     <mat-form-field class="example-full-width" style="width: 100%"> 
         <mat-select formControlName="discipline" style="width: 100%" placeholder="Wybierz dyscypline">
-            <mat-option *ngFor="let type of types" [value]="type.discipline" >{{type.discipline}}</mat-option>
+            <mat-option *ngFor="let type of types" [value]="type.id" >{{type.discipline}}</mat-option>
         </mat-select>
         <mat-error>
             Dyscyplina jest <strong>wymagana</strong>!
         </mat-error>
     </mat-form-field>
 
-    <button mat-button (click)="onAnulujClick()">Anuluj</button>
-    <button mat-flat-button color='primary' (click)="onSaveClick(data)">Zapisz</button>
+    <button mat-button (click)="onCancelClick()">Anuluj</button>
+    <button mat-flat-button color='primary' (click)="onSaveClick()">Zapisz</button>
     
 </form>

@@ -52,19 +52,17 @@ public class MemberService {
         }
     }
 
-    public void updateMember(Long id, String name, String discipline) {
-        memberRepository.getOne(id).setName(name);
-        Type tempType = typeRepository.findByDiscipline(discipline);
-        memberRepository.getOne(id).setType(tempType);
-        memberRepository.save(memberRepository.getOne(id));
+    public void updateMember(Member member) {
+        memberRepository.getOne(member.getId()).setName(member.getName());
+        memberRepository.getOne(member.getId()).setType(member.getType());
+        memberRepository.save(memberRepository.getOne(member.getId()));
     }
 
-    public void addMember(String name, String discipline) {
-        Member member = new Member();
-        member.setName(name);
-        Type tempType = typeRepository.findByDiscipline(discipline);
-        member.setType(tempType);
-        memberRepository.save(member);
+    public void addMember(Member member) {
+        Member newMember = new Member();
+        newMember.setName(member.getName());
+        newMember.setType(member.getType());
+        memberRepository.save(newMember);
     }
 
     private boolean isPlayer(Member member) {

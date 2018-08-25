@@ -103,9 +103,9 @@ public class AdminController {
         return memberService.deleteMember(id);
     }
 
-    @PostMapping(value= "/edit-players/edit/{id}/{name}/{discipline}")
-    public void updatePlayer(@PathVariable("id") Long id, @PathVariable("name") String name, @PathVariable("discipline") String discipline) {
-        memberService.updateMember(id, name, discipline);
+    @PostMapping(value= "/edit-players/edit")
+    public void updatePlayer(@RequestBody Member player) {
+        memberService.updateMember(player);
     }
 
     @GetMapping(value = "/edit-players/types")
@@ -114,9 +114,9 @@ public class AdminController {
         return typeService.getAllIndividualTypes();
     }
 
-    @PostMapping(value= "/edit-players/add/{name}/{discipline}")
-    public void addPlayer(@PathVariable("name") String name, @PathVariable("discipline") String discipline) {
-        memberService.addMember(name, discipline);
+    @PostMapping(value= "/edit-players/add")
+    public void addPlayer(@RequestBody Member player) {
+        memberService.addMember(player);
     }
 
     /*------------------*/
@@ -136,14 +136,14 @@ public class AdminController {
         return memberService.deleteMember(id);
     }
 
-    @PostMapping(value = "edit-teams/add/{name}/{discipline}")
-    public void addTeam(@PathVariable("name") String name, @PathVariable("discipline") String discipline) {
-        memberService.addMember(name, discipline);
+    @PostMapping(value = "edit-teams/add")
+    public void addTeam(@RequestBody Member team) {
+        memberService.addMember(team);
     }
 
-    @PostMapping(value = "edit-teams/edit/{id}/{name}/{discipline}")
-    public void editTeam(@PathVariable("id") Long id, @PathVariable("name")String name, @PathVariable("discipline") String discipline) {
-        memberService.updateMember(id, name, discipline);
+    @PostMapping(value = "edit-teams/edit")
+    public void editTeam(@RequestBody Member team) {
+        memberService.updateMember(team);
     }
 
     @GetMapping("/edit-teams/type")
