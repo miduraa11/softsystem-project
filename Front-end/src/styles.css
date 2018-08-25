@@ -9,3 +9,19 @@ body {
     background-repeat: round;
     background-attachment: fixed;
 }
+
+.footer {
+    position: fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    margin-left: 15%;
+    margin-right: 15%;
+    height:30px;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.text {
+    color: white;
+    font-size: 110%;
+}
