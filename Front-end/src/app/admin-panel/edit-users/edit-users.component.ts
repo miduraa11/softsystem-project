@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { User } from '../../model/user';
 
 export interface DialogData {
-  id: number;
+  user: User;
 }
 
 @Component({
@@ -13,24 +14,25 @@ export interface DialogData {
 })
 export class EditUsersComponent implements OnInit {
 
-  users: Array<any>;
+  users: User[];
 
   constructor(private userService: UserService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(data => {
-      this.users = data;
-    });
+    this.userService.getUsers().subscribe(
+      data => {
+       this.users = data;
+      }
+    );
   }
 
-  openDeleteDialog(id: number): void {
+  openDeleteDialog(user: User): void {
     const dialogRef = this.dialog.open(RemoveUserDialog, {
       width: '450px',
-      data: { id: id }
+      data: { user }
     });
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
@@ -44,20 +46,23 @@ export class EditUsersComponent implements OnInit {
 })
 export class RemoveUserDialog {
 
+  user: User;
   error: number;
 
   constructor(private userService: UserService,
     public dialogRef: MatDialogRef<RemoveUserDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialog: MatDialog
-  ) { }
+  ) {
+    this.user = this.data.user;
+  }
 
-  onAnulujClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
 
   onDeleteClick(): void {
-    this.userService.deleteUser(this.data.id).subscribe(
+    this.userService.deleteUser(this.user).subscribe(
       data => {
         this.error = data;
         this.dialogRef.close();
