@@ -8,8 +8,6 @@ import { ErrorStateMatcher } from '../../../../node_modules/@angular/material';
 import { FormControl, FormGroupDirective, NgForm, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
-// TODO to chyba będzie można usunąć potem
-//Validation
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -260,44 +258,29 @@ export class CreateEventModal {
   selectedType: Type;
   selectedMembers: Member[];
 
-  //eventName
-  eventNameFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  matcherEventName = new MyErrorStateMatcher();
-
-  //beginDate
-  beginDateFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  matcherBeginDate = new MyErrorStateMatcher();
-
-  //endDate
-  endDateFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  matcherEndDate = new MyErrorStateMatcher();
-
-  //selectedDiscipline
-  selectedDisciplineFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  matcherSelectedDiscipline = new MyErrorStateMatcher();
-
-  //selectedMembers
-  selectedMembersFormControl = new FormControl('', [
-    Validators.required
-  ]);
-  matcherSelectedMembers = new MyErrorStateMatcher();    
+  addForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    beginDate: new FormControl('', [
+      Validators.required
+    ]),
+    endDate: new FormControl('', [
+      Validators.required
+    ]),
+    discipline: new FormControl('', [
+      Validators.required
+    ]),
+    members: new FormControl('', [
+      Validators.required
+    ]),
+  });
 
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<CreateEventModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogDataCreate) {
-    }
-
-  onCancelClick(): void {
-    this.dialogRef.close();
-  }
+    @Inject(MAT_DIALOG_DATA) public data: DialogDataCreate,
+    public snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
     this.eventService.getTypesAndMembers().subscribe(data => {
@@ -306,30 +289,33 @@ export class CreateEventModal {
     });
   }
 
-  addEvent() {
+  onCancelClick(): void {
+    this.dialogRef.close();
+  }
 
-    if(this.eventNameFormControl.errors==null
-      && this.beginDateFormControl.errors==null
-      && this.endDateFormControl.errors==null
-      && this.selectedDisciplineFormControl.errors==null
-      && this.selectedMembersFormControl.errors==null) {
-      this.event.name = this.eventNameFormControl.value;
-      this.event.beginDate = this.beginDateFormControl.value;
-      this.event.endDate = this.endDateFormControl.value;
-      this.selectedType = this.selectedDisciplineFormControl.value;
-      this.selectedMembers = this.selectedMembersFormControl.value;
-      this.event.active = true;
-      this.eventService.addEvent(this.event, this.selectedType, this.selectedMembers)
-        .subscribe(
-          data => {
-            this.dialogRef.close();
-            window.location.reload();
-          },
-          error => console.log(error));
+  addEvent(): void {
+    if(this.addForm.valid) {
+      this.event.name = this.addForm.get('name').value;
+      this.event.beginDate = this.addForm.get('beginDate').value;
+      this.event.endDate = this.addForm.get('endDate').value;
+      this.selectedType = this.addForm.get('discipline').value;
+      this.selectedMembers = this.addForm.get('members').value;
+      this.eventService.addEvent(this.event, this.selectedType, this.selectedMembers).subscribe(
+        data => {
+          this.dialogRef.close();
+          window.location.reload();
+        },
+        error => console.log(error)
+      );
     } else {
-      alert("Błędnie wprowadzone dane!");
+      this.openSnackBar();
     }
+  }
 
+  openSnackBar() {
+    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
+      duration: 3000
+    });
   }
 
 }

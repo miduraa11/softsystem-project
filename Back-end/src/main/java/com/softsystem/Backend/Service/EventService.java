@@ -59,7 +59,7 @@ public class EventService {
         newEvent.setName(event.getName());
         newEvent.setBeginDate(event.getBeginDate());
         newEvent.setEndDate(event.getEndDate());
-        newEvent.setActive(event.getActive());
+        newEvent.setActive(true);
         type = typeRepository.findByDiscipline(selectedDiscipline.getDiscipline());
         newEvent.setType(type);
         newEvent.setMembers(selectedMembers);
