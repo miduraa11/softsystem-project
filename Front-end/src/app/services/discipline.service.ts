@@ -14,7 +14,7 @@ export class DisciplineService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
-    return this.http.get('//localhost:8080/edit-discipline');
+    return this.http.get(`${this.baseUrl}`);
   }
 
   deleteDiscipline(id : number) : Observable<any> {
@@ -22,11 +22,11 @@ export class DisciplineService {
   }
 
   addDiscipline(discipline: Type): Observable<any> {
-    return this.http.post(`${this.baseUrl}/add//${discipline.discipline}/${discipline.individual}`, {responseType: 'text'});
+    return this.http.post(`${this.baseUrl}/add`, discipline);
   }
 
-  editDiscipline(discipline: Type): Observable<any>{
-     return this.http.post(`${this.baseUrl}/edit/${discipline.id}/${discipline.discipline}/${discipline.individual}`,{responseType: 'text'});
+  editDiscipline(discipline: Type): Observable<any> {
+    return this.http.post(`${this.baseUrl}/edit`, discipline);
   }
 
 }

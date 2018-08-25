@@ -160,26 +160,26 @@ public class AdminController {
     /*------------------*/
 
     @GetMapping("/edit-discipline")
-    public List<Type> getAllDiscipline() {
+    public List<Type> getAllDisciplines() {
         List<Type> disciplines = new ArrayList<>();
         typeService.getAllDisciplines().forEach(disciplines::add);
         return disciplines;
     }
 
     @GetMapping("/edit-discipline/{id}")
-    public int adminDisciplineDelete(@PathVariable(name="id")Long id) {
+    public int deleteDiscipline(@PathVariable(name="id")Long id) {
 
         return typeService.deleteDiscipline(id);
     }
 
-    @PostMapping(value = "edit-discipline/add/{discipline}/{individual}")
-    public void addDiscipline(@PathVariable("discipline") String discipline, @PathVariable("individual") boolean individual) {
-        typeService.addDiscipline(discipline, individual);
+    @PostMapping(value = "edit-discipline/add")
+    public void addDiscipline(@RequestBody Type type) {
+        typeService.addDiscipline(type);
     }
 
-    @PostMapping(value = "edit-discipline/edit/{id}/{discipline}/{individual}")
-    public void editDiscipline(@PathVariable("id")long id, @PathVariable("discipline")String discipline, @PathVariable("individual") boolean individual) {
-        typeService.editDiscipline(discipline, id, individual);
+    @PostMapping(value = "edit-discipline/edit")
+    public void editDiscipline(@RequestBody Type type) {
+        typeService.editDiscipline(type);
     }
 
     /*------------------*/

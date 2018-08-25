@@ -56,17 +56,17 @@ public class TypeService {
         return disciplines;
     }
 
-    public void addDiscipline(String name, boolean individual) {
-        Type discipline = new Type();
-        discipline.setDiscipline(name);
-        discipline.setIndividual(individual);
-        typeRepository.save(discipline);
+    public void addDiscipline(Type type) {
+        Type newDiscipline = new Type();
+        newDiscipline.setDiscipline(type.getDiscipline());
+        newDiscipline.setIndividual(type.getIndividual());
+        typeRepository.save(newDiscipline);
     }
 
-    public void editDiscipline(String name, long id, boolean individual) {
-        Type discipline = typeRepository.getOne(id);
-        discipline.setDiscipline(name);
-        discipline.setIndividual(individual);
+    public void editDiscipline(Type type) {
+        Type discipline = typeRepository.getOne(type.getId());
+        discipline.setDiscipline(type.getDiscipline());
+        discipline.setIndividual(type.getIndividual());
         typeRepository.save(discipline);
     }
 

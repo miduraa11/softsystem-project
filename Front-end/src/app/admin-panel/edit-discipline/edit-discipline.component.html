@@ -22,27 +22,27 @@
   <thead class="thead-dark">
   <tr>
       <th scope="col">ID</th>
-      <th scope="col" onclick="sortTable(0)">Nazwa Dyscypliny</th>
+      <th scope="col">Nazwa Dyscypliny</th>
       <th scope="col">Rodzaj</th>
       <th scope="col"></th>
       <th scope="col"></th>
   </tr>
   </thead>
-  <tbody  *ngFor="let discipline of disciplines">
+  <tbody  *ngFor="let type of types">
   <tr >
       <th scope="row" >
-        {{discipline.id}}
+        {{type.id}}
       </th>
       <td >
-        {{discipline.discipline}}
+        {{type.discipline}}
       </td>
       <td>
-        <p *ngIf="discipline.individual">Indywidualna</p>
-        <p *ngIf="!discipline.individual">Drużynowa</p>
+        <p *ngIf="type.individual">Indywidualna</p>
+        <p *ngIf="!type.individual">Drużynowa</p>
       </td>
       
-      <td><button mat-raised-button color="primary" (click)="openDialogEdit(discipline)">Edytuj</button></td>
-      <td><button mat-raised-button color="warn" (click)="openDialogDelete(discipline.id)">Usuń</button></td>
+      <td><button mat-raised-button color="primary" (click)="openDialogEdit(type)">Edytuj</button></td>
+      <td><button mat-raised-button color="warn" (click)="openDialogDelete(type)">Usuń</button></td>
   </tr>
   </tbody>
 </table>

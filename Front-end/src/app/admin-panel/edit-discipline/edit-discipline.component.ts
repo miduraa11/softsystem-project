@@ -5,6 +5,7 @@ import { Type } from '../../model/type';
 import { FormControl, Validators, FormGroup, FormGroupDirective, NgForm } from '../../../../node_modules/@angular/forms';
 import { MatSnackBar, ErrorStateMatcher } from '@angular/material';
 
+// TODO: spróbować to usunąć bo na 100% jest nie potrzebne
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -15,9 +16,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export interface DialogData {
   type: Type;
 }
-export interface DialogDataDelete {
-  id: number;
-}
 
 @Component({
   selector: 'app-edit-discipline',
@@ -26,21 +24,27 @@ export interface DialogDataDelete {
 })
 export class EditDisciplineComponent implements OnInit {
   
-  disciplines: Array<any>;
+  types: Type[];
 
-  constructor(private disciplineService: DisciplineService, public dialog: MatDialog) { }
+  constructor(private disciplineService: DisciplineService,
+    public dialog: MatDialog
+  ) { }
 
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.disciplineService.getAll().subscribe(
-      data =>{ this.disciplines = data }
+      data => {
+        this.types = data
+      },
+      error => {
+        console.log(error)
+      }
     );
   }
 
-  openDialogDelete(id: number): void {
+  openDialogDelete(type: Type): void {
     const dialogRef = this.dialog.open(EditDisciplineModalDelete, {
       width: '450px',
-      data: {id}
+      data: { type }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -49,8 +53,7 @@ export class EditDisciplineComponent implements OnInit {
 
   openDialogAdd(): void {
     const dialogRef = this.dialog.open(EditDisciplineModalAdd, {
-      width: '450px',
-      data: {}
+      width: '450px'
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -76,20 +79,23 @@ export class EditDisciplineComponent implements OnInit {
 })
 export class EditDisciplineModalDelete {
 
+  type: Type;
   error: number;
 
   constructor(private disciplineService: DisciplineService,
     public dialogRef: MatDialogRef<EditDisciplineModalDelete>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogDataDelete,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialog: MatDialog
-  ) { }
+  ) { 
+    this.type = this.data.type;
+  }
 
-  onNoClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
 
   deleteDiscipline() {
-    this.disciplineService.deleteDiscipline(this.data.id).subscribe(
+    this.disciplineService.deleteDiscipline(this.type.id).subscribe(
       data => {
         this.error = data;
         this.dialogRef.close();
@@ -138,7 +144,7 @@ export class EditDisciplineModalAdd {
   ngOnInit() {
   }
 
-  onNoClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
   
