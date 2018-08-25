@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../model/user';
-import { RegistrationService } from './registration.service';
+import { RegistrationService } from '../services/registration.service';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {Md5} from 'ts-md5';

@@ -80,7 +80,7 @@ public class UserService {
     public String getUserRole(Long userId) { return userRepository.getRoleByUser(userId); }
 
     public User getUserById(Long id){
-        User user = userRepository.findByIdUser(id);
+        User user = userRepository.findUserById(id);
         user.setPassword("");
         return user;
     }

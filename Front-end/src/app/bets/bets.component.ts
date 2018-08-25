@@ -20,11 +20,11 @@ export class BetsComponent implements OnInit {
   currentUser: number;
   chosenStatus: String = "Wszystkie";
 
-  constructor(private betsService: BetsService, public dialog: MatDialog) {
+  constructor(private betsService: BetsService,
+    public dialog: MatDialog
+  ) { }
 
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.currentUser = Number(localStorage.getItem(this.key));
     this.betsService.getAllBetsById(this.currentUser).subscribe(
       data => {
@@ -40,20 +40,23 @@ export class BetsComponent implements OnInit {
   }
 
   updateList(chosenStatus: String): void {
-
     this.chosenStatus = chosenStatus;
     this.betsService.giveChosenParams(this.chosenStatus, this.currentUser).subscribe(
-      data => { console.log("Success"),
-      this.betsService.getActiveBets().subscribe(data => {
-        this.bets = data;
-        for(var i = 0; i < this.bets.length; i++) {
-          if(this.bets[i].member == null) { 
-            this.bets[i].member = new Member;
-            this.bets[i].member.name = "Remis";
+      data => { 
+        console.log("Success"),
+        this.betsService.getActiveBets().subscribe(
+          data => {
+            this.bets = data;
+            for(var i = 0; i < this.bets.length; i++) {
+              if(this.bets[i].member == null) { 
+                this.bets[i].member = new Member;
+                this.bets[i].member.name = "Remis";
+              }
+            }
+            this.chosenStatus = chosenStatus;
           }
-        }
-        this.chosenStatus = chosenStatus;
-      })},
+        )
+      },
       error => console.log(error)
     );
   }
@@ -61,7 +64,7 @@ export class BetsComponent implements OnInit {
   openInfoDialog(event: Event): void {
     const dialogRef = this.dialog.open(InfoDialog, {
       width: '400px',
-      data: {event: event}
+      data: { event }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -81,15 +84,12 @@ export class InfoDialog {
   constructor(
     public dialogRef: MatDialogRef<InfoDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {  
+  ) {
+    this.event = this.data.event; 
   }
 
   onOkClick(): void {
     this.dialogRef.close();
-  }
-
-  ngOnInit() {
-    this.event = this.data.event;
   }
 
 }

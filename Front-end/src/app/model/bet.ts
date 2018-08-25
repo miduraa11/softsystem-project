@@ -8,7 +8,7 @@ export class Bet {
     betResult: Boolean;
     prize: number;
     result: String;
-    isGeneral: Boolean;
+    general: Boolean;
     member: Member;
     event: Event;
     user: User;

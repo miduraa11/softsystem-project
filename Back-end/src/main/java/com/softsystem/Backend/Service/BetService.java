@@ -2,6 +2,7 @@ package com.softsystem.Backend.Service;
 
 import com.softsystem.Backend.Model.Bet;
 import com.softsystem.Backend.Model.Event;
+import com.softsystem.Backend.Model.User;
 import com.softsystem.Backend.Repository.BetRepository;
 import com.softsystem.Backend.Repository.EventRepository;
 import com.softsystem.Backend.Repository.MemberRepository;
@@ -23,22 +24,20 @@ public class BetService {
     @Autowired
     private MemberRepository memberRepository;
 
-    public void addBet(Long currentUser, Event event, float amount, Long chosenMember, String result, int betType) {
+    public void addBet(Bet bet) {
         Bet newBet = new Bet();
-        newBet.setUser(userRepository.getOne(currentUser));
-        newBet.setEvent(eventRepository.getOne(event.getId()));
-        if(chosenMember != -1) { newBet.setMember(memberRepository.getOne(chosenMember)); }
-        else { newBet.setMember(null); }
+        newBet.setUser(userRepository.findUserById(bet.getUser().getId()));
+        newBet.setEvent(bet.getEvent());
+        newBet.setMember(bet.getMember());
         newBet.setBetResult(null);
-        newBet.setAmount(amount);
-        if(betType == 0) {
+        newBet.setAmount(bet.getAmount());
+        if(bet.getGeneral()) {
             newBet.setGeneral(true);
-            betRepository.saveAndFlush(newBet);
         } else {
-            newBet.setResult(result);
             newBet.setGeneral(false);
-            betRepository.saveAndFlush(newBet);
+            newBet.setResult(bet.getResult());
         }
+        betRepository.save(newBet);
     }
 
     public List<Bet> showAllBets(Long userId) { return betRepository.findAllBetsByUserId(userId); }

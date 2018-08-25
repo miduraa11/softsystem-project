@@ -32,7 +32,7 @@ import { MatIconModule} from '@angular/material/icon';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { UserService } from './services/user.service';
 import { RegistrationComponent } from './registration/registration.component';
-import { RegistrationService } from './registration/registration.service';
+import { RegistrationService } from './services/registration.service';
 import { LoginComponent } from './login/login.component';
 import { LocalStorageService } from './services/localStorage';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
