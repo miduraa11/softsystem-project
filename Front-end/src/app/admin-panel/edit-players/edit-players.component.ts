@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Member } from '../../model/member';
 import { PlayerService } from '../../services/player.service';
 import { TypeService } from '../../services/type.service';
-import { Validators, FormControl } from '../../../../node_modules/@angular/forms';
+import { Validators, FormControl, FormGroup } from '../../../../node_modules/@angular/forms';
 import { MyErrorStateMatcher } from '../../registration/registration.component';
 
 export interface DialogData {
@@ -118,45 +118,57 @@ export class PlayerEditDialog implements OnInit {
 
   types: Array<any>;
 
-    //teamName
-    playerNameFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherTeamName = new MyErrorStateMatcher();
 
-     //discipline
-     disciplineFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherDiscipline = new MyErrorStateMatcher(); 
+  editForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    discipline: new FormControl('', [
+      Validators.required
+    ])
+  });
 
   constructor( private typeService: TypeService,
-    private playerService: PlayerService, public dialogRef: MatDialogRef<PlayerEditDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData2) {
-  }
+    private playerService: PlayerService,
+    public dialogRef: MatDialogRef<PlayerEditDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData2,
+    public snackBar: MatSnackBar
+  ) { }
 
   onAnulujClick(): void {
     this.dialogRef.close();
   }
 
   ngOnInit() {
-    this.typeService.getTypes().subscribe(data =>{
+    this.typeService.getTypes().subscribe(
+      data => {
       this.types = data;
-      this.playerNameFormControl.setValue(this.data.name);
-      this.disciplineFormControl.setValue(this.data.discipline)
+      this.editForm.get('name').setValue(this.data.name);
+      this.editForm.get('discipline').setValue(this.data.discipline);
     });
   }
 
   onSaveClick(data: DialogData2): void {
-    if(this.playerNameFormControl.errors==null
-      && this.disciplineFormControl.errors==null) {
-      data.name = this.playerNameFormControl.value;
-      data.discipline = this.disciplineFormControl.value;
-    this.playerService.updatePlayer(data.id, data.name, data.discipline).subscribe(
-      data => { console.log("Success"); this.dialogRef.close(); window.location.reload(); },
-      error => console.log(error));
+    if(this.editForm.valid) {
+      data.name = this.editForm.get('name').value;
+      data.discipline = this.editForm.get('discipline').value;
+      this.playerService.updatePlayer(data.id, data.name, data.discipline).subscribe(
+        data => { 
+          console.log("Success");
+          this.dialogRef.close();
+          window.location.reload();
+        },
+        error => console.log(error)
+      );
     } else {
-      alert("Błędnie wprowadzone dane!");
+      this.openSnackBar();
     }
+  }
+
+  openSnackBar() {
+    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
+      duration: 3000
+    });
   }
 
 }
