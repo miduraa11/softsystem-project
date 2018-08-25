@@ -10,10 +10,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
 import { BetsComponent, InfoDialog } from './bets/bets.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { AdminDeleteObjectComponent, ErrorInfoDialog } from './admin-panel/admin-panel-delete-object.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal, UserListModal, ResolveEventModal, EventErrorInfoDialog } from './admin-panel/edit-events/edit-events.component';
 import { EditTeamsComponent, EditTeamsModalDelete, EditTeamsModalAdd, EditTeamsModalEdit, TeamErrorInfoDialog } from './admin-panel/edit-teams/edit-teams.component';
-import { EditDisciplineComponent, EditDisciplineModalDelete, EditDisciplineModalAdd, EditDisciplineModalEdit, DisciplineErrorInfoDialog } from './admin-panel/edit-discipline/edit-discipline.component';
+import { EditDisciplineComponent, EditDisciplineModalAdd, EditDisciplineModalEdit } from './admin-panel/edit-discipline/edit-discipline.component';
 import { EditPlayersComponent, RemovePlayerDialog, PlayerEditDialog, AddPlayerDialog, PlayerErrorInfoDialog} from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent, RemoveUserDialog, UserErrorInfoDialog } from './admin-panel/edit-users/edit-users.component';
 import { PlayerService } from './services/player.service';
@@ -57,6 +58,8 @@ const routes: Routes = [
     EventsComponent,
     BetsComponent,
     AdminPanelComponent,
+    AdminDeleteObjectComponent,
+    ErrorInfoDialog,
     EditEventsComponent,
     EditTeamsComponent,
     EditDisciplineComponent,
@@ -75,10 +78,8 @@ const routes: Routes = [
     EditTeamsModalAdd,
     EditTeamsModalEdit,
     TeamErrorInfoDialog,
-    EditDisciplineModalDelete,
     EditDisciplineModalAdd,
     EditDisciplineModalEdit,
-    DisciplineErrorInfoDialog,
     RemoveUserDialog,
     UserErrorInfoDialog,
     RegistrationComponent,
@@ -122,6 +123,8 @@ const routes: Routes = [
     MatRadioModule,
   ],
   entryComponents: [
+    AdminDeleteObjectComponent,
+    ErrorInfoDialog,
     DeleteEventModal,
     EditEventModal,
     CreateEventModal,
@@ -140,10 +143,8 @@ const routes: Routes = [
     BetTheBetGeneralDialog,
     BetTheBetDetailDialog,
     BetTheBetConfirmDialog,
-    EditDisciplineModalDelete,
     EditDisciplineModalAdd,
     EditDisciplineModalEdit,
-    DisciplineErrorInfoDialog,
     UserListModal,
     InfoDialog,
   ],

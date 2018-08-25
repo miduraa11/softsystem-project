@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Type } from '../../model/type';
 import { FormControl, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
 import { MatSnackBar } from '@angular/material';
+import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
 
 export interface DialogData {
   type: Type;
@@ -33,10 +34,10 @@ export class EditDisciplineComponent implements OnInit {
     );
   }
 
-  openDialogDelete(type: Type): void {
-    const dialogRef = this.dialog.open(EditDisciplineModalDelete, {
+  openDeleteObjectDialog(object: any, flag: number): void {
+    const dialogRef = this.dialog.open(AdminDeleteObjectComponent, {
       width: '450px',
-      data: { type }
+      data: { object, flag }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -56,51 +57,6 @@ export class EditDisciplineComponent implements OnInit {
     const dialogRef = this.dialog.open(EditDisciplineModalEdit, {
       width: '450px',
       data: {type: type}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-}
-
-@Component({
-  selector: 'edit-discipline-modal-delete',
-  templateUrl: './edit-discipline-modal-delete.html',
-  styleUrls: ['./edit-discipline.component.css']
-})
-export class EditDisciplineModalDelete {
-
-  type: Type;
-  error: number;
-
-  constructor(private disciplineService: DisciplineService,
-    public dialogRef: MatDialogRef<EditDisciplineModalDelete>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialog: MatDialog
-  ) { 
-    this.type = this.data.type;
-  }
-
-  onCancelClick(): void {
-    this.dialogRef.close();
-  }
-
-  deleteDiscipline() {
-    this.disciplineService.deleteDiscipline(this.type.id).subscribe(
-      data => {
-        this.error = data;
-        this.dialogRef.close();
-        if(this.error == 0) { window.location.reload(); }
-        else { this.openErrorInfoDialog(); }
-      },
-      error => console.log(error)
-    );
-  }
-
-  openErrorInfoDialog(): void {
-    const dialogRef = this.dialog.open(DisciplineErrorInfoDialog, {
-      width: '400px',
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -219,21 +175,6 @@ export class EditDisciplineModalEdit {
     this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
       duration: 3000
     });
-  }
-
-}
-
-@Component({
-  selector: 'error-info-dialog',
-  templateUrl: './error-info-dialog.html',
-})
-export class DisciplineErrorInfoDialog {
-
-  constructor(public dialogRef: MatDialogRef<DisciplineErrorInfoDialog>) {  
-  }
-
-  onOkClick(): void {
-    this.dialogRef.close();
   }
 
 }
