@@ -7,6 +7,7 @@ import { Type } from '../../model/type';
 import { FormControl, Validators, FormGroup, FormGroupDirective, NgForm } from '../../../../node_modules/@angular/forms';
 import { MatSnackBar, ErrorStateMatcher } from '@angular/material';
 
+// TODO: Spróbować to usunąć bo jest to nie potrzebne
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -15,21 +16,14 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 }
 
 export interface DialogData {
-  id: number;
-}
-
-export interface DialogDataEdit {
   event: Event;
 }
 
+// TODO: sprawdzić czy tego też się nie da usunąć
 export interface UserList {
   userFirstName: string;
   userLastName: string;
   userPrize: number;
-}
-
-export interface DialogDataCreate {
-  event: Event;
 }
 
 @Component({
@@ -37,7 +31,6 @@ export interface DialogDataCreate {
   templateUrl: './edit-events.component.html',
   styleUrls: ['./edit-events.component.css']
 })
-
 export class EditEventsComponent implements OnInit {
   
   eventIsFinished: boolean;
@@ -47,54 +40,54 @@ export class EditEventsComponent implements OnInit {
     public dialog: MatDialog
   ) { }
 
-  ngOnInit() {
-    this.eventService.getAllEvents().subscribe(data => {
-      this.events = data;
-    });
+  ngOnInit(): void {
+    this.eventService.getAllEvents().subscribe(
+      data => {
+        this.events = data;
+      },
+      error => console.log(error)
+    );
   }
 
-  eventStatus(winner: string){
-    if(winner!=null){
-      this.eventIsFinished = true;
-    } else {
-      this.eventIsFinished = false;
-    }
-    return this.eventIsFinished;
-  }
-
-  openDeleteDialog(id: number): void {
+  openDeleteDialog(event: Event): void {
     const dialogRef = this.dialog.open(DeleteEventModal, {
       width: '400px',
-      data: {id: id}
+      data: { event }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe(
+      result => {
+        console.log('The dialog was closed')
+      }
+    );
   }
 
   openEditDialog(event: Event): void {
     const dialogRef = this.dialog.open(EditEventModal, {
       width: '450px',
-      data: { event : event }
+      data: { event }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe(
+      result => {
+        console.log('The dialog was closed');
+      }
+    );
   }
 
   openCreateDialog(): void {
     const dialogRef = this.dialog.open(CreateEventModal, {
       width: '450px'
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe(
+      result => {
+        console.log('The dialog was closed');
+      }
+    );
   }
 
-  openUserListDialog(id: number){
+  openUserListDialog(event: Event): void {
     const dialogRef = this.dialog.open(UserListModal, {
       width: '500px',
-      data: {id: id}
+      data: { event }
     });
   }
 
@@ -106,20 +99,23 @@ export class EditEventsComponent implements OnInit {
 })
 export class DeleteEventModal {
 
+  event: Event;
   error: number;
 
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<DeleteEventModal>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialog: MatDialog
-  ) { }
+  ) {
+    this.event = this.data.event;
+  }
 
   onCancelClick(): void {   
-      this.dialogRef.close();
+    this.dialogRef.close();
   }
 
   deleteEvent() {
-    this.eventService.deleteEvent(this.data.id).subscribe(
+    this.eventService.deleteEvent(this.event).subscribe(
       data => {
         this.error = data;
         this.dialogRef.close();
@@ -152,8 +148,6 @@ export class EditEventModal {
   types: Type[];
   choosenTypeId: number;
   choosenMemberId: number[];
-  selectedType: Type;
-  selectedMembers: Member[];
 
   editForm = new FormGroup({
     name: new FormControl('', [
@@ -175,7 +169,7 @@ export class EditEventModal {
 
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<EditEventModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public dialog: MatDialog,
     public snackBar: MatSnackBar
   ) {
@@ -184,15 +178,14 @@ export class EditEventModal {
     this.event.endDate = new Date(this.data.event.endDate);
   }
 
-  onCancelClick(): void {
-    this.dialogRef.close();
-  }
-
   ngOnInit() {
-    this.eventService.getTypesAndMembers().subscribe(data => {
-      this.types = data.types;
-      this.members = data.members;
-    });
+    this.eventService.getTypesAndMembers().subscribe(
+      data => {
+        this.types = data.types;
+        this.members = data.members;
+      },
+      error => console.log(error)
+    );
     this.editForm.get('name').setValue(this.event.name);
     this.editForm.get('beginDate').setValue(this.event.beginDate);
     this.editForm.get('endDate').setValue(this.event.endDate);
@@ -200,6 +193,9 @@ export class EditEventModal {
     this.editForm.get('members').setValue(this.event.members.map(x => x.id));
   }
 
+  onCancelClick(): void {
+    this.dialogRef.close();
+  }
 
   editEvent(flag: number) {
     if(this.editForm.valid) {
@@ -208,9 +204,9 @@ export class EditEventModal {
       this.event.endDate = this.editForm.get('endDate').value;
       this.choosenTypeId = this.editForm.get('discipline').value;
       this.choosenMemberId = this.editForm.get('members').value;
-      this.selectedType = this.types.find(x => this.choosenTypeId === x.id);
-      this.selectedMembers = this.members.filter(x => this.choosenMemberId.some(y => y == x.id));
-      this.eventService.updateEvent(this.event, this.selectedType, this.selectedMembers).subscribe(
+      this.event.type = this.types.find(x => this.choosenTypeId === x.id);
+      this.event.members = this.members.filter(x => this.choosenMemberId.some(y => y == x.id));
+      this.eventService.updateEvent(this.event).subscribe(
         data => {
           this.dialogRef.close();
           this.eventService.checkEventsActivity().subscribe(
@@ -234,7 +230,7 @@ export class EditEventModal {
   resolveEventModal(event: Event): void {
     const dialogRef = this.dialog.open(ResolveEventModal, {
       width: '450px',
-      data: {event: event}
+      data: { event }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -250,9 +246,11 @@ export class EditEventModal {
 })
 export class CreateEventModal {
 
-  event: any = {};
+  event: Event = new Event();
   members: Member[];
   types: Type[];
+
+
   selectedType: Type;
   selectedMembers: Member[];
 
@@ -276,15 +274,18 @@ export class CreateEventModal {
 
   constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<CreateEventModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogDataCreate,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
-    this.eventService.getTypesAndMembers().subscribe(data => {
-      this.types = data.types;
-      this.members = data.members;
-    });
+    this.eventService.getTypesAndMembers().subscribe(
+      data => {
+        this.types = data.types;
+        this.members = data.members;
+      },
+      error => console.log(error)
+    );
   }
 
   onCancelClick(): void {
@@ -296,9 +297,9 @@ export class CreateEventModal {
       this.event.name = this.addForm.get('name').value;
       this.event.beginDate = this.addForm.get('beginDate').value;
       this.event.endDate = this.addForm.get('endDate').value;
-      this.selectedType = this.addForm.get('discipline').value;
-      this.selectedMembers = this.addForm.get('members').value;
-      this.eventService.addEvent(this.event, this.selectedType, this.selectedMembers).subscribe(
+      this.event.type = this.addForm.get('discipline').value;
+      this.event.members = this.addForm.get('members').value;
+      this.eventService.addEvent(this.event).subscribe(
         data => {
           this.dialogRef.close();
           window.location.reload();
@@ -325,32 +326,35 @@ export class CreateEventModal {
 })
 export class UserListModal {
 
-userList: UserList[];
-displayedColumns: string[] = ['userFirstName', 'userLastName', 'userPrize'];
+  event: Event;
+  userList: UserList[];
+  displayedColumns: string[] = ['userFirstName', 'userLastName', 'userPrize'];
 
-
-constructor(private eventService: EventService,
+  constructor(private eventService: EventService,
     public dialogRef: MatDialogRef<UserListModal>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {
+    this.event = this.data.event;
+  }
 
-ngOnInit() {
-   this.eventService.getUserList(this.data.id).subscribe(data => {
-    this.userList = data;
-   });
-}
+  ngOnInit() {
+    this.eventService.getUserList(this.event.id).subscribe(data => {
+      this.userList = data;
+    });
+  }
 
-onCancelClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
-}
+  }
 
 
 }
 
-  @Component({
-    selector: 'resolve-event-modal',
-    templateUrl: 'resolve-event-modal.html',
-  })
-  export class ResolveEventModal {
+@Component({
+  selector: 'resolve-event-modal',
+  templateUrl: 'resolve-event-modal.html',
+})
+export class ResolveEventModal {
 
   event: Event;
 
@@ -366,7 +370,7 @@ onCancelClick(): void {
 
   constructor(public dialogRef: MatDialogRef<ResolveEventModal>,
     private eventService: EventService,
-    @Inject(MAT_DIALOG_DATA) public data: DialogDataEdit,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
     public snackBar: MatSnackBar
   ) {
     this.event = this.data.event;
@@ -398,6 +402,7 @@ onCancelClick(): void {
       duration: 3000
     });
   }
+
 }
 
 @Component({

@@ -2,14 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Event } from '../model/event';
-import { Member } from '../model/member';
-import { Type } from '../model/type';
-
-export interface EventData {
-  event: Event;
-  members: Member[];
-  types: Type[];
-}
 
 @Injectable({
   providedIn: 'root'
@@ -31,18 +23,16 @@ export class EventService {
     return this.http.get(`${this.baseUrl}/info`);
   }
 
-  deleteEvent(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${id}`, { responseType: 'text' });
+  deleteEvent(event: Event): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${event.id}`, { responseType: 'text' });
   }
 
-  addEvent(event: Event, selectedType: Type, selectedMembers: Member[]): Observable<any> {
-    const eventData: EventData = {event: event, types: [selectedType], members: selectedMembers}
-    return this.http.post(`${this.baseUrl}/add`, eventData);
+  addEvent(event: Event): Observable<any> {
+    return this.http.post(`${this.baseUrl}/add`, event);
   }
 
-  updateEvent(event: Event, selectedType: Type, selectedMembers: Member[]): Observable<any> {
-    const eventData: EventData = {event: event, types: [selectedType], members: selectedMembers}
-    return this.http.post(`${this.baseUrl}/edit`, eventData);
+  updateEvent(event: Event): Observable<any> {
+    return this.http.post(`${this.baseUrl}/edit`, event);
   }
 
   getActiveEvents(): Observable<any> {

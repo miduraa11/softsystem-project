@@ -63,16 +63,14 @@ public class AdminController {
         return event;
     }
 
-
     @PostMapping(value= "/edit-events/edit")
-    public void updateEvent(@RequestBody EventDataDTO eventDataDTO) {
-        eventService.updateEvent(eventDataDTO.getEvent(), eventDataDTO.getTypes().get(0), eventDataDTO.getMembers());
-
+    public void updateEvent(@RequestBody Event event) {
+        eventService.updateEvent(event);
     }
 
     @PostMapping(value= "/edit-events/add")
-    public void addEvent(@RequestBody EventDataDTO eventDataDTO) {
-        eventService.addEvent(eventDataDTO.getEvent(), eventDataDTO.getTypes().get(0), eventDataDTO.getMembers());
+    public void addEvent(@RequestBody Event event) {
+        eventService.addEvent(event);
     }
 
     @PostMapping(value = "/edit-events/resolve")

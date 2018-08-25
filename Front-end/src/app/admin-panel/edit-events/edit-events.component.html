@@ -38,7 +38,7 @@
         <b>Wydarzenie jest aktywne: </b>{{event.active}}<br>
         <b>Zwycięzca: </b>{{event.winner}}<br>
         <b>Wynik: </b>{{event.score}}<br>
-        <button type="button" class="btn btn-info btn-sm" *ngIf="eventStatus(event.winner)" (click)="openUserListDialog(event.id)">Lista zwycięzców</button>
+        <button type="button" class="btn btn-info btn-sm" *ngIf="event.winner != null" (click)="openUserListDialog(event)">Lista zwycięzców</button>
       </mat-expansion-panel>
     </mat-accordion>
   </td>
@@ -46,6 +46,6 @@
     <button *ngIf="event.winner == null" class="button" type="button" mat-raised-button color="primary" (click)="openEditDialog(event)">Edytuj</button>
     <button *ngIf="event.winner != null" disabled class="button" type="button" mat-raised-button color="primary" (click)="openEditDialog(event)">Edytuj</button>
   </td>
-  <td><button class="button" type="button" mat-raised-button color="warn" (click)="openDeleteDialog(event.id)">Usuń</button></td>
+  <td><button class="button" type="button" mat-raised-button color="warn" (click)="openDeleteDialog(event)">Usuń</button></td>
 </tr>
 </table>
