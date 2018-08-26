@@ -9,6 +9,7 @@ import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.compone
 
 export interface DialogData {
   player: Member;
+  flag: number;
 }
 
 @Component({
@@ -44,20 +45,10 @@ export class EditPlayersComponent implements OnInit {
     });
   }
 
-  openEditDialog(player: Member): void {
-    const dialogRef = this.dialog.open(PlayerEditDialog, {
+  openUpdatePlayerDialog(player: Member, flag: number): void {
+    const dialogRef = this.dialog.open(UpdatePlayerDialog, {
       width: '450px',
-      data: { player }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-  openAddDialog(): void {
-    const dialogRef = this.dialog.open(AddPlayerDialog, {
-      width: '450px'
+      data: { player, flag }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -67,16 +58,17 @@ export class EditPlayersComponent implements OnInit {
 }
 
 @Component({
-  selector: 'player-edit-dialog',
-  templateUrl: './player-edit-dialog.html',
+  selector: 'player-list-update',
+  templateUrl: './player-list-update.html',
 })
-export class PlayerEditDialog implements OnInit {
+export class UpdatePlayerDialog implements OnInit {
 
   player: Member;
   chosenType: number;
   types: Type[];
+  flag: number;
 
-  editForm = new FormGroup({
+  updateForm = new FormGroup({
     name: new FormControl('', [
       Validators.required
     ]),
@@ -85,17 +77,15 @@ export class PlayerEditDialog implements OnInit {
     ])
   });
 
-  constructor( private typeService: TypeService,
-    private playerService: PlayerService,
-    public dialogRef: MatDialogRef<PlayerEditDialog>,
+  constructor(public dialogRef: MatDialogRef<UpdatePlayerDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private typeService: TypeService,
+    private playerService: PlayerService,
     public snackBar: MatSnackBar
   ) {
-    this.player = this.data.player;
-  }
-
-  onCancelClick(): void {
-    this.dialogRef.close();
+    this.flag = this.data.flag;
+    if(this.flag == 0) { this.player = new Member(); }
+    else { this.player = this.data.player; }
   }
 
   ngOnInit() {
@@ -104,88 +94,50 @@ export class PlayerEditDialog implements OnInit {
         this.types = data;
       }
     );
-    this.editForm.get('name').setValue(this.player.name);
-    this.editForm.get('discipline').setValue(this.player.type.id);
-  }
-
-  onSaveClick(): void {
-    if(this.editForm.valid) {
-      this.player.name = this.editForm.get('name').value;
-      this.chosenType = this.editForm.get('discipline').value;
-      this.player.type = this.types.find(x => this.chosenType == x.id);
-      this.playerService.updatePlayer(this.player).subscribe(
-        data => { 
-          console.log("Success");
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error)
-      );
-    } else {
-      this.openSnackBar();
+    if(this.flag == 1) {
+      this.updateForm.get('name').setValue(this.player.name);
+      this.updateForm.get('discipline').setValue(this.player.type.id);
     }
-  }
-
-  openSnackBar() {
-    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
-      duration: 3000
-    });
-  }
-
-}
-
-@Component({
-  selector: 'new-player-dialog',
-  templateUrl: './new-player-dialog.html',
-})
-export class AddPlayerDialog implements OnInit {
-
-  player: Member;
-  types: Type[];
-
-  addForm = new FormGroup({
-    name: new FormControl('', [
-      Validators.required
-    ]),
-    discipline: new FormControl('', [
-      Validators.required
-    ])
-  });    
-    
-  constructor( private typeService: TypeService,
-    private playerService: PlayerService,
-    public dialogRef: MatDialogRef<AddPlayerDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public snackBar: MatSnackBar
-  ) {
-    this.player = new Member();
   }
 
   onCancelClick(): void {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {
-    this.typeService.getTypes().subscribe(
-      data =>{
-        this.types = data;
-      },
-      error => console.log(error)
-    );
-  }
-
-  onAddClick(): void {
-    if(this.addForm.valid) {
-      this.player.name = this.addForm.get('name').value;
-      this.player.type = this.addForm.get('discipline').value;
-      this.playerService.addPlayer(this.player).subscribe(
-        data => {
-          console.log("Success");
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error)
-      );
+  onUpdateClick(): void {
+    if(this.updateForm.valid) {
+      this.player.name = this.updateForm.get('name').value;
+      switch(this.flag) {
+        case 0: {
+          this.player.type = this.updateForm.get('discipline').value;
+          this.playerService.addPlayer(this.player).subscribe(
+            data => {
+              console.log("Success");
+              this.dialogRef.close();
+              window.location.reload();
+            },
+            error => console.log(error)
+          );
+          break;
+        }
+        case 1: {
+          this.chosenType = this.updateForm.get('discipline').value;
+          this.player.type = this.types.find(x => this.chosenType == x.id);
+          this.playerService.updatePlayer(this.player).subscribe(
+            data => { 
+              console.log("Success");
+              this.dialogRef.close();
+              window.location.reload();
+            },
+            error => console.log(error)
+          );
+          break;
+        }
+        default: {
+          console.log("error");
+          break;
+        }
+      }
     } else {
       this.openSnackBar();
     }

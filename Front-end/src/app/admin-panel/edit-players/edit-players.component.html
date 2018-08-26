@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<button mat-button class="matBtn" (click)="openAddDialog()">Dodaj nowego zawodnika</button>
+<button mat-button class="matBtn" (click)="openUpdatePlayerDialog(null, 0)">Dodaj nowego zawodnika</button>
 
 <table class="table table-sm" id="myTable">
   <thead class="thead-dark">
@@ -33,7 +33,7 @@
       <th scope="row">{{player.id}}</th>
       <td>{{player.name}}</td>
       <td>{{player.type.discipline}}</td>
-      <td><button mat-raised-button color="primary" (click)="openEditDialog(player)">Edytuj</button></td>
+      <td><button mat-raised-button color="primary" (click)="openUpdatePlayerDialog(player, 1)">Edytuj</button></td>
       <td><button mat-raised-button color="warn" (click)="openDeleteObjectDialog(player, 3)">Usuń</button></td>
   </tr>
   </tbody>

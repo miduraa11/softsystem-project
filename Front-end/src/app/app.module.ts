@@ -15,7 +15,7 @@ import { AlertModule } from 'ngx-bootstrap';
 import { EditEventsComponent, UserListModal, ResolveEventDialog, UpdateEventDialog } from './admin-panel/edit-events/edit-events.component';
 import { EditTeamsComponent, EditTeamsModalAdd, EditTeamsModalEdit } from './admin-panel/edit-teams/edit-teams.component';
 import { EditDisciplineComponent, UpdateDisciplineDialog } from './admin-panel/edit-discipline/edit-discipline.component';
-import { EditPlayersComponent, PlayerEditDialog, AddPlayerDialog } from './admin-panel/edit-players/edit-players.component';
+import { EditPlayersComponent, UpdatePlayerDialog } from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
 import { PlayerService } from './services/player.service';
 import { MatListModule } from '@angular/material/list';
@@ -67,8 +67,7 @@ const routes: Routes = [
     EditPlayersComponent,
     EditUsersComponent,
     ResolveEventDialog,
-    PlayerEditDialog,
-    AddPlayerDialog,
+    UpdatePlayerDialog,
     EditTeamsModalAdd,
     EditTeamsModalEdit,
     UpdateDisciplineDialog,
@@ -116,8 +115,7 @@ const routes: Routes = [
     ErrorInfoDialog,
     ResolveEventDialog,
     UpdateEventDialog,
-    PlayerEditDialog,
-    AddPlayerDialog,
+    UpdatePlayerDialog,
     EditTeamsModalAdd,
     EditTeamsModalEdit,
     BetTheBetGeneralDialog,
