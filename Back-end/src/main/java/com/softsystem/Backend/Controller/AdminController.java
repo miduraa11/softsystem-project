@@ -138,8 +138,9 @@ public class AdminController {
     }
 
     @PostMapping(value = "edit-teams/add")
-    public void addTeam(@RequestBody Member team) {
-        memberService.addMember(team);
+    public Long addTeam(@RequestBody Member team) {
+
+        return memberService.addMember(team);
     }
 
     @PostMapping(value = "edit-teams/edit")

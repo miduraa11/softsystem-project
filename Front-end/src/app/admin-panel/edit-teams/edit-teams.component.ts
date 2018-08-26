@@ -19,6 +19,7 @@ export interface DialogData {
 })
 export class EditTeamsComponent implements OnInit {
   
+  team: Member;
   teams: Member[];
 
   constructor(private teamService: TeamService,
@@ -26,12 +27,9 @@ export class EditTeamsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.teamService.getAll().subscribe(
-      data => {
-        this.teams = data;
-      },
-      error => console.log(error)
-    );
+    this.teamService.getAll().subscribe(data => {
+      this.teams = data;
+    });
   }
 
   openDeleteObjectDialog(object: any, flag: number): void {
@@ -39,11 +37,12 @@ export class EditTeamsComponent implements OnInit {
       width: '450px',
       data: { object, flag }
     });
-    dialogRef.afterClosed().subscribe(
-      result => {
-        console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != null) {
+        this.team = result;
+        this.teams = this.teams.filter(x =>  x.id != this.team.id);
       }
-    );
+    });
   }
 
   openUpdateTeamDialog(team: Member, flag: number): void {
@@ -51,11 +50,14 @@ export class EditTeamsComponent implements OnInit {
       width: '450px',
       data: { team, flag }
     });
-    dialogRef.afterClosed().subscribe(
-      result => {
-        console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != null) {
+        this.team = result;
+        var index = this.teams.findIndex(x => x.id == this.team.id)
+        if( index == -1) { this.teams.push(this.team); }
+        else { this.teams[index] = this.team; }
       }
-    );
+    });
   }
 
 }
@@ -103,7 +105,7 @@ export class UpdateTeamDialog {
   }
 
   onCancelClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
   
   updateTeam(): void {
@@ -112,29 +114,18 @@ export class UpdateTeamDialog {
       switch(this.flag) {
         case 0: {
           this.team.type = this.updateForm.get('discipline').value;
-          this.teamService.addTeam(this.team).subscribe(
-            data => {
-              this.dialogRef.close();
-              window.location.reload();
-            },
-            error => console.log(error)
-          );
+          this.teamService.addTeam(this.team).subscribe(data => {
+            this.team.id = data;
+            this.dialogRef.close(this.team);
+          });
           break;
         }
         case 1: {
           this.chosenType = this.updateForm.get('discipline').value;
           this.team.type = this.types.find(x => this.chosenType == x.id);
-          this.teamService.editTeam(this.team).subscribe(
-            data => {
-              this.dialogRef.close();
-              window.location.reload();
-            },
-            error => console.log(error)
-          );
-          break;
-        }
-        default: {
-          console.log("error");
+          this.teamService.editTeam(this.team).subscribe(data => {
+            this.dialogRef.close(this.team);
+          });
           break;
         }
       }
