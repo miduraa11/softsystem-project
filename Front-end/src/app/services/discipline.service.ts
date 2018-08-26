@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Type } from '../model/type';
 
-
 @Injectable({
   providedIn: 'root'
 })
