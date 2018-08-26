@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { User } from '../../model/user';
 import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
 
@@ -13,6 +13,8 @@ export class EditUsersComponent implements OnInit {
 
   user: User;
   users: User[];
+  displayedColumns: string[] = ['id', 'login', 'email', 'firstName', 'lastName', 'delete'];
+  dataSource: any;
 
   constructor(private userService: UserService,
     public dialog: MatDialog
@@ -21,7 +23,12 @@ export class EditUsersComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getUsers().subscribe(data => {
       this.users = data;
+      this.dataSource = new MatTableDataSource(this.users);
     });
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   openDeleteObjectDialog(object: any, flag: number): void {

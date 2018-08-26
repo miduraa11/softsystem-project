@@ -19,10 +19,22 @@ body {
     margin-left: 15%;
     margin-right: 15%;
     height:30px;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.6);
 }
 
 .text {
     color: white;
     font-size: 110%;
 }
+
+.right-aligned-header > .mat-content {
+    justify-content: space-between;
+  }
+  
+.mat-content > mat-panel-title, .mat-content > mat-panel-description {
+  flex: 0 0 auto;
+  }
+
+  html {
+    overflow-y: scroll;
+  }

@@ -1,6 +1,7 @@
 .mt-4 {
   margin-top: 5 !important;
-  margin-left: 25px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .alert {

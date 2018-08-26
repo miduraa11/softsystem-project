@@ -1,6 +1,7 @@
 .mt-4 {
   margin-top: 5 !important;
-  margin-left: 25px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 table {
@@ -42,4 +43,12 @@ table {
 
 .btn-warning {
   margin-bottom: 10px;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+mat-panel-title b {
+  margin-top: 10px;
 }
