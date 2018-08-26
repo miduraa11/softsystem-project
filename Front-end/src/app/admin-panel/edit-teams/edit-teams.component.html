@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<nav><button mat-button class="matBtn" role="button" aria-pressed="true" (click)="openDialogAdd()">Dodaj nową drużynę</button></nav>
+<nav><button mat-button class="matBtn" role="button" aria-pressed="true" (click)="openUpdateTeamDialog(null, 0)">Dodaj nową drużynę</button></nav>
 
 <table class="table table-sm" id="myTable">
   <thead class="thead-dark">
@@ -39,7 +39,7 @@
       <td >
         {{team.type.discipline}}
       </td>
-      <td><button mat-raised-button color="primary" (click)="openDialogEdit(team)">Edytuj</button></td>
+      <td><button mat-raised-button color="primary" (click)="openUpdateTeamDialog(team, 1)">Edytuj</button></td>
       <td><button mat-raised-button color="warn" (click)="openDeleteObjectDialog(team, 4)">Usuń</button></td>
   </tr>
   </tbody>

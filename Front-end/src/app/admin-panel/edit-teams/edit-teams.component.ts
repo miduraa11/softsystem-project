@@ -9,6 +9,7 @@ import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.compone
 
 export interface DialogData {
   team: Member;
+  flag: number;
 }
 
 @Component({
@@ -45,21 +46,10 @@ export class EditTeamsComponent implements OnInit {
     );
   }
 
-  openDialogAdd(): void {
-    const dialogRef = this.dialog.open(EditTeamsModalAdd, {
-      width: '450px'
-    });
-    dialogRef.afterClosed().subscribe(
-      result => {
-        console.log('The dialog was closed');
-      }
-    );
-  }
-
-  openDialogEdit(team: Member): void {
-    const dialogRef = this.dialog.open(EditTeamsModalEdit, {
+  openUpdateTeamDialog(team: Member, flag: number): void {
+    const dialogRef = this.dialog.open(UpdateTeamDialog, {
       width: '450px',
-      data: { team }
+      data: { team, flag }
     });
     dialogRef.afterClosed().subscribe(
       result => {
@@ -71,16 +61,17 @@ export class EditTeamsComponent implements OnInit {
 }
 
 @Component({
-  selector: 'edit-teams-modal-add',
-  templateUrl: './edit-teams-modal-add.html',
-  styleUrls: ['./edit-teams.component.css']
+  selector: 'team-list-update',
+  templateUrl: './team-list-update.html'
 })
-export class EditTeamsModalAdd {
+export class UpdateTeamDialog {
   
   team: Member;
-  types: Array<Type>;
+  types: Type[];
+  chosenType: number;
+  flag: number;
 
-  addForm = new FormGroup({
+  updateForm = new FormGroup({
     name: new FormControl('', [
       Validators.required
     ]),
@@ -89,11 +80,14 @@ export class EditTeamsModalAdd {
     ])
   });
 
-  constructor(private teamService: TeamService,
-    public dialogRef: MatDialogRef<EditTeamsModalAdd>,
+  constructor(public dialogRef: MatDialogRef<UpdateTeamDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private teamService: TeamService,
     public snackBar: MatSnackBar
   ) {
-    this.team = new Member();
+    this.flag = this.data.flag;
+    if(this.flag == 0) { this.team = new Member(); }
+    else { this.team = this.data.team; }
   }
     
   ngOnInit(): void {
@@ -102,93 +96,51 @@ export class EditTeamsModalAdd {
         this.types = data
       }
     );
-  }
-
-  onCancelClick(): void {
-    this.dialogRef.close();
-  }
-  
-  addTeam(): void {
-    if(this.addForm.valid) {
-      this.team.name = this.addForm.get('name').value;
-      this.team.type = this.addForm.get('discipline').value;
-      this.teamService.addTeam(this.team).subscribe(
-        data => {
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error)
-      );
-    } else {
-      this.openSnackBar();
+    if(this.flag == 1) {
+      this.updateForm.get('name').setValue(this.team.name);
+      this.updateForm.get('discipline').setValue(this.team.type.id);
     }
   }
 
-  openSnackBar() {
-    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
-      duration: 3000
-    });
-  }
-
-}
-
-@Component({
-  selector: 'edit-teams-modal-edit',
-  templateUrl: './edit-teams-modal-edit.html',
-  styleUrls: ['./edit-teams.component.css']
-})
-export class EditTeamsModalEdit {
-
-  types: Type[];
-  team: Member;
-  chosenType: number;
-
-  editForm = new FormGroup({
-    name: new FormControl('', [
-      Validators.required
-    ]),
-    discipline: new FormControl('', [
-      Validators.required
-    ])
-  });
-
-  constructor(private teamService: TeamService,
-    public dialogRef: MatDialogRef<EditTeamsModalEdit>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public snackBar: MatSnackBar
-  ) {
-    this.team = this.data.team;
-  }
-
-  ngOnInit(): void {
-    this.teamService.getAllType().subscribe(
-      data => {
-        this.types = data
-      }
-    );
-    this.editForm.get('name').setValue(this.team.name);
-    this.editForm.get('discipline').setValue(this.team.type.id);
-  }
-
   onCancelClick(): void {
     this.dialogRef.close();
   }
   
-  editTeam() {
-    if(this.editForm.valid) {
-      this.team.name= this.editForm.get('name').value;
-      this.chosenType = this.editForm.get('discipline').value;
-      this.team.type = this.types.find(x => this.chosenType == x.id);
-      this.teamService.editTeam(this.team).subscribe(
-        data => {
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error)
-      );
+  updateTeam(): void {
+    if(this.updateForm.valid) {
+      this.team.name= this.updateForm.get('name').value;
+      switch(this.flag) {
+        case 0: {
+          this.team.type = this.updateForm.get('discipline').value;
+          this.teamService.addTeam(this.team).subscribe(
+            data => {
+              this.dialogRef.close();
+              window.location.reload();
+            },
+            error => console.log(error)
+          );
+          break;
+        }
+        case 1: {
+          this.chosenType = this.updateForm.get('discipline').value;
+          this.team.type = this.types.find(x => this.chosenType == x.id);
+          this.teamService.editTeam(this.team).subscribe(
+            data => {
+              this.dialogRef.close();
+              window.location.reload();
+            },
+            error => console.log(error)
+          );
+          break;
+        }
+        default: {
+          console.log("error");
+          break;
+        }
+      }
     } else {
       this.openSnackBar();
-    }   
+    }
   }
 
   openSnackBar() {

@@ -13,7 +13,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AdminDeleteObjectComponent, ErrorInfoDialog } from './admin-panel/admin-panel-delete-object.component';
 import { AlertModule } from 'ngx-bootstrap';
 import { EditEventsComponent, UserListModal, ResolveEventDialog, UpdateEventDialog } from './admin-panel/edit-events/edit-events.component';
-import { EditTeamsComponent, EditTeamsModalAdd, EditTeamsModalEdit } from './admin-panel/edit-teams/edit-teams.component';
+import { EditTeamsComponent, UpdateTeamDialog } from './admin-panel/edit-teams/edit-teams.component';
 import { EditDisciplineComponent, UpdateDisciplineDialog } from './admin-panel/edit-discipline/edit-discipline.component';
 import { EditPlayersComponent, UpdatePlayerDialog } from './admin-panel/edit-players/edit-players.component';
 import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
@@ -68,8 +68,7 @@ const routes: Routes = [
     EditUsersComponent,
     ResolveEventDialog,
     UpdatePlayerDialog,
-    EditTeamsModalAdd,
-    EditTeamsModalEdit,
+    UpdateTeamDialog,
     UpdateDisciplineDialog,
     RegistrationComponent,
     LoginComponent,
@@ -116,8 +115,7 @@ const routes: Routes = [
     ResolveEventDialog,
     UpdateEventDialog,
     UpdatePlayerDialog,
-    EditTeamsModalAdd,
-    EditTeamsModalEdit,
+    UpdateTeamDialog,
     BetTheBetGeneralDialog,
     BetTheBetDetailDialog,
     BetTheBetConfirmDialog,
