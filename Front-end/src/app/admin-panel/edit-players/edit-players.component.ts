@@ -19,6 +19,7 @@ export interface DialogData {
 })
 export class EditPlayersComponent implements OnInit {  
 
+  player: Member;
   players: Member[];
 
   constructor(private playerService: PlayerService,
@@ -39,9 +40,11 @@ export class EditPlayersComponent implements OnInit {
       width: '450px',
       data: { object, flag }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if(result != null) {
+        this.player = result;
+        this.players = this.players.filter(x =>  x.id != this.player.id);
+      }
     });
   }
 
@@ -51,7 +54,12 @@ export class EditPlayersComponent implements OnInit {
       data: { player, flag }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if(result != null) {
+        this.player = result;
+        var index = this.players.findIndex(x => x.id == this.player.id)
+        if( index == -1) { this.players.push(this.player); }
+        else { this.players[index] = this.player; }
+      }
     });
   }
 
@@ -110,31 +118,18 @@ export class UpdatePlayerDialog implements OnInit {
       switch(this.flag) {
         case 0: {
           this.player.type = this.updateForm.get('discipline').value;
-          this.playerService.addPlayer(this.player).subscribe(
-            data => {
-              console.log("Success");
-              this.dialogRef.close();
-              window.location.reload();
-            },
-            error => console.log(error)
-          );
+          this.playerService.addPlayer(this.player).subscribe(data => {
+            this.player.id = data;
+            this.dialogRef.close(this.player);
+          });
           break;
         }
         case 1: {
           this.chosenType = this.updateForm.get('discipline').value;
           this.player.type = this.types.find(x => this.chosenType == x.id);
-          this.playerService.updatePlayer(this.player).subscribe(
-            data => { 
-              console.log("Success");
-              this.dialogRef.close();
-              window.location.reload();
-            },
-            error => console.log(error)
-          );
-          break;
-        }
-        default: {
-          console.log("error");
+          this.playerService.updatePlayer(this.player).subscribe(data => { 
+            this.dialogRef.close(this.player);
+          });
           break;
         }
       }

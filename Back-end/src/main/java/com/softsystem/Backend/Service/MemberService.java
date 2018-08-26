@@ -58,11 +58,13 @@ public class MemberService {
         memberRepository.save(memberRepository.getOne(member.getId()));
     }
 
-    public void addMember(Member member) {
+    public Long addMember(Member member) {
         Member newMember = new Member();
         newMember.setName(member.getName());
         newMember.setType(member.getType());
         memberRepository.save(newMember);
+
+        return newMember.getId();
     }
 
     private boolean isPlayer(Member member) {

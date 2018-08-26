@@ -115,8 +115,9 @@ public class AdminController {
     }
 
     @PostMapping(value= "/edit-players/add")
-    public void addPlayer(@RequestBody Member player) {
-        memberService.addMember(player);
+    public Long addPlayer(@RequestBody Member player) {
+
+        return memberService.addMember(player);
     }
 
     /*------------------*/

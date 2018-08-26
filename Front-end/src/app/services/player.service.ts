@@ -24,7 +24,7 @@ export class PlayerService {
   }
 
   addPlayer(player: Member): Observable<any> {
-    return this.http.post(`${this.API}/edit-players/add`, player);
+    return this.http.post(`${this.API}/edit-players/add`, player, { responseType: 'text' });
   }
 
 }
