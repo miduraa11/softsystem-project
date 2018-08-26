@@ -9,17 +9,17 @@
     <tr>
         <td>
             <select class="form-control" id="FormControlSelectActive" [(ngModel)]="chosenStatus" (change)="updateList(chosenDiscipline, chosenStatus)">
-                    <option selected hidden>{{chosenStatus}}</option>
-                    <option>Wszystkie</option>
-                    <option>Aktywne</option>
-                    <option>Zakończone</option>
+                <option selected hidden>{{chosenStatus}}</option>
+                <option>Wszystkie</option>
+                <option>Aktywne</option>
+                <option>Zakończone</option>
             </select>
         </td>
         <td>
             <select class="form-control" id="FormControlSelectDiscipline" [(ngModel)]="chosenDiscipline" (change)="updateList(chosenDiscipline, chosenStatus)">
-                    <option selected hidden>{{chosenDiscipline}}</option>
-                    <option>Wszystkie</option>
-                    <option *ngFor="let type of types">{{type.discipline}}</option>
+                <option selected hidden>{{chosenDiscipline}}</option>
+                <option>Wszystkie</option>
+                <option *ngFor="let type of types">{{type.discipline}}</option>
             </select>
         </td>
     </tr>

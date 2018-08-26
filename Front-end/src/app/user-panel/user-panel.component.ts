@@ -21,6 +21,17 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class UserPanelComponent implements OnInit {
 
+  user: User = new User();
+  key: string = "User id";
+  currentUser: number;
+  currentPassword: any;
+  password: any;
+  account: number[]= [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+  chance: number=0.0;
+  dataSourceGraph: Object;
+  dataSourceHistory: Object;
+  panelOpenGraph: boolean = false;
+  panelOpenHistory: boolean = false;
 
   //current password
   currentPasswordFormControl = new FormControl('', [
@@ -40,71 +51,60 @@ export class UserPanelComponent implements OnInit {
   ]);
   matcherConfirmPassword = new MyErrorStateMatcher();
 
-  user: User = new User();
-  key: string = "User id";
-  currentUser: number;
-  currentPassword: any;
-  password: any;
-  account: number[]= [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
-  chance: number=0.0;
-  dataSourceGraph: Object;
-  dataSourceHistory: Object;
-  panelOpenGraph: boolean = false;
-  panelOpenHistory: boolean = false;
+  constructor(private userPanelService: UserPanelService,
+    private logout: AppComponent,
+    private router: Router
+  ) { }
 
-
-  constructor(private userPanelService: UserPanelService, private logout: AppComponent, private router: Router) { 
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.currentUser = Number(localStorage.getItem(this.key));
     this.userPanelService.getUserById(this.currentUser).subscribe(data => {
-        this.user = data;
-      });
+      this.user = data;
+    });
     this.userPanelService.getAccount(this.currentUser).subscribe(data => {
-        this.account = data;
-        if((this.account[4]+this.account[5])>=4.0)
-          this.chance = (this.account[4]/(this.account[4]+this.account[5]))*100;
-        else
-          this.chance = 50.0;
-          this.dataSourceGraph = {
-            "chart": {
-              "caption": "Szanse wygranej w kolejnym zakładzie",
-              "lowerlimit": "0",
-              "upperlimit": "100",
-              "showvalue": "5",
-              "numbersuffix": "%",
-              "theme": "candy",
-              "showtooltip": "0"
-            },
-            "colorrange": {
-              "color": [
-                {
-                  "minvalue": "0",
-                  "maxvalue": "33",
-                  "code": "#F2726F"
-                },
-                {
-                  "minvalue": "33",
-                  "maxvalue": "66",
-                  "code": "#FFC533"
-                },
-                {
-                  "minvalue": "66",
-                  "maxvalue": "100",
-                  "code": "#62B58F"
-                }
-              ]
-            },
-            "dials": {
-              "dial": [
-                {
-                  "value": this.chance
-                }
-              ]
-            }
-          }; 
-      });
+      this.account = data;
+      if((this.account[4]+this.account[5])>=4.0)
+        this.chance = (this.account[4]/(this.account[4]+this.account[5]))*100;
+      else
+        this.chance = 50.0;
+        this.dataSourceGraph = {
+          "chart": {
+            "caption": "Szanse wygranej w kolejnym zakładzie",
+            "lowerlimit": "0",
+            "upperlimit": "100",
+            "showvalue": "5",
+            "numbersuffix": "%",
+            "theme": "candy",
+            "showtooltip": "0"
+          },
+          "colorrange": {
+            "color": [
+              {
+                "minvalue": "0",
+                "maxvalue": "33",
+                "code": "#F2726F"
+              },
+              {
+                "minvalue": "33",
+                "maxvalue": "66",
+                "code": "#FFC533"
+              },
+              {
+                "minvalue": "66",
+                "maxvalue": "100",
+                "code": "#62B58F"
+              }
+            ]
+          },
+          "dials": {
+            "dial": [
+              {
+                "value": this.chance
+              }
+            ]
+          }
+        }; 
+    });
   }
 
   save(){

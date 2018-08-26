@@ -1,20 +1,21 @@
 <h2 class="caption">Moje zakłady:</h2>
+
 <table class="table-condensed" width="100%">
-<b><label>Filtry:</label></b>
-<tr>
-  <th class="notbold" for="FormControlSelectActive">Status:</th>
-</tr>
-<tr>
-  <td>
-    <select class="form-control" id="FormControlSelectActive" [(ngModel)]="chosenStatus" (change)="updateList(chosenStatus)">
-      <option selected hidden>{{chosenStatus}}</option>
-      <option>Wszystkie</option>
-      <option>Wygrane</option>
-      <option>Przegrane</option>
-      <option>Trwające</option>
-    </select>
-  </td>
-</tr>
+  <b><label>Filtry:</label></b>
+  <tr>
+    <th class="notbold" for="FormControlSelectActive">Status:</th>
+  </tr>
+  <tr>
+    <td>
+      <select class="form-control" id="FormControlSelectActive" [(ngModel)]="chosenStatus" (change)="updateList(chosenStatus)">
+        <option selected hidden>{{chosenStatus}}</option>
+        <option>Wszystkie</option>
+        <option>Wygrane</option>
+        <option>Przegrane</option>
+        <option>Trwające</option>
+      </select>
+    </td>
+  </tr>
 </table>
 
 <table class="table" width="100%">

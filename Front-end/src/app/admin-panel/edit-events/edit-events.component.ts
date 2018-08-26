@@ -35,12 +35,9 @@ export class EditEventsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.eventService.getAllEvents().subscribe(
-      data => {
-        this.events = data;
-      },
-      error => console.log(error)
-    );
+    this.eventService.getAllEvents().subscribe(data => {
+      this.events = data;
+    });
   }
 
   openDeleteObjectDialog(object: any, flag: number): void {
@@ -127,7 +124,7 @@ export class UpdateEventDialog {
     }
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.eventService.getTypesAndMembers().subscribe(data => {
       this.types = data.types;
       this.members = data.members;
@@ -145,7 +142,7 @@ export class UpdateEventDialog {
     this.dialogRef.close(null);
   }
 
-  updateEvent(resolve: number) {
+  updateEvent(resolve: number): void {
     if(this.updateForm.valid) {
       this.event.name = this.updateForm.get('name').value;
       this.event.beginDate = this.updateForm.get('beginDate').value;
@@ -213,7 +210,7 @@ export class UserListModal {
     this.event = this.data.event;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.eventService.getUserList(this.event.id).subscribe(data => {
       this.userList = data;
     });
@@ -222,7 +219,6 @@ export class UserListModal {
   onCancelClick(): void {
     this.dialogRef.close(null);
   }
-
 
 }
 
@@ -245,8 +241,8 @@ export class ResolveEventDialog {
   });
 
   constructor(public dialogRef: MatDialogRef<ResolveEventDialog>,
-    private eventService: EventService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private eventService: EventService,
     public snackBar: MatSnackBar
   ) {
     this.event = this.data.event;

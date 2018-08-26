@@ -1,17 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from '../../../node_modules/rxjs';
-import { Event } from '../model/event';
 import { Bet } from '../model/bet';
-
-export interface BetData {
-  event: Event;
-  currentUser: number;
-  amount: number;
-  chosenMember: number;
-  result: String;
-  betType: number;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -38,4 +28,5 @@ export class BetsService {
   giveChosenParams(chosenStatus: String, currentUser: number): Observable<any> {
     return this.http.post(`${this.baseUrl}/${chosenStatus}/${currentUser}`, { responseType: 'text' });
   }
+  
 }

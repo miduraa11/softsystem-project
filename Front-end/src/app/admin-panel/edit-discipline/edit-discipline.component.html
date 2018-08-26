@@ -20,29 +20,24 @@
 
 <table class="table table-sm" id="myTable">
   <thead class="thead-dark">
-  <tr>
+    <tr>
       <th scope="col">ID</th>
       <th scope="col">Nazwa Dyscypliny</th>
       <th scope="col">Rodzaj</th>
       <th scope="col"></th>
       <th scope="col"></th>
-  </tr>
+    </tr>
   </thead>
   <tbody  *ngFor="let type of types">
-  <tr >
-      <th scope="row" >
-        {{type.id}}
-      </th>
-      <td >
-        {{type.discipline}}
-      </td>
-      <td>
-        <p *ngIf="type.individual">Indywidualna</p>
-        <p *ngIf="!type.individual">Drużynowa</p>
-      </td>
-      
-      <td><button mat-raised-button color="primary" (click)="openUpdateDisciplineDialog(type, 1)">Edytuj</button></td>
-      <td><button mat-raised-button color="warn" (click)="openDeleteObjectDialog(type, 1)">Usuń</button></td>
+  <tr >    
+    <th scope="row" >{{type.id}}</th>
+    <td >{{type.discipline}}</td>
+    <td>
+      <p *ngIf="type.individual">Indywidualna</p>
+      <p *ngIf="!type.individual">Drużynowa</p>
+    </td>    
+    <td><button mat-raised-button color="primary" (click)="openUpdateDisciplineDialog(type, 1)">Edytuj</button></td>
+    <td><button mat-raised-button color="warn" (click)="openDeleteObjectDialog(type, 1)">Usuń</button></td>
   </tr>
   </tbody>
 </table>

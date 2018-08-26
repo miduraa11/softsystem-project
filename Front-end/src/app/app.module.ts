@@ -106,7 +106,7 @@ const routes: Routes = [
     MatNativeDateModule,
     MatTableModule,
     FusionChartsModule,
-    MatRadioModule,
+    MatRadioModule
   ],
   entryComponents: [
     AdminDeleteObjectComponent,
@@ -119,7 +119,7 @@ const routes: Routes = [
     BetTheBetConfirmDialog,
     UpdateDisciplineDialog,
     UserListModal,
-    InfoDialog,
+    InfoDialog
   ],
   providers: [
     PlayerService,
@@ -130,7 +130,7 @@ const routes: Routes = [
     RegistrationService,
     LocalStorageService,
     BetsService,
-    UserPanelService,
+    UserPanelService
   ],
   bootstrap: [
     AppComponent

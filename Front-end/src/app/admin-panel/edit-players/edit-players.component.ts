@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { PlayerService } from '../../services/player.service';
 import { TypeService } from '../../services/type.service';
@@ -26,13 +26,10 @@ export class EditPlayersComponent implements OnInit {
     public dialog: MatDialog
   ) { }
 
-  ngOnInit() {
-    this.playerService.getPlayers().subscribe(
-      data => {
-        this.players = data
-      },
-      error => console.log(error)
-    );    
+  ngOnInit(): void {
+    this.playerService.getPlayers().subscribe(data => {
+      this.players = data
+    });    
   }
 
   openDeleteObjectDialog(object: any, flag: number): void {
@@ -96,12 +93,10 @@ export class UpdatePlayerDialog implements OnInit {
     else { this.player = this.data.player; }
   }
 
-  ngOnInit() {
-    this.typeService.getTypes().subscribe(
-      data => {
-        this.types = data;
-      }
-    );
+  ngOnInit(): void {
+    this.typeService.getTypes().subscribe(data => {
+      this.types = data;
+    });
     if(this.flag == 1) {
       this.updateForm.get('name').setValue(this.player.name);
       this.updateForm.get('discipline').setValue(this.player.type.id);

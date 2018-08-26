@@ -26,8 +26,21 @@ export class BetsComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = Number(localStorage.getItem(this.key));
-    this.betsService.getAllBetsById(this.currentUser).subscribe(
-      data => {
+    this.betsService.getAllBetsById(this.currentUser).subscribe(data => {
+      this.bets = data;
+      for(var i = 0; i < this.bets.length; i++) {
+        if(this.bets[i].member == null) { 
+          this.bets[i].member = new Member();
+          this.bets[i].member.name = "Remis";
+        }
+      }
+    });
+  }
+
+  updateList(chosenStatus: String): void {
+    this.chosenStatus = chosenStatus;
+    this.betsService.giveChosenParams(this.chosenStatus, this.currentUser).subscribe(data => {
+      this.betsService.getActiveBets().subscribe(data => {
         this.bets = data;
         for(var i = 0; i < this.bets.length; i++) {
           if(this.bets[i].member == null) { 
@@ -35,39 +48,15 @@ export class BetsComponent implements OnInit {
             this.bets[i].member.name = "Remis";
           }
         }
-      }
-    );
-  }
-
-  updateList(chosenStatus: String): void {
-    this.chosenStatus = chosenStatus;
-    this.betsService.giveChosenParams(this.chosenStatus, this.currentUser).subscribe(
-      data => { 
-        console.log("Success"),
-        this.betsService.getActiveBets().subscribe(
-          data => {
-            this.bets = data;
-            for(var i = 0; i < this.bets.length; i++) {
-              if(this.bets[i].member == null) { 
-                this.bets[i].member = new Member;
-                this.bets[i].member.name = "Remis";
-              }
-            }
-            this.chosenStatus = chosenStatus;
-          }
-        )
-      },
-      error => console.log(error)
-    );
+        this.chosenStatus = chosenStatus;
+      })
+    });
   }
 
   openInfoDialog(event: Event): void {
     const dialogRef = this.dialog.open(InfoDialog, {
       width: '400px',
       data: { event }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 

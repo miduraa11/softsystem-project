@@ -1,27 +1,27 @@
 .mt-4 {
-    margin-top: 5 !important;
-    margin-left: 25px;
-  }
+  margin-top: 5 !important;
+  margin-left: 25px;
+}
 
-  .alert {
-    margin-top: 30px;
-  }
+.alert {
+  margin-top: 30px;
+}
 
-  .btn {
-    width: 100%;
-    margin-top: 20px;
-  }
+.btn {
+  width: 100%;
+  margin-top: 20px;
+}
 
-  .BTBimage {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 80px;
-  }
+.BTBimage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 80px;
+}
 
-  .welcomeText {
-    text-align: center;
-    margin-top: 50px;
-    font-family: fantasy;
-    font-size: 300%;
-  }
+.welcomeText {
+  text-align: center;
+  margin-top: 50px;
+  font-family: fantasy;
+  font-size: 300%;
+}

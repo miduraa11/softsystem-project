@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { EventService } from '../services/event.service';
 import { Type } from '../model/type';
 import { Event } from '../model/event';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, ErrorStateMatcher, MatSnackBar } from '../../../node_modules/@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '../../../node_modules/@angular/material';
 import { BetsService } from '../services/bets.service';
 import { FormControl, Validators, FormGroup } from '../../../node_modules/@angular/forms';
 import { Bet } from '../model/bet';
@@ -34,45 +34,33 @@ export class EventsComponent implements OnInit {
  
   ngOnInit(): void {
     this.currentUser = Number(localStorage.getItem(this.key));
-    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(
-      data => {
-        console.log("Success"),
-        this.eventService.getActiveEvents().subscribe(
-          data => {
-            this.events = data.events;
-            this.types = data.types;
-            this.chosenDiscipline = data.chosenDiscipline;
-            this.chosenStatus = data.chosenStatus;
-          }
-        )
-      },
-      error => console.log(error)      
-    );
-  }
-
-  updateList(chosenDiscipline: String, chosenStatus: String): void {
-    this.chosenDiscipline = chosenDiscipline;
-    this.chosenStatus = chosenStatus;
-    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(
-      data => { console.log("Success"),
+    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
       this.eventService.getActiveEvents().subscribe(data => {
         this.events = data.events;
         this.types = data.types;
         this.chosenDiscipline = data.chosenDiscipline;
         this.chosenStatus = data.chosenStatus;
-      })},
-      error => console.log(error)
-    );
+      })
+    });
+  }
+
+  updateList(chosenDiscipline: String, chosenStatus: String): void {
+    this.chosenDiscipline = chosenDiscipline;
+    this.chosenStatus = chosenStatus;
+    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
+      this.eventService.getActiveEvents().subscribe(data => {
+        this.events = data.events;
+        this.types = data.types;
+        this.chosenDiscipline = data.chosenDiscipline;
+        this.chosenStatus = data.chosenStatus;
+      })
+    });
   }
 
   openBetDialog(event: Event, flag: number): void {
     const dialogRef = this.dialog.open(BetTheBetDialog, {
       width: '450px',
       data: { event,  currentUser: this.currentUser, flag }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 
@@ -120,7 +108,7 @@ export class BetTheBetDialog {
     this.dialogRef.close();
   }
 
-  onBetClick(event : Event): void {
+  onBetClick(event: Event): void {
     if(this.flag == 1) { this.betForm.get('result').setErrors(null); }
     if(this.betForm.valid) {
       this.bet.amount = this.betForm.get('amount').value;
@@ -139,13 +127,10 @@ export class BetTheBetDialog {
           break;
         }
       }
-      this.betService.addBet(this.bet).subscribe(
-        data => {
-          this.openConfirmDialog();
-          this.dialogRef.close();
-        },
-        error => console.log(error)
-      );
+      this.betService.addBet(this.bet).subscribe(data => {
+        this.openConfirmDialog();
+        this.dialogRef.close();
+      });
     } else {
       this.openSnackBar();
     }
@@ -161,10 +146,6 @@ export class BetTheBetDialog {
     const dialogRef = this.dialog.open(BetTheBetConfirmDialog, {
       width: '400px'
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
 
 }
@@ -175,8 +156,7 @@ export class BetTheBetDialog {
 })
 export class BetTheBetConfirmDialog {
 
-  constructor( public dialogRef: MatDialogRef<BetTheBetConfirmDialog> ) {
-  }
+  constructor(public dialogRef: MatDialogRef<BetTheBetConfirmDialog>) { }
 
   onOkClick(): void {
     this.dialogRef.close();

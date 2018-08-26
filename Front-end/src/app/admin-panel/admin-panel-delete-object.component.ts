@@ -46,79 +46,58 @@ export class AdminDeleteObjectComponent {
     deleteObject(): void {
         switch(this.flag) {
             case 1: {
-                this.disciplineService.deleteDiscipline(this.object).subscribe(
-                    data => {
-                        this.error = data;
-                        if(this.error == -1) {
-                            this.openErrorInfoDialog(this.flag);
-                            this.dialogRef.close(null);
-                        }
-                        else { this.dialogRef.close(this.object); }
-                    },
-                    error => console.log(error)
-                );
+                this.disciplineService.deleteDiscipline(this.object).subscribe(data => {
+                    this.error = data;
+                    if(this.error == -1) {
+                        this.openErrorInfoDialog(this.flag);
+                        this.dialogRef.close(null);
+                    }
+                    else { this.dialogRef.close(this.object); }
+                });
                 break;
             }
             case 2: {
-                this.eventService.deleteEvent(this.object).subscribe(
-                    data => {
-                        this.error = data;
-                        if(this.error == -1) {
-                            this.openErrorInfoDialog(this.flag);
-                            this.dialogRef.close(null);
-                        }
-                        else { this.dialogRef.close(this.object); }
-                    },
-                    error => console.log(error)
-                );
+                this.eventService.deleteEvent(this.object).subscribe(data => {
+                    this.error = data;
+                    if(this.error == -1) {
+                        this.openErrorInfoDialog(this.flag);
+                        this.dialogRef.close(null);
+                    }
+                    else { this.dialogRef.close(this.object); }
+                });
                 break;
             }
             case 3: {
-                this.playerService.deletePlayer(this.object).subscribe(
-                    data => {
-                        this.error = data;
-                        if(this.error == -1) {
-                            this.openErrorInfoDialog(this.flag);
-                            this.dialogRef.close(null);
-                        }
-                        else { this.dialogRef.close(this.object); }
-                    },
-                    error => console.log(error)
-                );
+                this.playerService.deletePlayer(this.object).subscribe(data => {
+                    this.error = data;
+                    if(this.error == -1) {
+                        this.openErrorInfoDialog(this.flag);
+                        this.dialogRef.close(null);
+                    }
+                    else { this.dialogRef.close(this.object); }
+                });
                 break;
             }
             case 4: {
-                this.teamService.deleteTeam(this.object).subscribe(
-                    data => {
-                        this.error = data;
-                        if(this.error == -1) {
-                            this.openErrorInfoDialog(this.flag);
-                            this.dialogRef.close(null);
-                        }
-                        else { this.dialogRef.close(this.object); }
-                    },
-                    error => {
-                      console.log(error);          
+                this.teamService.deleteTeam(this.object).subscribe(data => {
+                    this.error = data;
+                    if(this.error == -1) {
+                        this.openErrorInfoDialog(this.flag);
+                        this.dialogRef.close(null);
                     }
-                );
+                    else { this.dialogRef.close(this.object); }
+                });
                 break;
             }
             case 5: {
-                this.userService.deleteUser(this.object).subscribe(
-                    data => {
-                        this.error = data;
-                        if(this.error == -1) {
-                            this.openErrorInfoDialog(this.flag);
-                            this.dialogRef.close(null);
-                        }
-                        else { this.dialogRef.close(this.object); }
-                    },
-                    error => console.log(error)      
-                );
-                break;
-            }
-            default: {
-                console.log("error");
+                this.userService.deleteUser(this.object).subscribe(data => {
+                    this.error = data;
+                    if(this.error == -1) {
+                        this.openErrorInfoDialog(this.flag);
+                        this.dialogRef.close(null);
+                    }
+                    else { this.dialogRef.close(this.object); }
+                });
                 break;
             }
         }
@@ -126,11 +105,8 @@ export class AdminDeleteObjectComponent {
 
     openErrorInfoDialog(flag: number): void {
         const dialogRef = this.dialog.open(ErrorInfoDialog, {
-        width: '400px',
-        data: { flag }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
+            width: '400px',
+            data: { flag }
         });
     }
 

@@ -20,15 +20,15 @@ export class TeamService {
   }
 
   deleteTeam(team: Member) : Observable<any> {
-    return this.http.get(`${this.baseUrl}/${team.id}`,{responseType: 'text'});
+    return this.http.get(`${this.baseUrl}/${team.id}`,{ responseType: 'text' });
   }
 
   addTeam(team: Member): Observable<any> {
     return this.http.post(`${this.baseUrl}/add`, team, { responseType: 'text' });
   }
 
-  editTeam(team: Member): Observable<any>{
-     return this.http.post(`${this.baseUrl}/edit`, team);
+  editTeam(team: Member): Observable<any> {
+    return this.http.post(`${this.baseUrl}/edit`, team);
   }
 
 }

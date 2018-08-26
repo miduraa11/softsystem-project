@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Member } from '../model/member';
 
@@ -8,8 +8,7 @@ import { Member } from '../model/member';
 export class PlayerService {
   public API = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
   
   getPlayers(): Observable<any> {
     return this.http.get(this.API + '/edit-players');

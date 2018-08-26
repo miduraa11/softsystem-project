@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { User } from '../model/user';
 import { RegistrationService } from '../services/registration.service';
 import {FormControl, Validators, FormGroup} from '@angular/forms';
@@ -11,8 +11,7 @@ import { MatSnackBar } from '@angular/material';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent {
 
   user: User = new User();
   existLogin: any = false;
@@ -49,35 +48,31 @@ export class RegistrationComponent implements OnInit {
     public snackBar: MatSnackBar
   ) { }
 
-  ngOnInit() {
+  loginExist(): void {
+    this.registrationService.getLoginExist(this.registrationForm.get('login').value).subscribe(data => {
+      this.existLogin = data
+      if(!this.existLogin) { this.addUser(); }
+      else { this.openLoginSnackBar(); }
+    });
   }
 
-  loginExist(){
-    this.registrationService.getLoginExist(this.registrationForm.get('login').value).subscribe(
-      data => {
-        this.existLogin = data
-        if(!this.existLogin) { this.addUser(); }
-        else { alert("Podany login już istnieje!\nProszę podać inny lub zalogować się na istniejące konto."); }
-      }
-    );
-  }
-
-  addUser(){
+  addUser(): void {
     if(this.registrationForm.valid) {
       this.user.email = this.registrationForm.get('email').value;
       this.user.firstName = this.registrationForm.get('firstName').value;
       this.user.lastName = this.registrationForm.get('lastName').value;
       this.user.login = this.registrationForm.get('login').value;
       this.user.password = Md5.hashStr(this.registrationForm.get('password').value);
-      this.registrationService.addUser(this.user).subscribe(
-        error => console.log(error)
-      );
+      this.registrationService.addUser(this.user);
       this.openWelcomeSnackBar(this.user.firstName);
-      this.router.navigate(['/login']);}
-    else {
-      this.openErrorSnackBar();
-    }
-        
+      this.router.navigate(['/login']);
+    } else { this.openErrorSnackBar(); }        
+  }
+
+  openLoginSnackBar() {
+    this.snackBar.open('Podany login już istnieje!\nProszę podać inny lub zalogować się na istniejące konto.', 'Zamknij', {
+      duration: 3000
+    });
   }
 
   openErrorSnackBar() {

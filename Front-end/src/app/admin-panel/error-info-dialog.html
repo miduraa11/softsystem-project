@@ -1,4 +1,5 @@
 <h2 mat-dialog-title><strong>UWAGA!</strong> Wystąpił błąd!</h2>
+
 <div mat-dialog-content [ngSwitch]="flag">
     <b justify *ngSwitchCase="1">
         Wybranej dyscypliny nie można usunąć z bazy danych ponieważ posiada ona powiązania z innymi elementami
@@ -26,6 +27,7 @@
         w przyszlości do wystąpienia nieoczekiwach błędów.
     </b>
 </div>
+
 <div mat-dialog-actions>
     <button mat-button (click)="onOkClick()">Zamknij</button>
 </div>

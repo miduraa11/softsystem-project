@@ -6,7 +6,7 @@
 
     <form [formGroup]="registrationForm">
 
-      <mat-form-field class="example-full-width" style="width: 600px">
+      <mat-form-field style="width: 600px">
         <input matInput placeholder="Imię" formControlName="firstName">
         <mat-error *ngIf="registrationForm.get('firstName').hasError('pattern') && !registrationForm.get('firstName').hasError('required')">
           Proszę wpisać <strong>poprawne</strong> imię!
@@ -16,7 +16,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="example-full-width" style="width: 600px">
+      <mat-form-field style="width: 600px">
         <input matInput placeholder="Nazwisko" formControlName="lastName">
         <mat-error *ngIf="registrationForm.get('lastName').hasError('pattern') && !registrationForm.get('lastName').hasError('required')">
           Proszę wpisać <strong>poprawne</strong> nazwisko!
@@ -26,7 +26,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="example-full-width" style="width: 600px">
+      <mat-form-field style="width: 600px">
         <input matInput placeholder="Login" formControlName="login">
         <mat-error *ngIf="registrationForm.get('login').hasError('pattern') && !registrationForm.get('login').hasError('required')">
           Proszę wpisać <strong>poprawne</strong> login (od 3 do 20 znaków, litery i cyfry)!
@@ -36,7 +36,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="example-full-width" style="width: 600px">
+      <mat-form-field style="width: 600px">
         <input matInput placeholder="Adres e-mail" formControlName="email">
         <mat-error *ngIf="registrationForm.get('email').hasError('email') && !registrationForm.get('email').hasError('required')">
           Proszę wpisać <strong>poprawny</strong> adres e-mail
@@ -46,7 +46,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="example-full-width" style="width: 600px">
+      <mat-form-field style="width: 600px">
         <input matInput type="password" placeholder="Hasło" formControlName="password">
         <mat-error *ngIf="registrationForm.get('password').hasError('pattern') && !registrationForm.get('password').hasError('required') && !registrationForm.get('password').hasError('minlength')">
           Hasło musi <strong>być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
@@ -59,7 +59,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field class="example-full-width" style="width: 600px; padding-bottom: 20px">
+      <mat-form-field style="width: 600px; padding-bottom: 20px">
         <input matInput type="Password" placeholder="Powtórz hasło" formControlName="confirmPassword" pattern="{{registrationForm.get('password').value}}">
         <mat-error *ngIf="registrationForm.get('confirmPassword').hasError('pattern') && !registrationForm.get('confirmPassword').hasError('required')">
           Podane hasła są <strong>różne</strong> !
@@ -73,7 +73,7 @@
 
     </form>
 
-      <h5 style="text-align: center; padding-top: 20px">Masz już konto?<a href="/login">Zaloguj sie!</a></h5>
+    <h5 style="text-align: center; padding-top: 20px">Masz już konto?<a href="/login">Zaloguj sie!</a></h5>
 
   </div>
 

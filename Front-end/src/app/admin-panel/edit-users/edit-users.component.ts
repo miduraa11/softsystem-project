@@ -18,12 +18,10 @@ export class EditUsersComponent implements OnInit {
     public dialog: MatDialog
   ) { }
 
-  ngOnInit() {
-    this.userService.getUsers().subscribe(
-      data => {
-       this.users = data;
-      }
-    );
+  ngOnInit(): void {
+    this.userService.getUsers().subscribe(data => {
+      this.users = data;
+    });
   }
 
   openDeleteObjectDialog(object: any, flag: number): void {

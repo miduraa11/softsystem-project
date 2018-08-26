@@ -11,9 +11,7 @@ export class EventService {
   private baseUrl = 'http://localhost:8080/edit-events';
   private activeEventsAPI = 'http://localhost:8080/events';
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(private http: HttpClient) { }
 
   getAllEvents(): Observable<any> {
     return this.http.get(`${this.baseUrl}`);

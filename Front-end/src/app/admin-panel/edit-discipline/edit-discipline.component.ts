@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DisciplineService } from '../../services/discipline.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Type } from '../../model/type';
@@ -26,14 +26,9 @@ export class EditDisciplineComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.disciplineService.getAll().subscribe(
-      data => {
-        this.types = data
-      },
-      error => {
-        console.log(error)
-      }
-    );
+    this.disciplineService.getAll().subscribe(data => {
+      this.types = data
+    });
   }
 
   openDeleteObjectDialog(object: any, flag: number): void {

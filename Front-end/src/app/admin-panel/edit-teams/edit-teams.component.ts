@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { TeamService } from '../../services/team.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Member } from '../../model/member';
@@ -26,7 +26,7 @@ export class EditTeamsComponent implements OnInit {
     public dialog: MatDialog
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.teamService.getAll().subscribe(data => {
       this.teams = data;
     });
@@ -93,11 +93,9 @@ export class UpdateTeamDialog {
   }
     
   ngOnInit(): void {
-    this.teamService.getAllType().subscribe(
-      data => {
-        this.types = data
-      }
-    );
+    this.teamService.getAllType().subscribe(data => {
+      this.types = data
+    });
     if(this.flag == 1) {
       this.updateForm.get('name').setValue(this.team.name);
       this.updateForm.get('discipline').setValue(this.team.type.id);

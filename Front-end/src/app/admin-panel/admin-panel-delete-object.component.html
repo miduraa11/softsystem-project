@@ -1,4 +1,5 @@
 <h1 mat-dialog-title>Potwierdzenie akcji</h1>
+
 <div mat-dialog-content [ngSwitch]="flag">
   <p *ngSwitchCase="1">Czy na pewno chcesz usunąć wybraną dyscyplinę?<br> Operacji tej nie można cofnąć!</p>
   <p *ngSwitchCase="2">Czy na pewno chcesz usunąć wybrane wydarzenie?<br> Operacji tej nie można cofnąć!</p>
@@ -6,6 +7,7 @@
   <p *ngSwitchCase="4">Czy na pewno chcesz usunąć wybraną drużynę? <br> Operacji tej nie można cofnąć !</p>
   <p *ngSwitchCase="5">Czy na pewno chcesz usunąć wybranego użytkownika?<br> Operacji tej nie można cofnąć!</p>
 </div>
+
 <div mat-dialog-actions>
   <button type="button" class="btn btn-danger btn-lg btn-block btn-sm" (click)="deleteObject()">Usuń</button>
   <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onCancelClick()">Anuluj</button>

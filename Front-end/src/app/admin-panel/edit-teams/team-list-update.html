@@ -5,14 +5,14 @@
 
 <form [formGroup]="updateForm" [ngSwitch]="flag">
 
-    <mat-form-field class="example-full-width" style="width: 100%">            
+    <mat-form-field style="width: 100%">            
         <input matInput formControlName="name" style="width: 100%" placeholder="Podaj nazwę drużyny"/>
         <mat-error>
             Nazwa drużyny jest <strong>wymagana</strong>!
         </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width" style="width: 100%">
+    <mat-form-field style="width: 100%">
         <mat-select *ngSwitchCase="0" formControlName="discipline" style="width: 100%" placeholder="Wybierz dyscypline">
             <mat-option *ngFor="let type of types" [value]="type" >{{type.discipline}}</mat-option>
         </mat-select>
