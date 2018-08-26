@@ -26,6 +26,7 @@ export interface UserList {
 })
 export class EditEventsComponent implements OnInit {
   
+  event: Event;
   eventIsFinished: boolean;
   events: Event[];
 
@@ -47,11 +48,12 @@ export class EditEventsComponent implements OnInit {
       width: '400px',
       data: { object, flag }
     });
-    dialogRef.afterClosed().subscribe(
-      result => {
-        console.log('The dialog was closed')
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != null) {
+        this.event = result;
+        this.events = this.events.filter(x =>  x.id != this.event.id);
       }
-    );
+    });
   }
 
   openUpdateEventDialog(event: Event, flag: number):void {
@@ -59,11 +61,14 @@ export class EditEventsComponent implements OnInit {
       width: '450px',
       data: { event, flag }
     });
-    dialogRef.afterClosed().subscribe(
-      result => {
-        console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != null) {
+        this.event = result;
+        var index = this.events.findIndex(x => x.id == this.event.id)
+        if( index == -1) { this.events.push(this.event); }
+        else { this.events[index] = this.event; }
       }
-    );
+    });
   }
 
   openUserListDialog(event: Event): void {
@@ -123,13 +128,10 @@ export class UpdateEventDialog {
   }
 
   ngOnInit() {
-    this.eventService.getTypesAndMembers().subscribe(
-      data => {
-        this.types = data.types;
-        this.members = data.members;
-      },
-      error => console.log(error)
-    );
+    this.eventService.getTypesAndMembers().subscribe(data => {
+      this.types = data.types;
+      this.members = data.members;
+    });
     if(this.flag == 1) {
       this.updateForm.get('name').setValue(this.event.name);
       this.updateForm.get('beginDate').setValue(this.event.beginDate);
@@ -140,10 +142,10 @@ export class UpdateEventDialog {
   }
 
   onCancelClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
 
-  updateEvent(flag: number) {
+  updateEvent(resolve: number) {
     if(this.updateForm.valid) {
       this.event.name = this.updateForm.get('name').value;
       this.event.beginDate = this.updateForm.get('beginDate').value;
@@ -152,13 +154,10 @@ export class UpdateEventDialog {
         case 0: {
           this.event.type = this.updateForm.get('discipline').value;
           this.event.members = this.updateForm.get('members').value;
-          this.eventService.addEvent(this.event).subscribe(
-            data => {
-              this.dialogRef.close();
-              window.location.reload();
-            },
-            error => console.log(error)
-          );
+          this.eventService.addEvent(this.event).subscribe(data => {
+            this.event.id = data;
+            this.dialogRef.close(this.event);
+          });
           break;
         }
         case 1: {
@@ -166,20 +165,10 @@ export class UpdateEventDialog {
           this.chosenMemberId = this.updateForm.get('members').value;
           this.event.type = this.types.find(x => this.chosenTypeId == x.id);
           this.event.members = this.members.filter(x => this.chosenMemberId.some(y => y == x.id));
-          this.eventService.updateEvent(this.event).subscribe(
-            data => {
-              this.dialogRef.close();
-              this.eventService.checkEventsActivity().subscribe(
-                error => console.log(error)
-              )
-              if(flag) { window.location.reload(); }
-            },
-            error => console.log(error)
-          );
-          break;
-        }
-        default: {
-          console.log("error");
+          this.eventService.updateEvent(this.event).subscribe(data => {            
+            this.dialogRef.close(this.event);
+          });
+          if(resolve == 1) { this.openResolveEventDialog(this.event); }
           break;
         }
       }
@@ -194,13 +183,13 @@ export class UpdateEventDialog {
     });
   }
 
-  resolveEventDialog(event: Event): void {
+  openResolveEventDialog(event: Event): void {
     const dialogRef = this.dialog.open(ResolveEventDialog, {
       width: '450px',
       data: { event }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if(result != null) { this.event = result; }
     });
   }
 
@@ -231,7 +220,7 @@ export class UserListModal {
   }
 
   onCancelClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
 
 
@@ -264,7 +253,7 @@ export class ResolveEventDialog {
   }
 
   onCancelClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
 
   onResolveClick(): void {
@@ -272,13 +261,9 @@ export class ResolveEventDialog {
       if(this.resolveForm.get('member').value == -1) { this.event.winner = "Remis"; }
       else { this.event.winner = this.resolveForm.get('member').value; }
       this.event.score = this.resolveForm.get('result').value;
-      this.eventService.resolveEvent(this.event).subscribe(
-        data => {
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error)
-      );
+      this.eventService.resolveEvent(this.event).subscribe(data => {
+        this.dialogRef.close(this.event);
+      });
     } else {
       this.openSnackBar();
     }

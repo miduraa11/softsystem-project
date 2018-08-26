@@ -28,7 +28,7 @@ export class EventService {
   }
 
   addEvent(event: Event): Observable<any> {
-    return this.http.post(`${this.baseUrl}/add`, event);
+    return this.http.post(`${this.baseUrl}/add`, event, { responseType: 'text' });
   }
 
   updateEvent(event: Event): Observable<any> {

@@ -50,7 +50,7 @@ public class EventService {
        eventRepository.save(eventRepository.getOne(event.getId()));
     }
 
-    public void addEvent(Event event) {
+    public Long addEvent(Event event) {
         Event newEvent = new Event();
         newEvent.setName(event.getName());
         newEvent.setBeginDate(event.getBeginDate());
@@ -59,6 +59,8 @@ public class EventService {
         newEvent.setType(event.getType());
         newEvent.setMembers(event.getMembers());
         eventRepository.save(newEvent);
+
+        return newEvent.getId();
     }
 
     public void resolve(Event event) {

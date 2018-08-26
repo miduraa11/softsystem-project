@@ -68,8 +68,9 @@ public class AdminController {
     }
 
     @PostMapping(value= "/edit-events/add")
-    public void addEvent(@RequestBody Event event) {
-        eventService.addEvent(event);
+    public Long addEvent(@RequestBody Event event) {
+
+        return eventService.addEvent(event);
     }
 
     @PostMapping(value = "/edit-events/resolve")
