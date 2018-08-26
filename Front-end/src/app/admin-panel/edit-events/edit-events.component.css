@@ -39,3 +39,7 @@ table{
 .userListTable {
     width: 100%;
 }
+
+.btn-warning {
+  margin-bottom: 10px;
+}
