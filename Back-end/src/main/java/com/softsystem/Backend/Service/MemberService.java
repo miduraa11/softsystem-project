@@ -1,7 +1,6 @@
 package com.softsystem.Backend.Service;
 
 import com.softsystem.Backend.Model.Member;
-import com.softsystem.Backend.Model.Type;
 import com.softsystem.Backend.Repository.MemberRepository;
 import com.softsystem.Backend.Repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

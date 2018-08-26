@@ -14,7 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u JOIN u.roles ur WHERE (SELECT COUNT(uo) FROM u.roles uo JOIN u.roles ur) = 1")
     List<User> findAllUsers();
 
-
     @Query(value = "SELECT * FROM user u WHERE u.login = :login", nativeQuery = true)
     Optional<User> findByLogin(@Param("login") String login);
 

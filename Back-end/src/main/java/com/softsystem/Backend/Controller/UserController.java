@@ -14,11 +14,13 @@ public class UserController {
 
     @GetMapping(value = "/user-panel/{userId}")
     public User getUserById(@PathVariable(name="userId")Long userId) {
+
         return userService.getUserById(userId);
     }
 
     @GetMapping(value ="user-panel/change/{id}/{currentPassword}/{password}")
-    public Object changePassword(@PathVariable("id")Long id, @PathVariable("currentPassword")String currentPassword, @PathVariable("password")String password){
+    public Object changePassword(@PathVariable("id")Long id, @PathVariable("currentPassword")String currentPassword, @PathVariable("password")String password) {
+
         return userService.changePassword(id, currentPassword, password);
     }
 

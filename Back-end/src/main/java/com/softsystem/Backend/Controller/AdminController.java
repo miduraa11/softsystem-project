@@ -128,6 +128,7 @@ public class AdminController {
     public List<Member> getAllTeam() {
         List<Member> teams = new ArrayList<>();
         memberService.getAllTeams().forEach(teams::add);
+
         return teams;
     }
 
@@ -152,6 +153,7 @@ public class AdminController {
     public List<Type> getAllTeamTypes() {
         List<Type> types = new ArrayList<>();
         typeService.getAllTeamTypes().forEach(types::add);
+
         return types;
     }
 
@@ -163,6 +165,7 @@ public class AdminController {
     public List<Type> getAllDisciplines() {
         List<Type> disciplines = new ArrayList<>();
         typeService.getAllDisciplines().forEach(disciplines::add);
+
         return disciplines;
     }
 
@@ -191,6 +194,7 @@ public class AdminController {
     public List<User> showAllUsers() {
         List<User> users = new ArrayList<>();
         userService.getAllUsers().forEach(users::add);
+
         return users;
     }
 

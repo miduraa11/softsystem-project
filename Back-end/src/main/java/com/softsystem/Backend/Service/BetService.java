@@ -2,7 +2,6 @@ package com.softsystem.Backend.Service;
 
 import com.softsystem.Backend.Model.Bet;
 import com.softsystem.Backend.Model.Event;
-import com.softsystem.Backend.Model.User;
 import com.softsystem.Backend.Repository.BetRepository;
 import com.softsystem.Backend.Repository.EventRepository;
 import com.softsystem.Backend.Repository.MemberRepository;
@@ -40,7 +39,10 @@ public class BetService {
         betRepository.save(newBet);
     }
 
-    public List<Bet> showAllBets(Long userId) { return betRepository.findAllBetsByUserId(userId); }
+    public List<Bet> showAllBets(Long userId) {
+
+        return betRepository.findAllBetsByUserId(userId);
+    }
 
     public List<Bet> findMatchingBets(String chosenStatus, Long currentUser) {
         List<Bet> betList;
@@ -78,7 +80,6 @@ public class BetService {
         int i;
         Bet bets[] = betRepository.getAllByEvent(event.getId());
 
-
         if(bets.length != 0) {
             for(i = 0; i < bets.length; i++) {
                 Bet currentBet = bets[i];
@@ -103,7 +104,6 @@ public class BetService {
             }
             this.callPrizes(event.getId());
         }
-
     }
 
     private void callPrizes(Long idEvent){
@@ -171,9 +171,13 @@ public class BetService {
                 }
             }
         }
+
         return prize;
     }
 
-    public Bet[] getAllBetsByEventId(Long eventId) { return betRepository.getAllByEvent(eventId);
+    public Bet[] getAllBetsByEventId(Long eventId) {
+
+        return betRepository.getAllByEvent(eventId);
     }
+
 }
