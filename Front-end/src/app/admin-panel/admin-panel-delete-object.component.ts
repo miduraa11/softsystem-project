@@ -40,7 +40,7 @@ export class AdminDeleteObjectComponent {
     }
 
     onCancelClick(): void {
-        this.dialogRef.close();
+        this.dialogRef.close(null);
     }
 
     deleteObject(): void {
@@ -49,9 +49,11 @@ export class AdminDeleteObjectComponent {
                 this.disciplineService.deleteDiscipline(this.object).subscribe(
                     data => {
                         this.error = data;
-                        this.dialogRef.close();
-                        if(this.error == 0) { window.location.reload(); }
-                        else { this.openErrorInfoDialog(this.flag); }
+                        if(this.error == -1) {
+                            this.openErrorInfoDialog(this.flag);
+                            this.dialogRef.close(null);
+                        }
+                        else { this.dialogRef.close(this.object); }
                     },
                     error => console.log(error)
                 );
@@ -60,10 +62,12 @@ export class AdminDeleteObjectComponent {
             case 2: {
                 this.eventService.deleteEvent(this.object).subscribe(
                     data => {
-                      this.error = data;
-                      this.dialogRef.close();
-                      if(this.error == 0) { window.location.reload(); }
-                      else { this.openErrorInfoDialog(this.flag); }
+                        this.error = data;
+                        if(this.error == -1) {
+                            this.openErrorInfoDialog(this.flag);
+                            this.dialogRef.close(null);
+                        }
+                        else { this.dialogRef.close(this.object); }
                     },
                     error => console.log(error)
                 );
@@ -72,10 +76,12 @@ export class AdminDeleteObjectComponent {
             case 3: {
                 this.playerService.deletePlayer(this.object).subscribe(
                     data => {
-                      this.error = data;
-                      this.dialogRef.close();
-                      if(this.error == 0) { window.location.reload(); }
-                      else { this.openErrorInfoDialog(this.flag); }
+                        this.error = data;
+                        if(this.error == -1) {
+                            this.openErrorInfoDialog(this.flag);
+                            this.dialogRef.close(null);
+                        }
+                        else { this.dialogRef.close(this.object); }
                     },
                     error => console.log(error)
                 );
@@ -84,10 +90,12 @@ export class AdminDeleteObjectComponent {
             case 4: {
                 this.teamService.deleteTeam(this.object).subscribe(
                     data => {
-                      this.error = data;
-                      this.dialogRef.close();
-                      if(this.error == 0) { window.location.reload(); }
-                      else { this.openErrorInfoDialog(this.flag); }
+                        this.error = data;
+                        if(this.error == -1) {
+                            this.openErrorInfoDialog(this.flag);
+                            this.dialogRef.close(null);
+                        }
+                        else { this.dialogRef.close(this.object); }
                     },
                     error => {
                       console.log(error);          
@@ -98,10 +106,12 @@ export class AdminDeleteObjectComponent {
             case 5: {
                 this.userService.deleteUser(this.object).subscribe(
                     data => {
-                      this.error = data;
-                      this.dialogRef.close();
-                      if(this.error == 0) { window.location.reload(); }
-                      else { this.openErrorInfoDialog(this.flag); }
+                        this.error = data;
+                        if(this.error == -1) {
+                            this.openErrorInfoDialog(this.flag);
+                            this.dialogRef.close(null);
+                        }
+                        else { this.dialogRef.close(this.object); }
                     },
                     error => console.log(error)      
                 );

@@ -18,6 +18,7 @@ export interface DialogData {
 })
 export class EditDisciplineComponent implements OnInit {
   
+  type: Type;
   types: Type[];
 
   constructor(private disciplineService: DisciplineService,
@@ -41,7 +42,10 @@ export class EditDisciplineComponent implements OnInit {
       data: { object, flag }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if(result != null) {
+        this.type = result;
+        this.types = this.types.filter(x =>  x.id != this.type.id);
+      }
     });
   }
 
@@ -51,7 +55,12 @@ export class EditDisciplineComponent implements OnInit {
       data: { type, flag }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if(result != null) {
+        this.type = result;
+        var index = this.types.findIndex(x => x.id == this.type.id)
+        if( index == -1) { this.types.push(this.type); }
+        else { this.types[index] = this.type; }
+      }
     });
   }
 
@@ -93,36 +102,26 @@ export class UpdateDisciplineDialog {
   }
 
   onCancelClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(null);
   }
   
   updateDiscipline(): void {
     if(this.updateForm.valid) {
       this.type.discipline = this.updateForm.get('discipline').value;
-      this.type.individual = this.updateForm.get('individual').value;
+      if(this.updateForm.get('individual').value == "true") { this.type.individual = true; }
+      else { this.type.individual = false; }
       switch(this.flag) {
         case 0: {
-          this.disciplineService.addDiscipline(this.type).subscribe(
-            data => {
-              this.dialogRef.close();
-              window.location.reload();
-            },
-            error => console.log(error)
-          );
+          this.disciplineService.addDiscipline(this.type).subscribe(data => {
+            this.type.id = data;
+            this.dialogRef.close(this.type);
+          });
           break;
         }
         case 1: {
-          this.disciplineService.editDiscipline(this.type).subscribe(
-            data => {
-              this.dialogRef.close();
-              window.location.reload();
-            },
-            error => console.log(error)
-          );  
-          break;
-        }
-        default: {
-          console.log("error");
+          this.disciplineService.editDiscipline(this.type).subscribe(data => {
+            this.dialogRef.close(this.type);
+          });  
           break;
         }
       }

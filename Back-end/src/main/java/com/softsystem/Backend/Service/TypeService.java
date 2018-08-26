@@ -56,11 +56,13 @@ public class TypeService {
         return disciplines;
     }
 
-    public void addDiscipline(Type type) {
+    public Long addDiscipline(Type type) {
         Type newDiscipline = new Type();
         newDiscipline.setDiscipline(type.getDiscipline());
         newDiscipline.setIndividual(type.getIndividual());
         typeRepository.save(newDiscipline);
+
+        return newDiscipline.getId();
     }
 
     public void editDiscipline(Type type) {

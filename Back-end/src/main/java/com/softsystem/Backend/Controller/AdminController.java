@@ -170,8 +170,9 @@ public class AdminController {
     }
 
     @PostMapping(value = "edit-discipline/add")
-    public void addDiscipline(@RequestBody Type type) {
-        typeService.addDiscipline(type);
+    public Long addDiscipline(@RequestBody Type type) {
+
+        return typeService.addDiscipline(type);
     }
 
     @PostMapping(value = "edit-discipline/edit")

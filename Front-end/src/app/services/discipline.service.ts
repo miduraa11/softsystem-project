@@ -18,11 +18,11 @@ export class DisciplineService {
   }
 
   deleteDiscipline(discipline: Type) : Observable<any> {
-    return this.http.get(`${this.baseUrl}/${discipline.id}`,{responseType: 'text'});
+    return this.http.get(`${this.baseUrl}/${discipline.id}`, {responseType: 'text'});
   }
 
   addDiscipline(discipline: Type): Observable<any> {
-    return this.http.post(`${this.baseUrl}/add`, discipline);
+    return this.http.post(`${this.baseUrl}/add`, discipline, {responseType: 'text'});
   }
 
   editDiscipline(discipline: Type): Observable<any> {
