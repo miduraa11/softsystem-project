@@ -16,33 +16,28 @@
   </div>
 </div>
 
-<nav><button mat-button class="matBtn" role="button" aria-pressed="true" (click)="openDialogAdd()">Dodaj nową dyscyplinę</button></nav>
+<nav><button mat-button class="matBtn" role="button" aria-pressed="true" (click)="openUpdateDisciplineDialog(null, 0)">Dodaj nową dyscyplinę</button></nav>
 
 <table class="table table-sm" id="myTable">
   <thead class="thead-dark">
-  <tr>
+    <tr>
       <th scope="col">ID</th>
-      <th scope="col" onclick="sortTable(0)">Nazwa Dyscypliny</th>
+      <th scope="col">Nazwa Dyscypliny</th>
       <th scope="col">Rodzaj</th>
       <th scope="col"></th>
       <th scope="col"></th>
-  </tr>
+    </tr>
   </thead>
-  <tbody  *ngFor="let discipline of disciplines">
-  <tr >
-      <th scope="row" >
-        {{discipline.id}}
-      </th>
-      <td >
-        {{discipline.discipline}}
-      </td>
-      <td>
-        <p *ngIf="discipline.individual">Indywidualna</p>
-        <p *ngIf="!discipline.individual">Drużynowa</p>
-      </td>
-      
-      <td><button mat-raised-button color="primary" (click)="openDialogEdit(discipline.id, discipline.discipline, discipline.individual)">Edytuj</button></td>
-      <td><button mat-raised-button color="warn" (click)="openDialogDelete(discipline.id)">Usuń</button></td>
+  <tbody  *ngFor="let type of types">
+  <tr >    
+    <th scope="row" >{{type.id}}</th>
+    <td >{{type.discipline}}</td>
+    <td>
+      <p *ngIf="type.individual">Indywidualna</p>
+      <p *ngIf="!type.individual">Drużynowa</p>
+    </td>    
+    <td><button mat-raised-button color="primary" (click)="openUpdateDisciplineDialog(type, 1)">Edytuj</button></td>
+    <td><button mat-raised-button color="warn" (click)="openDeleteObjectDialog(type, 1)">Usuń</button></td>
   </tr>
   </tbody>
 </table>

@@ -1,4 +1,5 @@
 <h2 mat-dialog-title>Informacje o wydarzeniu</h2>
+
 <div mat-dialog-content>
     <b>Nazwa wydarzenia:</b> {{event.name}} <br>
     <b>Data rozpoczęcia wydarzenia:</b> {{event.beginDate | date: "dd.MM.yyyy"}} <br>
@@ -13,6 +14,7 @@
         <b>Wynik: </b>{{event.score}}<br>
     </div>
 </div>
+
 <div mat-dialog-actions>
     <button mat-button (click)="onOkClick()">Zamknij</button>
 </div>

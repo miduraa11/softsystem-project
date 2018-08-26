@@ -1,85 +1,80 @@
 <div class="content">
-<h2>Zarejestruj się!</h2>
-<div class="form" style="width: 600px; margin-left: auto; margin-right: auto">
-<form>
-  <mat-form-field class="example-full-width" style="width: 600px">
-    <input matInput placeholder="Imię" [formControl]="firstNameFormControl"
-           [errorStateMatcher]="matcherFirstName">
-    <mat-error *ngIf="firstNameFormControl.hasError('pattern') && !firstNameFormControl.hasError('required')">
-      Proszę wpisać <strong>poprawne</strong> imię!
-    </mat-error>
-    <mat-error *ngIf="firstNameFormControl.hasError('required')">
-      Imię jest <strong>wymagane</strong>!
-    </mat-error>
-  </mat-form-field>
 
-  <mat-form-field class="example-full-width" style="width: 600px">
-    <input matInput placeholder="Nazwisko" [formControl]="lastNameFormControl"
-           [errorStateMatcher]="matcherLastName">
-    <mat-error *ngIf="lastNameFormControl.hasError('pattern') && !lastNameFormControl.hasError('required')">
-      Proszę wpisać <strong>poprawne</strong> nazwisko!
-    </mat-error>
-    <mat-error *ngIf="lastNameFormControl.hasError('required')">
-      Nazwisko jest <strong>wymagane</strong>!
-    </mat-error>
-  </mat-form-field>
+  <h2>Zarejestruj się!</h2>
 
-  <mat-form-field class="example-full-width" style="width: 600px">
-    <input matInput placeholder="Login" [formControl]="loginFormControl"
-           [errorStateMatcher]="matcherLogin">
-    <mat-error *ngIf="loginFormControl.hasError('pattern') && !loginFormControl.hasError('required')">
-      Proszę wpisać <strong>poprawne</strong> login (od 3 do 20 znaków, litery i cyfry)!
-    </mat-error>
-    <mat-error *ngIf="loginFormControl.hasError('required')">
-      Login jest <strong>wymagany</strong>!
-    </mat-error>
-  </mat-form-field>
+  <div class="form" style="width: 600px; margin-left: auto; margin-right: auto">
 
-  <mat-form-field class="example-full-width" style="width: 600px">
-    <input matInput placeholder="Adres e-mail" [formControl]="emailFormControl"
-           [errorStateMatcher]="matcherEmail">
-    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-      Proszę wpisać <strong>poprawny</strong> adres e-mail
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      Adres e-mail jest <strong>wymagany</strong>
-    </mat-error>
-  </mat-form-field>
+    <form [formGroup]="registrationForm">
 
-  <mat-form-field class="example-full-width" style="width: 600px">
-    <input matInput type="password" placeholder="Hasło" [formControl]="passwordFormControl"
-           [errorStateMatcher]="matcherPassword">
-    <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required') && !passwordFormControl.hasError('minlength')">
-      Hasło musi <strong>być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
-    </mat-error>
-    <mat-error *ngIf="passwordFormControl.hasError('required')">
-      Hasło jest <strong>wymagane</strong>!
-    </mat-error>
-    <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
-      Hasło musi zawierać <strong>minimum 8 znaków i być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
-    </mat-error>
-  </mat-form-field>
+      <mat-form-field style="width: 600px">
+        <input matInput placeholder="Imię" formControlName="firstName">
+        <mat-error *ngIf="registrationForm.get('firstName').hasError('pattern') && !registrationForm.get('firstName').hasError('required')">
+          Proszę wpisać <strong>poprawne</strong> imię!
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('firstName').hasError('required')">
+          Imię jest <strong>wymagane</strong>!
+        </mat-error>
+      </mat-form-field>
 
-  <mat-form-field class="example-full-width" style="width: 600px; padding-bottom: 20px">
-    <input matInput type="Password" placeholder="Powtórz hasło" [formControl]="confirmPasswordFormControl" pattern="{{passwordFormControl.value}}"
-           [errorStateMatcher]="matcherConfirmPassword">
-    <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
-      Podane hasła są <strong>różne</strong> !
-    </mat-error>
-    <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
-      Powtórzenie hasła jest <strong>wymagane</strong>!
-    </mat-error>
-  </mat-form-field>
-  <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="loginExist()">Zarejestruj się</button></nav>
-</form>
-  <h5 style="text-align: center; padding-top: 20px">
-      Masz już konto?
-      <a href="/login">
-        Zaloguj sie!
-      </a>
-  </h5>
+      <mat-form-field style="width: 600px">
+        <input matInput placeholder="Nazwisko" formControlName="lastName">
+        <mat-error *ngIf="registrationForm.get('lastName').hasError('pattern') && !registrationForm.get('lastName').hasError('required')">
+          Proszę wpisać <strong>poprawne</strong> nazwisko!
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('lastName').hasError('required')">
+          Nazwisko jest <strong>wymagane</strong>!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field style="width: 600px">
+        <input matInput placeholder="Login" formControlName="login">
+        <mat-error *ngIf="registrationForm.get('login').hasError('pattern') && !registrationForm.get('login').hasError('required')">
+          Proszę wpisać <strong>poprawne</strong> login (od 3 do 20 znaków, litery i cyfry)!
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('login').hasError('required')">
+          Login jest <strong>wymagany</strong>!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field style="width: 600px">
+        <input matInput placeholder="Adres e-mail" formControlName="email">
+        <mat-error *ngIf="registrationForm.get('email').hasError('email') && !registrationForm.get('email').hasError('required')">
+          Proszę wpisać <strong>poprawny</strong> adres e-mail
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('email').hasError('required')">
+          Adres e-mail jest <strong>wymagany</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field style="width: 600px">
+        <input matInput type="password" placeholder="Hasło" formControlName="password">
+        <mat-error *ngIf="registrationForm.get('password').hasError('pattern') && !registrationForm.get('password').hasError('required') && !registrationForm.get('password').hasError('minlength')">
+          Hasło musi <strong>być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('password').hasError('required')">
+          Hasło jest <strong>wymagane</strong>!
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('password').hasError('minlength') && !registrationForm.get('password').hasError('required')">
+          Hasło musi zawierać <strong>minimum 8 znaków i być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field style="width: 600px; padding-bottom: 20px">
+        <input matInput type="Password" placeholder="Powtórz hasło" formControlName="confirmPassword" pattern="{{registrationForm.get('password').value}}">
+        <mat-error *ngIf="registrationForm.get('confirmPassword').hasError('pattern') && !registrationForm.get('confirmPassword').hasError('required')">
+          Podane hasła są <strong>różne</strong> !
+        </mat-error>
+        <mat-error *ngIf="registrationForm.get('confirmPassword').hasError('required')">
+          Powtórzenie hasła jest <strong>wymagane</strong>!
+        </mat-error>
+      </mat-form-field>
+
+      <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="loginExist()">Zarejestruj się</button></nav>
+
+    </form>
+
+    <h5 style="text-align: center; padding-top: 20px">Masz już konto?<a href="/login">Zaloguj sie!</a></h5>
+
+  </div>
+
 </div>
-</div>
-
-
-

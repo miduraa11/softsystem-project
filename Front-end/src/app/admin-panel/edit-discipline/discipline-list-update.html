@@ -1,0 +1,26 @@
+<div [ngSwitch]="flag">
+    <h1 *ngSwitchCase="0" mat-dialog-title>Dodawanie nowej dyscypliny</h1>
+    <h1 *ngSwitchCase="1" mat-dialog-title>Edycja dyscypliny</h1>
+</div>
+
+<form [formGroup]="updateForm">
+
+    <mat-form-field style="width: 100%">            
+        <input matInput formControlName="discipline" style="width: 350px" placeholder="Podaj nazwę dyscypliny"/>
+        <mat-error>
+            Nazwa jest <strong>wymagana</strong>!
+        </mat-error>
+    </mat-form-field>
+
+    <mat-radio-group formControlName="individual">
+        <mat-radio-button value=true>Indywidualna</mat-radio-button>
+        <mat-radio-button value=false>Drużynowa</mat-radio-button>
+        <mat-error *ngIf="updateForm.get('individual').hasError('required')">
+            Rodzaj jest <strong>wymagany</strong>!
+        </mat-error>
+    </mat-radio-group>
+
+    <button type="button" class="btn btn-success btn-lg btn-block btn-sm"  (click)="updateDiscipline()">Zapisz zmiany</button>
+    <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onCancelClick()" >Anuluj</button>
+
+</form>

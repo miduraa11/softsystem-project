@@ -27,8 +27,13 @@ public class EventService {
         return eventRepository.findAll();
     }
 
-    public void deleteEvent(Long id) {
-        eventRepository.deleteById(id);
+    public int deleteEvent(Long id) {
+        try {
+            eventRepository.deleteById(id);
+            return 0;
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     public Event getOne(Long id) {
@@ -36,30 +41,26 @@ public class EventService {
         return eventRepository.getOne(id);
     }
 
-
-    public void updateEvent(Event event, Type selectedDiscipline, List<Member> selectedMembers) {
+    public void updateEvent(Event event) {
        eventRepository.getOne(event.getId()).setName(event.getName());
        eventRepository.getOne(event.getId()).setBeginDate(event.getBeginDate());
        eventRepository.getOne(event.getId()).setEndDate(event.getEndDate());
-       Type type;
-       type = typeRepository.findByDiscipline(selectedDiscipline.getDiscipline());
-       eventRepository.getOne(event.getId()).setType(type);
-       eventRepository.getOne(event.getId()).setMembers(selectedMembers);
+       eventRepository.getOne(event.getId()).setType(event.getType());
+       eventRepository.getOne(event.getId()).setMembers(event.getMembers());
        eventRepository.save(eventRepository.getOne(event.getId()));
     }
 
-    public void addEvent(Event event, Type selectedDiscipline, List<Member> selectedMembers) {
+    public Long addEvent(Event event) {
         Event newEvent = new Event();
-        Type type;
-        Member members = new Member();
         newEvent.setName(event.getName());
         newEvent.setBeginDate(event.getBeginDate());
         newEvent.setEndDate(event.getEndDate());
-        newEvent.setActive(event.getActive());
-        type = typeRepository.findByDiscipline(selectedDiscipline.getDiscipline());
-        newEvent.setType(type);
-        newEvent.setMembers(selectedMembers);
+        newEvent.setActive(true);
+        newEvent.setType(event.getType());
+        newEvent.setMembers(event.getMembers());
         eventRepository.save(newEvent);
+
+        return newEvent.getId();
     }
 
     public void resolve(Event event) {
@@ -130,7 +131,7 @@ public class EventService {
 
         int betListSize = betList.size();
 
-        for (int i = 0; i < betListSize; ++i){
+        for(int i = 0; i < betListSize; ++i) {
             User currentUser;
             float prize;
             currentUser = betList.get(i).getUser();

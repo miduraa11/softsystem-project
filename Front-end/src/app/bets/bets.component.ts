@@ -20,14 +20,27 @@ export class BetsComponent implements OnInit {
   currentUser: number;
   chosenStatus: String = "Wszystkie";
 
-  constructor(private betsService: BetsService, public dialog: MatDialog) {
+  constructor(private betsService: BetsService,
+    public dialog: MatDialog
+  ) { }
 
+  ngOnInit(): void {
+    this.currentUser = Number(localStorage.getItem(this.key));
+    this.betsService.getAllBetsById(this.currentUser).subscribe(data => {
+      this.bets = data;
+      for(var i = 0; i < this.bets.length; i++) {
+        if(this.bets[i].member == null) { 
+          this.bets[i].member = new Member();
+          this.bets[i].member.name = "Remis";
+        }
+      }
+    });
   }
 
-  ngOnInit() {
-    this.currentUser = Number(localStorage.getItem(this.key));
-    this.betsService.getAllBetsById(this.currentUser).subscribe(
-      data => {
+  updateList(chosenStatus: String): void {
+    this.chosenStatus = chosenStatus;
+    this.betsService.giveChosenParams(this.chosenStatus, this.currentUser).subscribe(data => {
+      this.betsService.getActiveBets().subscribe(data => {
         this.bets = data;
         for(var i = 0; i < this.bets.length; i++) {
           if(this.bets[i].member == null) { 
@@ -35,30 +48,15 @@ export class BetsComponent implements OnInit {
             this.bets[i].member.name = "Remis";
           }
         }
-      }
-    );
-  }
-
-  updateList(chosenStatus: String): void {
-
-    this.chosenStatus = chosenStatus;
-    this.betsService.giveChosenParams(this.chosenStatus, this.currentUser).subscribe(
-      data => { console.log("Success"),
-      this.betsService.getActiveBets().subscribe(data => {
-        this.bets = data;
         this.chosenStatus = chosenStatus;
-      })},
-      error => console.log(error)
-    );
+      })
+    });
   }
 
   openInfoDialog(event: Event): void {
     const dialogRef = this.dialog.open(InfoDialog, {
       width: '400px',
-      data: {event: event}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      data: { event }
     });
   }
 
@@ -75,15 +73,12 @@ export class InfoDialog {
   constructor(
     public dialogRef: MatDialogRef<InfoDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {  
+  ) {
+    this.event = this.data.event; 
   }
 
   onOkClick(): void {
     this.dialogRef.close();
-  }
-
-  ngOnInit() {
-    this.event = this.data.event;
   }
 
 }

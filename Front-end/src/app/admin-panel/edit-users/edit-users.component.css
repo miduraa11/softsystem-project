@@ -1,15 +1,15 @@
 .mt-4 {
-    margin-top: 5 !important;
-    margin-left: 25px;
-  }
+  margin-top: 5 !important;
+  margin-left: 25px;
+}
 
-  .table {
-    margin-top: 115px;
-    margin-bottom: 50px;
-    background-color: aliceblue;
-  }
+.table {
+  margin-top: 115px;
+  margin-bottom: 50px;
+  background-color: aliceblue;
+}
 
-  .btn {
-    width: 100%;
-    margin-top: 20px;
-  }
+.btn {
+  width: 100%;
+  margin-top: 20px;
+}

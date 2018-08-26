@@ -35,11 +35,9 @@ public class BetController {
     }
 
     @PostMapping(value = "/bets/{chosenStatus}/{currentUser}")
-    public void getChosenParams(@PathVariable("chosenStatus") String chosenStatus,
-                                @PathVariable("currentUser") Long currentUser) {
+    public void getChosenParams(@PathVariable("chosenStatus") String chosenStatus, @PathVariable("currentUser") Long currentUser) {
         this.chosenStatus = chosenStatus;
         this.currentUser = currentUser;
     }
-
 
 }

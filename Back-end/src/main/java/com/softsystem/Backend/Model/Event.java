@@ -1,8 +1,6 @@
 package com.softsystem.Backend.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +12,6 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_event")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Long id;
 
     @Column(name = "name")
@@ -36,17 +33,14 @@ public class Event {
     private String score;
 
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_type")
     private Type type;
 
     @OneToMany(mappedBy = "event")
     @JsonIgnore
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Bet> bets;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(name = "event_member", joinColumns = @JoinColumn(name = "id_event"), inverseJoinColumns = @JoinColumn(name = "id_member"))
     private List<Member> members;
 

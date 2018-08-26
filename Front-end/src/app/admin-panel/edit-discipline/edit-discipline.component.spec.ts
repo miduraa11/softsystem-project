@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { EditDisciplineComponent } from './edit-discipline.component';
 
 describe('EditDisciplineComponent', () => {

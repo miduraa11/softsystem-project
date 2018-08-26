@@ -1,0 +1,64 @@
+<div [ngSwitch]="flag">
+    <h1 mat-dialog-title *ngSwitchCase="0">Utwórz wydarzenie</h1>
+    <h1 mat-dialog-title *ngSwitchCase="1">Edycja wydarzenia</h1>
+</div>
+
+<form [formGroup]="updateForm" [ngSwitch]="flag">
+
+    <mat-form-field style="width: 100%">            
+    <input matInput formControlName="name" style="width: 350px" placeholder="Podaj nazwę wydarzenia"/>
+    <mat-error>
+        Nazwa jest <strong>wymagana</strong>!
+    </mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+    <input matInput [matDatepicker]="picker" formControlName="beginDate" placeholder="Podaj datę rozpoczęcia wydarzenia">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error>
+        Data rozpoczęcia wydarzenia jest <strong>wymagana</strong>!
+    </mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+    <input matInput [matDatepicker]="picker2" formControlName="endDate" placeholder="Podaj datę zakończenia wydarzenia">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+    <mat-error>
+        Data zakończenia wydarzenia jest <strong>wymagana</strong>!
+    </mat-error>
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+    <mat-select *ngSwitchCase="0" formControlName="discipline" style="width: 100%" placeholder="Wybierz dyscyplinę">
+        <mat-option *ngFor="let type of types" [value]="type" >{{type.discipline}}</mat-option>
+    </mat-select>
+    <mat-select *ngSwitchCase="1" formControlName="discipline" style="width: 100%" placeholder="Wybierz dyscyplinę">
+        <mat-option *ngFor="let type of types" [value]="type.id">{{type.discipline}}</mat-option>
+    </mat-select>
+    <mat-error>
+        Wybór druzyn biorących udzial w wydarzeniu jest <strong>wymagany</strong>!
+    </mat-error>
+    </mat-form-field>  
+
+    <mat-form-field style="width: 100%">
+    <mat-select *ngSwitchCase="0" multiple formControlName="members" style="width: 100%" placeholder="Wybierz drużyny lub uczestników">
+        <mat-option *ngFor="let member of members" [value]="member">{{member.name}}</mat-option>
+    </mat-select>
+    <mat-select *ngSwitchCase="1" multiple formControlName="members" style="width: 100%" placeholder="Wybierz drużyny lub uczestników">
+        <mat-option *ngFor="let member of members" [value]="member.id">{{member.name}}</mat-option>
+    </mat-select>
+    <mat-error>
+        Wybranie drużyny lub uczestników jest <strong>wymagane</strong>!
+    </mat-error>
+    </mat-form-field>
+  
+    <div *ngSwitchCase="1">
+        <button *ngIf=!event.active type="button" class="btn btn-warning btn-lg btn-block btn-sm" (click)="updateEvent(1)">Zakończ wydarzenie i rozstrzygnij zakłady</button>
+        <button *ngIf=event.active disabled type="button" class="btn btn-warning btn-lg btn-block btn-sm">Zakończ wydarzenie i rozstrzygnij zakłady</button>
+    </div>
+    <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="updateEvent(0)">Zapisz zmiany</button>
+    <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onCancelClick()">Anuluj</button>
+
+</form>

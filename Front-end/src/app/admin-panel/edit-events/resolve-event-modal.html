@@ -1,5 +1,7 @@
 <div mat-dialog-content>
+
     <h6 mat-dialog-title>Szczegóły dotyczące wybranego wydarzenia:</h6>
+
     <section>
         <b>Nazwa wydarzenia:</b> {{event.name}} <br>
         <b>Dyscyplina:</b> {{event.type.discipline}} <br>
@@ -14,28 +16,31 @@
             lecz zostaną zapisane do bazy danych po rozstrzygnięciu tego wydarzenia)
         </font></div>
     </section>
+
     <h6 mat-dialog-title>Podaj wynik powyższego wydarzenia:</h6>
-    <form>          
-        <mat-form-field class="example-full-width" style="width: 400px">            
-            <mat-select matSelect [formControl]="memberFormControl" [errorStateMatcher]="matcherMember" style="width: 400px" placeholder="Wybierz zwycięzce wydarzenia.">
+    
+    <form [formGroup]="resolveForm">                  
+        <mat-form-field style="width: 400px">            
+            <mat-select matSelect formControlName="member" style="width: 400px" placeholder="Wybierz zwycięzce wydarzenia.">
                 <mat-option *ngFor="let member of event.members" [value]="member.name">{{member.name}}</mat-option>
                 <mat-option [value]=-1>Remis</mat-option>
             </mat-select>
-            <mat-error *ngIf="memberFormControl.hasError('required')">
+            <mat-error>
                 Zwycięzca jest <strong>wymagany</strong>!
             </mat-error>
         </mat-form-field>
-        <mat-form-field class="example-full-width" style="width: 400px">  
-            <input matInput [formControl]="resultFormControl" [errorStateMatcher]="matcherResult" style="width: 350px" placeholder="Podaj dokladny resultat wydarzenia."/>
-            <mat-error *ngIf="resultFormControl.hasError('pattern') && !resultFormControl.hasError('required')">
+        <mat-form-field style="width: 400px">  
+            <input matInput formControlName="result" style="width: 350px" placeholder="Podaj dokladny resultat wydarzenia."/>
+            <mat-error *ngIf="resolveForm.get('result').hasError('pattern') && !resolveForm.get('result').hasError('required')">
                 Proszę wpisać <strong>poprawny</strong> format rezultatu!
             </mat-error>
-            <mat-error *ngIf="resultFormControl.hasError('required')">
+            <mat-error *ngIf="resolveForm.get('result').hasError('required')">
                 Rezultat jest <strong>wymagany</strong>!
             </mat-error>
         </mat-form-field>
     </form>
 </div>
+
 <div mat-dialog-actions>
     <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="onResolveClick()">Zakończ i rozstrzygnij</button>
     <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onCancelClick()">Anuluj</button>

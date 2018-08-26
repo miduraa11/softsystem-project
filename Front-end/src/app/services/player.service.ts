@@ -1,29 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Member } from '../model/member';
 
 @Injectable({ providedIn: 'root' })
 
 export class PlayerService {
   public API = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
   
   getPlayers(): Observable<any> {
     return this.http.get(this.API + '/edit-players');
   }
 
-  updatePlayer(id: number, name: String, discipline: String): Observable<any> {
-    return this.http.post(`${this.API}/edit-players/edit/${id}/${name}/${discipline}`, { responseType: 'text' });
+  updatePlayer(player: Member): Observable<any> {
+    return this.http.post(`${this.API}/edit-players/edit`, player);
   }
 
-  deletePlayer(id: number): Observable<any> {
-    return this.http.delete(`${this.API}/edit-players/${id}`, { responseType: 'text' });
+  deletePlayer(player: Member): Observable<any> {
+    return this.http.get(`${this.API}/edit-players/${player.id}`, { responseType: 'text' });
   }
 
-  addPlayer(name: String, discipline: String): Observable<any> {
-    return this.http.post(`${this.API}/edit-players/add/${name}/${discipline}`, { responseType: 'text' });
+  addPlayer(player: Member): Observable<any> {
+    return this.http.post(`${this.API}/edit-players/add`, player, { responseType: 'text' });
   }
 
 }

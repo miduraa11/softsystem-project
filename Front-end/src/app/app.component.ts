@@ -16,42 +16,30 @@ export class AppComponent {
   isAdmin: boolean;
   userRole: any;
 
-  constructor(private localStorageService: LocalStorageService, private eventService: EventService) {}
+  constructor(private localStorageService: LocalStorageService,
+    private eventService: EventService
+  ) { }
 
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.userId = localStorage.getItem(this.key);
-
-    if(this.userId == null){
-      this.isActive = false;
-    } else{
-      this.isActive = true;
-      
+    if(this.userId == null) { this.isActive = false; } 
+    else {
+      this.isActive = true;      
       this.localStorageService.getUserRole(this.userId).subscribe(data => {
-        this.userRole = data;
-    
-        if(this.userRole == "admin"){
-          this.isAdmin = true;
-        } else{
-          this.isAdmin = false;
-        }
-        });
+        this.userRole = data;    
+        if(this.userRole == "admin") { this.isAdmin = true; }
+        else { this.isAdmin = false; }
+      });
     }
-
-    this.eventService.checkEventsActivity().subscribe(
-      error => console.log(error)
-    )
-    
+    this.eventService.checkEventsActivity()    
   }
 
-
-  logout(){
+  logout(): void {
     localStorage.setItem(this.key, "");
     this.userId = localStorage.getItem(this.key);
     this.userRole = null;
     window.location.reload();
     localStorage.clear();    
   }
+
 }
-
-

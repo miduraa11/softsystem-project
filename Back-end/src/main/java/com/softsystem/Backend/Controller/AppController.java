@@ -17,4 +17,5 @@ public class AppController {
     public void checkEventsActivity() {
         eventService.checkEventsActivity();
     }
+
 }

@@ -16,31 +16,25 @@
   </div>
 </div>
 
-<nav><button mat-button class="matBtn" role="button" aria-pressed="true" (click)="openDialogAdd()">Dodaj nową drużynę</button></nav>
+<nav><button mat-button class="matBtn" role="button" aria-pressed="true" (click)="openUpdateTeamDialog(null, 0)">Dodaj nową drużynę</button></nav>
 
 <table class="table table-sm" id="myTable">
   <thead class="thead-dark">
-  <tr>
+    <tr>
       <th scope="col">ID</th>
       <th scope="col" onclick="sortTable(0)">Nazwa drużyny</th>
       <th scope="col">Dyscyplina</th>
       <th scope="col"></th>
       <th scope="col"></th>
-  </tr>
+    </tr>
   </thead>
   <tbody  *ngFor="let team of teams">
-  <tr >
-      <th scope="row" >
-        {{team.id}}
-      </th>
-      <td >
-        {{team.name}}
-      </td>
-      <td >
-        {{team.type.discipline}}
-      </td>
-      <td><button mat-raised-button color="primary" (click)="openDialogEdit(team.id, team.name, team.type)">Edytuj</button></td>
-      <td><button mat-raised-button color="warn" (click)="openDialogDelete(team.id)">Usuń</button></td>
-  </tr>
+    <tr >
+      <th scope="row">{{team.id}}</th>
+      <td >{{team.name}}</td>
+      <td >{{team.type.discipline}}</td>
+      <td><button mat-raised-button color="primary" (click)="openUpdateTeamDialog(team, 1)">Edytuj</button></td>
+      <td><button mat-raised-button color="warn" (click)="openDeleteObjectDialog(team, 4)">Usuń</button></td>
+    </tr>
   </tbody>
 </table>
