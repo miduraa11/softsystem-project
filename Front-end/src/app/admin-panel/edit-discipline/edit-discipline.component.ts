@@ -8,6 +8,7 @@ import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.compone
 
 export interface DialogData {
   type: Type;
+  flag: number;
 }
 
 @Component({
@@ -44,19 +45,10 @@ export class EditDisciplineComponent implements OnInit {
     });
   }
 
-  openDialogAdd(): void {
-    const dialogRef = this.dialog.open(EditDisciplineModalAdd, {
-      width: '450px'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-  openDialogEdit(type: Type): void {
-    const dialogRef = this.dialog.open(EditDisciplineModalEdit, {
+  openUpdateDisciplineDialog(type: Type, flag: number): void {
+    const dialogRef = this.dialog.open(UpdateDisciplineDialog, {
       width: '450px',
-      data: {type: type}
+      data: { type, flag }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
@@ -66,15 +58,15 @@ export class EditDisciplineComponent implements OnInit {
 }
 
 @Component({
-  selector: 'edit-discipline-modal-add',
-  templateUrl: './edit-discipline-modal-add.html',
-  styleUrls: ['./edit-discipline.component.css']
+  selector: 'discipline-list-update',
+  templateUrl: './discipline-list-update.html'
 })
-export class EditDisciplineModalAdd {
+export class UpdateDisciplineDialog {
 
-  type: Type = new Type();
+  type: Type;
+  flag: number;
 
-  addForm = new FormGroup({
+  updateForm = new FormGroup({
     discipline: new FormControl('', [
       Validators.required
     ]),
@@ -83,89 +75,57 @@ export class EditDisciplineModalAdd {
     ])
   });
 
-  constructor(private disciplineService: DisciplineService,
-    public dialogRef: MatDialogRef<EditDisciplineModalAdd>,
+  constructor( public dialogRef: MatDialogRef<UpdateDisciplineDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private disciplineService: DisciplineService,
     public snackBar: MatSnackBar
-  ) { }
+  ) {
+    this.flag = this.data.flag;
+    if(this.flag == 0) { this.type = new Type(); }
+    else { this.type = this.data.type; }
+  }
     
-  ngOnInit() {
+  ngOnInit(): void {
+    if(this.flag == 1) {
+      this.updateForm.get('discipline').setValue(this.type.discipline);
+      this.updateForm.get('individual').setValue(String(this.type.individual));
+    }
   }
 
   onCancelClick(): void {
     this.dialogRef.close();
   }
   
-  addDiscipline() {
-    if(this.addForm.valid) {
-      this.type.discipline = this.addForm.get('discipline').value;
-      this.type.individual = this.addForm.get('individual').value;
-      this.disciplineService.addDiscipline(this.type).subscribe(
-        data => {
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error)
-      );
-    } else {
-      this.openSnackBar();
-    }
-  }
-
-  openSnackBar() {
-    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
-      duration: 3000
-    });
-  }
-
-}
-
-@Component({
-  selector: 'edit-discipline-modal-edit',
-  templateUrl: './edit-discipline-modal-edit.html',
-  styleUrls: ['./edit-discipline.component.css']
-})
-export class EditDisciplineModalEdit {
-
-  type: Type;
-
-  editForm = new FormGroup({
-    discipline: new FormControl('', [
-      Validators.required
-    ]),
-    individual: new FormControl('', [
-      Validators.required
-    ])
-  });
-
-  constructor(private disciplineService: DisciplineService,
-    public dialogRef: MatDialogRef<EditDisciplineModalEdit>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public snackBar: MatSnackBar
-  ) { 
-    this.type = this.data.type;
-  }
-
-  ngOnInit() {
-    this.editForm.get('discipline').setValue(this.type.discipline);
-    this.editForm.get('individual').setValue(String(this.type.individual));
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-  
-  editDiscipline() {
-    if(this.editForm.valid) {
-      this.type.discipline = this.editForm.get('discipline').value;
-      this.type.individual = this.editForm.get('individual').value;
-      this.disciplineService.editDiscipline(this.type).subscribe(
-        data => {
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error)
-      );     
+  updateDiscipline(): void {
+    if(this.updateForm.valid) {
+      this.type.discipline = this.updateForm.get('discipline').value;
+      this.type.individual = this.updateForm.get('individual').value;
+      switch(this.flag) {
+        case 0: {
+          this.disciplineService.addDiscipline(this.type).subscribe(
+            data => {
+              this.dialogRef.close();
+              window.location.reload();
+            },
+            error => console.log(error)
+          );
+          break;
+        }
+        case 1: {
+          this.disciplineService.editDiscipline(this.type).subscribe(
+            data => {
+              this.dialogRef.close();
+              window.location.reload();
+            },
+            error => console.log(error)
+          );  
+          break;
+        }
+        default: {
+          console.log("error");
+          break;
+        }
+      }
     } else {
       this.openSnackBar();
     }

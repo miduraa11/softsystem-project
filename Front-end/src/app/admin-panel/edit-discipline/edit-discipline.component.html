@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<nav><button mat-button class="matBtn" role="button" aria-pressed="true" (click)="openDialogAdd()">Dodaj nową dyscyplinę</button></nav>
+<nav><button mat-button class="matBtn" role="button" aria-pressed="true" (click)="openUpdateDisciplineDialog(null, 0)">Dodaj nową dyscyplinę</button></nav>
 
 <table class="table table-sm" id="myTable">
   <thead class="thead-dark">
@@ -41,7 +41,7 @@
         <p *ngIf="!type.individual">Drużynowa</p>
       </td>
       
-      <td><button mat-raised-button color="primary" (click)="openDialogEdit(type)">Edytuj</button></td>
+      <td><button mat-raised-button color="primary" (click)="openUpdateDisciplineDialog(type, 1)">Edytuj</button></td>
       <td><button mat-raised-button color="warn" (click)="openDeleteObjectDialog(type, 1)">Usuń</button></td>
   </tr>
   </tbody>
