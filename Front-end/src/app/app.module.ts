@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { EventsComponent, BetTheBetGeneralDialog, BetTheBetDetailDialog, BetTheBetConfirmDialog } from './events/events.component';
+import { EventsComponent, BetTheBetDialog, BetTheBetConfirmDialog } from './events/events.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
 import { BetsComponent, InfoDialog } from './bets/bets.component';
@@ -73,8 +73,7 @@ const routes: Routes = [
     RegistrationComponent,
     LoginComponent,
     HomeComponent,
-    BetTheBetGeneralDialog,
-    BetTheBetDetailDialog,
+    BetTheBetDialog,
     BetTheBetConfirmDialog,
     UserListModal,
     InfoDialog,
@@ -116,8 +115,7 @@ const routes: Routes = [
     UpdateEventDialog,
     UpdatePlayerDialog,
     UpdateTeamDialog,
-    BetTheBetGeneralDialog,
-    BetTheBetDetailDialog,
+    BetTheBetDialog,
     BetTheBetConfirmDialog,
     UpdateDisciplineDialog,
     UserListModal,

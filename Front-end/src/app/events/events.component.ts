@@ -11,6 +11,7 @@ import { User } from '../model/user';
 export interface DialogData {
   event: Event;
   currentUser: number;
+  flag: number;
 }
 
 @Component({
@@ -64,21 +65,10 @@ export class EventsComponent implements OnInit {
     );
   }
 
-  openGeneralBetDialog(event: Event): void {
-    const dialogRef = this.dialog.open(BetTheBetGeneralDialog, {
+  openBetDialog(event: Event, flag: number): void {
+    const dialogRef = this.dialog.open(BetTheBetDialog, {
       width: '450px',
-      data: { event,  currentUser: this.currentUser }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-  openDetailBetDialog(event: Event): void {
-    const dialogRef = this.dialog.open(BetTheBetDetailDialog, {
-      width: '450px',
-      data: { event,  currentUser: this.currentUser }
+      data: { event,  currentUser: this.currentUser, flag }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -89,93 +79,17 @@ export class EventsComponent implements OnInit {
 }
 
 @Component({
-  selector: 'bet-the-bet-general-dialog',
-  templateUrl: './bet-the-bet-general-dialog.html',
+  selector: 'bet-the-bet-dialog',
+  templateUrl: './bet-the-bet-dialog.html',
 })
-export class BetTheBetGeneralDialog implements OnInit {
+export class BetTheBetDialog {
 
   event: Event;
   bet: Bet;
   currentUser: number;
+  flag: number;
 
-  generalBetForm = new FormGroup({
-    amount: new FormControl('', [
-      Validators.required,
-      Validators.pattern("^\\d+\\.\\d{0,2}$")
-    ]),
-    member: new FormControl('', [
-      Validators.required
-    ])
-  });
-
-  constructor( private betService: BetsService,
-    public dialogRef: MatDialogRef<BetTheBetGeneralDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    public dialog: MatDialog,
-    public snackBar: MatSnackBar
-  ) {
-    this.event = this.data.event;
-    this.currentUser = this.data.currentUser;
-    this.bet = new Bet();
-    this.bet.user = new User();
-  }
-
-  ngOnInit() {
-  }
-
-  onCancelClick(): void {
-    this.dialogRef.close();
-  }
-
-  onBetClick(event: Event): void {
-    if(this.generalBetForm.valid) {
-      this.bet.amount = this.generalBetForm.get('amount').value;
-      if(this.generalBetForm.get('member').value != -1) { this.bet.member = this.generalBetForm.get('member').value; }
-      else { this.bet.member = null; }
-      this.bet.event = event;
-      this.bet.general = true;
-      this.bet.user.id = this.data.currentUser;
-      this.betService.addBet(this.bet).subscribe(
-        data => {
-          this.openConfirmDialog();
-          this.dialogRef.close();
-        },
-        error => console.log(error)
-      );
-    } else {
-      this.openSnackBar();
-    }
-  }
-
-  openSnackBar() {
-    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
-      duration: 3000
-    });
-  }
-
-  openConfirmDialog(): void {
-    const dialogRef = this.dialog.open(BetTheBetConfirmDialog, {
-      width: '400px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-}
-
-@Component({
-  selector: 'bet-the-bet-detail-dialog',
-  templateUrl: './bet-the-bet-detail-dialog.html',
-})
-export class BetTheBetDetailDialog implements OnInit {
-
-  event: Event;
-  bet: Bet;
-  currentUser: number;
-
-  detailBetForm = new FormGroup({
+  betForm = new FormGroup({
     amount: new FormControl('', [
       Validators.required,
       Validators.pattern("^\\d+\\.\\d{0,2}$")
@@ -189,19 +103,17 @@ export class BetTheBetDetailDialog implements OnInit {
     ])
   });
 
-  constructor(private betService: BetsService,
-    public dialogRef: MatDialogRef<BetTheBetDetailDialog>,
+  constructor(public dialogRef: MatDialogRef<BetTheBetDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private betService: BetsService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar
   ) {
+    this.flag = this.data.flag;
     this.event = this.data.event;
     this.currentUser = this.data.currentUser;
     this.bet = new Bet();
     this.bet.user = new User();
-  }
-
-  ngOnInit() {
   }
 
   onCancelClick(): void {
@@ -209,14 +121,24 @@ export class BetTheBetDetailDialog implements OnInit {
   }
 
   onBetClick(event : Event): void {
-    if(this.detailBetForm.valid) {
-      this.bet.amount = this.detailBetForm.get('amount').value;
-      if(this.detailBetForm.get('member').value != -1) { this.bet.member = this.detailBetForm.get('member').value; }
+    if(this.flag == 1) { this.betForm.get('result').setErrors(null); }
+    if(this.betForm.valid) {
+      this.bet.amount = this.betForm.get('amount').value;
+      if(this.betForm.get('member').value != -1) { this.bet.member = this.betForm.get('member').value; }
       else { this.bet.member = null; }
-      this.bet.result = this.detailBetForm.get('result').value;
       this.bet.event = event;
-      this.bet.general = false;
       this.bet.user.id = this.data.currentUser;
+      switch(this.flag) {
+        case 1: {
+          this.bet.general = true;
+          break;
+        }
+        case 2: {
+          this.bet.general = false;
+          this.bet.result = this.betForm.get('result').value;
+          break;
+        }
+      }
       this.betService.addBet(this.bet).subscribe(
         data => {
           this.openConfirmDialog();
