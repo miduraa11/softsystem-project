@@ -30,22 +30,28 @@
         <mat-form-field style="width: 400px">            
             <mat-select matSelect formControlName="member" style="width: 400px" placeholder="Wybierz przewidywanego przez Ciebie zwycięzce.">
                 <mat-option *ngFor="let member of event.members" [value]="member">{{member.name}}</mat-option>
-                <mat-option [value]=-1>Remis</mat-option>
+                <mat-option *ngIf="event.type.result" [value]=-1>Remis</mat-option>
             </mat-select>
             <mat-error>
                 Zwycięzca jest <strong>wymagany</strong>!
             </mat-error>
         </mat-form-field>
 
-        <mat-form-field style="width: 400px" *ngSwitchCase="2">            
-            <input matInput formControlName="result" style="width: 350px" placeholder="Podaj przewidywany przez Ciebie wynik."/>
-            <mat-error *ngIf="betForm.get('result').hasError('pattern') && !betForm.get('result').hasError('required')">
-                Proszę wpisać <strong>poprawny</strong> format wyniku!
-            </mat-error>
-            <mat-error *ngIf="betForm.get('result').hasError('required')">
-                Wynik jest <strong>wymagany</strong>!
-            </mat-error>
-        </mat-form-field>
+        <div *ngSwitchCase="2">
+            <mat-form-field style="width: 400px">            
+                <input matInput formControlName="result" style="width: 350px" placeholder="Podaj przewidywany przez Ciebie wynik."/>
+                <mat-error *ngIf="betForm.get('result').hasError('pattern') && !betForm.get('result').hasError('required')">
+                    Proszę wpisać <strong>poprawny</strong> format wyniku!
+                </mat-error>
+                <mat-error *ngIf="betForm.get('result').hasError('required')">
+                    Wynik jest <strong>wymagany</strong>!
+                </mat-error>
+            </mat-form-field>
+            <font size="2" color="red" style="margin-top: 10px">
+                (UWAGA! Rezultat koniecznie należy wprowadzić tak aby większy wynik był podany jako pierwszy np. 2-1, 34-28 itp.
+                W przeciwnym wypadku zakład może zostać nieprawidłowo rozstrzygnięty.)
+            </font>
+        </div>
 
     </form>
     

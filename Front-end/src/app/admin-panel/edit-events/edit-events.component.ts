@@ -278,6 +278,7 @@ export class ResolveEventDialog {
   }
 
   onResolveClick(): void {
+    if(!this.event.type.result) { this.resolveForm.get('result').setErrors(null); }
     if(this.resolveForm.valid) {
       if(this.resolveForm.get('member').value == -1) { this.event.winner = "Remis"; }
       else { this.event.winner = this.resolveForm.get('member').value; }

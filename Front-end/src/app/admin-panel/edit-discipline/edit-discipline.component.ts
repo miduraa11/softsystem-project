@@ -21,7 +21,7 @@ export class EditDisciplineComponent implements OnInit {
   
   type: Type;
   types: Type[];
-  displayedColumns: string[] = ['id', 'discipline', 'individual', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'discipline', 'individual', 'result', 'edit', 'delete'];
   dataSource: any;
 
   constructor(private disciplineService: DisciplineService,
@@ -35,7 +35,7 @@ export class EditDisciplineComponent implements OnInit {
     });
   }
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue: string): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   
@@ -86,6 +86,9 @@ export class UpdateDisciplineDialog {
     ]),
     individual: new FormControl('', [
       Validators.required
+    ]),
+    result: new FormControl('', [
+      Validators.required
     ])
   });
 
@@ -103,6 +106,7 @@ export class UpdateDisciplineDialog {
     if(this.flag == 1) {
       this.updateForm.get('discipline').setValue(this.type.discipline);
       this.updateForm.get('individual').setValue(String(this.type.individual));
+      this.updateForm.get('result').setValue(String(this.type.result));
     }
   }
 
@@ -115,6 +119,8 @@ export class UpdateDisciplineDialog {
       this.type.discipline = this.updateForm.get('discipline').value;
       if(this.updateForm.get('individual').value == "true") { this.type.individual = true; }
       else { this.type.individual = false; }
+      if(this.updateForm.get('result').value == "true") { this.type.result = true; }
+      else { this.type.result = false; }
       switch(this.flag) {
         case 0: {
           this.disciplineService.addDiscipline(this.type).subscribe(data => {

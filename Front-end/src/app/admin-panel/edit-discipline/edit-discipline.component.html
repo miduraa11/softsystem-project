@@ -43,6 +43,14 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="result">
+        <th mat-header-cell *matHeaderCellDef> Rodzaj wyniku </th>
+        <td mat-cell *matCellDef="let types"> 
+          <p *ngIf="types.result">Szczegółowy</p>
+          <p *ngIf="!types.result">Ogólny</p>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="edit">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let types"> 
