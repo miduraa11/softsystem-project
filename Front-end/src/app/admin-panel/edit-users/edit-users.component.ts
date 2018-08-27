@@ -1,10 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
-export interface DialogData {
-  id: number;
-}
+import { MatDialog, MatTableDataSource } from '@angular/material';
+import { User } from '../../model/user';
+import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
 
 @Component({
   selector: 'app-edit-users',
@@ -13,52 +11,37 @@ export interface DialogData {
 })
 export class EditUsersComponent implements OnInit {
 
-  users: Array<any>;
+  user: User;
+  users: User[];
+  displayedColumns: string[] = ['id', 'login', 'email', 'firstName', 'lastName', 'delete'];
+  dataSource: any;
 
-  constructor(private userService: UserService, public dialog: MatDialog) { 
+  constructor(private userService: UserService,
+    public dialog: MatDialog
+  ) { }
 
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.userService.getUsers().subscribe(data => {
       this.users = data;
+      this.dataSource = new MatTableDataSource(this.users);
     });
   }
 
-  openDeleteDialog(id: number): void {
-    const dialogRef = this.dialog.open(RemoveUserDialog, {
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  openDeleteObjectDialog(object: any, flag: number): void {
+    const dialogRef = this.dialog.open(AdminDeleteObjectComponent, {
       width: '450px',
-      data: { id: id }
+      data: { object, flag }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if(result != null) {
+        this.user = result;
+        this.users = this.users.filter(x =>  x.id != this.user.id);
+      }
     });
-  }
-
-}
-
-@Component({
-  selector: 'remove-user-dialog',
-  templateUrl: './remove-user-dialog.html',
-})
-export class RemoveUserDialog {
-
-  constructor( private userService: UserService, public dialogRef: MatDialogRef<RemoveUserDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-
-  }
-
-  onAnulujClick(): void {
-    this.dialogRef.close();
-  }
-
-  onDeleteClick(): void {
-    this.userService.deleteUser(this.data.id).subscribe(
-      data => { console.log(data); 
-        this.dialogRef.close();
-        window.location.reload(); },
-      error => console.log(error)      
-    );  
   }
 
 }

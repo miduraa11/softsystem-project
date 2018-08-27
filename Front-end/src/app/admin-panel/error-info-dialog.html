@@ -1,0 +1,33 @@
+<h2 mat-dialog-title><strong>UWAGA!</strong> Wystąpił błąd!</h2>
+
+<div mat-dialog-content [ngSwitch]="flag">
+    <b justify *ngSwitchCase="1">
+        Wybranej dyscypliny nie można usunąć z bazy danych ponieważ posiada ona powiązania z innymi elementami
+        w niej się znajdującymi. Operacja ta mogła by zatem spowodować utratę istotnych danych lub doprowadzić
+        w przyszlości do wystąpienia nieoczekiwach błędów.
+    </b>
+    <b justify *ngSwitchCase="2">
+        Wybranego wydarzenia nie można usunąć z bazy danych ponieważ posiada ono powiązania z innymi elementami
+        w niej się znajdującymi. Operacja ta mogła by zatem spowodować utratę istotnych danych lub doprowadzić
+        w przyszlości do wystąpienia nieoczekiwach błędów.
+    </b>
+    <b justify *ngSwitchCase="3">
+        Wybranego zawodnika nie można usunąć z bazy danych ponieważ posiada on powiązania z innymi elementami
+        w niej się znajdującymi. Operacja ta mogła by zatem spowodować utratę istotnych danych lub doprowadzić
+        w przyszlości do wystąpienia nieoczekiwach błędów.
+    </b>
+    <b justify *ngSwitchCase="4">
+        Wybranej drużyny nie można usunąć z bazy danych ponieważ posiada ona powiązania z innymi elementami
+        w niej się znajdującymi. Operacja ta mogła by zatem spowodować utratę istotnych danych lub doprowadzić
+        w przyszlości do wystąpienia nieoczekiwach błędów.
+    </b>
+    <b justify *ngSwitchCase="5">
+        Wybranego użytkownika nie można usunąć z bazy danych ponieważ posiada on powiązania z innymi elementami
+        w niej się znajdującymi. Operacja ta mogła by zatem spowodować utratę istotnych danych lub doprowadzić
+        w przyszlości do wystąpienia nieoczekiwach błędów.
+    </b>
+</div>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onOkClick()">Zamknij</button>
+</div>

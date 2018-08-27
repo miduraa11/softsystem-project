@@ -1,7 +1,6 @@
 package com.softsystem.Backend.Service;
 
 import com.softsystem.Backend.Model.Member;
-import com.softsystem.Backend.Model.Type;
 import com.softsystem.Backend.Repository.MemberRepository;
 import com.softsystem.Backend.Repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,35 +19,22 @@ public class MemberService {
 
     public Collection <Member> getAllPlayers() {
         Collection <Member> players;
-        players = memberRepository.findAll().stream()
-                                    .filter(this::isPlayer)
-                                    .collect(Collectors.toList());
+        players = memberRepository.findAll()
+                .stream()
+                .filter(this::isPlayer)
+                .collect(Collectors.toList());
 
         return players;
     }
 
-    private boolean isPlayer(Member member) {
+    public Collection <Member> getAllTeams() {
+        Collection<Member> teams;
+        teams = memberRepository.findAll()
+                .stream()
+                .filter(this::isTeam)
+                .collect(Collectors.toList());
 
-        return member.getType().getIndividual();
-    }
-
-    public void deleteById(Long id) {
-        memberRepository.deleteById(id);
-    }
-
-    public void updateMember(Long id, String name, String discipline) {
-        memberRepository.getOne(id).setName(name);
-        Type tempType = typeRepository.findByDiscipline(discipline);
-        memberRepository.getOne(id).setType(tempType);
-        memberRepository.save(memberRepository.getOne(id));
-    }
-
-    public void addMember(String name, String discipline) {
-        Member member = new Member();
-        member.setName(name);
-        Type tempType = typeRepository.findByDiscipline(discipline);
-        member.setType(tempType);
-        memberRepository.save(member);
+        return teams;
     }
 
     public List<Member> findAll() {
@@ -56,33 +42,33 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public Collection <Member> getAllTeams() {
-        Collection<Member> teams;
-        teams = memberRepository.findAll().stream()
-                .filter(this::isTeam)
-                .collect(Collectors.toList());
-
-        return teams;
+    public int deleteMember(Long id) {
+        try {
+            memberRepository.deleteById(id);
+            return 0;
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
-    public void addTeam(String name, Long idType) {
-        Member member = new Member();
-        Type type = typeRepository.getOne(idType);
-        member.setName(name);
-        member.setType(type);
-        memberRepository.save(member);
+    public void updateMember(Member member) {
+        memberRepository.getOne(member.getId()).setName(member.getName());
+        memberRepository.getOne(member.getId()).setType(member.getType());
+        memberRepository.save(memberRepository.getOne(member.getId()));
     }
 
-    public void editMember(String name, Long id, Long idType) {
-        Member member = memberRepository.getOne(id);
-        member.setName(name);
-        Type type = typeRepository.getOne(idType);
-        member.setType(type);
-        memberRepository.save(member);
+    public Long addMember(Member member) {
+        Member newMember = new Member();
+        newMember.setName(member.getName());
+        newMember.setType(member.getType());
+        memberRepository.save(newMember);
+
+        return newMember.getId();
     }
 
-    public void deleteMember(Long id) {
-        memberRepository.deleteById(id);
+    private boolean isPlayer(Member member) {
+
+        return member.getType().getIndividual();
     }
 
     private boolean isTeam(Member member) {

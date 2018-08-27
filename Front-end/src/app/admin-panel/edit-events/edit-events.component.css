@@ -1,19 +1,20 @@
 .mt-4 {
   margin-top: 5 !important;
-  margin-left: 25px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-table{
+table {
   margin-top: 20px;
   margin-bottom: 50px;
 }
 
-.form-group{
+.form-group {
   margin-top: 10px;
 }
-.form-check{
-  margin-bottom: 25px;
 
+.form-check {
+  margin-bottom: 25px;
 }
 
 .expansionpanel {
@@ -37,5 +38,17 @@ table{
 }
 
 .userListTable {
-    width: 100%;
+  width: 100%;
+}
+
+.btn-warning {
+  margin-bottom: 10px;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+mat-panel-title b {
+  margin-top: 10px;
 }

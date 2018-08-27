@@ -21,6 +21,19 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class UserPanelComponent implements OnInit {
 
+  user: User = new User();
+  key: string = "User id";
+  currentUser: number;
+  currentPassword: any;
+  password: any;
+  account: number[]= [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+  chance: number=0.0;
+  dataSourceGraph: Object;
+  dataSourceHistory: Object;
+  panelOpenGraph: boolean = false;
+  panelOpenHistory: boolean = false;
+  accountState: Array<any>=new Array(20);
+  result: Array<any>=new Array(20);
 
   //current password
   currentPasswordFormControl = new FormControl('', [
@@ -40,28 +53,16 @@ export class UserPanelComponent implements OnInit {
   ]);
   matcherConfirmPassword = new MyErrorStateMatcher();
 
-  user: User = {id: 0, login: "", firstName: "", lastName: "", email: "", password: ""};
-  key: string = "User id";
-  currentUser: number;
-  currentPassword: any;
-  password: any;
-  account: number[]= [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
-  chance: number=0.0;
-  dataSourceGraph: Object;
-  dataSourceHistory: Object;
-  panelOpenGraph: boolean = false;
-  panelOpenHistory: boolean = false;
-  accountState: Array<any>=new Array(20);
-  result: Array<any>=new Array(20);
+  constructor(private userPanelService: UserPanelService,
+    private logout: AppComponent,
+    private router: Router
+  ) { }
 
-  constructor(private userPanelService: UserPanelService, private logout: AppComponent, private router: Router) { 
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.currentUser = Number(localStorage.getItem(this.key));
     this.userPanelService.getUserById(this.currentUser).subscribe(data => {
-        this.user = data;
-      });
+      this.user = data;
+    });
     this.userPanelService.getAccount(this.currentUser).subscribe(data => {
         this.account = data;
       });
@@ -99,7 +100,7 @@ export class UserPanelComponent implements OnInit {
         ]
       },
       "dials": {"dial": [{"value": this.chance}]}
-    }; 
+    };
   }
 
   getHistory(){
@@ -119,7 +120,6 @@ export class UserPanelComponent implements OnInit {
           "plottooltext": "<b>$dataValue</b> $seriesName",
           "theme": "fusion"
         },
-        
         "categories": [
           {
             "category": [{"label": "I"},{"label": "II"},{"label": "III"},{"label": "IV"},{"label": "V"},{"label": "VI"},{"label": "VII"},{"label": "VIII"},{"label": "IX"},{"label": "X"},{"label": "XI"},{"label": "XII"},{"label": "XIII"},{"label": "XIV"},{"label": "XV"},{"label": "XVI"},{"label": "XVII"},{"label": "XVIII"},{"label": "XIX"},{"label": "XX"}]
@@ -130,7 +130,6 @@ export class UserPanelComponent implements OnInit {
             "seriesname": "Wynik zakładu",
             "data": this.result
           },
-          
           {
             "seriesname": "Stan konta",
             "data": this.accountState

@@ -23,25 +23,26 @@ public class BetService {
     @Autowired
     private MemberRepository memberRepository;
 
-    public void addBet(Long currentUser, Event event, float amount, Long chosenMember, String result, int betType) {
+    public void addBet(Bet bet) {
         Bet newBet = new Bet();
-        newBet.setUser(userRepository.getOne(currentUser));
-        newBet.setEvent(eventRepository.getOne(event.getId()));
-        if(chosenMember != -1) { newBet.setMember(memberRepository.getOne(chosenMember)); }
-        else { newBet.setMember(null); }
+        newBet.setUser(userRepository.findUserById(bet.getUser().getId()));
+        newBet.setEvent(bet.getEvent());
+        newBet.setMember(bet.getMember());
         newBet.setBetResult(null);
-        newBet.setAmount(amount);
-        if(betType == 0) {
+        newBet.setAmount(bet.getAmount());
+        if(bet.getGeneral()) {
             newBet.setGeneral(true);
-            betRepository.saveAndFlush(newBet);
         } else {
-            newBet.setResult(result);
             newBet.setGeneral(false);
-            betRepository.saveAndFlush(newBet);
+            newBet.setResult(bet.getResult());
         }
+        betRepository.save(newBet);
     }
 
-    public List<Bet> showAllBets(Long userId) { return betRepository.findAllBetsByUserId(userId); }
+    public List<Bet> showAllBets(Long userId) {
+
+        return betRepository.findAllBetsByUserId(userId);
+    }
 
     public List<Bet> findMatchingBets(String chosenStatus, Long currentUser) {
         List<Bet> betList;
@@ -79,7 +80,6 @@ public class BetService {
         int i;
         Bet bets[] = betRepository.getAllByEvent(event.getId());
 
-
         if(bets.length != 0) {
             for(i = 0; i < bets.length; i++) {
                 Bet currentBet = bets[i];
@@ -104,7 +104,6 @@ public class BetService {
             }
             this.callPrizes(event.getId());
         }
-
     }
 
     private void callPrizes(Long idEvent){
@@ -172,9 +171,13 @@ public class BetService {
                 }
             }
         }
+
         return prize;
     }
 
-    public Bet[] getAllBetsByEventId(Long eventId) { return betRepository.getAllByEvent(eventId);
+    public Bet[] getAllBetsByEventId(Long eventId) {
+
+        return betRepository.getAllByEvent(eventId);
     }
+
 }

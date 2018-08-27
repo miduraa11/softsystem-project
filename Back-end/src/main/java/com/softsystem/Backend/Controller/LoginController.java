@@ -20,18 +20,16 @@ public class LoginController {
         boolean userStatus;
         userStatus = userService.authUser(login, password);
 
-        if(userStatus){
-            id = userService.getUserId(login);
-        } else {
-            id = null;
-        }
+        if(userStatus){ id = userService.getUserId(login); }
+        else { id = null; }
+
         return id;
     }
 
     @GetMapping(value= "/login/{userId}")
     public Object getUserRole(@PathVariable Long userId) {
-
         String userRole = userService.getUserRole(userId);
+
         return userRole;
     }
 

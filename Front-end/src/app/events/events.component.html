@@ -9,17 +9,17 @@
     <tr>
         <td>
             <select class="form-control" id="FormControlSelectActive" [(ngModel)]="chosenStatus" (change)="updateList(chosenDiscipline, chosenStatus)">
-                    <option selected hidden>{{chosenStatus}}</option>
-                    <option>Wszystkie</option>
-                    <option>Aktywne</option>
-                    <option>Zakończone</option>
+                <option selected hidden>{{chosenStatus}}</option>
+                <option>Wszystkie</option>
+                <option>Aktywne</option>
+                <option>Zakończone</option>
             </select>
         </td>
         <td>
             <select class="form-control" id="FormControlSelectDiscipline" [(ngModel)]="chosenDiscipline" (change)="updateList(chosenDiscipline, chosenStatus)">
-                    <option selected hidden>{{chosenDiscipline}}</option>
-                    <option>Wszystkie</option>
-                    <option *ngFor="let type of types">{{type.discipline}}</option>
+                <option selected hidden>{{chosenDiscipline}}</option>
+                <option>Wszystkie</option>
+                <option *ngFor="let type of types">{{type.discipline}}</option>
             </select>
         </td>
     </tr>
@@ -43,9 +43,9 @@
                 <li *ngFor="let member of event.members">{{member.name}}<br></li>
             </ul>
             <p *ngIf="event.active">
-                <a class="btn btn-success" (click)="openGeneralBetDialog(event)">Postaw zakład ogólny!</a>
+                <a class="btn btn-success" (click)="openBetDialog(event, 1)">Postaw zakład ogólny!</a>
                 <mat-icon data-toggle="tooltip" data-placement="right" title="Zakład ogólny dotyczy wyboru jedynie zwycięzcy wydarzenia">info</mat-icon>
-                <a class="btn btn-success" (click)="openDetailBetDialog(event)">Postaw zakład szczegółowy!</a>
+                <a class="btn btn-success" (click)="openBetDialog(event, 2)">Postaw zakład szczegółowy!</a>
                 <mat-icon data-toggle="tooltip" data-placement="right" title="Zakład szczegółowy dotyczy podania dokładnego wyniku wydarzenia">info</mat-icon>
             </p>
             <p *ngIf="!event.active">

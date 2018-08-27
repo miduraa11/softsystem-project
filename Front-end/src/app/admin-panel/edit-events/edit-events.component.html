@@ -16,36 +16,68 @@
   </div>
 </div>
 
-<button mat-button class="matBtn" (click)="openCreateDialog()">Dodaj nowe wydarzenie</button>
+<button mat-button class="matBtn" (click)="openUpdateEventDialog(null, 0)">Dodaj nowe wydarzenie</button>
+
+<table class="table-condensed" width="100%">
+  <b><label>Filtry:</label></b>
+  <tr>
+      <th class="notbold" for="FormControlSelectActive">Status:</th>
+      <th class="notbold" for="FormControlSelectDiscipline">Dyscyplina:</th>
+  </tr>
+  <tr>
+      <td>
+          <select class="form-control" id="FormControlSelectActive" [(ngModel)]="chosenStatus" (change)="updateList(chosenDiscipline, chosenStatus)">
+                  <option selected hidden>{{chosenStatus}}</option>
+                  <option>Wszystkie</option>
+                  <option>Aktywne</option>
+                  <option>Zakończone</option>
+                  <option>Roztrzygnij</option>
+          </select>
+      </td>
+      <td>
+          <select class="form-control" id="FormControlSelectDiscipline" [(ngModel)]="chosenDiscipline" (change)="updateList(chosenDiscipline, chosenStatus)">
+                  <option selected hidden>{{chosenDiscipline}}</option>
+                  <option>Wszystkie</option>
+                  <option *ngFor="let type of types">{{type.discipline}}</option>
+          </select>
+      </td>
+  </tr>
+</table>
 
 <table width="100%">
-<tr *ngFor="let event of events">
-  <td width="90%">
-    <mat-accordion>
-      <mat-expansion-panel class="expansionpanel">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <b>{{event.name}}</b>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <b>Data rozpoczęcia wydarzenia:</b> {{event.beginDate | date: "dd.MM.yyyy"}} <br>
-        <b>Data zakończenia wydarzenia:</b> {{event.endDate | date: "dd.MM.yyyy"}} <br>
-        <b>Dyscyplina:</b> {{event.type.discipline}} <br>
-        <b>Drużyny biorące udział w wydarzeniu:</b>
-        <ul>
-          <li *ngFor="let member of event.members">{{member.name}}<br></li>
-        </ul>
-        <b>Wydarzenie jest aktywne: </b>{{event.active}}<br>
-        <b>Zwycięzca: </b>{{event.winner}}<br>
-        <b>Wynik: </b>{{event.score}}<br>
-        <button type="button" class="btn btn-info btn-sm" *ngIf="eventStatus(event.winner)" (click)="openUserListDialog(event.id)">Lista zwycięzców</button>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </td>
-  <td>
-    <button *ngIf="event.winner == null" class="button" type="button" mat-raised-button color="primary" (click)="openEditDialog(event)">Edytuj</button>
-    <button *ngIf="event.winner != null" disabled class="button" type="button" mat-raised-button color="primary" (click)="openEditDialog(event)">Edytuj</button>
-  </td>
-  <td><button class="button" type="button" mat-raised-button color="warn" (click)="openDeleteDialog(event.id)">Usuń</button></td>
-</tr>
+  <tr *ngFor="let event of events">
+    <td width="90%">
+      <mat-accordion>
+        <mat-expansion-panel class="expansionpanel">
+          <mat-expansion-panel-header class="right-aligned-header">
+            <mat-panel-title>
+              <b>{{event.name}}</b>
+            </mat-panel-title>
+            <mat-panel-description>
+              <button mat-icon-button class="editButton" *ngIf="event.winner == null" (click)="openUpdateEventDialog(event, 1)">
+                  <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="editButton" *ngIf="event.winner != null" disabled>
+                  <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="editButton" (click)="openDeleteObjectDialog(event, 2)">
+                  <mat-icon>delete</mat-icon>
+              </button>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <b>Data rozpoczęcia wydarzenia:</b> {{event.beginDate | date: "dd.MM.yyyy"}} <br>
+          <b>Data zakończenia wydarzenia:</b> {{event.endDate | date: "dd.MM.yyyy"}} <br>
+          <b>Dyscyplina:</b> {{event.type.discipline}} <br>
+          <b>Drużyny biorące udział w wydarzeniu:</b>
+          <ul>
+            <li *ngFor="let member of event.members">{{member.name}}<br></li>
+          </ul>
+          <b>Wydarzenie jest aktywne: </b>{{event.active}}<br>
+          <b>Zwycięzca: </b>{{event.winner}}<br>
+          <b>Wynik: </b>{{event.score}}<br>
+          <button type="button" class="btn btn-info btn-sm" *ngIf="event.winner != null" (click)="openUserListDialog(event)">Lista zwycięzców</button>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </td>
+  </tr>
 </table>

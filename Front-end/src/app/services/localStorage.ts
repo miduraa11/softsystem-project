@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -18,4 +18,5 @@ export class LocalStorageService {
   getUserRole(userId: any): Observable<any> {
     return this.http.get(`${this.baseUrl}/${userId}`, { responseType: 'text' });
   }
+  
 }

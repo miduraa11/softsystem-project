@@ -1,6 +1,5 @@
 package com.softsystem.Backend.Controller;
 
-import com.softsystem.Backend.DTO.EventDataDTO;
 import com.softsystem.Backend.DTO.UserListDTO;
 import com.softsystem.Backend.Model.*;
 import com.softsystem.Backend.Service.*;
@@ -50,11 +49,10 @@ public class AdminController {
         return editEventsDTO;
     }
 
-    @DeleteMapping("/edit-events/{id}")
-    public String adminEventDelete(@PathVariable(name="id")Long id) {
-        eventService.deleteEvent(id);
+    @GetMapping("/edit-events/{id}")
+    public int adminEventDelete(@PathVariable(name="id")Long id) {
 
-        return "redirect:edit-events";
+        return eventService.deleteEvent(id);
     }
 
     @GetMapping(value= "/edit-events/{id}}")
@@ -64,16 +62,15 @@ public class AdminController {
         return event;
     }
 
-
     @PostMapping(value= "/edit-events/edit")
-    public void updateEvent(@RequestBody EventDataDTO eventDataDTO) {
-        eventService.updateEvent(eventDataDTO.getEvent(), eventDataDTO.getTypes().get(0), eventDataDTO.getMembers());
-
+    public void updateEvent(@RequestBody Event event) {
+        eventService.updateEvent(event);
     }
 
     @PostMapping(value= "/edit-events/add")
-    public void addEvent(@RequestBody EventDataDTO eventDataDTO) {
-        eventService.addEvent(eventDataDTO.getEvent(), eventDataDTO.getTypes().get(0), eventDataDTO.getMembers());
+    public Long addEvent(@RequestBody Event event) {
+
+        return eventService.addEvent(event);
     }
 
     @PostMapping(value = "/edit-events/resolve")
@@ -100,14 +97,15 @@ public class AdminController {
         return memberService.getAllPlayers();
     }
 
-    @DeleteMapping("/edit-players/{id}")
-    public void deletePlayer(@PathVariable("id") Long id) {
-        memberService.deleteById(id);
+    @GetMapping("/edit-players/{id}")
+    public int deletePlayer(@PathVariable("id") Long id) {
+
+        return memberService.deleteMember(id);
     }
 
-    @PostMapping(value= "/edit-players/edit/{id}/{name}/{discipline}")
-    public void updatePlayer(@PathVariable("id") Long id, @PathVariable("name") String name, @PathVariable("discipline") String discipline) {
-        memberService.updateMember(id, name, discipline);
+    @PostMapping(value= "/edit-players/edit")
+    public void updatePlayer(@RequestBody Member player) {
+        memberService.updateMember(player);
     }
 
     @GetMapping(value = "/edit-players/types")
@@ -116,9 +114,10 @@ public class AdminController {
         return typeService.getAllIndividualTypes();
     }
 
-    @PostMapping(value= "/edit-players/add/{name}/{discipline}")
-    public void addPlayer(@PathVariable("name") String name, @PathVariable("discipline") String discipline) {
-        memberService.addMember(name, discipline);
+    @PostMapping(value= "/edit-players/add")
+    public Long addPlayer(@RequestBody Member player) {
+
+        return memberService.addMember(player);
     }
 
     /*------------------*/
@@ -129,28 +128,32 @@ public class AdminController {
     public List<Member> getAllTeam() {
         List<Member> teams = new ArrayList<>();
         memberService.getAllTeams().forEach(teams::add);
+
         return teams;
     }
 
-    @DeleteMapping("/edit-teams/{id}")
-    public void adminTeamDelete(@PathVariable(name="id") Long id) {
-        memberService.deleteMember(id);
+    @GetMapping("/edit-teams/{id}")
+    public int adminTeamDelete(@PathVariable(name="id") Long id) {
+
+        return memberService.deleteMember(id);
     }
 
-    @PostMapping(value = "edit-teams/add/{name}/{idType}")
-    public void addTeam(@PathVariable("name") String name, @PathVariable("idType") Long idType) {
-        memberService.addTeam(name, idType);
+    @PostMapping(value = "edit-teams/add")
+    public Long addTeam(@RequestBody Member team) {
+
+        return memberService.addMember(team);
     }
 
-    @PostMapping(value = "edit-teams/edit/{id}/{name}/{idType}")
-    public void editTeam(@PathVariable("id") Long id, @PathVariable("name")String name, @PathVariable("idType") Long idType) {
-        memberService.editMember(name, id, idType);
+    @PostMapping(value = "edit-teams/edit")
+    public void editTeam(@RequestBody Member team) {
+        memberService.updateMember(team);
     }
 
     @GetMapping("/edit-teams/type")
     public List<Type> getAllTeamTypes() {
         List<Type> types = new ArrayList<>();
         typeService.getAllTeamTypes().forEach(types::add);
+
         return types;
     }
 
@@ -159,25 +162,28 @@ public class AdminController {
     /*------------------*/
 
     @GetMapping("/edit-discipline")
-    public List<Type> getAllDiscipline() {
+    public List<Type> getAllDisciplines() {
         List<Type> disciplines = new ArrayList<>();
         typeService.getAllDisciplines().forEach(disciplines::add);
+
         return disciplines;
     }
 
-    @DeleteMapping("/edit-discipline/{id}")
-    public void adminDisciplineDelete(@PathVariable(name="id")Long id) {
-        typeService.deleteDiscipline(id);
+    @GetMapping("/edit-discipline/{id}")
+    public int deleteDiscipline(@PathVariable(name="id")Long id) {
+
+        return typeService.deleteDiscipline(id);
     }
 
-    @PostMapping(value = "edit-discipline/add/{discipline}/{individual}")
-    public void addDiscipline(@PathVariable("discipline") String discipline, @PathVariable("individual") boolean individual) {
-        typeService.addDiscipline(discipline, individual);
+    @PostMapping(value = "edit-discipline/add")
+    public Long addDiscipline(@RequestBody Type type) {
+
+        return typeService.addDiscipline(type);
     }
 
-    @PostMapping(value = "edit-discipline/edit/{id}/{discipline}/{individual}")
-    public void editDiscipline(@PathVariable("id")long id, @PathVariable("discipline")String discipline, @PathVariable("individual") boolean individual) {
-        typeService.editDiscipline(discipline, id, individual);
+    @PostMapping(value = "edit-discipline/edit")
+    public void editDiscipline(@RequestBody Type type) {
+        typeService.editDiscipline(type);
     }
 
     /*------------------*/
@@ -188,12 +194,14 @@ public class AdminController {
     public List<User> showAllUsers() {
         List<User> users = new ArrayList<>();
         userService.getAllUsers().forEach(users::add);
+
         return users;
     }
 
-    @DeleteMapping("/edit-users/delete/{id}")
-    public void deleteUser(@PathVariable("id") Long id) {
-        userService.deleteById(id);
+    @GetMapping("/edit-users/delete/{id}")
+    public int deleteUser(@PathVariable("id") Long id) {
+
+        return userService.deleteById(id);
     }
 
 }

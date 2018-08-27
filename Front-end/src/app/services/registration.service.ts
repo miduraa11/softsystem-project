@@ -16,8 +16,8 @@ export class RegistrationService {
     return this.http.get(`//localhost:8080/registration/loginExist/${login}`);
   }
 
-  addUser(user: User){
-    return this.http.post(`${this.baseUrl}/add/${user.login}/${user.firstName}/${user.lastName}/${user.email}/${user.password}`,{responseType: 'text'});
+  addUser(user: User): Observable<any> {
+    return this.http.post(`${this.baseUrl}/add/${user.login}/${user.firstName}/${user.lastName}/${user.email}/${user.password}`, { responseType: 'text' });
   }
 
 }

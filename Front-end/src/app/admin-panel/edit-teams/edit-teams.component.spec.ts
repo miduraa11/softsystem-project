@@ -1,5 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { EditTeamsComponent } from './edit-teams.component';
 
 describe('EditTeamsComponent', () => {

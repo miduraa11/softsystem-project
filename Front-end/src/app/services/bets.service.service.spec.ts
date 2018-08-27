@@ -1,8 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { BetsService } from './bets.service';
 
-
-
 describe('BetsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({

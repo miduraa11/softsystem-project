@@ -56,28 +56,29 @@ public class TypeService {
         return disciplines;
     }
 
-    public void addDiscipline(String name, boolean individual) {
-        Type discipline = new Type();
-        discipline.setDiscipline(name);
-        discipline.setIndividual(individual);
+    public Long addDiscipline(Type type) {
+        Type newDiscipline = new Type();
+        newDiscipline.setDiscipline(type.getDiscipline());
+        newDiscipline.setIndividual(type.getIndividual());
+        typeRepository.save(newDiscipline);
+
+        return newDiscipline.getId();
+    }
+
+    public void editDiscipline(Type type) {
+        Type discipline = typeRepository.getOne(type.getId());
+        discipline.setDiscipline(type.getDiscipline());
+        discipline.setIndividual(type.getIndividual());
         typeRepository.save(discipline);
     }
 
-    public void editDiscipline(String name, long id, boolean individual) {
-        Type discipline = typeRepository.getOne(id);
-        discipline.setDiscipline(name);
-        discipline.setIndividual(individual);
-        typeRepository.save(discipline);
+    public int deleteDiscipline(Long id) {
+        try {
+            typeRepository.deleteById(id);
+            return 0;
+        } catch (Exception e) {
+            return -1;
+        }
     }
-
-    public void deleteDiscipline(Long id) {
-        //Type type = typeRepository.getOne(id);
-        //typeRepository.delete(type);
-        typeRepository.deleteById(id);
-        //memberRepository.deleteAllByType(type);
-
-        //typeRepository.deleteById(id);
-    }
-
 
 }

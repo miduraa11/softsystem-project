@@ -1,5 +1,4 @@
 import { TestBed, inject } from '@angular/core/testing';
-
 import { UserPanelService } from './user-panel.service';
 
 describe('UserPanelService', () => {

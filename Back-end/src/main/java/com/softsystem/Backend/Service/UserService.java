@@ -1,6 +1,5 @@
 package com.softsystem.Backend.Service;
 
-
 import com.softsystem.Backend.Model.Bet;
 import com.softsystem.Backend.Model.Role;
 import com.softsystem.Backend.Model.User;
@@ -26,8 +25,13 @@ public class UserService {
         return userRepository.findAllUsers();
     }
 
-    public void deleteById(Long id) {
-        userRepository.deleteById(id);
+    public int deleteById(Long id) {
+        try {
+            userRepository.deleteById(id);
+            return 0;
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     public Boolean authUser(String login, String password) {
@@ -44,13 +48,15 @@ public class UserService {
         }
     }
 
-    public Long getUserId(String login){
+    public Long getUserId(String login) {
         User user;
         Long userId;
         user = userRepository.getUserByLogin(login);
         userId = user.getId();
+
         return userId;
     }
+
     public Object emailExist(String login){
         Optional<User> users;
         users = userRepository.findByLogin(login);
@@ -60,7 +66,7 @@ public class UserService {
             return true;
     }
 
-    public void addUser(String userLogin, String userFirstName, String userLastName, String userEmail, String userPassword){
+    public void addUser(String userLogin, String userFirstName, String userLastName, String userEmail, String userPassword) {
         User user = new User();
         user.setLogin(userLogin);
         user.setFirstName(userFirstName);
@@ -72,15 +78,19 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public String getUserRole(Long userId) { return userRepository.getRoleByUser(userId); }
+    public String getUserRole(Long userId) {
 
-    public User getUserById(Long id){
-        User user = userRepository.findByIdUser(id);
+        return userRepository.getRoleByUser(userId);
+    }
+
+    public User getUserById(Long id) {
+        User user = userRepository.findUserById(id);
         user.setPassword("");
+
         return user;
     }
 
-    public Object changePassword(Long id, String currentPassword, String password){
+    public Object changePassword(Long id, String currentPassword, String password) {
         User user = userRepository.getOne(id);
         if (user.getPassword().equals(currentPassword)) {
             user.setPassword(password);
@@ -90,7 +100,7 @@ public class UserService {
         else return false;
     }
 
-    public Object getAccount(Long id){
+    public Object getAccount(Long id) {
         double account[] = new double[7];
         Bet bets[] = betRepository.getAllByUser(id);
         for (Bet bet: bets) {
@@ -113,6 +123,7 @@ public class UserService {
         }
         account[2]=account[0]-account[1];
         account[1]=-account[1];
+
         return account;
     }
 

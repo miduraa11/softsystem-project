@@ -5,17 +5,18 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
-import { EventsComponent, BetTheBetGeneralDialog, BetTheBetDetailDialog, BetTheBetConfirmDialog } from './events/events.component';
+import { EventsComponent, BetTheBetDialog, BetTheBetConfirmDialog } from './events/events.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from './app-routing.module';
 import { BetsComponent, InfoDialog } from './bets/bets.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { AdminDeleteObjectComponent, ErrorInfoDialog } from './admin-panel/admin-panel-delete-object.component';
 import { AlertModule } from 'ngx-bootstrap';
-import { EditEventsComponent, DeleteEventModal, EditEventModal, CreateEventModal, UserListModal, ResolveEventModal} from './admin-panel/edit-events/edit-events.component';
-import { EditTeamsComponent, EditTeamsModalDelete, EditTeamsModalAdd, EditTeamsModalEdit } from './admin-panel/edit-teams/edit-teams.component';
-import { EditDisciplineComponent, EditDisciplineModalDelete, EditDisciplineModalAdd, EditDisciplineModalEdit } from './admin-panel/edit-discipline/edit-discipline.component';
-import { EditPlayersComponent, RemovePlayerDialog, PlayerEditDialog, AddPlayerDialog} from './admin-panel/edit-players/edit-players.component';
-import { EditUsersComponent, RemoveUserDialog } from './admin-panel/edit-users/edit-users.component';
+import { EditEventsComponent, UserListModal, ResolveEventDialog, UpdateEventDialog } from './admin-panel/edit-events/edit-events.component';
+import { EditTeamsComponent, UpdateTeamDialog } from './admin-panel/edit-teams/edit-teams.component';
+import { EditDisciplineComponent, UpdateDisciplineDialog } from './admin-panel/edit-discipline/edit-discipline.component';
+import { EditPlayersComponent, UpdatePlayerDialog } from './admin-panel/edit-players/edit-players.component';
+import { EditUsersComponent } from './admin-panel/edit-users/edit-users.component';
 import { PlayerService } from './services/player.service';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card'
@@ -32,7 +33,7 @@ import { MatIconModule} from '@angular/material/icon';
 import { MatCheckboxModule} from '@angular/material/checkbox';
 import { UserService } from './services/user.service';
 import { RegistrationComponent } from './registration/registration.component';
-import { RegistrationService } from './registration/registration.service';
+import { RegistrationService } from './services/registration.service';
 import { LoginComponent } from './login/login.component';
 import { LocalStorageService } from './services/localStorage';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -41,6 +42,7 @@ import { BetsService } from './services/bets.service';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { UserPanelService } from './services/user-panel.service';
 import { FusionChartsModule } from 'angular-fusioncharts';
+import { MatRadioModule } from '@angular/material/radio';
 import FusionCharts from 'fusioncharts/core';
 import AngularGauge from 'fusioncharts/viz/angulargauge';
 import MsLine from 'fusioncharts/viz/msline';
@@ -56,31 +58,22 @@ const routes: Routes = [
     EventsComponent,
     BetsComponent,
     AdminPanelComponent,
+    AdminDeleteObjectComponent,
+    ErrorInfoDialog,
     EditEventsComponent,
+    UpdateEventDialog,
     EditTeamsComponent,
     EditDisciplineComponent,
     EditPlayersComponent,
     EditUsersComponent,
-    DeleteEventModal,
-    EditEventModal,
-    CreateEventModal,
-    ResolveEventModal,
-    RemovePlayerDialog,
-    PlayerEditDialog,
-    AddPlayerDialog,
-    EditTeamsModalDelete,
-    EditTeamsModalAdd,
-    EditTeamsModalEdit,
-    EditDisciplineModalDelete,
-    EditDisciplineModalAdd,
-    EditDisciplineModalEdit,
-    RemoveUserDialog,
+    ResolveEventDialog,
+    UpdatePlayerDialog,
+    UpdateTeamDialog,
+    UpdateDisciplineDialog,
     RegistrationComponent,
-    RemoveUserDialog,
     LoginComponent,
     HomeComponent,
-    BetTheBetGeneralDialog,
-    BetTheBetDetailDialog,
+    BetTheBetDialog,
     BetTheBetConfirmDialog,
     UserListModal,
     InfoDialog,
@@ -113,27 +106,20 @@ const routes: Routes = [
     MatNativeDateModule,
     MatTableModule,
     FusionChartsModule,
+    MatRadioModule
   ],
   entryComponents: [
-    DeleteEventModal,
-    EditEventModal,
-    CreateEventModal,
-    ResolveEventModal,
-    RemovePlayerDialog,
-    PlayerEditDialog,
-    AddPlayerDialog,
-    EditTeamsModalDelete,
-    EditTeamsModalAdd,
-    EditTeamsModalEdit,
-    RemoveUserDialog,
-    BetTheBetGeneralDialog,
-    BetTheBetDetailDialog,
+    AdminDeleteObjectComponent,
+    ErrorInfoDialog,
+    ResolveEventDialog,
+    UpdateEventDialog,
+    UpdatePlayerDialog,
+    UpdateTeamDialog,
+    BetTheBetDialog,
     BetTheBetConfirmDialog,
-    EditDisciplineModalDelete,
-    EditDisciplineModalAdd,
-    EditDisciplineModalEdit,
+    UpdateDisciplineDialog,
     UserListModal,
-    InfoDialog,
+    InfoDialog
   ],
   providers: [
     PlayerService,
@@ -144,7 +130,7 @@ const routes: Routes = [
     RegistrationService,
     LocalStorageService,
     BetsService,
-    UserPanelService,
+    UserPanelService
   ],
   bootstrap: [
     AppComponent

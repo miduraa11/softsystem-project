@@ -1,8 +1,13 @@
+import { Bet } from "./bet";
+import { Role } from "./role";
+
 export class User {
     id: number;
-    login: string;
-    firstName: string;
-    lastName: string;
-    email: string;
+    login: String;
+    firstName: String;
+    lastName: String;
+    email: String;
     password: any;
+    bets: Bet[];
+    roles: Role[];
 }

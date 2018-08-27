@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
+
 body { 
     color: white;
     margin: 0; 
@@ -9,3 +10,31 @@ body {
     background-repeat: round;
     background-attachment: fixed;
 }
+
+.footer {
+    position: fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    margin-left: 15%;
+    margin-right: 15%;
+    height:30px;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.text {
+    color: white;
+    font-size: 110%;
+}
+
+.right-aligned-header > .mat-content {
+    justify-content: space-between;
+  }
+  
+.mat-content > mat-panel-title, .mat-content > mat-panel-description {
+  flex: 0 0 auto;
+  }
+
+  html {
+    overflow-y: scroll;
+  }

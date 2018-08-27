@@ -1,19 +1,16 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Member } from '../../model/member';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { PlayerService } from '../../services/player.service';
 import { TypeService } from '../../services/type.service';
-import { Validators, FormControl } from '../../../../node_modules/@angular/forms';
-import { MyErrorStateMatcher } from '../../registration/registration.component';
+import { Validators, FormControl, FormGroup } from '../../../../node_modules/@angular/forms';
+import { Member } from '../../model/member';
+import { Type } from '../../model/type';
+import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
+import {MatTableDataSource} from '@angular/material';
 
 export interface DialogData {
-  id: number;
-}
-
-export interface DialogData2 {
-  id: number;
-  name: String;
-  discipline: String;
+  player: Member;
+  flag: number;
 }
 
 @Component({
@@ -23,177 +20,131 @@ export interface DialogData2 {
 })
 export class EditPlayersComponent implements OnInit {  
 
-  players: Array<any>;
+  player: Member;
+  players: Member[];
+  displayedColumns: string[] = ['id', 'name', 'discipline', 'edit', 'delete'];
+  dataSource: any;
 
-  constructor(private playerService: PlayerService, public dialog: MatDialog) {
-  }
+  constructor(private playerService: PlayerService,
+    public dialog: MatDialog
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.playerService.getPlayers().subscribe(data => {
       this.players = data;
+      this.dataSource = new MatTableDataSource(this.players);
     });    
   }
 
-  openDeleteDialog(id: number): void {
-    const dialogRef = this.dialog.open(RemovePlayerDialog, {
-      width: '450px',
-      data: { id: id }
-    });
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
+  openDeleteObjectDialog(object: any, flag: number): void {
+    const dialogRef = this.dialog.open(AdminDeleteObjectComponent, {
+      width: '450px',
+      data: { object, flag }
+    });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if(result != null) {
+        this.player = result;
+        this.players = this.players.filter(x =>  x.id != this.player.id);
+      }
     });
   }
 
-  openEditDialog(id: number, name: String, discipline: String): void {
-    const dialogRef = this.dialog.open(PlayerEditDialog, {
+  openUpdatePlayerDialog(player: Member, flag: number): void {
+    const dialogRef = this.dialog.open(UpdatePlayerDialog, {
       width: '450px',
-      data: { id: id, name: name, discipline: discipline }
+      data: { player, flag }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-  openAddDialog(): void {
-    const dialogRef = this.dialog.open(AddPlayerDialog, {
-      width: '450px',
-      data: {id: null, name: null, discipline: null}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      if(result != null) {
+        this.player = result;
+        var index = this.players.findIndex(x => x.id == this.player.id)
+        if( index == -1) { this.players.push(this.player); }
+        else { this.players[index] = this.player; }
+      }
     });
   }
 
 }
 
 @Component({
-  selector: 'remove-player-dialog',
-  templateUrl: './remove-player-dialog.html',
+  selector: 'player-list-update',
+  templateUrl: './player-list-update.html',
 })
-export class RemovePlayerDialog {
+export class UpdatePlayerDialog implements OnInit {
 
-  constructor( private playerService: PlayerService, public dialogRef: MatDialogRef<RemovePlayerDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+  player: Member;
+  chosenType: number;
+  types: Type[];
+  flag: number;
 
+  updateForm = new FormGroup({
+    name: new FormControl('', [
+      Validators.required
+    ]),
+    discipline: new FormControl('', [
+      Validators.required
+    ])
+  });
+
+  constructor(public dialogRef: MatDialogRef<UpdatePlayerDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private typeService: TypeService,
+    private playerService: PlayerService,
+    public snackBar: MatSnackBar
+  ) {
+    this.flag = this.data.flag;
+    if(this.flag == 0) { this.player = new Member(); }
+    else { this.player = this.data.player; }
   }
 
-  onAnulujClick(): void {
-    this.dialogRef.close();
-  }
-
-  onDeleteClick(): void {
-    this.playerService.deletePlayer(this.data.id).subscribe(
-      data => {
-        this.dialogRef.close();
-        window.location.reload();
-      },
-      error => console.log(error)      
-    );  
-  }
-
-}
-
-@Component({
-  selector: 'player-edit-dialog',
-  templateUrl: './player-edit-dialog.html',
-})
-export class PlayerEditDialog implements OnInit {
-
-  types: Array<any>;
-
-    //teamName
-    playerNameFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherTeamName = new MyErrorStateMatcher();
-
-     //discipline
-     disciplineFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherDiscipline = new MyErrorStateMatcher(); 
-
-  constructor( private typeService: TypeService,
-    private playerService: PlayerService, public dialogRef: MatDialogRef<PlayerEditDialog>, @Inject(MAT_DIALOG_DATA) public data: DialogData2) {
-  }
-
-  onAnulujClick(): void {
-    this.dialogRef.close();
-  }
-
-  ngOnInit() {
-    this.typeService.getTypes().subscribe(data =>{
+  ngOnInit(): void {
+    this.typeService.getTypes().subscribe(data => {
       this.types = data;
-      this.playerNameFormControl.setValue(this.data.name);
-      this.disciplineFormControl.setValue(this.data.discipline)
     });
-  }
-
-  onSaveClick(data: DialogData2): void {
-    if(this.playerNameFormControl.errors==null
-      && this.disciplineFormControl.errors==null) {
-      data.name = this.playerNameFormControl.value;
-      data.discipline = this.disciplineFormControl.value;
-    this.playerService.updatePlayer(data.id, data.name, data.discipline).subscribe(
-      data => { console.log("Success"); this.dialogRef.close(); window.location.reload(); },
-      error => console.log(error));
-    } else {
-      alert("Błędnie wprowadzone dane!");
+    if(this.flag == 1) {
+      this.updateForm.get('name').setValue(this.player.name);
+      this.updateForm.get('discipline').setValue(this.player.type.id);
     }
   }
 
-}
-
-@Component({
-  selector: 'new-player-dialog',
-  templateUrl: './new-player-dialog.html',
-})
-export class AddPlayerDialog implements OnInit {
-
-  types: Array<any>;
-
-    //teamName
-    playerNameFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherTeamName = new MyErrorStateMatcher();
-
-     //discipline
-     disciplineFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherDiscipline = new MyErrorStateMatcher(); 
-    
-    
-  constructor( private typeService: TypeService,
-      private playerService: PlayerService,
-      public dialogRef: MatDialogRef<AddPlayerDialog>,
-      @Inject(MAT_DIALOG_DATA) public data: DialogData2) {
-  }
-
-  onAnulujClick(): void {
+  onCancelClick(): void {
     this.dialogRef.close();
   }
 
-  ngOnInit() {
-    this.typeService.getTypes().subscribe(data =>{
-      this.types = data;
-    });
+  onUpdateClick(): void {
+    if(this.updateForm.valid) {
+      this.player.name = this.updateForm.get('name').value;
+      switch(this.flag) {
+        case 0: {
+          this.player.type = this.updateForm.get('discipline').value;
+          this.playerService.addPlayer(this.player).subscribe(data => {
+            this.player.id = data;
+            this.dialogRef.close(this.player);
+          });
+          break;
+        }
+        case 1: {
+          this.chosenType = this.updateForm.get('discipline').value;
+          this.player.type = this.types.find(x => this.chosenType == x.id);
+          this.playerService.updatePlayer(this.player).subscribe(data => { 
+            this.dialogRef.close(this.player);
+          });
+          break;
+        }
+      }
+    } else {
+      this.openSnackBar();
+    }
   }
 
-  onAddClick(data: DialogData2): void {
-    if(this.playerNameFormControl.errors==null
-      && this.disciplineFormControl.errors==null) {
-      this.data.name = this.playerNameFormControl.value;
-      this.data.discipline = this.disciplineFormControl.value;
-      this.playerService.addPlayer(data.name, data.discipline).subscribe(
-      data => { console.log("Success"); this.dialogRef.close(); window.location.reload(); },
-      error => console.log(error));
-    } else {
-      alert("Błędnie wprowadzone dane!");
-    }
+  openSnackBar() {
+    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
+      duration: 3000
+    });
   }
 
 }

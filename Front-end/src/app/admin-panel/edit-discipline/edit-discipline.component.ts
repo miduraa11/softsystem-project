@@ -1,18 +1,16 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { DisciplineService } from '../../services/discipline.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Type } from '../../model/type';
-import { FormControl, Validators } from '../../../../node_modules/@angular/forms';
-import { MyErrorStateMatcher } from '../../registration/registration.component';
+import { FormControl, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
+import { MatSnackBar } from '@angular/material';
+import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
+import {MatTableDataSource} from '@angular/material';
 
 export interface DialogData {
-  id: number;
-  discipline: string;
-  individual: boolean;
+  type: Type;
+  flag: number;
 }
-
-
-//list discipline
 
 @Component({
   selector: 'app-edit-discipline',
@@ -21,160 +19,124 @@ export interface DialogData {
 })
 export class EditDisciplineComponent implements OnInit {
   
-  disciplines: Array<any>;
-
-  constructor(private disciplineService: DisciplineService, public dialog: MatDialog) { }
-
-
-  ngOnInit() {
-    this.disciplineService.getAll().subscribe(data =>{this.disciplines = data});
-    }
-
-  openDialogDelete(id: number): void {
-      const dialogRef = this.dialog.open(EditDisciplineModalDelete, {
-        width: '450px',
-        data: {id}
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });
-    }
-
-  openDialogAdd(): void{
-    const dialogRef = this.dialog.open(EditDisciplineModalAdd, {
-      width: '450px',
-      data: {}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-  openDialogEdit(id: number, discipline: string, individual: boolean): void{
-    const dialogRef = this.dialog.open(EditDisciplineModalEdit, {
-      width: '450px',
-      data: {discipline, id, individual}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-}
-
-
-//Delete discipline
-
-@Component({
-  selector: 'edit-discipline-modal-delete',
-  templateUrl: './edit-discipline-modal-delete.html',
-  styleUrls: ['./edit-discipline.component.css']
-})
-export class EditDisciplineModalDelete {
+  type: Type;
+  types: Type[];
+  displayedColumns: string[] = ['id', 'discipline', 'individual', 'edit', 'delete'];
+  dataSource: any;
 
   constructor(private disciplineService: DisciplineService,
-    public dialogRef: MatDialogRef<EditDisciplineModalDelete>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    public dialog: MatDialog
+  ) { }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  ngOnInit(): void {
+    this.disciplineService.getAll().subscribe(data => {
+      this.types = data;
+      this.dataSource = new MatTableDataSource(this.types);
+    });
   }
 
-  deleteDiscipline() {
-    this.disciplineService.deleteDiscipline(this.data.id)
-      .subscribe(
-        data => {
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error));
-  }
-
-}
-
-//Add discipline
-
-@Component({
-  selector: 'edit-discipline-modal-add',
-  templateUrl: './edit-discipline-modal-add.html',
-  styleUrls: ['./edit-discipline.component.css']
-})
-export class EditDisciplineModalAdd {
-
-  discipline: Type = { id : 0, discipline : "", individual: false};
-
-    //discipline
-    disciplineFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherDiscipline = new MyErrorStateMatcher();
-
-  constructor(private disciplineService: DisciplineService,
-    public dialogRef: MatDialogRef<EditDisciplineModalAdd>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-    
-  ngOnInit() {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   
-  addDiscipline() {
-    if(this.disciplineFormControl.errors==null) {
-    this.discipline.discipline = this.disciplineFormControl.value;
-    this.disciplineService.addDiscipline(this.discipline)
-      .subscribe(
-        data => {
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error));
+  openDeleteObjectDialog(object: any, flag: number): void {
+    const dialogRef = this.dialog.open(AdminDeleteObjectComponent, {
+      width: '450px',
+      data: { object, flag }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != null) {
+        this.type = result;
+        this.types = this.types.filter(x =>  x.id != this.type.id);
       }
+    });
   }
+
+  openUpdateDisciplineDialog(type: Type, flag: number): void {
+    const dialogRef = this.dialog.open(UpdateDisciplineDialog, {
+      width: '450px',
+      data: { type, flag }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if(result != null) {
+        this.type = result;
+        var index = this.types.findIndex(x => x.id == this.type.id)
+        if( index == -1) { this.types.push(this.type); }
+        else { this.types[index] = this.type; }
+      }
+    });
+  }
+
 }
 
-//Edit discipline
-
 @Component({
-  selector: 'edit-discipline-modal-edit',
-  templateUrl: './edit-discipline-modal-edit.html',
-  styleUrls: ['./edit-discipline.component.css']
+  selector: 'discipline-list-update',
+  templateUrl: './discipline-list-update.html'
 })
-export class EditDisciplineModalEdit {
+export class UpdateDisciplineDialog {
 
-  discipline: Type = { id : 0, discipline : "", individual: null};
+  type: Type;
+  flag: number;
 
-    //discipline
-    disciplineFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    matcherDiscipline = new MyErrorStateMatcher();
+  updateForm = new FormGroup({
+    discipline: new FormControl('', [
+      Validators.required
+    ]),
+    individual: new FormControl('', [
+      Validators.required
+    ])
+  });
 
-  constructor(private disciplineService: DisciplineService,
-    public dialogRef: MatDialogRef<EditDisciplineModalEdit>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  ngOnInit() {
-    this.disciplineFormControl.setValue(this.data.discipline);
-    this.discipline.individual = this.data.individual;
+  constructor( public dialogRef: MatDialogRef<UpdateDisciplineDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private disciplineService: DisciplineService,
+    public snackBar: MatSnackBar
+  ) {
+    this.flag = this.data.flag;
+    if(this.flag == 0) { this.type = new Type(); }
+    else { this.type = this.data.type; }
+  }
+    
+  ngOnInit(): void {
+    if(this.flag == 1) {
+      this.updateForm.get('discipline').setValue(this.type.discipline);
+      this.updateForm.get('individual').setValue(String(this.type.individual));
+    }
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  onCancelClick(): void {
+    this.dialogRef.close(null);
   }
   
-  editDiscipline() {
-    if(this.disciplineFormControl.errors==null) {
-    this.discipline.discipline = this.disciplineFormControl.value;
-    this.discipline.id = this.data.id; 
-    this.discipline.individual = this.data.individual;
-    this.disciplineService.editDiscipline(this.discipline)
-      .subscribe(
-        data => {
-          this.dialogRef.close();
-          window.location.reload();
-        },
-        error => console.log(error));     
-      } 
+  updateDiscipline(): void {
+    if(this.updateForm.valid) {
+      this.type.discipline = this.updateForm.get('discipline').value;
+      if(this.updateForm.get('individual').value == "true") { this.type.individual = true; }
+      else { this.type.individual = false; }
+      switch(this.flag) {
+        case 0: {
+          this.disciplineService.addDiscipline(this.type).subscribe(data => {
+            this.type.id = data;
+            this.dialogRef.close(this.type);
+          });
+          break;
+        }
+        case 1: {
+          this.disciplineService.editDiscipline(this.type).subscribe(data => {
+            this.dialogRef.close(this.type);
+          });  
+          break;
+        }
+      }
+    } else {
+      this.openSnackBar();
+    }
   }
+
+  openSnackBar() {
+    this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
+      duration: 3000
+    });
+  }
+
 }

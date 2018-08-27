@@ -8,17 +8,18 @@ import { Observable } from '../../../node_modules/rxjs';
 export class UserPanelService {
 
   private baseUrl = 'http://localhost:8080/user-panel';
+
   constructor(private http: HttpClient) { }
 
   getUserById(currentUser: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${currentUser}`);
   }
 
-  getAccount(currentUser: number): Observable<any>{
+  getAccount(currentUser: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/account/${currentUser}`);
   }
 
-  changePassword(id: number,currentPassword: String, password: String){
+  changePassword(id: number,currentPassword: String, password: String): Observable<any> {
     return this.http.get(`${this.baseUrl}/change//${id}/${currentPassword}/${password}`);
   }
 

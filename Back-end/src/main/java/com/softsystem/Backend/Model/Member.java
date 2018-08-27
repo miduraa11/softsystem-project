@@ -1,7 +1,5 @@
 package com.softsystem.Backend.Model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 
 @Entity
@@ -18,7 +16,6 @@ public class Member {
 
     @ManyToOne
     @JoinColumn(name = "id_type")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Type type;
 
     public Member(String name, Type type) {

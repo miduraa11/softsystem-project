@@ -1,4 +1,4 @@
-.content{
+.content {
   position: absolute;
   margin: auto;
   top: 0;
@@ -12,14 +12,13 @@
   border-style: solid;
   border-width: 1px;
   background-image: linear-gradient(rgb(202, 202, 202), rgb(255, 255, 255), rgb(202, 202, 202));
-
 }
 
-form{
+form {
     font: white;
 }
 
-h2{
+h2 {
     text-align: center;
     margin-top: 20px;
 }

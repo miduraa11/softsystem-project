@@ -1,9 +1,9 @@
-h2{
-    text-align: center;
-    margin-top: 20px;
+h2 {
+  text-align: center;
+  margin-top: 20px;
 }
 
-.content{
+.content {
   position: absolute;
   margin: auto;
   top: 0;

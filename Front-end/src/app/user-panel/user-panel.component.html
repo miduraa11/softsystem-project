@@ -11,9 +11,9 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <mat-list role="list">
-        <mat-list-item role="listitem"><b>Imię:</b> <div class="paddingLeft">{{this.user.firstName}}</div></mat-list-item>
-        <mat-list-item role="listitem"><b>Nazwisko:</b> <div class="paddingLeft">{{this.user.lastName}}</div></mat-list-item>
-        <mat-list-item role="listitem"><b>E-mail:</b> <div class="paddingLeft">{{this.user.email}}</div></mat-list-item>
+      <mat-list-item role="listitem"><b>Imię:</b> <div class="paddingLeft">{{this.user.firstName}}</div></mat-list-item>
+      <mat-list-item role="listitem"><b>Nazwisko:</b> <div class="paddingLeft">{{this.user.lastName}}</div></mat-list-item>
+      <mat-list-item role="listitem"><b>E-mail:</b> <div class="paddingLeft">{{this.user.email}}</div></mat-list-item>
     </mat-list>
   </mat-expansion-panel>
 
@@ -26,33 +26,33 @@
 
     <div class="center">
       <mat-form-field class="example-full-width formPassword">
-          <input matInput type="password" placeholder="Aktualne hasło" [formControl]="currentPasswordFormControl" [errorStateMatcher]="matcherCurrentPassword">
-          <mat-error *ngIf="currentPasswordFormControl.hasError('required')">
-              Podanie obecnego hasła jest <strong>wymagane</strong>!
-          </mat-error>
+        <input matInput type="password" placeholder="Aktualne hasło" [formControl]="currentPasswordFormControl" [errorStateMatcher]="matcherCurrentPassword">
+        <mat-error *ngIf="currentPasswordFormControl.hasError('required')">
+          Podanie obecnego hasła jest <strong>wymagane</strong>!
+        </mat-error>
       </mat-form-field>
       
       <mat-form-field class="example-full-width formPassword">
-          <input matInput type="password" placeholder="Nowe hasło" [formControl]="passwordFormControl" [errorStateMatcher]="matcherPassword">
-          <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required') && !passwordFormControl.hasError('minlength')">
-            Hasło musi <strong>być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
-          </mat-error>
-          <mat-error *ngIf="passwordFormControl.hasError('required')">
-            Nowe hasło jest <strong>wymagane</strong>!
-          </mat-error>
-          <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
-            Hasło musi zawierać <strong>minimum 8 znaków i być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
-          </mat-error>
+        <input matInput type="password" placeholder="Nowe hasło" [formControl]="passwordFormControl" [errorStateMatcher]="matcherPassword">
+        <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required') && !passwordFormControl.hasError('minlength')">
+          Hasło musi <strong>być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
+        </mat-error>
+        <mat-error *ngIf="passwordFormControl.hasError('required')">
+          Nowe hasło jest <strong>wymagane</strong>!
+        </mat-error>
+        <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+          Hasło musi zawierać <strong>minimum 8 znaków i być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
+        </mat-error>
       </mat-form-field>
       
       <mat-form-field class="example-full-width formPassword">
-          <input matInput type="Password" placeholder="Powtórz nowe hasło" [formControl]="confirmPasswordFormControl" pattern="{{passwordFormControl.value}}" [errorStateMatcher]="matcherConfirmPassword">
-          <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
-            Podane hasła są <strong>różne</strong> !
-          </mat-error>
-          <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
-            Powtórzenie nowego hasła jest <strong>wymagane</strong>!
-          </mat-error>
+        <input matInput type="Password" placeholder="Powtórz nowe hasło" [formControl]="confirmPasswordFormControl" pattern="{{passwordFormControl.value}}" [errorStateMatcher]="matcherConfirmPassword">
+        <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
+          Podane hasła są <strong>różne</strong> !
+        </mat-error>
+        <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
+          Powtórzenie nowego hasła jest <strong>wymagane</strong>!
+        </mat-error>
       </mat-form-field>
 
       <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="save()">Zapisz zmiany</button></nav>
@@ -71,13 +71,13 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="divLeft">
-        <mat-list role="list">
-            <mat-list-item role="listitem">Wygrane: <div class="win paddingLeft"> {{account[0].toFixed(2)}} PLN</div> </mat-list-item>
-            <mat-list-item role="listitem">Przegrane: <div class="loss paddingLeft"> {{(-1*account[1]).toFixed(2)}} PLN</div></mat-list-item>
-            <mat-list-item role="listitem" *ngIf="account[2]<0">Saldo: <div class="loss paddingLeft"> {{account[2].toFixed(2)}} PLN</div></mat-list-item>
-            <mat-list-item role="listitem" *ngIf="account[2]>=0">Saldo: <div class="win paddingLeft"> {{account[2].toFixed(2)}} PLN</div></mat-list-item>
-            <mat-list-item role="listitem">Oczekujące: <div class="blue paddingLeft"> {{account[3].toFixed(2)}} PLN</div> </mat-list-item>
-          </mat-list>
+      <mat-list role="list">
+        <mat-list-item role="listitem">Wygrane: <div class="win paddingLeft"> {{account[0].toFixed(2)}} PLN</div> </mat-list-item>
+        <mat-list-item role="listitem">Przegrane: <div class="loss paddingLeft"> {{(-1*account[1]).toFixed(2)}} PLN</div></mat-list-item>
+        <mat-list-item role="listitem" *ngIf="account[2]<0">Saldo: <div class="loss paddingLeft"> {{account[2].toFixed(2)}} PLN</div></mat-list-item>
+        <mat-list-item role="listitem" *ngIf="account[2]>=0">Saldo: <div class="win paddingLeft"> {{account[2].toFixed(2)}} PLN</div></mat-list-item>
+        <mat-list-item role="listitem">Oczekujące: <div class="blue paddingLeft"> {{account[3].toFixed(2)}} PLN</div> </mat-list-item>
+      </mat-list>
     </div>
     <div class="centerLine"></div>
     <div class="divLeft">
