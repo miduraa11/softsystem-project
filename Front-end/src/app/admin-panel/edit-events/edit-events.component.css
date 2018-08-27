@@ -52,3 +52,7 @@ tr.mat-footer-row {
 mat-panel-title b {
   margin-top: 10px;
 }
+
+.row {
+  margin-top: 60px;
+}
