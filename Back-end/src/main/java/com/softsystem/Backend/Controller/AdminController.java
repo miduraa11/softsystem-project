@@ -55,13 +55,6 @@ public class AdminController {
         return eventService.deleteEvent(id);
     }
 
-    @GetMapping(value= "/edit-events/{id}}")
-    public Event adminUserEdit(@PathVariable Long id) {
-        Event event = eventService.getOne(id);
-
-        return event;
-    }
-
     @PostMapping(value= "/edit-events/edit")
     public void updateEvent(@RequestBody Event event) {
         eventService.updateEvent(event);

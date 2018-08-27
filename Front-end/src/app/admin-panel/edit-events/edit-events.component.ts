@@ -39,31 +39,27 @@ export class EditEventsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(
-      data => { 
+    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(data => { 
       this.eventService.getActiveEvents().subscribe(data => {
         this.events = data.events;
         this.types = data.types;
         this.chosenDiscipline = data.chosenDiscipline;
         this.chosenStatus = data.chosenStatus;
-      })},
-      error => console.log(error)      
-    );
+      })
+    });
   }
 
   updateList(chosenDiscipline: String, chosenStatus: String): void {
     this.chosenDiscipline = chosenDiscipline;
     this.chosenStatus = chosenStatus;
-    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(
-      data => { 
+    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(data => { 
       this.eventService.getActiveEvents().subscribe(data => {
         this.events = data.events;
         this.types = data.types;
         this.chosenDiscipline = data.chosenDiscipline;
         this.chosenStatus = data.chosenStatus;
-      })},
-      error => console.log(error)
-    );
+      })
+    });
   }
 
   openDeleteObjectDialog(object: any, flag: number): void {
@@ -116,6 +112,7 @@ export class UpdateEventDialog {
   chosenTypeId: number;
   chosenMemberId: number[];
   flag: number;
+  sysDate: Date = new Date();
 
   updateForm = new FormGroup({
     name: new FormControl('', [
@@ -173,6 +170,8 @@ export class UpdateEventDialog {
       this.event.name = this.updateForm.get('name').value;
       this.event.beginDate = this.updateForm.get('beginDate').value;
       this.event.endDate = this.updateForm.get('endDate').value;
+      if(this.event.endDate > this.sysDate) { this.event.active = true; }
+      else { this.event.active = false; }
       switch(this.flag) {
         case 0: {
           this.event.type = this.updateForm.get('discipline').value;

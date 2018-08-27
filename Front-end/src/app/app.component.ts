@@ -31,7 +31,6 @@ export class AppComponent {
         else { this.isAdmin = false; }
       });
     }
-    this.eventService.checkEventsActivity()    
   }
 
   logout(): void {
