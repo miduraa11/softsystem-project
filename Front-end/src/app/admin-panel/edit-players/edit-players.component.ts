@@ -49,6 +49,7 @@ export class EditPlayersComponent implements OnInit {
       if(result != null) {
         this.player = result;
         this.players = this.players.filter(x =>  x.id != this.player.id);
+        this.dataSource = new MatTableDataSource(this.players);
       }
     });
   }
@@ -64,6 +65,7 @@ export class EditPlayersComponent implements OnInit {
         var index = this.players.findIndex(x => x.id == this.player.id)
         if( index == -1) { this.players.push(this.player); }
         else { this.players[index] = this.player; }
+        this.dataSource = new MatTableDataSource(this.players);
       }
     });
   }
