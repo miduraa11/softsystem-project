@@ -4,7 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Member } from '../../model/member';
 import { Type } from '../../model/type';
 import { Validators, FormControl, FormGroup } from '../../../../node_modules/@angular/forms';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatTableDataSource } from '@angular/material';
 import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
 
 export interface DialogData {
@@ -21,6 +21,8 @@ export class EditTeamsComponent implements OnInit {
   
   team: Member;
   teams: Member[];
+  displayedColumns: string[] = ['id', 'name', 'discipline', 'edit', 'delete'];
+  dataSource: any;
 
   constructor(private teamService: TeamService,
     public dialog: MatDialog
@@ -29,9 +31,14 @@ export class EditTeamsComponent implements OnInit {
   ngOnInit(): void {
     this.teamService.getAll().subscribe(data => {
       this.teams = data;
+      this.dataSource = new MatTableDataSource(this.teams);
     });
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  
   openDeleteObjectDialog(object: any, flag: number): void {
     const dialogRef = this.dialog.open(AdminDeleteObjectComponent, {
       width: '450px',

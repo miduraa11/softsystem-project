@@ -5,6 +5,7 @@ import { Type } from '../../model/type';
 import { FormControl, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
+import {MatTableDataSource} from '@angular/material';
 
 export interface DialogData {
   type: Type;
@@ -20,6 +21,8 @@ export class EditDisciplineComponent implements OnInit {
   
   type: Type;
   types: Type[];
+  displayedColumns: string[] = ['id', 'discipline', 'individual', 'edit', 'delete'];
+  dataSource: any;
 
   constructor(private disciplineService: DisciplineService,
     public dialog: MatDialog
@@ -27,10 +30,15 @@ export class EditDisciplineComponent implements OnInit {
 
   ngOnInit(): void {
     this.disciplineService.getAll().subscribe(data => {
-      this.types = data
+      this.types = data;
+      this.dataSource = new MatTableDataSource(this.types);
     });
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+  
   openDeleteObjectDialog(object: any, flag: number): void {
     const dialogRef = this.dialog.open(AdminDeleteObjectComponent, {
       width: '450px',

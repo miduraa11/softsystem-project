@@ -6,6 +6,7 @@ import { Validators, FormControl, FormGroup } from '../../../../node_modules/@an
 import { Member } from '../../model/member';
 import { Type } from '../../model/type';
 import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
+import {MatTableDataSource} from '@angular/material';
 
 export interface DialogData {
   player: Member;
@@ -21,6 +22,8 @@ export class EditPlayersComponent implements OnInit {
 
   player: Member;
   players: Member[];
+  displayedColumns: string[] = ['id', 'name', 'discipline', 'edit', 'delete'];
+  dataSource: any;
 
   constructor(private playerService: PlayerService,
     public dialog: MatDialog
@@ -28,8 +31,13 @@ export class EditPlayersComponent implements OnInit {
 
   ngOnInit(): void {
     this.playerService.getPlayers().subscribe(data => {
-      this.players = data
+      this.players = data;
+      this.dataSource = new MatTableDataSource(this.players);
     });    
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   openDeleteObjectDialog(object: any, flag: number): void {

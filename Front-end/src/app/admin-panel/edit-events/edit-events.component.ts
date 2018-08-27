@@ -29,15 +29,41 @@ export class EditEventsComponent implements OnInit {
   event: Event;
   eventIsFinished: boolean;
   events: Event[];
+  types: Type[];
+  chosenDiscipline: String = "Wszystkie";
+  chosenStatus: String = "Wszystkie";
+
 
   constructor(private eventService: EventService,
     public dialog: MatDialog
   ) { }
 
-  ngOnInit(): void {
-    this.eventService.getAllEvents().subscribe(data => {
-      this.events = data;
-    });
+  ngOnInit() {
+    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(
+      data => { 
+      this.eventService.getActiveEvents().subscribe(data => {
+        this.events = data.events;
+        this.types = data.types;
+        this.chosenDiscipline = data.chosenDiscipline;
+        this.chosenStatus = data.chosenStatus;
+      })},
+      error => console.log(error)      
+    );
+  }
+
+  updateList(chosenDiscipline: String, chosenStatus: String): void {
+    this.chosenDiscipline = chosenDiscipline;
+    this.chosenStatus = chosenStatus;
+    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(
+      data => { 
+      this.eventService.getActiveEvents().subscribe(data => {
+        this.events = data.events;
+        this.types = data.types;
+        this.chosenDiscipline = data.chosenDiscipline;
+        this.chosenStatus = data.chosenStatus;
+      })},
+      error => console.log(error)
+    );
   }
 
   openDeleteObjectDialog(object: any, flag: number): void {

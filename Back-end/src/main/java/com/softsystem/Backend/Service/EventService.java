@@ -76,10 +76,20 @@ public class EventService {
         if(chosenDiscipline.equals("Wszystkie")) {
             if(chosenStatus.equals("Wszystkie")) {
                 eventList = eventRepository.findAll();
-            } else {
-                active = this.isActive(chosenStatus);
+            } else if (chosenStatus.equals("Roztrzygnij")){
                 eventList = eventRepository.findAll()
-                        .stream().filter(x -> x.getActive() == active)
+                        .stream().filter(x -> x.getWinner() == null)
+                        .filter(x -> x.getActive() == false)
+                        .collect(Collectors.toList());
+            } else if (chosenStatus.equals("Aktywne")){
+                eventList = eventRepository.findAll()
+                        .stream().filter(x -> x.getWinner() == null)
+                        .filter(x -> x.getActive() == true)
+                        .collect(Collectors.toList());
+            } else {
+                eventList = eventRepository.findAll()
+                        .stream().filter(x -> x.getWinner() != null)
+                        .filter(x -> x.getActive() == false)
                         .collect(Collectors.toList());
             }
         } else {
@@ -88,22 +98,28 @@ public class EventService {
                         .stream()
                         .filter(x -> x.getType().getDiscipline().equals(chosenDiscipline))
                         .collect(Collectors.toList());
-            } else {
-                active = this.isActive(chosenStatus);
+            } else if (chosenStatus.equals("Roztrzygnij")){
                 eventList = eventRepository.findAll()
-                        .stream()
-                        .filter(x -> x.getActive() == active)
+                        .stream().filter(x -> x.getWinner() == null)
+                        .filter(x -> x.getActive() == false)
+                        .filter(x -> x.getType().getDiscipline().equals(chosenDiscipline))
+                        .collect(Collectors.toList());
+            } else if (chosenStatus.equals("Aktywne")){
+                eventList = eventRepository.findAll()
+                        .stream().filter(x -> x.getWinner() == null)
+                        .filter(x -> x.getActive() == true)
+                        .filter(x -> x.getType().getDiscipline().equals(chosenDiscipline))
+                        .collect(Collectors.toList());
+            } else {
+                eventList = eventRepository.findAll()
+                        .stream().filter(x -> x.getWinner() != null)
+                        .filter(x -> x.getActive() == false)
                         .filter(x -> x.getType().getDiscipline().equals(chosenDiscipline))
                         .collect(Collectors.toList());
             }
         }
 
         return eventList;
-    }
-
-    private boolean isActive(String chosenStatus) {
-        if(chosenStatus.equals("Aktywne")) { return true; }
-        else { return false; }
     }
 
     public void checkEventsActivity() {
