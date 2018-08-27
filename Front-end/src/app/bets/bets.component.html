@@ -20,6 +20,22 @@
 
 <table class="table" width="100%">
   <b><label>Zakłady:</label></b>
+  <tr *ngIf="empty">
+      <td width="90%">
+        <mat-accordion>
+            <mat-expansion-panel [disabled]="true">
+              <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <b>Brak zakładów</b>
+                  </mat-panel-title>
+                  <mat-panel-description class="mat-description">
+                      <button  class="buttonEvents" mat-button routerLink="/events">Postaw nowy zakład</button>
+                  </mat-panel-description>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </td>
+  </tr>
   <tr *ngFor="let bet of bets">
     <td width="90%">
       <mat-accordion>
@@ -32,7 +48,9 @@
           <div>
             <b>Informacje o wydarzeniu: </b>
             <span>
-                <a type="button" (click)="openInfoDialog(bet.event)">info</a>
+                <button mat-icon-button class="editButton" (click)="openInfoDialog(bet.event)">
+                    <mat-icon>info</mat-icon>
+                </button>
             </span>
           </div>
           <div>
@@ -53,4 +71,5 @@
       </mat-accordion>
     </td>
   </tr>
+
 </table>

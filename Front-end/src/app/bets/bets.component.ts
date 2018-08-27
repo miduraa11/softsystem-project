@@ -19,6 +19,7 @@ export class BetsComponent implements OnInit {
   key: string = "User id";
   currentUser: number;
   chosenStatus: String = "Wszystkie";
+  empty: boolean = false;
 
   constructor(private betsService: BetsService,
     public dialog: MatDialog
@@ -42,6 +43,10 @@ export class BetsComponent implements OnInit {
     this.betsService.giveChosenParams(this.chosenStatus, this.currentUser).subscribe(data => {
       this.betsService.getActiveBets().subscribe(data => {
         this.bets = data;
+        if(this.bets.length ==0)
+          this.empty = true;
+        else
+          this.empty = false;
         for(var i = 0; i < this.bets.length; i++) {
           if(this.bets[i].member == null) { 
             this.bets[i].member = new Member;

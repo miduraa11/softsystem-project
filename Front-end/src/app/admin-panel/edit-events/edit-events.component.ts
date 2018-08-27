@@ -33,7 +33,6 @@ export class EditEventsComponent implements OnInit {
   chosenDiscipline: String = "Wszystkie";
   chosenStatus: String = "Wszystkie";
 
-
   constructor(private eventService: EventService,
     public dialog: MatDialog
   ) { }
