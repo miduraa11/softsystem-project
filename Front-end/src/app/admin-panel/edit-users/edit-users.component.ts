@@ -40,6 +40,7 @@ export class EditUsersComponent implements OnInit {
       if(result != null) {
         this.user = result;
         this.users = this.users.filter(x =>  x.id != this.user.id);
+        this.dataSource = new MatTableDataSource(this.users);
       }
     });
   }

@@ -48,6 +48,7 @@ export class EditTeamsComponent implements OnInit {
       if(result != null) {
         this.team = result;
         this.teams = this.teams.filter(x =>  x.id != this.team.id);
+        this.dataSource = new MatTableDataSource(this.teams);
       }
     });
   }
@@ -63,6 +64,7 @@ export class EditTeamsComponent implements OnInit {
         var index = this.teams.findIndex(x => x.id == this.team.id)
         if( index == -1) { this.teams.push(this.team); }
         else { this.teams[index] = this.team; }
+        this.dataSource = new MatTableDataSource(this.teams);
       }
     });
   }

@@ -48,6 +48,7 @@ export class EditDisciplineComponent implements OnInit {
       if(result != null) {
         this.type = result;
         this.types = this.types.filter(x =>  x.id != this.type.id);
+        this.dataSource = new MatTableDataSource(this.types);
       }
     });
   }
@@ -63,6 +64,7 @@ export class EditDisciplineComponent implements OnInit {
         var index = this.types.findIndex(x => x.id == this.type.id)
         if( index == -1) { this.types.push(this.type); }
         else { this.types[index] = this.type; }
+        this.dataSource = new MatTableDataSource(this.types);
       }
     });
   }
