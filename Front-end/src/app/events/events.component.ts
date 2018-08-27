@@ -2,9 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { EventService } from '../services/event.service';
 import { Type } from '../model/type';
 import { Event } from '../model/event';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '../../../node_modules/@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { BetsService } from '../services/bets.service';
-import { FormControl, Validators, FormGroup } from '../../../node_modules/@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Bet } from '../model/bet';
 import { User } from '../model/user';
 

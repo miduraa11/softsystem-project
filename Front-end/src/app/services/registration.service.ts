@@ -17,7 +17,7 @@ export class RegistrationService {
   }
 
   addUser(user: User): Observable<any> {
-    return this.http.post(`${this.baseUrl}/add/${user.login}/${user.firstName}/${user.lastName}/${user.email}/${user.password}`, { responseType: 'text' });
+    return this.http.post(`//localhost:8080/registration/add`, user, {responseType: 'text'});
   }
 
 }

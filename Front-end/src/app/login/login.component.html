@@ -4,11 +4,11 @@
       
       <form>
         <mat-form-field style="width: 350px">
-          <input matInput placeholder="Login" [(ngModel)]="userLogin" name="login">
+          <input matInput placeholder="Login" [(ngModel)]="username" name="username" required>
         </mat-form-field>
         
         <mat-form-field style="width: 350px; padding-bottom: 20px">
-          <input matInput type="password" placeholder="Hasło" [(ngModel)]="userPassword" name="password">
+          <input matInput type="password" placeholder="Hasło" [(ngModel)]="password" name="password" required>
         </mat-form-field>
         <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="login()">Zaloguj się</button></nav>
       </form>

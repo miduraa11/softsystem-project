@@ -3,6 +3,8 @@ import { LocalStorageService } from '../services/localStorage';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import {Md5} from 'ts-md5';
+import { AuthService } from '../services/auth.service';
+import { TokenStorage } from '../token.storage';
 
 @Component({
   selector: 'app-login',
@@ -11,16 +13,14 @@ import {Md5} from 'ts-md5';
 })
 export class LoginComponent {
 
-  userLogin: string;
-  userPassword: string;
-  hashPassword: any;
-  key: string = "User id";
-  id: any;
-  userId: any;
+  username: string;
+  password: string;
 
   constructor(private localStorageService: LocalStorageService,
     private router: Router,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    private authService: AuthService, 
+    private token: TokenStorage
   ) { }
 
   openSnackBar(): void {
@@ -30,16 +30,12 @@ export class LoginComponent {
   }
 
   login(): void {
-    this.hashPassword = Md5.hashStr(this.userPassword);
-    this.localStorageService.getUser(this.userLogin, this.hashPassword).subscribe(data => {
-      this.id = data;
-      localStorage.setItem(this.key, this.id);
-      this.userId = localStorage.getItem(this.key);
-      if(this.userId != "") {
-        window.location.reload();
-        this.router.navigate(['/home']);
-      } else { this.openSnackBar(); }
-    });    
+    this.authService.attemptAuth(this.username, this.password).subscribe(
+      data => {
+        this.token.saveToken(data.token);
+        this.router.navigate(['home']);
+      }
+    );
   }
 
 }

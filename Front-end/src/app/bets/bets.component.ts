@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { BetsService } from '../services/bets.service';
 import { Bet } from '../model/bet';
 import { Member } from '../model/member';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '../../../node_modules/@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export interface DialogData {
   event: Event;
