@@ -22,4 +22,8 @@ export class UserPanelService {
   changePassword(id: number,currentPassword: String, password: String): Observable<any> {
     return this.http.get(`${this.baseUrl}/change//${id}/${currentPassword}/${password}`);
   }
+
+  getHistory(id: number){
+    return this.http.get(`${this.baseUrl}/history/${id}`);
+  }
 }

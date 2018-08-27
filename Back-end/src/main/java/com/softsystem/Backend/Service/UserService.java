@@ -101,7 +101,7 @@ public class UserService {
     }
 
     public Object getAccount(Long id) {
-        double account[] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        double account[] = new double[7];
         Bet bets[] = betRepository.getAllByUser(id);
         for (Bet bet: bets) {
             if(bet.getBetResult()==null) {
@@ -109,13 +109,14 @@ public class UserService {
                 account[6]=account[6]+1;
                 continue;
             }
-            if(bet.getPrize()==0.0) {
-                account[1] = account[1] + bet.getAmount();
+            if(bet.getBetResult()==false) {
+                if(bet.getPrize()==0.0)
+                    account[1] = account[1] + bet.getAmount();
                 account[5]=account[5]+1;
                 continue;
             }
-            if(bet.getPrize()>0.0){
-                account[0]=account[0]+bet.getPrize();
+            if(bet.getBetResult()==true){
+                account[0]=account[0]+bet.getPrize()-bet.getAmount();
                 account[4]=account[4]+1;
                 continue;
             }
@@ -125,5 +126,25 @@ public class UserService {
 
         return account;
     }
-    
+
+    public Object getHistory(Long id){
+        Bet bets[] = betRepository.getFinishByUser(id);
+        double history[][] = new double[bets.length+1][2];
+        history[0][0]=0;
+        history[0][1]=0;
+        for (int i=1;i<bets.length+1 && i<21;i++){
+            if(bets[i-1].getPrize()>0.0)
+                history[i][0]=bets[i-1].getPrize()-bets[i-1].getAmount();
+            if(bets[i-1].getPrize()==0.0)
+                history[i][0]=-bets[i-1].getAmount();
+            history[0][0]=i;
+        }
+        for (int i=1, j=(int)history[0][0];i<bets.length+1 && i<(int)history[0][0]+1;i++,j--){
+            if(i>1)
+                history[j][1]=history[j+1][1]+history[j][0];
+            else
+                history[j][1]=history[j][0];
+        }
+        return history;
+    }
 }

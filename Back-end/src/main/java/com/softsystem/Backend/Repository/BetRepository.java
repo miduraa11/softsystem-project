@@ -27,4 +27,8 @@ public interface BetRepository extends JpaRepository<Bet, Long> {
 
     @Query("SELECT b FROM Bet b JOIN b.user u WHERE u.id = :userId")
     Bet[] getAllByUser(@Param("userId")Long userId);
+
+    @Query("SELECT b FROM Bet b JOIN b.user u WHERE u.id = :userId AND NOT b.betResult = null ORDER BY b.id DESC")
+    Bet[] getFinishByUser(@Param("userId")Long userId);
+
 }
