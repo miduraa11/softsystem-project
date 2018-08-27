@@ -108,6 +108,7 @@ export class UpdateEventDialog {
 
   event: Event;
   members: Member[];
+  membersList: Member[];
   types: Type[];
   chosenTypeId: number;
   chosenMemberId: number[];
@@ -150,7 +151,11 @@ export class UpdateEventDialog {
   ngOnInit(): void {
     this.eventService.getTypesAndMembers().subscribe(data => {
       this.types = data.types;
-      this.members = data.members;
+      this.membersList = this.members = data.members;
+      this.updateForm.get('discipline').valueChanges.subscribe(value => {
+        if(this.flag == 0) { this.membersList = this.members.filter(x => x.type.id == value.id); }
+        else { this.membersList = this.members.filter(x => x.type.id == value); }
+      });
     });
     if(this.flag == 1) {
       this.updateForm.get('name').setValue(this.event.name);
