@@ -43,6 +43,7 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
 import { UserPanelService } from './services/user-panel.service';
 import { FusionChartsModule } from 'angular-fusioncharts';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatGridListModule } from '@angular/material/grid-list';
 import FusionCharts from 'fusioncharts/core';
 import AngularGauge from 'fusioncharts/viz/angulargauge';
 import MsLine from 'fusioncharts/viz/msline';
@@ -106,7 +107,8 @@ const routes: Routes = [
     MatNativeDateModule,
     MatTableModule,
     FusionChartsModule,
-    MatRadioModule
+    MatRadioModule,
+    MatGridListModule
   ],
   entryComponents: [
     AdminDeleteObjectComponent,

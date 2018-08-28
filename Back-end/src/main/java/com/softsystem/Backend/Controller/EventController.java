@@ -1,6 +1,5 @@
 package com.softsystem.Backend.Controller;
 
-import com.softsystem.Backend.DTO.ActiveEventsDTO;
 import com.softsystem.Backend.Model.Bet;
 import com.softsystem.Backend.Model.Event;
 import com.softsystem.Backend.Model.Type;
@@ -10,7 +9,6 @@ import com.softsystem.Backend.Service.MemberService;
 import com.softsystem.Backend.Service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,36 +27,27 @@ public class EventController {
     @Autowired
     BetService betService;
 
-    private String chosenDiscipline;
-    private String chosenStatus;
-
-    @GetMapping("/events")
-    public ActiveEventsDTO getActiveEvents() {
+    @GetMapping("/events/{chosenDiscipline}/{chosenStatus}")
+    public List<Event> getActiveEvents(@PathVariable("chosenDiscipline") String chosenDiscipline, @PathVariable("chosenStatus") String chosenStatus) {
         List<Event> events = new ArrayList<>();
-        List<Type> types = new ArrayList<>();
-        eventService.findMatchingEvents(this.chosenDiscipline, this.chosenStatus).forEach(events::add);
-        typeService.findAll().forEach(types::add);
-        ActiveEventsDTO activeEventsDTO = new ActiveEventsDTO(events, types, this.chosenDiscipline, this.chosenStatus);
+        eventService.findMatchingEvents(chosenDiscipline, chosenStatus).forEach(events::add);
 
-        return activeEventsDTO;
+        return events;
     }
 
-    @PostMapping(value = "/events/{chosenDiscipline}/{chosenStatus}")
-    public void getChosenParams(@PathVariable("chosenDiscipline") String chosenDiscipline, @PathVariable("chosenStatus") String chosenStatus) {
-        this.chosenDiscipline = chosenDiscipline;
-        this.chosenStatus = chosenStatus;
-    }
-
-    @PostMapping(value= "/events/addBet")
+    @PostMapping(value = "/events/addBet")
     public int addBet(@RequestBody Bet bet) {
         eventService.checkEventsActivity();
 
         return betService.addBet(bet);
     }
 
-    @Scheduled(fixedRate = 60000)
-    public void checkEventsActivity() {
-        eventService.checkEventsActivity();
+    @GetMapping(value = "/events/getTypes")
+    public List<Type> getTypes() {
+        List<Type> types = new ArrayList<>();
+        typeService.findAll().forEach(types::add);
+
+        return types;
     }
 
 }
