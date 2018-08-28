@@ -7,6 +7,7 @@ import { BetsService } from '../services/bets.service';
 import { FormControl, Validators, FormGroup } from '../../../node_modules/@angular/forms';
 import { Bet } from '../model/bet';
 import { User } from '../model/user';
+import { TypeService } from '../services/type.service';
 
 export interface DialogData {
   event: Event;
@@ -38,25 +39,23 @@ export class EventsComponent implements OnInit {
   });
 
   constructor(private eventService: EventService,
+    private typeService: TypeService,
     public dialog: MatDialog
   ) { }
  
   ngOnInit(): void {
+    this.typeService.getAllTypes().subscribe(data => {
+      this.types = data;
+    });
     this.currentUser = Number(localStorage.getItem(this.key));
     this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
-      this.events = data.events;
-      this.types = data.types;
-      this.chosenDiscipline = data.chosenDiscipline;
-      this.chosenStatus = data.chosenStatus;
+      this.events = data;
     });
     this.filterForm.valueChanges.subscribe(value => {
       this.chosenDiscipline = value.chosenDiscipline;
       this.chosenStatus = value.chosenStatus;
       this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
-        this.events = data.events;
-        this.types = data.types;
-        this.chosenDiscipline = data.chosenDiscipline;
-        this.chosenStatus = data.chosenStatus;
+        this.events = data;
       });
     });
   }

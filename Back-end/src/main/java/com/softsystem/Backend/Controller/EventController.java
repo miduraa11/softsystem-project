@@ -1,6 +1,5 @@
 package com.softsystem.Backend.Controller;
 
-import com.softsystem.Backend.DTO.ActiveEventsDTO;
 import com.softsystem.Backend.Model.Bet;
 import com.softsystem.Backend.Model.Event;
 import com.softsystem.Backend.Model.Type;
@@ -29,21 +28,26 @@ public class EventController {
     BetService betService;
 
     @GetMapping("/events/{chosenDiscipline}/{chosenStatus}")
-    public ActiveEventsDTO getActiveEvents(@PathVariable("chosenDiscipline") String chosenDiscipline, @PathVariable("chosenStatus") String chosenStatus) {
+    public List<Event> getActiveEvents(@PathVariable("chosenDiscipline") String chosenDiscipline, @PathVariable("chosenStatus") String chosenStatus) {
         List<Event> events = new ArrayList<>();
-        List<Type> types = new ArrayList<>();
         eventService.findMatchingEvents(chosenDiscipline, chosenStatus).forEach(events::add);
-        typeService.findAll().forEach(types::add);
-        ActiveEventsDTO activeEventsDTO = new ActiveEventsDTO(events, types, chosenDiscipline, chosenStatus);
 
-        return activeEventsDTO;
+        return events;
     }
 
-    @PostMapping(value= "/events/addBet")
+    @PostMapping(value = "/events/addBet")
     public int addBet(@RequestBody Bet bet) {
         eventService.checkEventsActivity();
 
         return betService.addBet(bet);
+    }
+
+    @GetMapping(value = "/events/getTypes")
+    public List<Type> getTypes() {
+        List<Type> types = new ArrayList<>();
+        typeService.findAll().forEach(types::add);
+
+        return types;
     }
 
 }

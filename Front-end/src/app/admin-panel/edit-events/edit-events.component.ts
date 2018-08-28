@@ -7,6 +7,7 @@ import { Type } from '../../model/type';
 import { FormControl, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
+import { TypeService } from '../../services/type.service';
 
 export interface DialogData {
   event: Event;
@@ -39,22 +40,22 @@ export class EditEventsComponent implements OnInit {
   });
 
   constructor(private eventService: EventService,
+    private typeService: TypeService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit() {
+    this.typeService.getAllTypes().subscribe(data => {
+      this.types = data;
+    });
     this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
-      this.events = data.events;
-      this.types = data.types;
-      this.chosenDiscipline = data.chosenDiscipline;
-      this.chosenStatus = data.chosenStatus;
+      this.events = data;
     });
     this.filterForm.valueChanges.subscribe(value => {
       this.chosenDiscipline = value.chosenDiscipline;
       this.chosenStatus = value.chosenStatus;
       this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
-        this.events = data.events;
-        this.types = data.types;
+        this.events = data;
       });
     });
   }
