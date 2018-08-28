@@ -1,11 +1,48 @@
-.homeContent {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 418px;
-    height: 222px;
-    background-image: url("../../assets/img/btb-large.png");
+.BTBimage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+}
+
+.headerText {
+    text-align: center;
+    margin-top: 80px;
+    font-family: fantasy;
+    font-size: 300%;
+    color: black;
+}
+
+.lesserHeader {
+    font-family: fantasy;
+    font-size: 150%;
+    color: black;
+}
+
+.text {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 60px;
+    font-size: 20px;
+    font-family: fantasy;
+    color: black;
+}
+
+.separator {
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+
+.card {
+    border-radius: 1em;
+    height: 625px;
+    max-width: 525px;
+    background: rgb(212, 54, 6);
+}
+
+.mat-raised-button {
+    background: orange;
+    color: black;
 }
