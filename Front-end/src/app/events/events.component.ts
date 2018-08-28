@@ -2,12 +2,14 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { EventService } from '../services/event.service';
 import { Type } from '../model/type';
 import { Event } from '../model/event';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '../../../node_modules/@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { BetsService } from '../services/bets.service';
-import { FormControl, Validators, FormGroup } from '../../../node_modules/@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Bet } from '../model/bet';
 import { User } from '../model/user';
 import { TypeService } from '../services/type.service';
+
+const USER_ID = 'User id';
 
 export interface DialogData {
   event: Event;
@@ -31,7 +33,6 @@ export class EventsComponent implements OnInit {
   chosenDiscipline: String = "Wszystkie";
   chosenStatus: String = "Wszystkie";
   currentUser: number;
-  key: string = "User id";
 
   filterForm = new FormGroup({
     chosenDiscipline: new FormControl(this.chosenDiscipline),
@@ -47,7 +48,7 @@ export class EventsComponent implements OnInit {
     this.typeService.getAllTypes().subscribe(data => {
       this.types = data;
     });
-    this.currentUser = Number(localStorage.getItem(this.key));
+    this.currentUser = Number(sessionStorage.getItem(USER_ID));
     this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
       this.events = data;
     });

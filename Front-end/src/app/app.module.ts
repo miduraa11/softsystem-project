@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { EventsComponent, BetTheBetDialog, BetTheBetConfirmDialog } from './events/events.component';
@@ -47,6 +47,12 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import FusionCharts from 'fusioncharts/core';
 import AngularGauge from 'fusioncharts/viz/angulargauge';
 import MsLine from 'fusioncharts/viz/msline';
+import { AuthService } from './services/auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { RoleGuardService } from './services/role-guard.service';
+import { TokenStorage } from './token.storage';
+import { Interceptor } from './interceptor';
+
 
 FusionChartsModule.fcRoot(FusionCharts, AngularGauge, MsLine);
 
@@ -132,7 +138,14 @@ const routes: Routes = [
     RegistrationService,
     LocalStorageService,
     BetsService,
-    UserPanelService
+    UserPanelService,
+    AuthService,
+    RoleGuardService,
+    AuthGuardService,
+    TokenStorage,
+    {provide: HTTP_INTERCEPTORS,
+      useClass: Interceptor,
+      multi : true}
   ],
   bootstrap: [
     AppComponent

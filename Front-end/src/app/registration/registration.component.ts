@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from '../model/user';
 import { RegistrationService } from '../services/registration.service';
-import {FormControl, Validators, FormGroup} from '@angular/forms';
-import {Md5} from 'ts-md5';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
@@ -61,11 +60,13 @@ export class RegistrationComponent {
       this.user.email = this.registrationForm.get('email').value;
       this.user.firstName = this.registrationForm.get('firstName').value;
       this.user.lastName = this.registrationForm.get('lastName').value;
-      this.user.login = this.registrationForm.get('login').value;
-      this.user.password = Md5.hashStr(this.registrationForm.get('password').value);
-      this.registrationService.addUser(this.user);
-      this.openWelcomeSnackBar(this.user.firstName);
-      this.router.navigate(['/login']);
+      this.user.username = this.registrationForm.get('login').value;
+      this.user.password = this.registrationForm.get('password').value;
+      this.registrationService.addUser(this.user).subscribe(data => {
+        console.log(data);
+        this.openWelcomeSnackBar(this.user.firstName);
+        this.router.navigate(['/login']);
+      });
     } else { this.openErrorSnackBar(); }        
   }
 

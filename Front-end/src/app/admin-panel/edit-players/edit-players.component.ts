@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { PlayerService } from '../../services/player.service';
 import { TypeService } from '../../services/type.service';
-import { Validators, FormControl, FormGroup } from '../../../../node_modules/@angular/forms';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { Member } from '../../model/member';
 import { Type } from '../../model/type';
 import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';

@@ -3,7 +3,7 @@ import { Role } from "./role";
 
 export class User {
     id: number;
-    login: String;
+    username: String;
     firstName: String;
     lastName: String;
     email: String;

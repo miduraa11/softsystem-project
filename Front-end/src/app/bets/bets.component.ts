@@ -2,8 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { BetsService } from '../services/bets.service';
 import { Bet } from '../model/bet';
 import { Member } from '../model/member';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '../../../node_modules/@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormControl } from '../../../node_modules/@angular/forms';
+
+const USER_ID = 'User id';
 
 export interface DialogData {
   event: Event;
@@ -17,7 +19,6 @@ export interface DialogData {
 export class BetsComponent implements OnInit {
 
   bets: Bet[];
-  key: string = "User id";
   currentUser: number;
   chosenStatus: String = "Wszystkie";
   empty: boolean;
@@ -27,11 +28,11 @@ export class BetsComponent implements OnInit {
   });
 
   constructor(private betsService: BetsService,
-    public dialog: MatDialog
+              public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.currentUser = Number(localStorage.getItem(this.key));
+    this.currentUser = Number(sessionStorage.getItem(USER_ID));
     this.betsService.getActiveBetsByUser(this.chosenStatus, this.currentUser).subscribe(data => {
       this.bets = data;
       if(this.bets.length ==0)

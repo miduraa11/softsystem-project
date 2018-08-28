@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { DisciplineService } from '../../services/discipline.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Type } from '../../model/type';
-import { FormControl, Validators, FormGroup } from '../../../../node_modules/@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
 import {MatTableDataSource} from '@angular/material';

@@ -3,7 +3,7 @@ import { TeamService } from '../../services/team.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Member } from '../../model/member';
 import { Type } from '../../model/type';
-import { Validators, FormControl, FormGroup } from '../../../../node_modules/@angular/forms';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar, MatTableDataSource } from '@angular/material';
 import { AdminDeleteObjectComponent } from '../admin-panel-delete-object.component';
 
