@@ -16,10 +16,8 @@ body {
     bottom:0;
     left:0;
     right:0;
-    margin-left: 15%;
-    margin-right: 15%;
     height:30px;
-    background: rgba(0, 0, 0, 0.6);
+    background: #2e2724;
 }
 
 .text {
@@ -35,6 +33,11 @@ body {
   flex: 0 0 auto;
   }
 
-  html {
+html {
     overflow-y: scroll;
-  }
+}
+
+marquee {
+    margin-left: 10%;
+    margin-right: 10%;
+}

@@ -48,3 +48,7 @@ table {
   font-weight: bold;
   color: black;
 }
+
+.row {
+  margin-top: 60px;
+}

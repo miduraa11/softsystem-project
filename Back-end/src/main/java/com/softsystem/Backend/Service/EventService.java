@@ -3,9 +3,8 @@ package com.softsystem.Backend.Service;
 import com.softsystem.Backend.DTO.UserListDTO;
 import com.softsystem.Backend.Model.*;
 import com.softsystem.Backend.Repository.EventRepository;
-import com.softsystem.Backend.Repository.TypeRepository;
-import com.softsystem.Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.ArrayList;
@@ -17,10 +16,6 @@ public class EventService {
 
     @Autowired
     private EventRepository eventRepository;
-    @Autowired
-    private TypeRepository typeRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     public List<Event> findAll() {
 
@@ -48,6 +43,7 @@ public class EventService {
        eventRepository.getOne(event.getId()).setType(event.getType());
        eventRepository.getOne(event.getId()).setMembers(event.getMembers());
        eventRepository.save(eventRepository.getOne(event.getId()));
+       this.checkEventsActivity();
     }
 
     public Long addEvent(Event event) {
@@ -59,6 +55,7 @@ public class EventService {
         newEvent.setType(event.getType());
         newEvent.setMembers(event.getMembers());
         eventRepository.save(newEvent);
+        this.checkEventsActivity();
 
         return newEvent.getId();
     }
@@ -122,6 +119,7 @@ public class EventService {
         return eventList;
     }
 
+    @Scheduled(fixedRate = 60000)
     public void checkEventsActivity() {
         List<Event> eventList;
         Date sysDate = new Date();
@@ -132,8 +130,8 @@ public class EventService {
                     if(x.getEndDate().after(sysDate)) { x.setActive(true); }
                     eventRepository.save(x);
                 }
-
         );
+        System.out.println(sysDate + " INFO [ Events activity has been updated. ]");
     }
 
     public List<UserListDTO> getAllWinners(List<Bet> bet) {
@@ -157,4 +155,5 @@ public class EventService {
         }
         return listOfWinners;
     }
+
 }

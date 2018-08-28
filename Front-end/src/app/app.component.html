@@ -1,9 +1,9 @@
 <div class="container">   
     <div class="navigationBar fixed" *ngIf="isActive">
         <ul>
-            <li style="float:left"><nav><a routerLink="/home"><img class="homeImage" src="../assets/img/btb-small.png"></a></nav></li>
+            <li style="float:left; margin-left:10%"><nav><a routerLink="/home"><img class="homeImage" src="../assets/img/btb-small.png"></a></nav></li>
             <li style="float:left"><nav><a routerLink="/user-panel"><img class="userImage" src="../assets/img/userIcon.png"> Mój profil</a></nav></li>
-            <li><nav><a routerLink="/login" (click)="logout()">Wyloguj</a></nav></li>
+            <li style="margin-right:10%"><nav><a routerLink="/login" (click)="logout()">Wyloguj</a></nav></li>
             <li *ngIf="isAdmin"><nav><a routerLink="/admin-panel">Admin panel</a></nav></li>
             <li><nav><a routerLink="/bets">Moje zakłady</a></nav></li>
             <li><nav><a routerLink="/events">Wydarzenia</a></nav></li>

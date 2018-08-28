@@ -54,7 +54,7 @@ mat-panel-title b {
 }
 .editButton{
   color: black;
-  
+
 }
 .list{
   position: relative;
@@ -68,4 +68,8 @@ mat-panel-title b {
 .panel{
 
   z-index: 2;
+}
+
+.row {
+  margin-top: 60px;
 }

@@ -1,6 +1,5 @@
 package com.softsystem.Backend.Controller;
 
-import com.softsystem.Backend.DTO.ActiveEventsDTO;
 import com.softsystem.Backend.Model.Bet;
 import com.softsystem.Backend.Model.Event;
 import com.softsystem.Backend.Model.Type;
@@ -9,12 +8,14 @@ import com.softsystem.Backend.Service.EventService;
 import com.softsystem.Backend.Service.MemberService;
 import com.softsystem.Backend.Service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@EnableScheduling
 public class EventController {
 
     @Autowired
@@ -26,29 +27,27 @@ public class EventController {
     @Autowired
     BetService betService;
 
-    private String chosenDiscipline;
-    private String chosenStatus;
-
-    @GetMapping("/events")
-    public ActiveEventsDTO getActiveEvents() {
+    @GetMapping("/events/{chosenDiscipline}/{chosenStatus}")
+    public List<Event> getActiveEvents(@PathVariable("chosenDiscipline") String chosenDiscipline, @PathVariable("chosenStatus") String chosenStatus) {
         List<Event> events = new ArrayList<>();
+        eventService.findMatchingEvents(chosenDiscipline, chosenStatus).forEach(events::add);
+
+        return events;
+    }
+
+    @PostMapping(value = "/events/addBet")
+    public int addBet(@RequestBody Bet bet) {
+        eventService.checkEventsActivity();
+
+        return betService.addBet(bet);
+    }
+
+    @GetMapping(value = "/events/getTypes")
+    public List<Type> getTypes() {
         List<Type> types = new ArrayList<>();
-        eventService.findMatchingEvents(this.chosenDiscipline, this.chosenStatus).forEach(events::add);
         typeService.findAll().forEach(types::add);
-        ActiveEventsDTO activeEventsDTO = new ActiveEventsDTO(events, types, this.chosenDiscipline, this.chosenStatus);
 
-        return activeEventsDTO;
-    }
-
-    @PostMapping(value = "/events/{chosenDiscipline}/{chosenStatus}")
-    public void getChosenParams(@PathVariable("chosenDiscipline") String chosenDiscipline, @PathVariable("chosenStatus") String chosenStatus) {
-        this.chosenDiscipline = chosenDiscipline;
-        this.chosenStatus = chosenStatus;
-    }
-
-    @PostMapping(value= "/events/addBet")
-    public void addBet(@RequestBody Bet bet) {
-        betService.addBet(bet);
+        return types;
     }
 
 }

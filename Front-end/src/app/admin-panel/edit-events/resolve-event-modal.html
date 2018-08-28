@@ -11,33 +11,41 @@
         <ul>
             <li *ngFor="let member of event.members">{{member.name}}<br></li>
         </ul>
-        <div><font size="2" color="red">
+        <font size="2" color="red">
             (Zmiany dotyczące wydarzenia dokonane tuż przed otwarciem tego okna mogą nie zostać poprawnie tutaj wyświetlone
             lecz zostaną zapisane do bazy danych po rozstrzygnięciu tego wydarzenia)
-        </font></div>
+        </font>
     </section>
 
     <h6 mat-dialog-title>Podaj wynik powyższego wydarzenia:</h6>
     
-    <form [formGroup]="resolveForm">                  
+    <form [formGroup]="resolveForm">
+
         <mat-form-field style="width: 400px">            
             <mat-select matSelect formControlName="member" style="width: 400px" placeholder="Wybierz zwycięzce wydarzenia.">
                 <mat-option *ngFor="let member of event.members" [value]="member.name">{{member.name}}</mat-option>
-                <mat-option [value]=-1>Remis</mat-option>
+                <mat-option *ngIf="event.type.result" [value]=-1>Remis</mat-option>
             </mat-select>
             <mat-error>
                 Zwycięzca jest <strong>wymagany</strong>!
             </mat-error>
         </mat-form-field>
-        <mat-form-field style="width: 400px">  
-            <input matInput formControlName="result" style="width: 350px" placeholder="Podaj dokladny resultat wydarzenia."/>
-            <mat-error *ngIf="resolveForm.get('result').hasError('pattern') && !resolveForm.get('result').hasError('required')">
-                Proszę wpisać <strong>poprawny</strong> format rezultatu!
-            </mat-error>
-            <mat-error *ngIf="resolveForm.get('result').hasError('required')">
-                Rezultat jest <strong>wymagany</strong>!
-            </mat-error>
-        </mat-form-field>
+
+        <div *ngIf="event.type.result">
+            <mat-form-field style="width: 400px">  
+                <input matInput formControlName="result" style="width: 350px" placeholder="Podaj dokladny resultat wydarzenia."/>
+                <mat-error *ngIf="resolveForm.get('result').hasError('pattern') && !resolveForm.get('result').hasError('required')">
+                    Proszę wpisać <strong>poprawny</strong> format rezultatu!
+                </mat-error>
+                <mat-error *ngIf="resolveForm.get('result').hasError('required')">
+                    Rezultat jest <strong>wymagany</strong>!
+                </mat-error>
+            </mat-form-field>
+            <font size="2" color="red" style="margin-top: 10px">
+                (UWAGA! Rezultat należy wprowadzić tak aby większy wynik był podany jako pierwszy np. 2-1, 34-28 itp.)
+            </font>
+        </div>
+
     </form>
 </div>
 

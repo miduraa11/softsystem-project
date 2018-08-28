@@ -33,12 +33,8 @@ export class EventService {
     return this.http.post(`${this.baseUrl}/edit`, event);
   }
 
-  getActiveEvents(): Observable<any> {
-    return this.http.get(`${this.activeEventsAPI}`);
-  }
-
-  giveChosenParams(chosenDiscipline: String, chosenStatus: String): Observable<any> {
-    return this.http.post(`${this.activeEventsAPI}/${chosenDiscipline}/${chosenStatus}`, { responseType: 'text' });
+  getActiveEvents(chosenDiscipline: String, chosenStatus: String): Observable<any> {
+    return this.http.get(`${this.activeEventsAPI}/${chosenDiscipline}/${chosenStatus}`);
   }
 
   getUserList(eventId: number): Observable<any> {
@@ -47,10 +43,6 @@ export class EventService {
 
   resolveEvent(event: Event): Observable<any> {
     return this.http.post(`${this.baseUrl}/resolve`, event);
-  }
-
-  checkEventsActivity(): Observable<any> {
-    return this.http.post(`http://localhost:8080/checkEventsActivity`, { responseType: 'text' });
   }
 
 }

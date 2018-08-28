@@ -17,27 +17,18 @@ public class BetController {
     @Autowired
     BetService betService;
 
-    private String chosenStatus;
-    private Long currentUser;
-
     @GetMapping(value = "/bets/{userId}")
     public List<Bet> showAllBets(@PathVariable(name="userId") Long userId) {
 
         return betService.showAllBets(userId);
     }
 
-    @GetMapping("/bets")
-    public List<Bet> getActiveBets() {
+    @GetMapping("/bets/{chosenStatus}/{currentUser}")
+    public List<Bet> getActiveBets(@PathVariable("chosenStatus") String chosenStatus, @PathVariable("currentUser") Long currentUser) {
         List<Bet> betList = new ArrayList<>();
-        betService.findMatchingBets(this.chosenStatus, this.currentUser).forEach(betList::add);
+        betService.findMatchingBets(chosenStatus, currentUser).forEach(betList::add);
 
         return betList;
-    }
-
-    @PostMapping(value = "/bets/{chosenStatus}/{currentUser}")
-    public void getChosenParams(@PathVariable("chosenStatus") String chosenStatus, @PathVariable("currentUser") Long currentUser) {
-        this.chosenStatus = chosenStatus;
-        this.currentUser = currentUser;
     }
 
 }

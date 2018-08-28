@@ -32,7 +32,7 @@
 
     <mat-form-field style="width: 100%">
     <mat-select *ngSwitchCase="0" formControlName="discipline" style="width: 100%" placeholder="Wybierz dyscyplinę">
-        <mat-option *ngFor="let type of types" [value]="type" >{{type.discipline}}</mat-option>
+        <mat-option *ngFor="let type of types" [value]="type">{{type.discipline}}</mat-option>
     </mat-select>
     <mat-select *ngSwitchCase="1" formControlName="discipline" style="width: 100%" placeholder="Wybierz dyscyplinę">
         <mat-option *ngFor="let type of types" [value]="type.id">{{type.discipline}}</mat-option>
@@ -44,10 +44,10 @@
 
     <mat-form-field style="width: 100%">
     <mat-select *ngSwitchCase="0" multiple formControlName="members" style="width: 100%" placeholder="Wybierz drużyny lub uczestników">
-        <mat-option *ngFor="let member of members" [value]="member">{{member.name}}</mat-option>
+        <mat-option *ngFor="let member of membersList" [value]="member">{{member.name}}</mat-option>
     </mat-select>
     <mat-select *ngSwitchCase="1" multiple formControlName="members" style="width: 100%" placeholder="Wybierz drużyny lub uczestników">
-        <mat-option *ngFor="let member of members" [value]="member.id">{{member.name}}</mat-option>
+        <mat-option *ngFor="let member of membersList" [value]="member.id">{{member.name}}</mat-option>
     </mat-select>
     <mat-error>
         Wybranie drużyny lub uczestników jest <strong>wymagane</strong>!
