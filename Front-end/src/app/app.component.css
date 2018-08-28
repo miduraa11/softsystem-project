@@ -44,3 +44,9 @@ li a:hover:not(.active) {
   width: 35%;
   height: 35%;
 }
+.userImage {
+  width: 23px;
+  height: 23px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}

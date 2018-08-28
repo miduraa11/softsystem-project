@@ -19,7 +19,7 @@ export class BetsComponent implements OnInit {
   key: string = "User id";
   currentUser: number;
   chosenStatus: String = "Wszystkie";
-  empty: boolean = false;
+  empty: boolean;
 
   constructor(private betsService: BetsService,
     public dialog: MatDialog
@@ -29,6 +29,10 @@ export class BetsComponent implements OnInit {
     this.currentUser = Number(localStorage.getItem(this.key));
     this.betsService.getAllBetsById(this.currentUser).subscribe(data => {
       this.bets = data;
+      if(this.bets.length ==0)
+        this.empty = true;
+      else
+        this.empty = false;
       for(var i = 0; i < this.bets.length; i++) {
         if(this.bets[i].member == null) { 
           this.bets[i].member = new Member();
