@@ -22,7 +22,7 @@ export class BetsService {
   }
 
   addBet(bet: Bet): Observable<any> {
-    return this.http.post(`${this.addUrl}`, bet);
+    return this.http.post(`${this.addUrl}`, bet, { responseType: 'text' });
   }
 
   giveChosenParams(chosenStatus: String, currentUser: number): Observable<any> {

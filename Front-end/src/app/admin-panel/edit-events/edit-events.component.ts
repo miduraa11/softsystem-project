@@ -39,31 +39,27 @@ export class EditEventsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(
-      data => { 
+    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(data => { 
       this.eventService.getActiveEvents().subscribe(data => {
         this.events = data.events;
         this.types = data.types;
         this.chosenDiscipline = data.chosenDiscipline;
         this.chosenStatus = data.chosenStatus;
-      })},
-      error => console.log(error)      
-    );
+      })
+    });
   }
 
   updateList(chosenDiscipline: String, chosenStatus: String): void {
     this.chosenDiscipline = chosenDiscipline;
     this.chosenStatus = chosenStatus;
-    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(
-      data => { 
+    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(data => { 
       this.eventService.getActiveEvents().subscribe(data => {
         this.events = data.events;
         this.types = data.types;
         this.chosenDiscipline = data.chosenDiscipline;
         this.chosenStatus = data.chosenStatus;
-      })},
-      error => console.log(error)
-    );
+      })
+    });
   }
 
   openDeleteObjectDialog(object: any, flag: number): void {
@@ -112,10 +108,12 @@ export class UpdateEventDialog {
 
   event: Event;
   members: Member[];
+  membersList: Member[];
   types: Type[];
   chosenTypeId: number;
   chosenMemberId: number[];
   flag: number;
+  sysDate: Date = new Date();
 
   updateForm = new FormGroup({
     name: new FormControl('', [
@@ -153,7 +151,11 @@ export class UpdateEventDialog {
   ngOnInit(): void {
     this.eventService.getTypesAndMembers().subscribe(data => {
       this.types = data.types;
-      this.members = data.members;
+      this.membersList = this.members = data.members;
+      this.updateForm.get('discipline').valueChanges.subscribe(value => {
+        if(this.flag == 0) { this.membersList = this.members.filter(x => x.type.id == value.id); }
+        else { this.membersList = this.members.filter(x => x.type.id == value); }
+      });
     });
     if(this.flag == 1) {
       this.updateForm.get('name').setValue(this.event.name);
@@ -173,6 +175,8 @@ export class UpdateEventDialog {
       this.event.name = this.updateForm.get('name').value;
       this.event.beginDate = this.updateForm.get('beginDate').value;
       this.event.endDate = this.updateForm.get('endDate').value;
+      if(this.event.endDate > this.sysDate) { this.event.active = true; }
+      else { this.event.active = false; }
       switch(this.flag) {
         case 0: {
           this.event.type = this.updateForm.get('discipline').value;
@@ -279,6 +283,7 @@ export class ResolveEventDialog {
   }
 
   onResolveClick(): void {
+    if(!this.event.type.result) { this.resolveForm.get('result').setErrors(null); }
     if(this.resolveForm.valid) {
       if(this.resolveForm.get('member').value == -1) { this.event.winner = "Remis"; }
       else { this.event.winner = this.resolveForm.get('member').value; }

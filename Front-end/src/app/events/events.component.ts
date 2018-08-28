@@ -14,6 +14,10 @@ export interface DialogData {
   flag: number;
 }
 
+export interface ConfirmDialogData {
+  error: number;
+}
+
 @Component({
   selector: 'app-events',
   templateUrl: './events.component.html',
@@ -76,6 +80,7 @@ export class BetTheBetDialog {
   bet: Bet;
   currentUser: number;
   flag: number;
+  error: number;
 
   betForm = new FormGroup({
     amount: new FormControl('', [
@@ -128,7 +133,8 @@ export class BetTheBetDialog {
         }
       }
       this.betService.addBet(this.bet).subscribe(data => {
-        this.openConfirmDialog();
+        this.error = data;
+        this.openConfirmDialog(this.error);
         this.dialogRef.close();
       });
     } else {
@@ -142,9 +148,10 @@ export class BetTheBetDialog {
     });
   }
 
-  openConfirmDialog(): void {
+  openConfirmDialog(error: number): void {
     const dialogRef = this.dialog.open(BetTheBetConfirmDialog, {
-      width: '400px'
+      width: '400px',
+      data: { error }
     });
   }
 
@@ -156,7 +163,13 @@ export class BetTheBetDialog {
 })
 export class BetTheBetConfirmDialog {
 
-  constructor(public dialogRef: MatDialogRef<BetTheBetConfirmDialog>) { }
+  error: number;
+
+  constructor(public dialogRef: MatDialogRef<BetTheBetConfirmDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData,
+  ) {
+    this.error = this.data.error;
+  }
 
   onOkClick(): void {
     this.dialogRef.close();

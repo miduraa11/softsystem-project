@@ -4,10 +4,10 @@ import com.softsystem.Backend.Model.Bet;
 import com.softsystem.Backend.Model.Event;
 import com.softsystem.Backend.Repository.BetRepository;
 import com.softsystem.Backend.Repository.EventRepository;
-import com.softsystem.Backend.Repository.MemberRepository;
 import com.softsystem.Backend.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,10 +20,11 @@ public class BetService {
     private UserRepository userRepository;
     @Autowired
     private EventRepository eventRepository;
-    @Autowired
-    private MemberRepository memberRepository;
 
-    public void addBet(Bet bet) {
+    public int addBet(Bet bet) {
+        Date sysDate = new Date();
+
+        if(eventRepository.getOne(bet.getEvent().getId()).getEndDate().before(sysDate)) { return 1; }
         Bet newBet = new Bet();
         newBet.setUser(userRepository.findUserById(bet.getUser().getId()));
         newBet.setEvent(bet.getEvent());
@@ -37,6 +38,8 @@ public class BetService {
             newBet.setResult(bet.getResult());
         }
         betRepository.save(newBet);
+
+        return 0;
     }
 
     public List<Bet> showAllBets(Long userId) {

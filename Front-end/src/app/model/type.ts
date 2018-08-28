@@ -5,6 +5,7 @@ export class Type {
     id: number;
     discipline: String;
     individual: Boolean;
+    result: Boolean;
     members: Member[];
     events: Event[];
 }

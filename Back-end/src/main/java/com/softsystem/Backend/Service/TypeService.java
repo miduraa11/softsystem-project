@@ -1,7 +1,6 @@
 package com.softsystem.Backend.Service;
 
 import com.softsystem.Backend.Model.Type;
-import com.softsystem.Backend.Repository.MemberRepository;
 import com.softsystem.Backend.Repository.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +13,6 @@ public class TypeService {
 
     @Autowired
     private TypeRepository typeRepository;
-    @Autowired
-    private MemberRepository memberRepository;
 
     public Collection <Type> getAllIndividualTypes() {
         Collection<Type> types;
@@ -53,6 +50,7 @@ public class TypeService {
     public Collection <Type> getAllDisciplines() {
         Collection<Type> disciplines;
         disciplines = typeRepository.findAll();
+
         return disciplines;
     }
 
@@ -60,6 +58,7 @@ public class TypeService {
         Type newDiscipline = new Type();
         newDiscipline.setDiscipline(type.getDiscipline());
         newDiscipline.setIndividual(type.getIndividual());
+        newDiscipline.setResult(type.getResult());
         typeRepository.save(newDiscipline);
 
         return newDiscipline.getId();
@@ -75,8 +74,10 @@ public class TypeService {
     public int deleteDiscipline(Long id) {
         try {
             typeRepository.deleteById(id);
+
             return 0;
         } catch (Exception e) {
+
             return -1;
         }
     }
