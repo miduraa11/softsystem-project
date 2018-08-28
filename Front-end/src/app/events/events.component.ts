@@ -49,17 +49,9 @@ export class EventsComponent implements OnInit {
       this.chosenDiscipline = data.chosenDiscipline;
       this.chosenStatus = data.chosenStatus;
     });
-    this.filterForm.get('chosenDiscipline').valueChanges.subscribe(value => {
-      this.chosenDiscipline = value;
-      this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
-        this.events = data.events;
-        this.types = data.types;
-        this.chosenDiscipline = data.chosenDiscipline;
-        this.chosenStatus = data.chosenStatus;
-      });
-    });
-    this.filterForm.get('chosenStatus').valueChanges.subscribe(value => {
-      this.chosenStatus = value;
+    this.filterForm.valueChanges.subscribe(value => {
+      this.chosenDiscipline = value.chosenDiscipline;
+      this.chosenStatus = value.chosenStatus;
       this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
         this.events = data.events;
         this.types = data.types;
