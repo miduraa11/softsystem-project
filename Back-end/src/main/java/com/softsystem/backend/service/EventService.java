@@ -3,9 +3,9 @@ package com.softsystem.backend.service;
 import com.softsystem.backend.dto.UserListDTO;
 import com.softsystem.backend.model.*;
 import com.softsystem.backend.repository.EventRepository;
-import com.softsystem.backend.repository.TypeRepository;
-import com.softsystem.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.ArrayList;
@@ -13,14 +13,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@EnableScheduling
 public class EventService {
 
     @Autowired
     private EventRepository eventRepository;
-    @Autowired
-    private TypeRepository typeRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     public List<Event> findAll() {
 
@@ -48,6 +45,7 @@ public class EventService {
        eventRepository.getOne(event.getId()).setType(event.getType());
        eventRepository.getOne(event.getId()).setMembers(event.getMembers());
        eventRepository.save(eventRepository.getOne(event.getId()));
+       this.checkEventsActivity();
     }
 
     public Long addEvent(Event event) {
@@ -59,6 +57,7 @@ public class EventService {
         newEvent.setType(event.getType());
         newEvent.setMembers(event.getMembers());
         eventRepository.save(newEvent);
+        this.checkEventsActivity();
 
         return newEvent.getId();
     }
@@ -122,6 +121,7 @@ public class EventService {
         return eventList;
     }
 
+    @Scheduled(fixedRate = 60000)
     public void checkEventsActivity() {
         List<Event> eventList;
         Date sysDate = new Date();
@@ -132,8 +132,8 @@ public class EventService {
                     if(x.getEndDate().after(sysDate)) { x.setActive(true); }
                     eventRepository.save(x);
                 }
-
         );
+        System.out.println(sysDate + " INFO [ Events activity has been updated. ]");
     }
 
     public List<UserListDTO> getAllWinners(List<Bet> bet) {
@@ -157,4 +157,5 @@ public class EventService {
         }
         return listOfWinners;
     }
+
 }

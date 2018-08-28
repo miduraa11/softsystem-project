@@ -1,4 +1,4 @@
-<div class="row mt-4">
+<div class="row">
   <div class="col-sm">
     <nav><a class="btn btn-lg btn-dark active" role="button" aria-pressed="true">Wydarzenia</a></nav>
   </div>
@@ -18,42 +18,38 @@
 
 <button mat-button class="matBtn" (click)="openUpdateEventDialog(null, 0)">Dodaj nowe wydarzenie</button>
 
-<table class="table-condensed" width="100%">
-  <b><label>Filtry:</label></b>
-  <tr>
+<form [formGroup]="filterForm">
+  <table class="table-condensed" width="100%">
+    <b><label>Filtry:</label></b>
+    <tr>
       <th class="notbold" for="FormControlSelectActive">Status:</th>
       <th class="notbold" for="FormControlSelectDiscipline">Dyscyplina:</th>
-  </tr>
-  <tr>
+    </tr>
+    <tr>
       <td>
-          <select class="form-control" id="FormControlSelectActive" [(ngModel)]="chosenStatus" (change)="updateList(chosenDiscipline, chosenStatus)">
-                  <option selected hidden>{{chosenStatus}}</option>
-                  <option>Wszystkie</option>
-                  <option>Aktywne</option>
-                  <option>Zakończone</option>
-                  <option>Roztrzygnij</option>
-          </select>
+        <mat-select class="form-control" id="FormControlSelectActive" formControlName="chosenStatus">
+          <mat-option value="Wszystkie">Wszystkie</mat-option>
+          <mat-option value="Aktywne">Aktywne</mat-option>
+          <mat-option value="Zakończone">Zakończone</mat-option>
+          <mat-option value="Roztrzygnij">Roztrzygnij</mat-option>
+        </mat-select>
       </td>
       <td>
-          <select class="form-control" id="FormControlSelectDiscipline" [(ngModel)]="chosenDiscipline" (change)="updateList(chosenDiscipline, chosenStatus)">
-                  <option selected hidden>{{chosenDiscipline}}</option>
-                  <option>Wszystkie</option>
-                  <option *ngFor="let type of types">{{type.discipline}}</option>
-          </select>
+        <mat-select class="form-control" id="FormControlSelectDiscipline" formControlName="chosenDiscipline">
+          <mat-option value="Wszystkie">Wszystkie</mat-option>
+          <mat-option *ngFor="let type of types" [value]="type.discipline">{{type.discipline}}</mat-option>
+        </mat-select>
       </td>
-  </tr>
-</table>
+    </tr>
+  </table>
+</form>
 
 <table width="100%">
   <tr *ngFor="let event of events">
     <td width="90%">
       <mat-accordion>
-        <mat-expansion-panel class="expansionpanel">
-          <mat-expansion-panel-header class="right-aligned-header">
-            <mat-panel-title>
-              <b>{{event.name}}</b>
-            </mat-panel-title>
-            <mat-panel-description>
+        <div class="list">
+          <div class="editButtons">
               <button mat-icon-button class="editButton" *ngIf="event.winner == null" (click)="openUpdateEventDialog(event, 1)">
                   <mat-icon>edit</mat-icon>
               </button>
@@ -63,20 +59,30 @@
               <button mat-icon-button class="editButton" (click)="openDeleteObjectDialog(event, 2)">
                   <mat-icon>delete</mat-icon>
               </button>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <b>Data rozpoczęcia wydarzenia:</b> {{event.beginDate | date: "dd.MM.yyyy"}} <br>
-          <b>Data zakończenia wydarzenia:</b> {{event.endDate | date: "dd.MM.yyyy"}} <br>
-          <b>Dyscyplina:</b> {{event.type.discipline}} <br>
-          <b>Drużyny biorące udział w wydarzeniu:</b>
-          <ul>
-            <li *ngFor="let member of event.members">{{member.name}}<br></li>
-          </ul>
-          <b>Wydarzenie jest aktywne: </b>{{event.active}}<br>
-          <b>Zwycięzca: </b>{{event.winner}}<br>
-          <b>Wynik: </b>{{event.score}}<br>
-          <button type="button" class="btn btn-info btn-sm" *ngIf="event.winner != null" (click)="openUserListDialog(event)">Lista zwycięzców</button>
-        </mat-expansion-panel>
+          </div>
+          <div class="panel">
+            <mat-expansion-panel class="expansionpanel" >
+              <mat-expansion-panel-header class="right-aligned-header" >
+                <mat-panel-title>
+                  <b>{{event.name}}</b>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <b>Data rozpoczęcia wydarzenia:</b> {{event.beginDate | date: "dd.MM.yyyy"}} <br>
+              <b>Data zakończenia wydarzenia:</b> {{event.endDate | date: "dd.MM.yyyy"}} <br>
+              <b>Dyscyplina:</b> {{event.type.discipline}} <br>
+              <b>Drużyny biorące udział w wydarzeniu:</b>
+              <ul>
+                <li *ngFor="let member of event.members">{{member.name}}<br></li>
+              </ul>
+              <b>Wydarzenie jest aktywne: </b>{{event.active}}<br>
+              <div *ngIf="event.winner != null">
+                <b>Zwycięzca: </b>{{event.winner}}<br>
+                <div *ngIf="event.type.result"><b>Wynik: </b>{{event.score}}<br></div>
+              </div>
+              <button type="button" class="btn btn-info btn-sm" *ngIf="event.winner != null" (click)="openUserListDialog(event)">Lista zwycięzców</button>
+            </mat-expansion-panel>
+          </div>
+        </div>
       </mat-accordion>
     </td>
   </tr>

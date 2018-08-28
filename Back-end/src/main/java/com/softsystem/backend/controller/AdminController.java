@@ -59,15 +59,6 @@ public class AdminController {
         return eventService.deleteEvent(id);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(value= "/edit-events/{id}}")
-    public Event adminUserEdit(@PathVariable Long id) {
-        Event event = eventService.getOne(id);
-
-        return event;
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(value= "/edit-events/edit")
     public void updateEvent(@RequestBody Event event) {
         eventService.updateEvent(event);

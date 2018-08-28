@@ -32,6 +32,11 @@ export class EditTeamsComponent implements OnInit {
     this.teamService.getAll().subscribe(data => {
       this.teams = data;
       this.dataSource = new MatTableDataSource(this.teams);
+      this.dataSource.filterPredicate = function customFilter(dataFilter , filter:string ): boolean {
+        return (dataFilter.id === +filter ||                   
+                dataFilter.name.trim().toLowerCase().indexOf(filter) != -1 ||
+                dataFilter.type.discipline.trim().toLowerCase().indexOf(filter) != -1
+              );}
     });
   }
 

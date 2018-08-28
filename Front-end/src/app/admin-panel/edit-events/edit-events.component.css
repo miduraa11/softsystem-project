@@ -52,3 +52,24 @@ tr.mat-footer-row {
 mat-panel-title b {
   margin-top: 10px;
 }
+.editButton{
+  color: black;
+
+}
+.list{
+  position: relative;
+}
+.editButtons{
+  position: absolute;
+  right: 50px;
+  top:3px;
+  z-index: 4;
+}
+.panel{
+
+  z-index: 2;
+}
+
+.row {
+  margin-top: 60px;
+}

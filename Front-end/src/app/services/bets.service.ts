@@ -13,20 +13,20 @@ export class BetsService {
 
   constructor(private http: HttpClient) { }
 
-  getAllBetsById(currentUser: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${currentUser}`);
-  }
+  // getAllBetsById(currentUser: number): Observable<any> {
+  //   return this.http.get(`${this.baseUrl}/${currentUser}`);
+  // }
 
-  getActiveBets(): Observable<any> {
-    return this.http.get(`${this.baseUrl}`);
+  getActiveBetsByUser(chosenStatus: String, currentUser: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${chosenStatus}/${currentUser}`);
   }
 
   addBet(bet: Bet): Observable<any> {
-    return this.http.post(`${this.addUrl}`, bet);
+    return this.http.post(`${this.addUrl}`, bet, { responseType: 'text' });
   }
 
-  giveChosenParams(chosenStatus: String, currentUser: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${chosenStatus}/${currentUser}`, { responseType: 'text' });
-  }
+  // giveChosenParams(chosenStatus: String, currentUser: number): Observable<any> {
+  //   return this.http.post(`${this.baseUrl}/${chosenStatus}/${currentUser}`, { responseType: 'text' });
+  // }
   
 }

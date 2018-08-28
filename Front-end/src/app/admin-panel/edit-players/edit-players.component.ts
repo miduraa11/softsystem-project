@@ -33,6 +33,11 @@ export class EditPlayersComponent implements OnInit {
     this.playerService.getPlayers().subscribe(data => {
       this.players = data;
       this.dataSource = new MatTableDataSource(this.players);
+      this.dataSource.filterPredicate = function customFilter(dataFilter , filter:string ): boolean {
+        return (dataFilter.id === +filter ||                   
+                dataFilter.name.trim().toLowerCase().indexOf(filter) != -1 ||
+                dataFilter.type.discipline.trim().toLowerCase().indexOf(filter) != -1
+              );}
     });    
   }
 

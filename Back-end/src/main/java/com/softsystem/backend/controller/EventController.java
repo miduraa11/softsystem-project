@@ -1,6 +1,5 @@
 package com.softsystem.backend.controller;
 
-import com.softsystem.backend.dto.ActiveEventsDTO;
 import com.softsystem.backend.model.Bet;
 import com.softsystem.backend.model.Event;
 import com.softsystem.backend.model.Type;
@@ -27,32 +26,30 @@ public class EventController {
     @Autowired
     BetService betService;
 
-    private String chosenDiscipline;
-    private String chosenStatus;
-
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    @GetMapping("/events")
-    public ActiveEventsDTO getActiveEvents() {
+    @GetMapping("/events/{chosenDiscipline}/{chosenStatus}")
+    public List<Event> getActiveEvents(@PathVariable("chosenDiscipline") String chosenDiscipline, @PathVariable("chosenStatus") String chosenStatus) {
         List<Event> events = new ArrayList<>();
+        eventService.findMatchingEvents(chosenDiscipline, chosenStatus).forEach(events::add);
+
+        return events;
+    }
+
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PostMapping(value = "/events/addBet")
+    public int addBet(@RequestBody Bet bet) {
+        eventService.checkEventsActivity();
+
+        return betService.addBet(bet);
+    }
+
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @GetMapping(value = "/events/getTypes")
+    public List<Type> getTypes() {
         List<Type> types = new ArrayList<>();
-        eventService.findMatchingEvents(this.chosenDiscipline, this.chosenStatus).forEach(events::add);
         typeService.findAll().forEach(types::add);
-        ActiveEventsDTO activeEventsDTO = new ActiveEventsDTO(events, types, this.chosenDiscipline, this.chosenStatus);
 
-        return activeEventsDTO;
-    }
-
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    @PostMapping(value = "/events/{chosenDiscipline}/{chosenStatus}")
-    public void getChosenParams(@PathVariable("chosenDiscipline") String chosenDiscipline, @PathVariable("chosenStatus") String chosenStatus) {
-        this.chosenDiscipline = chosenDiscipline;
-        this.chosenStatus = chosenStatus;
-    }
-
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    @PostMapping(value= "/events/addBet")
-    public void addBet(@RequestBody Bet bet) {
-        betService.addBet(bet);
+        return types;
     }
 
 }

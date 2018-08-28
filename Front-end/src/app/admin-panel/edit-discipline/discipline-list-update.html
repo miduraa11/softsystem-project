@@ -12,12 +12,22 @@
         </mat-error>
     </mat-form-field>
 
-    <mat-radio-group formControlName="individual">
-        <mat-radio-button value=true>Indywidualna</mat-radio-button>
-        <mat-radio-button value=false>Drużynowa</mat-radio-button>
+    <mat-radio-group style="margin-top:10px" formControlName="individual">
+        <h6>Rodzaj dyscypliny:</h6>
         <mat-error *ngIf="updateForm.get('individual').hasError('required')">
             Rodzaj jest <strong>wymagany</strong>!
         </mat-error>
+        <mat-radio-button style="margin-right:15px" value=true>Indywidualna</mat-radio-button>
+        <mat-radio-button value=false>Drużynowa</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-radio-group style="margin-top:10px" formControlName="result">
+        <h6>Rodzaj wymaganego wyniku:</h6>
+        <mat-error *ngIf="updateForm.get('result').hasError('required')">
+            Rodzaj wyniku jest <strong>wymagany</strong>!
+        </mat-error>
+        <mat-radio-button style="margin-right:15px" value=true>Szczegółowy</mat-radio-button>
+        <mat-radio-button value=false>Ogólny</mat-radio-button>
     </mat-radio-group>
 
     <button type="button" class="btn btn-success btn-lg btn-block btn-sm"  (click)="updateDiscipline()">Zapisz zmiany</button>

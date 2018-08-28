@@ -23,8 +23,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    // this.eventService.checkEventsActivity();
-
     this.afterTokenRetrivial(this.tokenStorage.getDecodedToken());
     this.subscription.add(
       this.tokenStorage.userEmitter.subscribe((token: TokenData) => this.afterTokenRetrivial(token))
@@ -38,7 +36,7 @@ export class AppComponent implements OnInit, OnDestroy {
     } else {
       delete this.userRole;
       delete this.isActive;
-    }    
+    }
   }
 
   ngOnDestroy() {

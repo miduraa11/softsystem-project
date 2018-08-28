@@ -19,6 +19,9 @@ public class Type {
     @Column(name = "individual")
     private Boolean individual;
 
+    @Column(name = "result")
+    private Boolean result;
+
     @OneToMany(mappedBy = "type")
     @JsonIgnore
     private List<Member> members;
@@ -27,9 +30,10 @@ public class Type {
     @JsonIgnore
     private List<Event> events;
 
-    public Type(String discipline, Boolean individual, List<Member> members, List<Event> events) {
+    public Type(String discipline, Boolean individual, Boolean result, List<Member> members, List<Event> events) {
         this.discipline = discipline;
         this.individual = individual;
+        this.result = result;
         this.members = members;
         this.events = events;
     }
@@ -77,4 +81,11 @@ public class Type {
         this.events = events;
     }
 
+    public Boolean getResult() {
+        return result;
+    }
+
+    public void setResult(Boolean result) {
+        this.result = result;
+    }
 }

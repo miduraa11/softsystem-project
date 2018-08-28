@@ -6,8 +6,11 @@ div.container {
 
 .navigationBar {
   width: 100%;
-  position: relative;
-  z-index: 1;  
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 ul {
@@ -17,7 +20,7 @@ ul {
   overflow: hidden;
   position: relative;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: #2e2724;
 }
 
 li {
@@ -43,4 +46,10 @@ li a:hover:not(.active) {
 .homeImage {
   width: 35%;
   height: 35%;
+}
+.userImage {
+  width: 23px;
+  height: 23px;
+  margin-bottom: 0px;
+  margin-top: 0px;
 }

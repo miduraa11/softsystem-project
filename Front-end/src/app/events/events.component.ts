@@ -7,6 +7,7 @@ import { BetsService } from '../services/bets.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Bet } from '../model/bet';
 import { User } from '../model/user';
+import { TypeService } from '../services/type.service';
 
 const USER_ID = 'User id';
 
@@ -14,6 +15,10 @@ export interface DialogData {
   event: Event;
   currentUser: number;
   flag: number;
+}
+
+export interface ConfirmDialogData {
+  error: number;
 }
 
 @Component({
@@ -29,32 +34,30 @@ export class EventsComponent implements OnInit {
   chosenStatus: String = "Wszystkie";
   currentUser: number;
 
+  filterForm = new FormGroup({
+    chosenDiscipline: new FormControl(this.chosenDiscipline),
+    chosenStatus: new FormControl(this.chosenStatus)
+  });
+
   constructor(private eventService: EventService,
+    private typeService: TypeService,
     public dialog: MatDialog
   ) { }
  
   ngOnInit(): void {
-    this.currentUser = Number(sessionStorage.getItem(USER_ID));
-    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
-      this.eventService.getActiveEvents().subscribe(data => {
-        this.events = data.events;
-        this.types = data.types;
-        this.chosenDiscipline = data.chosenDiscipline;
-        this.chosenStatus = data.chosenStatus;
-      })
+    this.typeService.getAllTypes().subscribe(data => {
+      this.types = data;
     });
-  }
-
-  updateList(chosenDiscipline: String, chosenStatus: String): void {
-    this.chosenDiscipline = chosenDiscipline;
-    this.chosenStatus = chosenStatus;
-    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
-      this.eventService.getActiveEvents().subscribe(data => {
-        this.events = data.events;
-        this.types = data.types;
-        this.chosenDiscipline = data.chosenDiscipline;
-        this.chosenStatus = data.chosenStatus;
-      })
+    this.currentUser = Number(sessionStorage.getItem(USER_ID));
+    this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
+      this.events = data;
+    });
+    this.filterForm.valueChanges.subscribe(value => {
+      this.chosenDiscipline = value.chosenDiscipline;
+      this.chosenStatus = value.chosenStatus;
+      this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
+        this.events = data;
+      });
     });
   }
 
@@ -77,6 +80,7 @@ export class BetTheBetDialog {
   bet: Bet;
   currentUser: number;
   flag: number;
+  error: number;
 
   betForm = new FormGroup({
     amount: new FormControl('', [
@@ -129,7 +133,8 @@ export class BetTheBetDialog {
         }
       }
       this.betService.addBet(this.bet).subscribe(data => {
-        this.openConfirmDialog();
+        this.error = data;
+        this.openConfirmDialog(this.error);
         this.dialogRef.close();
       });
     } else {
@@ -143,9 +148,10 @@ export class BetTheBetDialog {
     });
   }
 
-  openConfirmDialog(): void {
+  openConfirmDialog(error: number): void {
     const dialogRef = this.dialog.open(BetTheBetConfirmDialog, {
-      width: '400px'
+      width: '400px',
+      data: { error }
     });
   }
 
@@ -157,7 +163,13 @@ export class BetTheBetDialog {
 })
 export class BetTheBetConfirmDialog {
 
-  constructor(public dialogRef: MatDialogRef<BetTheBetConfirmDialog>) { }
+  error: number;
+
+  constructor(public dialogRef: MatDialogRef<BetTheBetConfirmDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData,
+  ) {
+    this.error = this.data.error;
+  }
 
   onOkClick(): void {
     this.dialogRef.close();
