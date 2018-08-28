@@ -20,6 +20,7 @@ export class BetsComponent implements OnInit {
   key: string = "User id";
   currentUser: number;
   chosenStatus: String = "Wszystkie";
+  empty: boolean;
 
   filterForm = new FormGroup({
     chosenStatus: new FormControl(this.chosenStatus)
@@ -33,6 +34,10 @@ export class BetsComponent implements OnInit {
     this.currentUser = Number(localStorage.getItem(this.key));
     this.betsService.getActiveBetsByUser(this.chosenStatus, this.currentUser).subscribe(data => {
       this.bets = data;
+      if(this.bets.length ==0)
+        this.empty = true;
+      else
+        this.empty = false;
       for(var i = 0; i < this.bets.length; i++) {
         if(this.bets[i].member == null) { 
           this.bets[i].member = new Member();
@@ -44,6 +49,10 @@ export class BetsComponent implements OnInit {
       this.chosenStatus = value;
       this.betsService.getActiveBetsByUser(this.chosenStatus, this.currentUser).subscribe(data => {
         this.bets = data;
+        if(this.bets.length ==0)
+          this.empty = true;
+        else
+          this.empty = false;
         for(var i = 0; i < this.bets.length; i++) {
           if(this.bets[i].member == null) { 
             this.bets[i].member = new Member();
