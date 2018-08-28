@@ -39,11 +39,9 @@ public class UserService implements UserDetailsService {
     private Set<SimpleGrantedAuthority> getAuthority(User user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         user.getRoles().forEach(role -> {
-            //authorities.add(new SimpleGrantedAuthority(role.getName()));
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
         });
         return authorities;
-        //return Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
 
 
@@ -95,12 +93,10 @@ public class UserService implements UserDetailsService {
 
     public void addUser(User user) {
         User newUser = new User();
-        //String userPassword;
         newUser.setUsername(user.getUsername());
         newUser.setFirstName(user.getFirstName());
         newUser.setLastName(user.getLastName());
         newUser.setEmail(user.getEmail());
-        //userPassword = ;
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
         List<Role> role = roleRepository.findByName();
         newUser.setRoles(role);
@@ -121,9 +117,10 @@ public class UserService implements UserDetailsService {
 
     public Object changePassword(Long id, String currentPassword, String password) {
         User user = userRepository.getOne(id);
-        if (user.getPassword().equals(currentPassword)) {
-            user.setPassword(password);
+        if (bcryptEncoder.matches(currentPassword, user.getPassword())) {
+            user.setPassword(bcryptEncoder.encode(password));
             userRepository.save(user);
+
             return true;
         }
         else return false;

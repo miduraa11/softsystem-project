@@ -8,6 +8,8 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Bet } from '../model/bet';
 import { User } from '../model/user';
 
+const USER_ID = 'User id';
+
 export interface DialogData {
   event: Event;
   currentUser: number;
@@ -26,14 +28,13 @@ export class EventsComponent implements OnInit {
   chosenDiscipline: String = "Wszystkie";
   chosenStatus: String = "Wszystkie";
   currentUser: number;
-  key: string = "User id";
 
   constructor(private eventService: EventService,
     public dialog: MatDialog
   ) { }
  
   ngOnInit(): void {
-    this.currentUser = Number(localStorage.getItem(this.key));
+    this.currentUser = Number(sessionStorage.getItem(USER_ID));
     this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
       this.eventService.getActiveEvents().subscribe(data => {
         this.events = data.events;

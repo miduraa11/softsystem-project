@@ -6,6 +6,8 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import {Md5} from 'ts-md5';
 import { AppComponent } from '../app.component';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
+const USER_ID = 'User id';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -22,7 +24,6 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class UserPanelComponent implements OnInit {
 
   user: User = new User();
-  key: string = "User id";
   currentUser: number;
   currentPassword: any;
   password: any;
@@ -55,11 +56,12 @@ export class UserPanelComponent implements OnInit {
 
   constructor(private userPanelService: UserPanelService,
     private logout: AppComponent,
-    private router: Router
+    private router: Router,
+    public snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
-    this.currentUser = Number(localStorage.getItem(this.key));
+    this.currentUser = Number(sessionStorage.getItem(USER_ID));
     this.userPanelService.getUserById(this.currentUser).subscribe(data => {
       this.user = data;
     });
@@ -69,19 +71,31 @@ export class UserPanelComponent implements OnInit {
   }
 
   save(){
-    this.currentPassword = Md5.hashStr(this.currentPasswordFormControl.value);
-    this.password = Md5.hashStr(this.passwordFormControl.value);
+    this.currentPassword = this.currentPasswordFormControl.value;
+    this.password = this.passwordFormControl.value;
     if(this.currentPasswordFormControl.errors==null && this.passwordFormControl.errors==null && this.confirmPasswordFormControl.errors==null)
       this.userPanelService.changePassword(this.user.id, this.currentPassword, this.password).subscribe(data => {
         if(data){
-          alert("Brawo, hasło zostało zmienione!\nZaloguj się ponownie przy użyciu nowego hasła.");
+          this.openSnackBar(1);
           this.logout.logout();
           this.router.navigate(['/login']);
         }
         else {
-          alert("Podałeś błędne dane!");
+          this.openSnackBar(2);
         }
       });
+  }
+
+  openSnackBar(flag: number) {
+    if(flag==1){
+    this.snackBar.open('Hasło zostało zmienione!\nZaloguj się ponownie przy użyciu nowego hasła.', 'Zamknij', {
+      duration: 3000
+    });
+  } else {
+    this.snackBar.open('Wystąpił błąd przy zmianie hasła!', 'Zamknij', {
+      duration: 3000
+    });
+  }
   }
 
   getGraph(){

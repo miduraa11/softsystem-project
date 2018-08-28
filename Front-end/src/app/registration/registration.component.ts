@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from '../model/user';
 import { RegistrationService } from '../services/registration.service';
-import {FormControl, Validators, FormGroup} from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 

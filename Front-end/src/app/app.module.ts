@@ -47,6 +47,8 @@ import FusionCharts from 'fusioncharts/core';
 import AngularGauge from 'fusioncharts/viz/angulargauge';
 import MsLine from 'fusioncharts/viz/msline';
 import { AuthService } from './services/auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { RoleGuardService } from './services/role-guard.service';
 import { TokenStorage } from './token.storage';
 import { Interceptor } from './interceptor';
 
@@ -136,6 +138,8 @@ const routes: Routes = [
     BetsService,
     UserPanelService,
     AuthService,
+    RoleGuardService,
+    AuthGuardService,
     TokenStorage,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,

@@ -1,45 +1,52 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocalStorageService } from './services/localStorage';
 import { EventService } from './services/event.service';
+import { Subscription } from 'rxjs/Subscription';
+import { TokenData, TokenStorage } from './token.storage';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
 
   title = 'BTB';
   isActive: boolean;
-  key: string = "User id";
-  userId: any;
-  isAdmin: boolean;
   userRole: any;
+  private subscription = new Subscription();
 
   constructor(private localStorageService: LocalStorageService,
-    private eventService: EventService
+              private eventService: EventService,
+              private tokenStorage: TokenStorage
   ) { }
 
   ngOnInit(): void {
-    this.userId = localStorage.getItem(this.key);
-    if(this.userId == null) { this.isActive = false; } 
-    else {
-      this.isActive = true;      
-      this.localStorageService.getUserRole(this.userId).subscribe(data => {
-        this.userRole = data;    
-        if(this.userRole == "admin") { this.isAdmin = true; }
-        else { this.isAdmin = false; }
-      });
-    }
-    this.eventService.checkEventsActivity()    
+    // this.eventService.checkEventsActivity();
+
+    this.afterTokenRetrivial(this.tokenStorage.getDecodedToken());
+    this.subscription.add(
+      this.tokenStorage.userEmitter.subscribe((token: TokenData) => this.afterTokenRetrivial(token))
+    );
+  }
+
+  private afterTokenRetrivial(token: TokenData) {
+    if (token) {
+      this.userRole = token.scopes;
+      this.isActive = true;
+    } else {
+      delete this.userRole;
+      delete this.isActive;
+    }    
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   logout(): void {
-    localStorage.setItem(this.key, "");
-    this.userId = localStorage.getItem(this.key);
-    this.userRole = null;
-    window.location.reload();
-    localStorage.clear();    
+    this.tokenStorage.signOut();
   }
 
 }

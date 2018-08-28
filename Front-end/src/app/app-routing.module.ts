@@ -1,5 +1,5 @@
 import { NgModule }             from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { EventsComponent }      from './events/events.component';
 import { BetsComponent }        from './bets/bets.component';
 import { AdminPanelComponent }  from './admin-panel/admin-panel.component';
@@ -12,22 +12,26 @@ import { RegistrationComponent } from './registration/registration.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
+import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
+import { RoleGuardService as RoleGuard } from './services/role-guard.service';
 
 const routes: Routes = [
-  { path: 'events', component: EventsComponent },
-  { path: 'app-component', component: EventsComponent },
-  { path: 'bets', component: BetsComponent },
-  { path: 'admin-panel', component: AdminPanelComponent },
-  { path: 'edit-events', component: EditEventsComponent },
-  { path: 'edit-players', component: EditPlayersComponent },
-  { path: 'edit-teams', component: EditTeamsComponent },
-  { path: 'edit-discipline', component: EditDisciplineComponent },
-  { path: 'edit-users', component: EditUsersComponent },
+  { path: 'events', component: EventsComponent, canActivate: [AuthGuard] },
+  { path: 'app-component', component: EventsComponent, canActivate: [AuthGuard] },
+  { path: 'bets', component: BetsComponent, canActivate: [AuthGuard] },
+  { path: 'admin-panel', component: AdminPanelComponent, canActivate: [RoleGuard], data: { expectedRole: 'ROLE_ADMIN'}},
+  { path: 'edit-events', component: EditEventsComponent, canActivate: [RoleGuard], data: { expectedRole: 'ROLE_ADMIN'} },
+  { path: 'edit-players', component: EditPlayersComponent, canActivate: [RoleGuard], data: { expectedRole: 'ROLE_ADMIN'} },
+  { path: 'edit-teams', component: EditTeamsComponent, canActivate: [RoleGuard], data: { expectedRole: 'ROLE_ADMIN'} },
+  { path: 'edit-discipline', component: EditDisciplineComponent, canActivate: [RoleGuard], data: { expectedRole: 'ROLE_ADMIN'} },
+  { path: 'edit-users', component: EditUsersComponent, canActivate: [RoleGuard], data: { expectedRole: 'ROLE_ADMIN'} },
   { path: 'registration', component: RegistrationComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'user-panel', component: UserPanelComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'user-panel', component: UserPanelComponent },
+  { path: '**', redirectTo: '' },
+  
 ];
 
 @NgModule({

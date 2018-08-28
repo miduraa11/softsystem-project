@@ -12,12 +12,14 @@ public class RegistrationController {
     @Autowired
     UserService userService;
 
+
     @PostMapping(value = "registration/add")
     public int addUser(@RequestBody User user) {
         userService.addUser(user);
 
         return 1;
     }
+
 
     @GetMapping(value = "registration/loginExist/{login}")
     public  Object emailExist(@PathVariable("login")String login){

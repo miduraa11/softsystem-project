@@ -60,6 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
+        res.setHeader("Access-Control-Allow-Origin", "*");
 
         chain.doFilter(req, res);
     }

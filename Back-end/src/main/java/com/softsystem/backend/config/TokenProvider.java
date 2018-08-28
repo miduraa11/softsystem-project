@@ -1,6 +1,9 @@
 package com.softsystem.backend.config;
 
+import com.softsystem.backend.repository.UserRepository;
+import com.softsystem.backend.service.UserService;
 import io.jsonwebtoken.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,13 +18,14 @@ import java.util.Date;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.softsystem.backend.model.Constants.ACCESS_TOKEN_VALIDITY_SECONDS;
-import static com.softsystem.backend.model.Constants.AUTHORITIES_KEY;
-import static com.softsystem.backend.model.Constants.SIGNING_KEY;
+import static com.softsystem.backend.model.Constants.*;
 
 
 @Component
 public class TokenProvider implements Serializable {
+
+    @Autowired
+    private UserRepository userRepository;
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -52,9 +56,11 @@ public class TokenProvider implements Serializable {
         final String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
+
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
+                .claim(USER_ID, userRepository.findByUsername(authentication.getName()).getId())
                 .signWith(SignatureAlgorithm.HS256, SIGNING_KEY)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS*1000))

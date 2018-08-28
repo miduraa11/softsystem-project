@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { LocalStorageService } from '../services/localStorage';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import {Md5} from 'ts-md5';
 import { AuthService } from '../services/auth.service';
 import { TokenStorage } from '../token.storage';
 

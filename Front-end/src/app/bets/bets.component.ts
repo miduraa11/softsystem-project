@@ -4,6 +4,8 @@ import { Bet } from '../model/bet';
 import { Member } from '../model/member';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
+const USER_ID = 'User id';
+
 export interface DialogData {
   event: Event;
 }
@@ -16,16 +18,15 @@ export interface DialogData {
 export class BetsComponent implements OnInit {
 
   bets: Bet[];
-  key: string = "User id";
   currentUser: number;
   chosenStatus: String = "Wszystkie";
 
   constructor(private betsService: BetsService,
-    public dialog: MatDialog
+              public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
-    this.currentUser = Number(localStorage.getItem(this.key));
+    this.currentUser = Number(sessionStorage.getItem(USER_ID));
     this.betsService.getAllBetsById(this.currentUser).subscribe(data => {
       this.bets = data;
       for(var i = 0; i < this.bets.length; i++) {

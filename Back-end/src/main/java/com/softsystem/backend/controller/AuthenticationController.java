@@ -3,7 +3,6 @@ package com.softsystem.backend.controller;
 import com.softsystem.backend.config.TokenProvider;
 import com.softsystem.backend.model.AuthToken;
 import com.softsystem.backend.model.LoginUser;
-import com.softsystem.backend.model.User;
 import com.softsystem.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +25,6 @@ public class AuthenticationController {
     @Autowired
     private TokenProvider jwtTokenUtil;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
     public ResponseEntity<?> register(@RequestBody LoginUser loginUser) throws AuthenticationException {
@@ -42,10 +39,5 @@ public class AuthenticationController {
         final String token = jwtTokenUtil.generateToken(authentication);
         return ResponseEntity.ok(new AuthToken(token));
     }
-
-//    @RequestMapping(value="/signup", method = RequestMethod.POST)
-//    public User saveUser(@RequestBody User user){
-//        return userRepository.saveAndFlush(user);
-//    }
 
 }

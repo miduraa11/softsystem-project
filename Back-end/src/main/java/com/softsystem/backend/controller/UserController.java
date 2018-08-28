@@ -3,6 +3,7 @@ package com.softsystem.backend.controller;
 import com.softsystem.backend.model.User;
 import com.softsystem.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +23,10 @@ public class UserController {
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping(value ="user-panel/change/{id}/{currentPassword}/{password}")
-    public Object changePassword(@PathVariable("id")Long id, @PathVariable("currentPassword")String currentPassword, @PathVariable("password")String password) {
+    public ResponseEntity changePassword(@PathVariable("id")Long id, @PathVariable("currentPassword")String currentPassword, @PathVariable("password")String password) {
 
-        return userService.changePassword(id, currentPassword, password);
+
+        return ResponseEntity.ok(userService.changePassword(id, currentPassword, password));
     }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")

@@ -13,7 +13,7 @@ export class EditUsersComponent implements OnInit {
 
   user: User;
   users: User[];
-  displayedColumns: string[] = ['id', 'login', 'email', 'firstName', 'lastName', 'delete'];
+  displayedColumns: string[] = ['id', 'username', 'email', 'firstName', 'lastName', 'delete'];
   dataSource: any;
 
   constructor(private userService: UserService,
