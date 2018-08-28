@@ -10,7 +10,6 @@ import com.softsystem.Backend.Service.MemberService;
 import com.softsystem.Backend.Service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,24 +28,15 @@ public class EventController {
     @Autowired
     BetService betService;
 
-    private String chosenDiscipline;
-    private String chosenStatus;
-
-    @GetMapping("/events")
-    public ActiveEventsDTO getActiveEvents() {
+    @GetMapping("/events/{chosenDiscipline}/{chosenStatus}")
+    public ActiveEventsDTO getActiveEvents(@PathVariable("chosenDiscipline") String chosenDiscipline, @PathVariable("chosenStatus") String chosenStatus) {
         List<Event> events = new ArrayList<>();
         List<Type> types = new ArrayList<>();
-        eventService.findMatchingEvents(this.chosenDiscipline, this.chosenStatus).forEach(events::add);
+        eventService.findMatchingEvents(chosenDiscipline, chosenStatus).forEach(events::add);
         typeService.findAll().forEach(types::add);
-        ActiveEventsDTO activeEventsDTO = new ActiveEventsDTO(events, types, this.chosenDiscipline, this.chosenStatus);
+        ActiveEventsDTO activeEventsDTO = new ActiveEventsDTO(events, types, chosenDiscipline, chosenStatus);
 
         return activeEventsDTO;
-    }
-
-    @PostMapping(value = "/events/{chosenDiscipline}/{chosenStatus}")
-    public void getChosenParams(@PathVariable("chosenDiscipline") String chosenDiscipline, @PathVariable("chosenStatus") String chosenStatus) {
-        this.chosenDiscipline = chosenDiscipline;
-        this.chosenStatus = chosenStatus;
     }
 
     @PostMapping(value= "/events/addBet")
@@ -54,11 +44,6 @@ public class EventController {
         eventService.checkEventsActivity();
 
         return betService.addBet(bet);
-    }
-
-    @Scheduled(fixedRate = 60000)
-    public void checkEventsActivity() {
-        eventService.checkEventsActivity();
     }
 
 }

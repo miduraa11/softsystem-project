@@ -32,32 +32,40 @@ export class EventsComponent implements OnInit {
   currentUser: number;
   key: string = "User id";
 
+  filterForm = new FormGroup({
+    chosenDiscipline: new FormControl(this.chosenDiscipline),
+    chosenStatus: new FormControl(this.chosenStatus)
+  });
+
   constructor(private eventService: EventService,
     public dialog: MatDialog
   ) { }
  
   ngOnInit(): void {
     this.currentUser = Number(localStorage.getItem(this.key));
-    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
-      this.eventService.getActiveEvents().subscribe(data => {
-        this.events = data.events;
-        this.types = data.types;
-        this.chosenDiscipline = data.chosenDiscipline;
-        this.chosenStatus = data.chosenStatus;
-      })
+    this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
+      this.events = data.events;
+      this.types = data.types;
+      this.chosenDiscipline = data.chosenDiscipline;
+      this.chosenStatus = data.chosenStatus;
     });
-  }
-
-  updateList(chosenDiscipline: String, chosenStatus: String): void {
-    this.chosenDiscipline = chosenDiscipline;
-    this.chosenStatus = chosenStatus;
-    this.eventService.giveChosenParams(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
-      this.eventService.getActiveEvents().subscribe(data => {
+    this.filterForm.get('chosenDiscipline').valueChanges.subscribe(value => {
+      this.chosenDiscipline = value;
+      this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
         this.events = data.events;
         this.types = data.types;
         this.chosenDiscipline = data.chosenDiscipline;
         this.chosenStatus = data.chosenStatus;
-      })
+      });
+    });
+    this.filterForm.get('chosenStatus').valueChanges.subscribe(value => {
+      this.chosenStatus = value;
+      this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
+        this.events = data.events;
+        this.types = data.types;
+        this.chosenDiscipline = data.chosenDiscipline;
+        this.chosenStatus = data.chosenStatus;
+      });
     });
   }
 

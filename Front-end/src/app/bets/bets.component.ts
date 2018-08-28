@@ -3,6 +3,7 @@ import { BetsService } from '../services/bets.service';
 import { Bet } from '../model/bet';
 import { Member } from '../model/member';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '../../../node_modules/@angular/material';
+import { FormGroup, FormControl } from '../../../node_modules/@angular/forms';
 
 export interface DialogData {
   event: Event;
@@ -20,13 +21,17 @@ export class BetsComponent implements OnInit {
   currentUser: number;
   chosenStatus: String = "Wszystkie";
 
+  filterForm = new FormGroup({
+    chosenStatus: new FormControl(this.chosenStatus)
+  });
+
   constructor(private betsService: BetsService,
     public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.currentUser = Number(localStorage.getItem(this.key));
-    this.betsService.getAllBetsById(this.currentUser).subscribe(data => {
+    this.betsService.getActiveBetsByUser(this.chosenStatus, this.currentUser).subscribe(data => {
       this.bets = data;
       for(var i = 0; i < this.bets.length; i++) {
         if(this.bets[i].member == null) { 
@@ -35,21 +40,17 @@ export class BetsComponent implements OnInit {
         }
       }
     });
-  }
-
-  updateList(chosenStatus: String): void {
-    this.chosenStatus = chosenStatus;
-    this.betsService.giveChosenParams(this.chosenStatus, this.currentUser).subscribe(data => {
-      this.betsService.getActiveBets().subscribe(data => {
+    this.filterForm.get('chosenStatus').valueChanges.subscribe(value => {
+      this.chosenStatus = value;
+      this.betsService.getActiveBetsByUser(this.chosenStatus, this.currentUser).subscribe(data => {
         this.bets = data;
         for(var i = 0; i < this.bets.length; i++) {
           if(this.bets[i].member == null) { 
-            this.bets[i].member = new Member;
+            this.bets[i].member = new Member();
             this.bets[i].member.name = "Remis";
           }
         }
-        this.chosenStatus = chosenStatus;
-      })
+      });
     });
   }
 

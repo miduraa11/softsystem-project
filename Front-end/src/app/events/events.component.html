@@ -1,29 +1,29 @@
 <h2 class="caption">Aktualnie dostępne wydarzenia</h2>
 
-<table class="table-condensed" width="100%">
-    <b><label>Filtry:</label></b>
-    <tr>
-        <th class="notbold" for="FormControlSelectActive">Status:</th>
-        <th class="notbold" for="FormControlSelectDiscipline">Dyscyplina:</th>
-    </tr>
-    <tr>
-        <td>
-            <select class="form-control" id="FormControlSelectActive" [(ngModel)]="chosenStatus" (change)="updateList(chosenDiscipline, chosenStatus)">
-                <option selected hidden>{{chosenStatus}}</option>
-                <option>Wszystkie</option>
-                <option>Aktywne</option>
-                <option>Zakończone</option>
-            </select>
-        </td>
-        <td>
-            <select class="form-control" id="FormControlSelectDiscipline" [(ngModel)]="chosenDiscipline" (change)="updateList(chosenDiscipline, chosenStatus)">
-                <option selected hidden>{{chosenDiscipline}}</option>
-                <option>Wszystkie</option>
-                <option *ngFor="let type of types">{{type.discipline}}</option>
-            </select>
-        </td>
-    </tr>
-</table>
+<form [formGroup]="filterForm">
+    <table class="table-condensed" width="100%">
+        <b><label>Filtry:</label></b>
+        <tr>
+            <th class="notbold" for="FormControlSelectActive">Status:</th>
+            <th class="notbold" for="FormControlSelectDiscipline">Dyscyplina:</th>
+        </tr>
+        <tr>
+            <td>
+                <mat-select class="form-control" id="FormControlSelectActive" formControlName="chosenStatus">
+                    <mat-option value="Wszystkie">Wszystkie</mat-option>
+                    <mat-option value="Aktywne">Aktywne</mat-option>
+                    <mat-option value="Zakończone">Zakończone</mat-option>
+                </mat-select>
+            </td>
+            <td>
+                <mat-select class="form-control" id="FormControlSelectDiscipline" formControlName="chosenDiscipline">
+                    <mat-option value="Wszystkie">Wszystkie</mat-option>
+                    <mat-option *ngFor="let type of types" [value]="type.discipline">{{type.discipline}}</mat-option>
+                </mat-select>
+            </td>
+        </tr>
+    </table>
+</form>
 
 <table class="table" width="100%">
     <b><label>Wydarzenia:</label></b>

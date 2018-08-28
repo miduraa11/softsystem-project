@@ -4,6 +4,7 @@ import com.softsystem.Backend.DTO.UserListDTO;
 import com.softsystem.Backend.Model.*;
 import com.softsystem.Backend.Repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.ArrayList;
@@ -118,6 +119,7 @@ public class EventService {
         return eventList;
     }
 
+    @Scheduled(fixedRate = 60000)
     public void checkEventsActivity() {
         List<Event> eventList;
         Date sysDate = new Date();

@@ -18,31 +18,31 @@
 
 <button mat-button class="matBtn" (click)="openUpdateEventDialog(null, 0)">Dodaj nowe wydarzenie</button>
 
-<table class="table-condensed" width="100%">
-  <b><label>Filtry:</label></b>
-  <tr>
+<form [formGroup]="filterForm">
+  <table class="table-condensed" width="100%">
+    <b><label>Filtry:</label></b>
+    <tr>
       <th class="notbold" for="FormControlSelectActive">Status:</th>
       <th class="notbold" for="FormControlSelectDiscipline">Dyscyplina:</th>
-  </tr>
-  <tr>
+    </tr>
+    <tr>
       <td>
-          <select class="form-control" id="FormControlSelectActive" [(ngModel)]="chosenStatus" (change)="updateList(chosenDiscipline, chosenStatus)">
-                  <option selected hidden>{{chosenStatus}}</option>
-                  <option>Wszystkie</option>
-                  <option>Aktywne</option>
-                  <option>Zakończone</option>
-                  <option>Roztrzygnij</option>
-          </select>
+        <mat-select class="form-control" id="FormControlSelectActive" formControlName="chosenStatus">
+          <mat-option value="Wszystkie">Wszystkie</mat-option>
+          <mat-option value="Aktywne">Aktywne</mat-option>
+          <mat-option value="Zakończone">Zakończone</mat-option>
+          <mat-option value="Roztrzygnij">Roztrzygnij</mat-option>
+        </mat-select>
       </td>
       <td>
-          <select class="form-control" id="FormControlSelectDiscipline" [(ngModel)]="chosenDiscipline" (change)="updateList(chosenDiscipline, chosenStatus)">
-                  <option selected hidden>{{chosenDiscipline}}</option>
-                  <option>Wszystkie</option>
-                  <option *ngFor="let type of types">{{type.discipline}}</option>
-          </select>
+        <mat-select class="form-control" id="FormControlSelectDiscipline" formControlName="chosenDiscipline">
+          <mat-option value="Wszystkie">Wszystkie</mat-option>
+          <mat-option *ngFor="let type of types" [value]="type.discipline">{{type.discipline}}</mat-option>
+        </mat-select>
       </td>
-  </tr>
-</table>
+    </tr>
+  </table>
+</form>
 
 <table width="100%">
   <tr *ngFor="let event of events">
