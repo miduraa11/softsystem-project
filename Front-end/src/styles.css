@@ -3,7 +3,7 @@
 html, body { height: 100%; }
 
 body { 
-    color: white;
+    color: black;
     margin: 0; 
     font-family: 'Roboto', sans-serif;
     background-image: url("assets/img/background.jpg");
@@ -21,7 +21,7 @@ body {
 }
 
 .text {
-    color: white;
+    color: black;
     font-size: 110%;
 }
 
