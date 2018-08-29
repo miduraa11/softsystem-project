@@ -8,7 +8,7 @@
   <p *ngSwitchCase="5">Czy na pewno chcesz usunąć wybranego użytkownika?<br> Operacji tej nie można cofnąć!</p>
 </div>
 
-<div mat-dialog-actions>
-  <button type="button" class="btn btn-danger btn-lg btn-block btn-sm" (click)="deleteObject()">Usuń</button>
-  <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onCancelClick()">Anuluj</button>
+<div mat-dialog-actions style="width: 100%">
+  <button mat-raised-button class="deleteBtn" (click)="deleteObject()">Usuń</button>
+  <button mat-raised-button class="cancelBtn" (click)="onCancelClick()">Anuluj</button>
 </div>

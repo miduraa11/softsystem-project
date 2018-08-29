@@ -1,0 +1,13 @@
+.saveBtn {
+    background: green;
+    color: black;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.cancelBtn {
+    background: red;
+    color: black;
+    width: 100%;
+    margin-top: 15px;
+}

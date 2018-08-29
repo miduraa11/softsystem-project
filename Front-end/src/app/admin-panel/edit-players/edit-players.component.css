@@ -20,14 +20,13 @@
   background-color: rgb(121, 121, 121);
 }
 
-.createButton {
+.addBtn {
   border-radius: 1em;
   width: 100%;
   margin-top: 40px;
   background-color: green;
   color: white;
 }
-
 
 table {
   margin: auto;
@@ -57,4 +56,18 @@ table {
 
 .row {
   margin-top: 60px;
+}
+
+.saveBtn {
+  background: green;
+  color: black;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.cancelBtn {
+  background: red;
+  color: black;
+  width: 100%;
+  margin-top: 15px;
 }
