@@ -32,7 +32,7 @@
             Podanie obecnego hasła jest <strong>wymagane</strong>!
           </mat-error>
         </mat-form-field>
-        
+
         <mat-form-field class="example-full-width formPassword">
           <input matInput type="password" placeholder="Nowe hasło" formControlName="password">
           <mat-error *ngIf="changePasswordForm.get('password').hasError('pattern') && !changePasswordForm.get('password').hasError('required') && !changePasswordForm.get('password').hasError('minlength')">
@@ -45,7 +45,7 @@
             Hasło musi zawierać <strong>minimum 8 znaków i być silne</strong> (mała litera, duża, cyfra i znak specyjalny)!
           </mat-error>
         </mat-form-field>
-        
+
         <mat-form-field class="example-full-width formPassword">
           <input matInput type="Password" placeholder="Powtórz nowe hasło" formControlName="confirmPassword" pattern="{{changePasswordForm.get('password').value}}">
           <mat-error *ngIf="changePasswordForm.get('confirmPassword').hasError('pattern') && !changePasswordForm.get('confirmPassword').hasError('required')">
@@ -56,7 +56,7 @@
           </mat-error>
         </mat-form-field>
 
-        <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="save()">Zapisz zmiany</button></nav>
+      <button mat-raised-button class="saveBtn" (click)="save()">Zapisz zmiany</button>
       </form>
     </div>
 

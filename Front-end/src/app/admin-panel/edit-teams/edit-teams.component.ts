@@ -78,7 +78,8 @@ export class EditTeamsComponent implements OnInit {
 
 @Component({
   selector: 'team-list-update',
-  templateUrl: './team-list-update.html'
+  templateUrl: './team-list-update.html',
+  styleUrls: ['./team-list-update.css']
 })
 export class UpdateTeamDialog {
   

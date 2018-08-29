@@ -4,12 +4,12 @@
     <table class="table-condensed" width="100%">
         <b><label>Filtry:</label></b>
         <tr>
-            <th class="notbold" for="FormControlSelectActive">Status:</th>
-            <th class="notbold" for="FormControlSelectDiscipline">Dyscyplina:</th>
+            <th class="notBold" for="FormControlSelectActive">Status:</th>
+            <th class="notBold" for="FormControlSelectDiscipline">Dyscyplina:</th>
         </tr>
         <tr>
             <td>
-                <mat-select class="form-control" id="FormControlSelectActive" formControlName="chosenStatus">
+                <mat-select class="filterSelect" id="FormControlSelectActive" formControlName="chosenStatus">
                     <mat-option value="Wszystkie">Wszystkie</mat-option>
                     <mat-option value="Aktywne">Aktywne</mat-option>
                     <mat-option value="Zakończone">Zakończone</mat-option>
@@ -17,7 +17,7 @@
                 </mat-select>
             </td>
             <td>
-                <mat-select class="form-control" id="FormControlSelectDiscipline" formControlName="chosenDiscipline">
+                <mat-select class="filterSelect" id="FormControlSelectDiscipline" formControlName="chosenDiscipline">
                     <mat-option value="Wszystkie">Wszystkie</mat-option>
                     <mat-option *ngFor="let type of types" [value]="type.discipline">{{type.discipline}}</mat-option>
                 </mat-select>
@@ -57,14 +57,14 @@
                 <li *ngFor="let member of event.members">{{member.name}}<br></li>
             </ul>
             <div *ngIf="event.active">
-                <a class="btn btn-success" style="margin-bottom:15px" (click)="openBetDialog(event, 1)">Postaw zakład ogólny!</a>
+                <button mat-raised-button class="betBtn" (click)="openBetDialog(event, 1)">Postaw zakład ogólny!</button>
                 <mat-icon data-toggle="tooltip" data-placement="right" title="Zakład ogólny dotyczy wyboru jedynie zwycięzcy wydarzenia">info</mat-icon>
                 <div *ngIf="event.type.result">
-                    <a class="btn btn-success" (click)="openBetDialog(event, 2)">Postaw zakład szczegółowy!</a>
+                    <button mat-raised-button class="betBtn" (click)="openBetDialog(event, 2)">Postaw zakład szczegółowy!</button>
                     <mat-icon data-toggle="tooltip" data-placement="right" title="Zakład szczegółowy dotyczy podania dokładnego wyniku wydarzenia">info</mat-icon>
                 </div>
                 <div *ngIf="!event.type.result">
-                    <button class="btn btn-success" disabled>Postaw zakład szczegółowy!</button>
+                    <button mat-raised-buton class="betBtn" disabled>Postaw zakład szczegółowy!</button>
                     <mat-icon data-toggle="tooltip" data-placement="right" title="Zakładu szczegółowego nie można postawić dla wydarzenia z danej dyscypliny">info</mat-icon>
                 </div>
             </div>

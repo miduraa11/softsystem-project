@@ -3,6 +3,10 @@ h2 {
   margin-top: 20px;
 }
 
+.mat-form-field {
+  width: 80%;
+  margin-left: 10%;
+}
 .content {
   position: absolute;
   margin: auto;
@@ -10,11 +14,33 @@ h2 {
   right: 0;
   bottom: 0;
   left: 0;
-  width: 650px;
+  width: 500px;
   height: 600px;
   border-radius: 0.5em;
   border-color: rgb(39, 39, 39);
   border-style: solid;
   border-width: 1px;
   background-image: linear-gradient(rgb(202, 202, 202), rgb(255, 255, 255), rgb(202, 202, 202));
+}
+
+a:link, a:hover, a:visited, a:active {
+  text-decoration: none;
+  color: rgb(0, 132, 255);
+}
+
+h3{
+  text-align: center;
+}
+
+.registrationButton{
+  width: 100%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.buttonRegistration{
+  border-radius: 1em;
+  margin: auto;
+  width: 80%;
 }

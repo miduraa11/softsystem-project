@@ -1,5 +1,5 @@
 div.container {
-  width: 100%;
+  width: 70%;
   margin: auto;
   overflow: hidden;
 }
@@ -24,10 +24,14 @@ ul {
 }
 
 li {
+  overflow: hidden;
   float: right;
 }
 
 li a {
+  height: 23px;
+  margin-bottom: 0px;
+  margin-top: 0px;
   display: block;
   color: white;
   text-align: center;
@@ -40,16 +44,14 @@ li a:hover:not(.active) {
 }
 
 * {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Times New Roman";
 }
 
 .homeImage {
-  width: 35%;
-  height: 35%;
+  width: 40%;
 }
 .userImage {
   width: 23px;
   height: 23px;
-  margin-bottom: 0px;
-  margin-top: 0px;
+  overflow: hidden;
 }

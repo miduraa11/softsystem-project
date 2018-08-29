@@ -2,10 +2,6 @@ table {
     margin-top: 25px;
 }
 
-.notbold {
-    font-weight:normal;
-}
-
 .caption {
     margin-top: 70px;
     margin-bottom: 15px;
@@ -21,4 +17,13 @@ table {
     width: 100%;
     min-width: 100px;
     background-color: rgb(190, 190, 190);
+}
+
+.notBold {
+    font-weight: normal;
+}
+
+.filterSelect {
+    background: white;
+    height: 25px;
 }

@@ -1,17 +1,17 @@
 <table mat-table [dataSource]="userList" class="userListTable">
       
   <ng-container matColumnDef="userFirstName">
-    <th mat-header-cell *matHeaderCellDef> Imię </th>
+    <th class="winnersTableHeader" mat-header-cell *matHeaderCellDef> Imię </th>
     <td mat-cell *matCellDef="let userList"> {{userList.userFirstName}} </td>
   </ng-container>
 
   <ng-container matColumnDef="userLastName">
-    <th mat-header-cell *matHeaderCellDef> Nazwisko </th>
+    <th class="winnersTableHeader" mat-header-cell *matHeaderCellDef> Nazwisko </th>
     <td mat-cell *matCellDef="let userList"> {{userList.userLastname}} </td>
   </ng-container>
 
   <ng-container matColumnDef="userPrize">
-    <th mat-header-cell *matHeaderCellDef> Wygrana </th>
+    <th class="winnersTableHeader" mat-header-cell *matHeaderCellDef> Wygrana </th>
     <td mat-cell *matCellDef="let userList"> {{userList.userPrize | currency: "PLN "}} </td>
   </ng-container>
 
@@ -20,4 +20,4 @@
 
 </table>
     
-<button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onCancelClick()">Zamknij</button>
+<button mat-raised-button class="closeBtn" (click)="onCancelClick()">Zamknij</button>

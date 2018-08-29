@@ -84,8 +84,6 @@ export class UserPanelComponent implements OnInit {
         }
       });
     }
-      
-      
   }
 
   openSnackBar(flag: number) {

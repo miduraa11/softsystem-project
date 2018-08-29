@@ -3,9 +3,9 @@
 html, body { height: 100%; }
 
 body { 
-    color: white;
+    color: black;
     margin: 0; 
-    font-family: 'Roboto', sans-serif;
+    font-family: "Times New Roman";
     background-image: url("assets/img/background.jpg");
     background-repeat: round;
     background-attachment: fixed;
@@ -21,7 +21,7 @@ body {
 }
 
 .text {
-    color: white;
+    color: black;
     font-size: 110%;
 }
 
@@ -40,4 +40,9 @@ html {
 marquee {
     margin-left: 10%;
     margin-right: 10%;
+}
+
+.footerText {
+    color: white;
+    font-size: 120%;
 }
