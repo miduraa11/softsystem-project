@@ -26,7 +26,7 @@ export class EditUsersComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.users);
       this.dataSource.filterPredicate = function customFilter(dataFilter , filter:string ): boolean {
         return (dataFilter.id === +filter ||                   
-                dataFilter.login.trim().toLowerCase().indexOf(filter) != -1 ||
+                dataFilter.username.trim().toLowerCase().indexOf(filter) != -1 ||
                 dataFilter.email.trim().toLowerCase().indexOf(filter) != -1 ||
                 dataFilter.firstName.trim().toLowerCase().indexOf(filter) != -1 ||
                 dataFilter.lastName.trim().toLowerCase().indexOf(filter) != -1

@@ -1,5 +1,6 @@
 package com.softsystem.backend.service;
 
+import com.softsystem.backend.DTO.ChangePasswordDTO;
 import com.softsystem.backend.model.Bet;
 import com.softsystem.backend.model.Role;
 import com.softsystem.backend.model.User;
@@ -115,10 +116,10 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public Object changePassword(Long id, String currentPassword, String password) {
-        User user = userRepository.getOne(id);
-        if (bcryptEncoder.matches(currentPassword, user.getPassword())) {
-            user.setPassword(bcryptEncoder.encode(password));
+    public Object changePassword(ChangePasswordDTO changePassword) {
+        User user = userRepository.getOne(changePassword.getId());
+        if (bcryptEncoder.matches(changePassword.getCurrentPassword(), user.getPassword())) {
+            user.setPassword(bcryptEncoder.encode(changePassword.getPassword()));
             userRepository.save(user);
 
             return true;

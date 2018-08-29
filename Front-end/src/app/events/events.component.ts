@@ -33,6 +33,7 @@ export class EventsComponent implements OnInit {
   chosenDiscipline: String = "Wszystkie";
   chosenStatus: String = "Wszystkie";
   currentUser: number;
+  empty: boolean;
 
   filterForm = new FormGroup({
     chosenDiscipline: new FormControl(this.chosenDiscipline),
@@ -51,12 +52,20 @@ export class EventsComponent implements OnInit {
     this.currentUser = Number(sessionStorage.getItem(USER_ID));
     this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
       this.events = data;
+      if(this.events.length ==0)
+        this.empty = true;
+      else
+        this.empty = false;
     });
     this.filterForm.valueChanges.subscribe(value => {
       this.chosenDiscipline = value.chosenDiscipline;
       this.chosenStatus = value.chosenStatus;
       this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
         this.events = data;
+        if(this.events.length ==0)
+          this.empty = true;
+        else
+          this.empty = false;
       });
     });
   }

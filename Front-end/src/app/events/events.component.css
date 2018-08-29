@@ -59,6 +59,7 @@
 .caption {
   margin-top: 70px;
   margin-bottom: 15px;
+  padding-bottom: 10px;
 }
 
 .btn {
@@ -79,4 +80,7 @@
   background: green;
   color: black;
   margin-top: 15px;
+}
+.emptyEvents{
+  color: rgb(27, 27, 27);
 }
