@@ -4,72 +4,93 @@
   margin-right: auto;
 }
 
-table {
+.filterTable {
   margin-top: 20px;
-  margin-bottom: 50px;
-}
-
-.form-group {
-  margin-top: 10px;
-}
-
-.form-check {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .expansionpanel {
   margin-top: 10px;
 }
 
-.button {
-  margin-top: 10px;
-}
-
-.matBtn {
+.addBtn {
   width: 100%;
   margin-top: 40px;
   background-color: green;
   color: white;
 }
 
-.btn {
-  width: 100%;
-  margin-top: 20px;
-}
-
 .userListTable {
   width: 100%;
 }
 
-.btn-warning {
-  margin-bottom: 10px;
-}
-
-tr.mat-footer-row {
-  font-weight: bold;
-}
-
-mat-panel-title b {
-  margin-top: 10px;
-}
 .editButton{
   color: black;
 
 }
-.list{
+
+.list {
   position: relative;
 }
+
 .editButtons{
   position: absolute;
   right: 50px;
   top:3px;
   z-index: 4;
 }
-.panel{
 
-  z-index: 2;
+.btnRow {
+  margin-top: 60px;
 }
 
-.row {
-  margin-top: 60px;
+.resolveBtn {
+  background: orange;
+  color: black;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.saveBtn {
+  background: green;
+  color: black;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.cancelBtn {
+  background: red;
+  color: black;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.notBold {
+  font-weight: normal;
+  position: left;
+}
+
+.filterSelect {
+  background: white;
+  height: 25px;
+}
+
+.winnersBtn {
+  background: skyblue;
+  color: black;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.closeBtn {
+  background: lightslategray;
+  color: black;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.winnersTableHeader {
+  font-weight: bold;
+  color: black;
+  font-size: 80%;
 }

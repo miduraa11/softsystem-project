@@ -80,6 +80,7 @@ export class EditPlayersComponent implements OnInit {
 @Component({
   selector: 'player-list-update',
   templateUrl: './player-list-update.html',
+  styleUrls: ['./player-list-update.css']
 })
 export class UpdatePlayerDialog implements OnInit {
 

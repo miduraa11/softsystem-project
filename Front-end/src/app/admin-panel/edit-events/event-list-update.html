@@ -55,10 +55,10 @@
     </mat-form-field>
   
     <div *ngSwitchCase="1">
-        <button *ngIf=!event.active type="button" class="btn btn-warning btn-lg btn-block btn-sm" (click)="updateEvent(1)">Zakończ wydarzenie i rozstrzygnij zakłady</button>
-        <button *ngIf=event.active disabled type="button" class="btn btn-warning btn-lg btn-block btn-sm">Zakończ wydarzenie i rozstrzygnij zakłady</button>
+        <button mat-raised-button class="resolveBtn" *ngIf=!event.active (click)="updateEvent(1)">Zakończ wydarzenie i rozstrzygnij zakłady</button>
+        <button mat-raised-button class="resolveBtn" *ngIf=event.active disabled>Zakończ wydarzenie i rozstrzygnij zakłady</button>
     </div>
-    <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="updateEvent(0)">Zapisz zmiany</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onCancelClick()">Anuluj</button>
+    <button mat-raised-button class="saveBtn" (click)="updateEvent(0)">Zapisz zmiany</button>
+    <button mat-raised-button class="cancelBtn" (click)="onCancelClick()">Anuluj</button>
 
 </form>

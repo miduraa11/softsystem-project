@@ -13,7 +13,7 @@
     </mat-form-field>
 
     <mat-radio-group style="margin-top:10px" formControlName="individual">
-        <h6>Rodzaj dyscypliny:</h6>
+        <h6 class="radioHeader">Rodzaj dyscypliny:</h6>
         <mat-error *ngIf="updateForm.get('individual').hasError('required')">
             Rodzaj jest <strong>wymagany</strong>!
         </mat-error>
@@ -22,7 +22,7 @@
     </mat-radio-group>
 
     <mat-radio-group style="margin-top:10px" formControlName="result">
-        <h6>Rodzaj wymaganego wyniku:</h6>
+        <h6 class="radioHeader">Rodzaj wymaganego wyniku:</h6>
         <mat-error *ngIf="updateForm.get('result').hasError('required')">
             Rodzaj wyniku jest <strong>wymagany</strong>!
         </mat-error>
@@ -30,7 +30,7 @@
         <mat-radio-button value=false>Ogólny</mat-radio-button>
     </mat-radio-group>
 
-    <button type="button" class="btn btn-success btn-lg btn-block btn-sm"  (click)="updateDiscipline()">Zapisz zmiany</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onCancelClick()" >Anuluj</button>
+    <button mat-raised-button class="saveBtn"  (click)="updateDiscipline()">Zapisz zmiany</button>
+    <button mat-raised-button class="cancelBtn" (click)="onCancelClick()" >Anuluj</button>
 
 </form>

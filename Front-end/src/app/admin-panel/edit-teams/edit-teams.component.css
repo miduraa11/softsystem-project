@@ -14,16 +14,11 @@
   width: 100%;
 }
 
-.matBtn {
+.addBtn {
   width: 100%;
   margin-top: 40px;
   background-color: green;
   color: white;
-}
-
-.btn {
-  width: 100%;
-  margin-top: 20px;
 }
 
 table {

@@ -83,7 +83,8 @@ export class EditDisciplineComponent implements OnInit {
 
 @Component({
   selector: 'discipline-list-update',
-  templateUrl: './discipline-list-update.html'
+  templateUrl: './discipline-list-update.html',
+  styleUrls: ['./discipline-list-update.css']
 })
 export class UpdateDisciplineDialog {
 

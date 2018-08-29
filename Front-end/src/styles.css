@@ -41,3 +41,8 @@ marquee {
     margin-left: 10%;
     margin-right: 10%;
 }
+
+.footerText {
+    color: white;
+    font-size: 120%;
+}

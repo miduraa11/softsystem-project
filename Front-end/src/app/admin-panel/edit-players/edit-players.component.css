@@ -2,25 +2,13 @@
   margin-top: 5 !important;
   margin-left: auto;
   margin-right: auto;
-  }
-
-.button-row button,
-.button-row a {
-  margin-left: 100px;
-  margin-right: 100px;
-  margin-top: 50px;
 }
 
-.matBtn {
+.addBtn {
   width: 100%;
   margin-top: 40px;
   background-color: green;
   color: white;
-}
-
-.btn {
-  width: 100%;
-  margin-top: 20px;
 }
 
 table {
@@ -51,4 +39,18 @@ table {
 
 .row {
   margin-top: 60px;
+}
+
+.saveBtn {
+  background: green;
+  color: black;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.cancelBtn {
+  background: red;
+  color: black;
+  width: 100%;
+  margin-top: 15px;
 }

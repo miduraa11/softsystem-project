@@ -1,4 +1,4 @@
-<div class="row">
+<div class="btnRow">
   <div class="col-sm">
     <nav><a class="btn btn-lg btn-dark active" role="button" aria-pressed="true">Wydarzenia</a></nav>
   </div>
@@ -16,18 +16,18 @@
   </div>
 </div>
 
-<button mat-button class="matBtn" (click)="openUpdateEventDialog(null, 0)">Dodaj nowe wydarzenie</button>
+<button mat-raised-button class="addBtn" (click)="openUpdateEventDialog(null, 0)">Dodaj nowe wydarzenie</button>
 
 <form [formGroup]="filterForm">
-  <table class="table-condensed" width="100%">
+  <table class="filterTable" width="100%">
     <b><label>Filtry:</label></b>
     <tr>
-      <th class="notbold" for="FormControlSelectActive">Status:</th>
-      <th class="notbold" for="FormControlSelectDiscipline">Dyscyplina:</th>
+      <th class="notBold">Status:</th>
+      <th class="notBold">Dyscyplina:</th>
     </tr>
     <tr>
       <td>
-        <mat-select class="form-control" id="FormControlSelectActive" formControlName="chosenStatus">
+        <mat-select class="filterSelect" formControlName="chosenStatus">
           <mat-option value="Wszystkie">Wszystkie</mat-option>
           <mat-option value="Aktywne">Aktywne</mat-option>
           <mat-option value="Zakończone">Zakończone</mat-option>
@@ -35,7 +35,7 @@
         </mat-select>
       </td>
       <td>
-        <mat-select class="form-control" id="FormControlSelectDiscipline" formControlName="chosenDiscipline">
+        <mat-select class="filterSelect" formControlName="chosenDiscipline">
           <mat-option value="Wszystkie">Wszystkie</mat-option>
           <mat-option *ngFor="let type of types" [value]="type.discipline">{{type.discipline}}</mat-option>
         </mat-select>
@@ -79,7 +79,7 @@
                 <b>Zwycięzca: </b>{{event.winner}}<br>
                 <div *ngIf="event.type.result"><b>Wynik: </b>{{event.score}}<br></div>
               </div>
-              <button type="button" class="btn btn-info btn-sm" *ngIf="event.winner != null" (click)="openUserListDialog(event)">Lista zwycięzców</button>
+              <button mat-raised-button class="winnersBtn" *ngIf="event.winner != null" (click)="openUserListDialog(event)">Lista zwycięzców</button>
             </mat-expansion-panel>
           </div>
         </div>
