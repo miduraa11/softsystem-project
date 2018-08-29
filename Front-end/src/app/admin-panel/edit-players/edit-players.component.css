@@ -1,27 +1,33 @@
-.mt-4 {
-  margin-top: 5 !important;
+.button-row{
+  margin-top: 80px;
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
-  }
-
-.button-row button,
-.button-row a {
-  margin-left: 100px;
-  margin-right: 100px;
-  margin-top: 50px;
 }
 
-.matBtn {
+.navigationPanel {
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 25px;
+  padding: 6px 20px;
+  color: white;
+  background-color: black;
+  border-radius: 1em;
+  font-family: "Times New Roman";
+}
+
+.mat-accent{
+  background-color: rgb(121, 121, 121);
+}
+
+.createButton {
+  border-radius: 1em;
   width: 100%;
   margin-top: 40px;
   background-color: green;
   color: white;
 }
 
-.btn {
-  width: 100%;
-  margin-top: 20px;
-}
 
 table {
   margin: auto;
