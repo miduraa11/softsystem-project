@@ -56,10 +56,6 @@
   margin-top: 25px;
 }
 
-.notbold {
-  font-weight:normal;
-}
-
 .caption {
   margin-top: 70px;
   margin-bottom: 15px;
@@ -67,4 +63,20 @@
 
 .btn {
   margin-left: 20px;
+}
+
+.notBold {
+  font-weight: normal;
+  position: left;
+}
+
+.filterSelect {
+  background: white;
+  height: 25px;
+}
+
+.betBtn {
+  background: green;
+  color: black;
+  margin-top: 15px;
 }

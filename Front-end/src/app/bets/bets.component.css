@@ -21,3 +21,13 @@ table {
     width: 100%;
     min-width: 100px;
 }
+
+.notBold {
+    font-weight: normal;
+    position: left;
+}
+
+.filterSelect {
+    background: white;
+    height: 25px;
+}
