@@ -10,12 +10,14 @@
         <mat-form-field style="width: 350px; padding-bottom: 20px">
           <input matInput type="password" placeholder="Hasło" [(ngModel)]="password" name="password" required>
         </mat-form-field>
-        <nav><button class="btn btn-primary btn-md btn-block btn-success" role="button" aria-pressed="true" (click)="login()">Zaloguj się</button></nav>
+        <div class="loginButton">
+            <a mat-stroked-button class="buttonLogin" routerLink="/edit-events" (click)="login()">Zaloguj się</a>
+        </div>
       </form>
 
-      <h5 style="text-align: center; padding-top: 20px">Nie masz jeszcze konta?<br>
+      <h3>Nie masz jeszcze konta?<br>
         <a routerLink="/registration">Zarejestruj sie!</a>
-      </h5>
+      </h3>
 
     </div>
 </div>
