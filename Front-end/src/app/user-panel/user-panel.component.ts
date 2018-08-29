@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../model/user';
 import { UserPanelService } from '../services/user-panel.service';
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
-import {Md5} from 'ts-md5';
+import {FormControl, Validators, FormGroup} from '@angular/forms';
 import { AppComponent } from '../app.component';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 const USER_ID = 'User id';
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
+export class ChangePassword{
+  id: number;
+  currentPassword: String;
+  password: String;
 }
 
 @Component({
@@ -21,6 +18,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './user-panel.component.html',
   styleUrls: ['./user-panel.component.css']
 })
+
 export class UserPanelComponent implements OnInit {
 
   user: User = new User();
@@ -35,24 +33,22 @@ export class UserPanelComponent implements OnInit {
   panelOpenHistory: boolean = false;
   accountState: Array<any>=new Array(20);
   result: Array<any>=new Array(20);
+  changePassword: ChangePassword = new ChangePassword();
 
-  //current password
-  currentPasswordFormControl = new FormControl('', [
+  changePasswordForm =new FormGroup({
+    currentPassword : new FormControl('', [
       Validators.required,
-    ]);
-  matcherCurrentPassword = new MyErrorStateMatcher();
-  //password
-  passwordFormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(8),
-    Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,}'),
-  ]);
-  matcherPassword = new MyErrorStateMatcher();
-  //confirm password
-  confirmPasswordFormControl = new FormControl('', [
-    Validators.required,
-  ]);
-  matcherConfirmPassword = new MyErrorStateMatcher();
+    ]),
+    password : new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,}'),
+    ]),
+    confirmPassword : new FormControl('', [
+      Validators.required,
+    ])
+  });
+
 
   constructor(private userPanelService: UserPanelService,
     private logout: AppComponent,
@@ -71,11 +67,14 @@ export class UserPanelComponent implements OnInit {
   }
 
   save(){
-    this.currentPassword = this.currentPasswordFormControl.value;
-    this.password = this.passwordFormControl.value;
-    if(this.currentPasswordFormControl.errors==null && this.passwordFormControl.errors==null && this.confirmPasswordFormControl.errors==null)
-      this.userPanelService.changePassword(this.user.id, this.currentPassword, this.password).subscribe(data => {
-        if(data){
+    this.currentPassword = this.changePasswordForm.get('currentPassword').value;
+    this.password = this.changePasswordForm.get('password').value;
+    if(this.changePasswordForm.get('currentPassword').errors==null && this.changePasswordForm.get('password').errors==null && this.changePasswordForm.get('confirmPassword').errors==null){
+      this.changePassword.id = this.user.id;
+      this.changePassword.currentPassword = this.currentPassword;
+      this.changePassword.password = this.password;
+      this.userPanelService.changePassword(this.changePassword).subscribe(data => {
+        if(data=="true"){
           this.openSnackBar(1);
           this.logout.logout();
           this.router.navigate(['/login']);
@@ -84,6 +83,9 @@ export class UserPanelComponent implements OnInit {
           this.openSnackBar(2);
         }
       });
+    }
+      
+      
   }
 
   openSnackBar(flag: number) {

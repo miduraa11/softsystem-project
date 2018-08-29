@@ -73,3 +73,9 @@ mat-panel-title b {
 .row {
   margin-top: 60px;
 }
+.emptyEvents{
+  color: rgb(27, 27, 27);
+}
+.right-aligned-header{
+  padding-bottom: 10px
+}

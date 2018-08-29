@@ -1,5 +1,6 @@
 package com.softsystem.backend.controller;
 
+import com.softsystem.backend.DTO.ChangePasswordDTO;
 import com.softsystem.backend.model.User;
 import com.softsystem.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class UserController {
 
         return userService.getUserById(userId);
     }
-
+/*
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping(value ="user-panel/change/{id}/{currentPassword}/{password}")
     public ResponseEntity changePassword(@PathVariable("id")Long id, @PathVariable("currentPassword")String currentPassword, @PathVariable("password")String password) {
@@ -28,6 +29,15 @@ public class UserController {
 
         return ResponseEntity.ok(userService.changePassword(id, currentPassword, password));
     }
+*/
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    @PostMapping(value ="user-panel/change-password")
+    public ResponseEntity changePassword(@RequestBody ChangePasswordDTO changePassword) {
+
+        return ResponseEntity.ok(userService.changePassword(changePassword));
+    }
+
+
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping(value = "/user-panel/account/{userId}")

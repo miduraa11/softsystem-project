@@ -24,15 +24,13 @@
   <tr *ngIf="empty">
       <td width="90%">
         <mat-accordion>
-            <mat-expansion-panel [disabled]="true">
+            <mat-expansion-panel [expanded]="true">
               <mat-expansion-panel-header>
                   <mat-panel-title>
                     <b>Brak zakładów</b>
                   </mat-panel-title>
-                  <mat-panel-description class="mat-description">
-                      <button  class="buttonEvents" mat-button routerLink="/events">Postaw nowy zakład</button>
-                  </mat-panel-description>
               </mat-expansion-panel-header>
+              <button  class="buttonEvents" mat-button routerLink="/events">Postaw nowy zakład</button>
             </mat-expansion-panel>
           </mat-accordion>
         </td>

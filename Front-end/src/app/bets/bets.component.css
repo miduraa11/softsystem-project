@@ -20,4 +20,5 @@ table {
     text-align: center;
     width: 100%;
     min-width: 100px;
+    background-color: rgb(190, 190, 190);
 }

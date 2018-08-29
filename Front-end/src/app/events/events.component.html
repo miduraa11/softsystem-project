@@ -13,6 +13,7 @@
                     <mat-option value="Wszystkie">Wszystkie</mat-option>
                     <mat-option value="Aktywne">Aktywne</mat-option>
                     <mat-option value="Zakończone">Zakończone</mat-option>
+                    <mat-option value="Roztrzygnij">W trakcie roztrzygania</mat-option>
                 </mat-select>
             </td>
             <td>
@@ -27,6 +28,19 @@
 
 <table class="table" width="100%">
     <b><label>Wydarzenia:</label></b>
+    <tr *ngIf="empty">
+        <td>
+            <mat-accordion>
+                <mat-expansion-panel [disabled]="true">
+                  <mat-expansion-panel-header>
+                      <mat-panel-title>
+                          <b class="emptyEvents">Brak wydarzeń</b>
+                      </mat-panel-title>
+                  </mat-expansion-panel-header>
+                </mat-expansion-panel>
+              </mat-accordion>
+        </td>
+    </tr>
     <tr *ngFor="let event of events">
       <td width="90%">
         <mat-accordion>

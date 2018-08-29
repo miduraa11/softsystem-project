@@ -45,6 +45,19 @@
 </form>
 
 <table width="100%">
+  <tr *ngIf="empty">
+    <td>
+      <mat-accordion>
+        <mat-expansion-panel [disabled]="true" class="expansionpanel">
+          <mat-expansion-panel-header class="right-aligned-header">
+            <mat-panel-title>
+              <b class="emptyEvents">Brak wydarzeń</b>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </td>
+  </tr>
   <tr *ngFor="let event of events">
     <td width="90%">
       <mat-accordion>
