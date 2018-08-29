@@ -3,7 +3,6 @@ import { User } from '../model/user';
 import { UserPanelService } from '../services/user-panel.service';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {ErrorStateMatcher} from '@angular/material/core';
-import {Md5} from 'ts-md5';
 import { AppComponent } from '../app.component';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';

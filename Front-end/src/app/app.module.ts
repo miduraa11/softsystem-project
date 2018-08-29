@@ -11,7 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { BetsComponent, InfoDialog } from './bets/bets.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { AdminDeleteObjectComponent, ErrorInfoDialog } from './admin-panel/admin-panel-delete-object.component';
-import { AlertModule } from 'ngx-bootstrap';
 import { EditEventsComponent, UserListModal, ResolveEventDialog, UpdateEventDialog } from './admin-panel/edit-events/edit-events.component';
 import { EditTeamsComponent, UpdateTeamDialog } from './admin-panel/edit-teams/edit-teams.component';
 import { EditDisciplineComponent, UpdateDisciplineDialog } from './admin-panel/edit-discipline/edit-discipline.component';
@@ -21,7 +20,6 @@ import { PlayerService } from './services/player.service';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card'
 import { EventService } from './services/event.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { TeamService } from './services/team.service';
 import { DisciplineService } from './services/discipline.service';
@@ -94,11 +92,9 @@ const routes: Routes = [
     RouterModule,
     MatExpansionModule,
     AppRoutingModule,
-    AlertModule.forRoot(),
     MatListModule,
     MatButtonModule,
     MatCardModule,
-    NgbModule.forRoot(),
     MatDialogModule,
     MatSelectModule,
     MatDatepickerModule,
