@@ -1,19 +1,9 @@
-<div class="row">
-  <div class="col-sm">
-    <nav><a routerLink="/edit-events" class="btn btn-lg btn-dark " role="button" aria-pressed="true">Wydarzenia</a></nav>
-  </div>
-  <div class="col-sm">
-    <nav><a routerLink="/edit-teams" class="btn btn-lg btn-dark  " role="button" aria-pressed="true">Drużyny</a></nav>
-  </div>
-  <div class="col-sm">
-    <nav><a routerLink="/edit-players" class="btn btn-lg btn-dark " role="button" aria-pressed="true">Zawodnicy</a></nav>
-  </div>
-  <div class="col-sm">
-    <nav><a class="btn btn-lg btn-dark active" role="button" aria-pressed="true">Dyscypliny</a></nav>
-  </div>
-  <div class="col-sm">
-    <nav><a routerLink="/edit-users" class="btn btn-lg btn-dark " role="button" aria-pressed="true">Użytkownicy</a></nav>
-  </div>
+<div class="button-row">
+  <a mat-button class="navigationPanel" routerLink="/edit-events">Wydarzenia</a>
+  <a mat-button class="navigationPanel" routerLink="/edit-teams">Drużyny</a>
+  <a mat-button class="navigationPanel" routerLink="/edit-players">Zawodnicy</a>
+  <a mat-button class="navigationPanel" routerLink="/edit-discipline" routerLinkActive="mat-accent">Dyscypliny</a>
+  <a mat-button class="navigationPanel" routerLink="/edit-users">Użytkownicy</a>
 </div>
 
 <button mat-raised-button class="addBtn" (click)="openUpdateDisciplineDialog(null, 0)">Dodaj nową dyscyplinę</button>

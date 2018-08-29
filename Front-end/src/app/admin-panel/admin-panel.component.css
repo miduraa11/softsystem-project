@@ -1,16 +1,20 @@
-.mt-4 {
-  margin-top: 5 !important;
+
+.button-row{
+  margin-top: 80px;
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
 }
 
-.alert {
-  margin-top: 30px;
-}
-
-.btn {
-  width: 100%;
-  margin-top: 20px;
+.navigationPanel {
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 25px;
+  padding: 6px 20px;
+  color: white;
+  background-color: black;
+  border-radius: 1em;
+  font-family: "Times New Roman";
 }
 
 .BTBimage {
@@ -27,6 +31,6 @@
   font-size: 300%;
 }
 
-.row {
+/* .row {
   margin-top: 60px;
-}
+} */

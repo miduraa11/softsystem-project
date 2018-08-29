@@ -1,7 +1,23 @@
-.mt-4 {
-  margin-top: 5 !important;
+.button-row{
+  margin-top: 80px;
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
+}
+
+.navigationPanel {
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 25px;
+  padding: 6px 20px;
+  color: white;
+  background-color: black;
+  border-radius: 1em;
+  font-family: "Times New Roman";
+}
+
+.mat-accent{
+  background-color: rgb(121, 121, 121);
 }
 
 .filterTable {
@@ -14,6 +30,7 @@
 }
 
 .addBtn {
+  border-radius: 1em;
   width: 100%;
   margin-top: 40px;
   background-color: green;
@@ -40,10 +57,6 @@
   z-index: 4;
 }
 
-.btnRow {
-  margin-top: 60px;
-}
-
 .resolveBtn {
   background: orange;
   color: black;
@@ -67,7 +80,6 @@
 
 .notBold {
   font-weight: normal;
-  position: left;
 }
 
 .filterSelect {
