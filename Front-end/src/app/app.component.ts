@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocalStorageService } from './services/localStorage';
-import { EventService } from './services/event.service';
 import { Subscription } from 'rxjs/Subscription';
 import { TokenData, TokenStorage } from './token.storage';
 
@@ -18,8 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   constructor(private localStorageService: LocalStorageService,
-              private eventService: EventService,
-              private tokenStorage: TokenStorage
+    private tokenStorage: TokenStorage
   ) { }
 
   ngOnInit(): void {

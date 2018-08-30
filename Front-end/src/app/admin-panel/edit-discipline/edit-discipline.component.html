@@ -41,6 +41,14 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="draw">
+        <th mat-header-cell *matHeaderCellDef> Czy może być remis </th>
+        <td mat-cell *matCellDef="let types"> 
+          <p *ngIf="types.draw">Tak</p>
+          <p *ngIf="!types.draw">Nie</p>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="edit">
           <th mat-header-cell *matHeaderCellDef></th>
           <td mat-cell *matCellDef="let types"> 

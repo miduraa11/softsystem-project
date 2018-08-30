@@ -30,6 +30,15 @@
         <mat-radio-button value=false>Ogólny</mat-radio-button>
     </mat-radio-group>
 
+    <mat-radio-group style="margin-top:10px" formControlName="draw">
+        <h6 class="radioHeader">Czy dana dyscyplina przewiduje remisy?</h6>
+        <mat-error *ngIf="updateForm.get('draw').hasError('required')">
+            Odpowiedź jest <strong>wymagana</strong>!
+        </mat-error>
+        <mat-radio-button style="margin-right:15px" value=true>Tak</mat-radio-button>
+        <mat-radio-button value=false>Nie</mat-radio-button>
+    </mat-radio-group>
+
     <button mat-raised-button class="saveBtn"  (click)="updateDiscipline()">Zapisz zmiany</button>
     <button mat-raised-button class="cancelBtn" (click)="onCancelClick()" >Anuluj</button>
 
