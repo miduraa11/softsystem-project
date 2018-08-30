@@ -28,6 +28,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "activated")
+    private boolean activated;
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Bet> bets;
@@ -36,7 +39,7 @@ public class User {
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "rol_user"))
     private List<Role> roles;
 
-    public User(String username, String firstName, String lastName, String email, String password, List<Bet> bets, List<Role> roles) {
+    public User(String username, String firstName, String lastName, String email, String password, boolean activated, List<Bet> bets, List<Role> roles) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,6 +47,7 @@ public class User {
         this.password = password;
         this.bets = bets;
         this.roles = roles;
+        this.activated = activated;
     }
 
     public User() {
@@ -95,6 +99,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 
     public List<Bet> getBets() {

@@ -1,5 +1,6 @@
 package com.softsystem.backend.service;
 
+import com.softsystem.backend.DTO.AccountActivationDTO;
 import com.softsystem.backend.DTO.ChangePasswordDTO;
 import com.softsystem.backend.model.Bet;
 import com.softsystem.backend.model.Role;
@@ -127,6 +128,18 @@ public class UserService implements UserDetailsService {
         else return false;
     }
 
+    public boolean checkSecretPassword(AccountActivationDTO accountActivation) {
+        String hashSecretPassword = "$2y$12$hwZsOAw1dt98HPrFFrrwduR4LjxIKuZgN5V6aSf5PKpmyqFRmZmm.";
+        User user = userRepository.getOne(accountActivation.getId());
+        if(bcryptEncoder.matches(accountActivation.getSecretPassword(), hashSecretPassword)) {
+            user.setActivated(true);
+            userRepository.save(user);
+
+            return true;
+        } else return false;
+
+    }
+
     public Object getAccount(Long id) {
         double account[] = new double[7];
         Bet bets[] = betRepository.getAllByUser(id);
@@ -174,4 +187,6 @@ public class UserService implements UserDetailsService {
         }
         return history;
     }
+
+
 }
