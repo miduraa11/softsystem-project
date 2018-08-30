@@ -26,4 +26,8 @@ export class UserPanelService {
   getHistory(id: number){
     return this.http.get(`${this.baseUrl}/history/${id}`);
   }
+
+  authentication(authenticationKey: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/accountActivation`, authenticationKey, {responseType: 'text'});
+  }
 }
