@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Collection;
 
-@CrossOrigin(origins = "http://localhost:8080")
+//@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 public class AdminController {
 
