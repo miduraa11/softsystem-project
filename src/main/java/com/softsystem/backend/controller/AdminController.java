@@ -14,6 +14,7 @@ import java.util.Collection;
 
 //@CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@RequestMapping({"/api"})
 public class AdminController {
 
     @Autowired
