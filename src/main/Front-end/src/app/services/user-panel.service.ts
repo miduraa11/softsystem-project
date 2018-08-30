@@ -11,7 +11,7 @@ const httpOptions = {
 })
 export class UserPanelService {
 
-  private baseUrl = 'http://localhost:8080/user-panel';
+  private baseUrl = '/api/user-panel';
 
   constructor(private http: HttpClient) { }
 
