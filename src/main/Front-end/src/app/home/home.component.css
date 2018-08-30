@@ -3,6 +3,7 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 60px;
+    content:url("../../assets/img/btb-large.png");
 }
 
 .headerText {
@@ -45,4 +46,13 @@
 .mat-raised-button {
     background: orange;
     color: black;
+}
+
+.betImg {
+  content:url("../../assets/img/bet.jpg");
+}
+
+.moneyImg {
+  content:url("../../assets/img/money.jpg");
+  overflow: hidden;
 }
