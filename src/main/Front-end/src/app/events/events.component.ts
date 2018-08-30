@@ -83,6 +83,7 @@ export class EventsComponent implements OnInit {
 @Component({
   selector: 'bet-the-bet-dialog',
   templateUrl: './bet-the-bet-dialog.html',
+  styleUrls: ['./bet-the-bet-dialog.css']
 })
 export class BetTheBetDialog {
 
@@ -163,7 +164,7 @@ export class BetTheBetDialog {
 
 @Component({
   selector: 'bet-the-bet-confirm-dialog',
-  templateUrl: './bet-the-bet-confirm-dialog.html',
+  templateUrl: './bet-the-bet-confirm-dialog.html'
 })
 export class BetTheBetConfirmDialog {
 

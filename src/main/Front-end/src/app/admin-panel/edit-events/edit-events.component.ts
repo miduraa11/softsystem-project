@@ -71,7 +71,7 @@ export class EditEventsComponent implements OnInit {
 
   openDeleteObjectDialog(object: any, flag: number): void {
     const dialogRef = this.dialog.open(AdminDeleteObjectComponent, {
-      width: '400px',
+      width: '450px',
       data: { object, flag }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -262,6 +262,7 @@ export class UserListModal {
 @Component({
   selector: 'resolve-event-modal',
   templateUrl: 'resolve-event-modal.html',
+  styleUrls: ['./resolve-event-modal.css']
 })
 export class ResolveEventDialog {
 

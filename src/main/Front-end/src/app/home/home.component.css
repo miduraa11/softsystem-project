@@ -26,7 +26,7 @@
     margin-right: auto;
     text-align: center;
     margin-top: 60px;
-    font-size: 20px;
+    font-size: 22px;
     font-family: fantasy;
     color: black;
 }
@@ -36,23 +36,36 @@
     margin-bottom: 60px;
 }
 
+.cards {
+    height: 100%;
+    width: 100%;
+}
+
 .card {
     border-radius: 1em;
-    height: 625px;
-    max-width: 525px;
+    height: 90%;
+    width: 510px;
     background: rgb(212, 54, 6);
 }
 
-.mat-raised-button {
+.cardBtn {
     background: orange;
     color: black;
+    width: 100%;
+    margin-top: 100px;
 }
 
 .betImg {
-  content:url("../../assets/img/bet.jpg");
+  content: url("../../assets/img/bet.jpg");
+  size: 100%;
 }
 
 .moneyImg {
-  content:url("../../assets/img/money.jpg");
-  overflow: hidden;
+  content: url("../../assets/img/money.jpg");
+  size: 100%;
+}
+
+.cardText {
+    font-weight: bold;
+    font-size: 16px;
 }

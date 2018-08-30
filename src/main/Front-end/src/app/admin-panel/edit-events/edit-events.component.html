@@ -10,13 +10,10 @@
 
 <form [formGroup]="filterForm">
   <table class="filterTable" width="100%">
-    <b><label>Filtry:</label></b>
-    <tr>
-      <th class="notBold">Status:</th>
-      <th class="notBold">Dyscyplina:</th>
-    </tr>
+    <label class="tableLabel">Filtry: </label>
     <tr>
       <td>
+        <label>Status: </label>
         <mat-select class="filterSelect" formControlName="chosenStatus">
           <mat-option value="Wszystkie">Wszystkie</mat-option>
           <mat-option value="Aktywne">Aktywne</mat-option>
@@ -25,6 +22,7 @@
         </mat-select>
       </td>
       <td>
+        <label>Dyscyplina: </label>
         <mat-select class="filterSelect" formControlName="chosenDiscipline">
           <mat-option value="Wszystkie">Wszystkie</mat-option>
           <mat-option *ngFor="let type of types" [value]="type.discipline">{{type.discipline}}</mat-option>

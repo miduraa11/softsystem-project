@@ -1,8 +1,8 @@
-.saveBtn {
+.betBtn {
     background: green;
     color: black;
-    width: 100%;
     margin-top: 15px;
+    width: 400px;
 }
 
 .cancelBtn {
@@ -10,4 +10,4 @@
     color: black;
     width: 100%;
     margin-top: 15px;
-}
+  }
