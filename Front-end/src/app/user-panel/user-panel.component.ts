@@ -123,7 +123,7 @@ export class UserPanelComponent implements OnInit {
         });
         break;
       case 3:
-        this.snackBar.open('Weryfikacja zakończona pomyślnie!\nŻyczymy powodzenia w obstawianiu zakładów!', 'Zamknij', {
+        this.snackBar.open('Weryfikacja zakończona pomyślnie!', 'Zamknij', {
           duration: 3000
         });
         break;

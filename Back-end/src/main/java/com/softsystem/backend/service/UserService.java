@@ -100,6 +100,7 @@ public class UserService implements UserDetailsService {
         newUser.setLastName(user.getLastName());
         newUser.setEmail(user.getEmail());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+        newUser.setActivated(false);
         List<Role> role = roleRepository.findByName();
         newUser.setRoles(role);
         userRepository.save(newUser);
@@ -118,7 +119,7 @@ public class UserService implements UserDetailsService {
     }
 
     public Object changePassword(ChangePasswordDTO changePassword) {
-        User user = userRepository.getOne(changePassword.getId());
+        User user = userRepository.findUserById(changePassword.getId());
         if (bcryptEncoder.matches(changePassword.getCurrentPassword(), user.getPassword())) {
             user.setPassword(bcryptEncoder.encode(changePassword.getPassword()));
             userRepository.save(user);
@@ -129,9 +130,10 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean checkSecretPassword(AccountActivationDTO accountActivation) {
-        String hashSecretPassword = "$2y$12$hwZsOAw1dt98HPrFFrrwduR4LjxIKuZgN5V6aSf5PKpmyqFRmZmm.";
-        User user = userRepository.getOne(accountActivation.getId());
-        if(bcryptEncoder.matches(accountActivation.getSecretPassword(), hashSecretPassword)) {
+        String hashSecretPassword = "$2a$10$12IetLiiU8K3ynAM3ShfxOx5PMG0AvrxnbH7dGrQrAunqnp..wrKC";
+        User user = userRepository.findUserById(accountActivation.getId());
+        String password = accountActivation.getSecretPassword();
+        if(bcryptEncoder.matches(password, hashSecretPassword)) {
             user.setActivated(true);
             userRepository.save(user);
 
