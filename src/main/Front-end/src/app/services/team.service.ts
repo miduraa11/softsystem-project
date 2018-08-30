@@ -1,22 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Member } from '../model/member';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamService {
  
-  private baseUrl = 'http://localhost:8080/edit-teams';
+  private baseUrl = '/api/edit-teams';
  
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
-    return this.http.get('//localhost:8080/edit-teams');
+    return this.http.get('/api/edit-teams');
   }
   getAllType(): Observable<any> {
-    return this.http.get('//localhost:8080/edit-teams/type');
+    return this.http.get('/api/edit-teams/type');
   }
 
   deleteTeam(team: Member) : Observable<any> {

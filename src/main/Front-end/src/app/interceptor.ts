@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpUserEvent, HttpHandler, HttpRequest, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpErrorResponse } from '../../node_modules/@angular/common/http';
+import { HttpInterceptor, HttpUserEvent, HttpHandler, HttpRequest, HttpSentEvent, HttpHeaderResponse, HttpProgressEvent, HttpErrorResponse, HttpHeaders } from '../../node_modules/@angular/common/http';
 import { Router } from '../../node_modules/@angular/router';
 import { Observable } from '../../node_modules/rxjs';
 import 'rxjs/add/operator/do';
 import { TokenStorage } from './token.storage';
 
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 const TOKEN_HEADER_KEY = 'Authorization';
 

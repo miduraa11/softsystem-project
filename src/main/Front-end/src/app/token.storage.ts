@@ -1,5 +1,10 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import * as JWT from 'jwt-decode';
+import { HttpHeaders } from '@angular/common/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 const TOKEN_KEY = 'AuthToken';
 const USER_ID = 'User id';
