@@ -110,7 +110,8 @@ const routes: Routes = [
     MatTableModule,
     FusionChartsModule,
     MatRadioModule,
-    MatGridListModule
+    MatGridListModule,
+    RouterModule.forRoot(routes, { useHash: true })
   ],
   entryComponents: [
     AdminDeleteObjectComponent,
