@@ -1,0 +1,60 @@
+<div class="homeContainer">
+  <div class="homeContent">
+
+    <h6 class="headerText">Witaj w</h6>
+    <img class="BTBimage">
+
+    <h6 class="text">
+      <p>
+        BTB to system informatyczny stworzony wyłącznie w celach edukacyjnych w ramach praktyk zawodowych w firmie 
+        SoftSystem sp. z o. o. przez studentów Politechniki Rzeszowskiej.
+      </p>
+      <p>
+        Jest to system obsługujący fikcyjne zakłady bukmacherskie a jego założeniem jest jedynie edukacja w dziedzinie 
+        tworzenia systemów informatycznych.
+      </p>
+    </h6>
+
+    <hr class="separator">
+
+    <mat-grid-list cols="2" rowHeight="1:1.25">
+      <mat-grid-tile>
+        <mat-card class="card">
+          <mat-card-header>      
+            <mat-card-title class="lesserHeader">Mały zakładzik ?</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image class="betImg">
+          <mat-card-content>
+            <p><b>
+              Przejdź do aktualnie dostępnych wydarzeń i wybierz z listy to, które Cię interesuje.
+              Następnie wybierz rodzaj zakładu i uzupełnij formularz. To takie proste! Sprawdź sam!
+            </b></p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" routerLink="/events"><b>WYDARZENIA</b></button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-card class="card">
+          <mat-card-header>
+            <mat-card-title class="lesserHeader">Ciekawy jak przebiegają twoje zakłady ?</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image alt="moneyImage" class="moneyImg">
+          <mat-card-content>
+            <p><b>
+              Przejdź do "moich zakładów" i śledź na bierząco swoje zakłady! To bardzo ważne gdyż po rozstrzzygnięcu zakładu
+              należy zgłosić się po obiór wygranej. Chyba nie chcesz tego przegapić, co nie ?
+            </b></p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" style="margin-top: 20px" routerLink="/bets"><b>MOJE ZAKŁADY</b></button>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <hr class="separator">
+
+  </div>
+</div>
