@@ -126,5 +126,25 @@
     </div>
   </mat-expansion-panel>
 
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h4><b><u>Weryfikacja konta</u></b></h4>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="center">
+      <form [formGroup]="changePasswordForm">
+        <mat-form-field class="example-full-width formPassword">
+          <input matInput type="password" placeholder="Hasło dostępu" formControlName="authentication">
+          <mat-error *ngIf="changePasswordForm.get('authentication').hasError('required')">
+            Podanie hasła weryfikacyjnego jest <strong>wymagane</strong>!
+          </mat-error>
+        </mat-form-field>
+      <button mat-raised-button class="saveBtn" (click)="authentication()">Weryfikuj</button>
+      </form>
+    </div>
+
+  </mat-expansion-panel>
 </mat-accordion>
 </div>

@@ -1,5 +1,6 @@
 package com.softsystem.backend.service;
 
+import com.softsystem.backend.DTO.AccountActivationDTO;
 import com.softsystem.backend.DTO.ChangePasswordDTO;
 import com.softsystem.backend.model.Bet;
 import com.softsystem.backend.model.Role;
@@ -99,6 +100,7 @@ public class UserService implements UserDetailsService {
         newUser.setLastName(user.getLastName());
         newUser.setEmail(user.getEmail());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+        newUser.setActivated(false);
         List<Role> role = roleRepository.findByName();
         newUser.setRoles(role);
         userRepository.save(newUser);
@@ -117,7 +119,7 @@ public class UserService implements UserDetailsService {
     }
 
     public Object changePassword(ChangePasswordDTO changePassword) {
-        User user = userRepository.getOne(changePassword.getId());
+        User user = userRepository.findUserById(changePassword.getId());
         if (bcryptEncoder.matches(changePassword.getCurrentPassword(), user.getPassword())) {
             user.setPassword(bcryptEncoder.encode(changePassword.getPassword()));
             userRepository.save(user);
@@ -125,6 +127,19 @@ public class UserService implements UserDetailsService {
             return true;
         }
         else return false;
+    }
+
+    public boolean checkSecretPassword(AccountActivationDTO accountActivation) {
+        String hashSecretPassword = "$2a$10$12IetLiiU8K3ynAM3ShfxOx5PMG0AvrxnbH7dGrQrAunqnp..wrKC";
+        User user = userRepository.findUserById(accountActivation.getId());
+        String password = accountActivation.getSecretPassword();
+        if(bcryptEncoder.matches(password, hashSecretPassword)) {
+            user.setActivated(true);
+            userRepository.save(user);
+
+            return true;
+        } else return false;
+
     }
 
     public Object getAccount(Long id) {
@@ -174,4 +189,6 @@ public class UserService implements UserDetailsService {
         }
         return history;
     }
+
+
 }
