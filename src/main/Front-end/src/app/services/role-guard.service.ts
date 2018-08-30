@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { TokenStorage } from '../token.storage';
 import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
+import { HttpHeaders } from '@angular/common/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'

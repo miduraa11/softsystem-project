@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Member } from '../model/member';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({ providedIn: 'root' })
 
 export class PlayerService {
-  public API = 'http://localhost:8080';
+  public API = '/api';
 
   constructor(private http: HttpClient) { }
   
