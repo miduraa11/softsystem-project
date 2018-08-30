@@ -49,6 +49,7 @@ li a:hover:not(.active) {
 
 .homeImage {
   width: 40%;
+  content: url(../assets/img/btb-small.png);
 }
 .userImage {
   width: 23px;

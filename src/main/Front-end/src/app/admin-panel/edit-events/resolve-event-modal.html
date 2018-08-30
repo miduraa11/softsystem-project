@@ -49,7 +49,6 @@
     </form>
 </div>
 
-<div mat-dialog-actions>
-    <button type="button" class="btn btn-success btn-lg btn-block btn-sm" (click)="onResolveClick()">Zakończ i rozstrzygnij</button>
-    <button type="button" class="btn btn-secondary btn-lg btn-block btn-sm" (click)="onCancelClick()">Anuluj</button>
-</div>
+<button mat-raised-button class="resolveBtn" (click)="onResolveClick()">Zakończ i rozstrzygnij</button>
+<button mat-raised-button class="cancelBtn" (click)="onCancelClick()">Anuluj</button>
+

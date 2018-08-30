@@ -46,3 +46,7 @@ marquee {
     color: white;
     font-size: 120%;
 }
+
+.BTBico {
+    content: url(./assets/ico/btb-small.ico);
+}

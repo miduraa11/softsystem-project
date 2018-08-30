@@ -54,7 +54,7 @@
             <ul>
                 <li *ngFor="let member of event.members">{{member.name}}<br></li>
             </ul>
-            <div *ngIf="event.active">
+            <div class="betButtons" *ngIf="event.active">
                 <button mat-raised-button class="betBtn" (click)="openBetDialog(event, 1)">Postaw zakład ogólny!</button>
                 <mat-icon data-toggle="tooltip" data-placement="right" title="Zakład ogólny dotyczy wyboru jedynie zwycięzcy wydarzenia">info</mat-icon>
                 <div *ngIf="event.type.result">

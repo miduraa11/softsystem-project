@@ -94,7 +94,7 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/edit-players")
-    public Collection<Member> showAllPlayers() {
+    public Collection<Member> getAllPlayers() {
 
         return memberService.getAllPlayers();
     }

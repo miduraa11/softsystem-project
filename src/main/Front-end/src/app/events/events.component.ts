@@ -8,6 +8,7 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Bet } from '../model/bet';
 import { User } from '../model/user';
 import { TypeService } from '../services/type.service';
+import { Member } from '../model/member';
 
 const USER_ID = 'User id';
 
@@ -82,6 +83,7 @@ export class EventsComponent implements OnInit {
 @Component({
   selector: 'bet-the-bet-dialog',
   templateUrl: './bet-the-bet-dialog.html',
+  styleUrls: ['./bet-the-bet-dialog.css']
 })
 export class BetTheBetDialog {
 
@@ -116,6 +118,7 @@ export class BetTheBetDialog {
     this.currentUser = this.data.currentUser;
     this.bet = new Bet();
     this.bet.user = new User();
+    this.bet.member = new Member();
   }
 
   onCancelClick(): void {
@@ -126,20 +129,13 @@ export class BetTheBetDialog {
     if(this.flag == 1) { this.betForm.get('result').setErrors(null); }
     if(this.betForm.valid) {
       this.bet.amount = this.betForm.get('amount').value;
-      if(this.betForm.get('member').value != -1) { this.bet.member = this.betForm.get('member').value; }
-      else { this.bet.member = null; }
+      this.bet.member.id = this.betForm.get('member').value;
       this.bet.event = event;
       this.bet.user.id = this.data.currentUser;
-      switch(this.flag) {
-        case 1: {
-          this.bet.general = true;
-          break;
-        }
-        case 2: {
-          this.bet.general = false;
-          this.bet.result = this.betForm.get('result').value;
-          break;
-        }
+      if(this.flag == 1)  { this.bet.general = true; }
+      else {
+        this.bet.general = false;
+        this.bet.result = this.betForm.get('result').value;
       }
       this.betService.addBet(this.bet).subscribe(data => {
         this.error = data;
@@ -168,7 +164,7 @@ export class BetTheBetDialog {
 
 @Component({
   selector: 'bet-the-bet-confirm-dialog',
-  templateUrl: './bet-the-bet-confirm-dialog.html',
+  templateUrl: './bet-the-bet-confirm-dialog.html'
 })
 export class BetTheBetConfirmDialog {
 
