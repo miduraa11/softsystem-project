@@ -126,8 +126,8 @@
     </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
+  <mat-expansion-panel *ngIf="!user.activated">
+    <mat-expansion-panel-header class="redHeader">
       <mat-panel-title>
         <h4><b><u>Weryfikacja konta</u></b></h4>
       </mat-panel-title>
@@ -144,7 +144,20 @@
       <button mat-raised-button class="saveBtn" (click)="authentication()">Weryfikuj</button>
       </form>
     </div>
+  </mat-expansion-panel>
 
+  <mat-expansion-panel *ngIf="user.activated">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h4><b><u>Weryfikacja konta</u></b></h4>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="center">
+      <div class="accountActive">
+        Konto zostało już aktywowane!
+    </div>
+    </div>
   </mat-expansion-panel>
 </mat-accordion>
 </div>
