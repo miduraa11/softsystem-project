@@ -1,6 +1,7 @@
 <div [ngSwitch]="error">
     <h2 mat-dialog-title *ngSwitchCase="0">Gratulacje!</h2>
     <h2 mat-dialog-title *ngSwitchCase="1">Błąd!</h2>
+    <h2 mat-dialog-title *ngSwitchCase="2">Błąd!</h2>    
 </div>
 
 <div mat-dialog-content [ngSwitch]="error">
@@ -13,6 +14,12 @@
         <div>
             Ups...  Niestety wydarzenie, które chciałeś obstawić przestało być aktywne. 
             Odśwież stronę aby uzyskać aktualną listę dostępnych wydarzeń.
+        </div>     
+    </section>
+    <section *ngSwitchCase="2">
+        <div>
+            Ups... Wygląda na to, że Twoje konto nie zostało jeszcze aktywowane.
+            Przejdź do swojego profilu i wprowadź hasło aktywacyjne.
         </div>     
     </section>
 </div>

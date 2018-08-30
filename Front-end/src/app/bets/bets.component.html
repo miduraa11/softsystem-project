@@ -1,13 +1,11 @@
 <h2 class="caption">Moje zakłady:</h2>
 
 <form [formGroup]="filterForm">
+  <label class="tableLabel">Filtry:</label>
   <table class="table-condensed" width="100%">
-    <b><label>Filtry:</label></b>
-    <tr>
-      <th class="notBold" for="FormControlSelectActive">Status:</th>
-    </tr>
     <tr>
       <td>
+        <label>Status: </label>
         <mat-select class="filterSelect" id="FormControlSelectActive" formControlName="chosenStatus">
           <mat-option value="Wszystkie">Wszystkie</mat-option>
           <mat-option value="Wygrane">Wygrane</mat-option>

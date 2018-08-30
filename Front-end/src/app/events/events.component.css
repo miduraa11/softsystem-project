@@ -66,11 +66,6 @@
   margin-left: 20px;
 }
 
-.notBold {
-  font-weight: normal;
-  position: left;
-}
-
 .filterSelect {
   background: white;
   height: 25px;
@@ -83,4 +78,8 @@
 }
 .emptyEvents{
   color: rgb(27, 27, 27);
+}
+
+.tableLabel {
+  font-weight: bold;  
 }

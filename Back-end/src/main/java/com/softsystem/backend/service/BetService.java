@@ -2,6 +2,7 @@ package com.softsystem.backend.service;
 
 import com.softsystem.backend.model.Bet;
 import com.softsystem.backend.model.Event;
+import com.softsystem.backend.model.User;
 import com.softsystem.backend.repository.BetRepository;
 import com.softsystem.backend.repository.EventRepository;
 import com.softsystem.backend.repository.UserRepository;
@@ -23,15 +24,17 @@ public class BetService {
 
     public int addBet(Bet bet) {
         Date sysDate = new Date();
+        User currentUser = userRepository.findUserById(bet.getUser().getId());
 
         if(eventRepository.getOne(bet.getEvent().getId()).getEndDate().before(sysDate)) { return 1; }
+        if(!currentUser.getActivated()) { return 2; }
         Bet newBet = new Bet();
         newBet.setUser(userRepository.findUserById(bet.getUser().getId()));
         newBet.setEvent(bet.getEvent());
         newBet.setMember(bet.getMember());
         newBet.setBetResult(null);
         newBet.setAmount(bet.getAmount());
-        if(bet.getGeneral()) {
+        if (bet.getGeneral()) {
             newBet.setGeneral(true);
         } else {
             newBet.setGeneral(false);
