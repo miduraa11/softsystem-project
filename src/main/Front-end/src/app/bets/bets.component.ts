@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { BetsService } from '../services/bets.service';
 import { Bet } from '../model/bet';
-import { Member } from '../model/member';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormControl } from '../../../node_modules/@angular/forms';
 
@@ -28,38 +27,22 @@ export class BetsComponent implements OnInit {
   });
 
   constructor(private betsService: BetsService,
-              public dialog: MatDialog
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.currentUser = Number(sessionStorage.getItem(USER_ID));
     this.betsService.getActiveBetsByUser(this.chosenStatus, this.currentUser).subscribe(data => {
       this.bets = data;
-      if(this.bets.length ==0)
-        this.empty = true;
-      else
-        this.empty = false;
-      for(var i = 0; i < this.bets.length; i++) {
-        if(this.bets[i].member == null) { 
-          this.bets[i].member = new Member();
-          this.bets[i].member.name = "Remis";
-        }
-      }
+      if(this.bets.length == 0) { this.empty = true; }
+      else { this.empty = false; }
     });
     this.filterForm.get('chosenStatus').valueChanges.subscribe(value => {
       this.chosenStatus = value;
       this.betsService.getActiveBetsByUser(this.chosenStatus, this.currentUser).subscribe(data => {
         this.bets = data;
-        if(this.bets.length ==0)
-          this.empty = true;
-        else
-          this.empty = false;
-        for(var i = 0; i < this.bets.length; i++) {
-          if(this.bets[i].member == null) { 
-            this.bets[i].member = new Member();
-            this.bets[i].member.name = "Remis";
-          }
-        }
+        if(this.bets.length == 0) { this.empty = true; }
+        else { this.empty = false; }
       });
     });
   }

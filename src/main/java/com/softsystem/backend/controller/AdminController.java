@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Collection;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class AdminController {
 
@@ -93,7 +93,7 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/edit-players")
-    public Collection<Member> showAllPlayers() {
+    public Collection<Member> getAllPlayers() {
 
         return memberService.getAllPlayers();
     }

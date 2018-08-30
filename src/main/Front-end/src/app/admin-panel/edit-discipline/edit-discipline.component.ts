@@ -24,6 +24,8 @@ export class EditDisciplineComponent implements OnInit {
   displayedColumns: string[] = ['id', 'discipline', 'individual', 'result', 'draw', 'edit', 'delete'];
   dataSource: any;
   individual: String;
+  result: String;
+  draw: String;
 
   constructor(private disciplineService: DisciplineService,
     public dialog: MatDialog
@@ -36,13 +38,17 @@ export class EditDisciplineComponent implements OnInit {
       this.dataSource.filterPredicate = function customFilter(dataFilter , filter:string ): boolean {
         if(dataFilter.individual) { this.individual ="Indywidualna"; }
         else { this.individual ="Drużynowa"; }
+        if(dataFilter.result) { this.result = "Szczegółowy"; }
+        else { this.result = "Ogólny"; }
         if(dataFilter.draw) { this.draw = "Tak"; }
         else { this.darw = "Nie"; }
-        return (dataFilter.id === +filter ||                   
+        return (dataFilter.id == filter ||                   
                 dataFilter.discipline.trim().toLowerCase().indexOf(filter) != -1 ||
                 this.individual.trim().toLowerCase().indexOf(filter) != -1 ||
+                this.result.trim().toLowerCase().indexOf(filter) != -1 ||
                 this.draw.trim().toLowerCase().indexOf(filter) != -1
-              );}
+              );
+      }
     });
   }
 

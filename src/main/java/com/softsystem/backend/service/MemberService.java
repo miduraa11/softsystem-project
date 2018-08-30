@@ -18,35 +18,36 @@ public class MemberService {
     private TypeRepository typeRepository;
 
     public Collection <Member> getAllPlayers() {
-        Collection <Member> players;
-        players = memberRepository.findAll()
+
+        return memberRepository.findAll()
                 .stream()
                 .filter(this::isPlayer)
                 .collect(Collectors.toList());
-
-        return players;
     }
 
     public Collection <Member> getAllTeams() {
-        Collection<Member> teams;
-        teams = memberRepository.findAll()
+
+        return memberRepository.findAll()
                 .stream()
                 .filter(this::isTeam)
                 .collect(Collectors.toList());
-
-        return teams;
     }
 
     public List<Member> findAll() {
 
-        return memberRepository.findAll();
+        return memberRepository.findAll()
+                .stream()
+                .filter(x -> x.getId() != -1)
+                .collect(Collectors.toList());
     }
 
     public int deleteMember(Long id) {
         try {
             memberRepository.deleteById(id);
+
             return 0;
         } catch (Exception e) {
+
             return -1;
         }
     }
@@ -67,13 +68,13 @@ public class MemberService {
     }
 
     private boolean isPlayer(Member member) {
-
-        return member.getType().getIndividual();
+        if(member.getType() == null) { return false; }
+        else { return member.getType().getIndividual(); }
     }
 
     private boolean isTeam(Member member) {
-
-        return !member.getType().getIndividual();
+        if(member.getType() == null) { return false; }
+        else { return !member.getType().getIndividual(); }
     }
 
 }

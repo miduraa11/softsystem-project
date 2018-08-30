@@ -29,7 +29,7 @@
 
         <mat-form-field style="width: 400px">            
             <mat-select matSelect formControlName="member" style="width: 400px" placeholder="Wybierz przewidywanego przez Ciebie zwycięzce.">
-                <mat-option *ngFor="let member of event.members" [value]="member">{{member.name}}</mat-option>
+                <mat-option *ngFor="let member of event.members" [value]="member.id">{{member.name}}</mat-option>
                 <mat-option *ngIf="event.type.draw" [value]=-1>Remis</mat-option>
             </mat-select>
             <mat-error>
