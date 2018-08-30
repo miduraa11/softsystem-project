@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 //@CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@RequestMapping({"/api"})
 public class BetController {
 
     @Autowired

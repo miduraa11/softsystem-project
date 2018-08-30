@@ -12,8 +12,8 @@ const httpOptions = {
 })
 export class BetsService {
 
-  private baseUrl = 'http://localhost:8080/bets';
-  private addUrl = 'http://localhost:8080/events/addBet';
+  private baseUrl = '/api/bets';
+  private addUrl = '/api/events/addBet';
 
   constructor(private http: HttpClient) { }
 

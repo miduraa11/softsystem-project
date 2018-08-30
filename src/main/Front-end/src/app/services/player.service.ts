@@ -10,7 +10,7 @@ const httpOptions = {
 @Injectable({ providedIn: 'root' })
 
 export class PlayerService {
-  public API = 'http://localhost:8080';
+  public API = '/api';
 
   constructor(private http: HttpClient) { }
   

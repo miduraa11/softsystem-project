@@ -12,15 +12,15 @@ const httpOptions = {
 })
 export class TeamService {
  
-  private baseUrl = 'http://localhost:8080/edit-teams';
+  private baseUrl = '/api/edit-teams';
  
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
-    return this.http.get('//localhost:8080/edit-teams');
+    return this.http.get('/api/edit-teams');
   }
   getAllType(): Observable<any> {
-    return this.http.get('//localhost:8080/edit-teams/type');
+    return this.http.get('/api/edit-teams/type');
   }
 
   deleteTeam(team: Member) : Observable<any> {

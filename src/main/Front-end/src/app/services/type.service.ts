@@ -10,8 +10,8 @@ const httpOptions = {
 
 export class TypeService {
 
-  public baseUrl = 'http://localhost:8080';
-  public eventsUrl = 'http://localhost:8080/events';
+  public baseUrl = '/api';
+  public eventsUrl = '/api/events';
 
   constructor(private http: HttpClient) { }
   

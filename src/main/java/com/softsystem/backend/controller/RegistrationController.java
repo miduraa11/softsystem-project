@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 //@CrossOrigin(origins = "http://localhost:8080")
 @RestController
+@RequestMapping({"/api"})
 public class RegistrationController {
 
     @Autowired

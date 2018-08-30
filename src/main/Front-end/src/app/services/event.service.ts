@@ -12,8 +12,8 @@ const httpOptions = {
 })
 export class EventService {
 
-  private baseUrl = 'http://localhost:8080/edit-events';
-  private activeEventsAPI = 'http://localhost:8080/events';
+  private baseUrl = '/api/edit-events';
+  private activeEventsAPI = '/api/events';
 
   constructor(private http: HttpClient) { }
 

@@ -11,7 +11,7 @@ const httpOptions = {
 })
 export class LocalStorageService {
 
-  private baseUrl = 'http://localhost:8080/login';
+  private baseUrl = '/api/login';
 
   constructor(private http: HttpClient) { }
 

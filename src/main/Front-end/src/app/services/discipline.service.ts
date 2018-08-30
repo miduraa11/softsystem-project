@@ -12,7 +12,7 @@ const httpOptions = {
 })
 export class DisciplineService {
  
-  private baseUrl = 'http://localhost:8080/edit-discipline';
+  private baseUrl = '/api/edit-discipline';
  
   constructor(private http: HttpClient) { }
 
