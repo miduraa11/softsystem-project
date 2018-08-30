@@ -10,4 +10,5 @@ export class User {
     password: any;
     bets: Bet[];
     roles: Role[];
+    activated: boolean;
 }
