@@ -205,7 +205,7 @@ public class AdminController {
     /*------------------*/
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping(value = "/edit-users")
+    @GetMapping(value = "/#//edit-users")
     public List<User> showAllUsers() {
         List<User> users = new ArrayList<>();
         userService.getAllUsers().forEach(users::add);
