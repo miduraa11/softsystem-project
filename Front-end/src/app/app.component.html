@@ -2,7 +2,7 @@
   <div class="navigationBar" *ngIf="isActive">
     <ul>
       <li style="float:left; margin-left:10%"><nav><a routerLink="/home"><img class="homeImage" src="../assets/img/btb-small.png"></a></nav></li>
-      <li style="float:left"><nav><a routerLink="/user-panel"> Mój profil</a></nav></li>
+      <li style="float:left"><nav><a routerLink="/user-panel"> Mój profil </a></nav></li>
       <li style="margin-right:10%"><nav><a routerLink="/login" (click)="logout()">Wyloguj</a></nav></li>
       <li *ngIf="userRole=='ROLE_ADMIN'"><nav><a routerLink="/admin-panel">Admin panel</a></nav></li>
       <li><nav><a routerLink="/bets">Moje zakłady</a></nav></li>

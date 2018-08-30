@@ -6,6 +6,7 @@ export class Type {
     discipline: String;
     individual: Boolean;
     result: Boolean;
+    draw: Boolean;
     members: Member[];
     events: Event[];
 }

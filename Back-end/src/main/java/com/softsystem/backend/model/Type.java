@@ -22,6 +22,9 @@ public class Type {
     @Column(name = "result")
     private Boolean result;
 
+    @Column(name = "draw")
+    private Boolean draw;
+
     @OneToMany(mappedBy = "type")
     @JsonIgnore
     private List<Member> members;
@@ -30,10 +33,11 @@ public class Type {
     @JsonIgnore
     private List<Event> events;
 
-    public Type(String discipline, Boolean individual, Boolean result, List<Member> members, List<Event> events) {
+    public Type(String discipline, Boolean individual, Boolean result, Boolean draw, List<Member> members, List<Event> events) {
         this.discipline = discipline;
         this.individual = individual;
         this.result = result;
+        this.draw = draw;
         this.members = members;
         this.events = events;
     }
@@ -87,5 +91,13 @@ public class Type {
 
     public void setResult(Boolean result) {
         this.result = result;
+    }
+
+    public Boolean getDraw() {
+        return draw;
+    }
+
+    public void setDraw(Boolean draw) {
+        this.draw = draw;
     }
 }

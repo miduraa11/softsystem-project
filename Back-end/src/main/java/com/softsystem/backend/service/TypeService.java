@@ -59,6 +59,7 @@ public class TypeService {
         newDiscipline.setDiscipline(type.getDiscipline());
         newDiscipline.setIndividual(type.getIndividual());
         newDiscipline.setResult(type.getResult());
+        newDiscipline.setDraw(type.getDraw());
         typeRepository.save(newDiscipline);
 
         return newDiscipline.getId();
@@ -68,6 +69,8 @@ public class TypeService {
         Type discipline = typeRepository.getOne(type.getId());
         discipline.setDiscipline(type.getDiscipline());
         discipline.setIndividual(type.getIndividual());
+        discipline.setResult(type.getResult());
+        discipline.setDraw(type.getDraw());
         typeRepository.save(discipline);
     }
 

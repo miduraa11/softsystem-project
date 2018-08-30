@@ -19,11 +19,11 @@ table {
     background-color: rgb(190, 190, 190);
 }
 
-.notBold {
-    font-weight: normal;
-}
-
 .filterSelect {
     background: white;
     height: 25px;
+}
+
+.tableLabel {
+    font-weight: bold;
 }

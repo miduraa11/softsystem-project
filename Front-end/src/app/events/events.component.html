@@ -1,15 +1,12 @@
 <h2 class="caption">Aktualnie dostępne wydarzenia</h2>
 
 <form [formGroup]="filterForm">
-    <table class="table-condensed" width="100%">
-        <b><label>Filtry:</label></b>
-        <tr>
-            <th class="notBold" for="FormControlSelectActive">Status:</th>
-            <th class="notBold" for="FormControlSelectDiscipline">Dyscyplina:</th>
-        </tr>
+    <label class="tableLabel">Filtry: </label>
+    <table width="100%">
         <tr>
             <td>
-                <mat-select class="filterSelect" id="FormControlSelectActive" formControlName="chosenStatus">
+                <label>Status: </label>
+                <mat-select class="filterSelect" formControlName="chosenStatus">
                     <mat-option value="Wszystkie">Wszystkie</mat-option>
                     <mat-option value="Aktywne">Aktywne</mat-option>
                     <mat-option value="Zakończone">Zakończone</mat-option>
@@ -17,6 +14,7 @@
                 </mat-select>
             </td>
             <td>
+                <label>Dyscyplina: </label>
                 <mat-select class="filterSelect" id="FormControlSelectDiscipline" formControlName="chosenDiscipline">
                     <mat-option value="Wszystkie">Wszystkie</mat-option>
                     <mat-option *ngFor="let type of types" [value]="type.discipline">{{type.discipline}}</mat-option>
@@ -63,15 +61,16 @@
                     <button mat-raised-button class="betBtn" (click)="openBetDialog(event, 2)">Postaw zakład szczegółowy!</button>
                     <mat-icon data-toggle="tooltip" data-placement="right" title="Zakład szczegółowy dotyczy podania dokładnego wyniku wydarzenia">info</mat-icon>
                 </div>
+
                 <div *ngIf="!event.type.result">
-                    <button mat-raised-buton class="betBtn" disabled>Postaw zakład szczegółowy!</button>
+                    <button mat-raised-button class="betBtn" disabled>Postaw zakład szczegółowy!</button>
                     <mat-icon data-toggle="tooltip" data-placement="right" title="Zakładu szczegółowego nie można postawić dla wydarzenia z danej dyscypliny">info</mat-icon>
                 </div>
             </div>
-            <p *ngIf="!event.active">
+            <div *ngIf="event.winner != null">
                 <b>Zwycięzca: </b>{{event.winner}}<br>
-                <b>Wynik: </b>{{event.score}}<br>
-            </p>
+                <div *ngIf="event.type.result"><b>Wynik: </b>{{event.score}}<br></div>
+            </div>
           </mat-expansion-panel>
         </mat-accordion>
       </td>

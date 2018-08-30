@@ -21,7 +21,7 @@ export class EditDisciplineComponent implements OnInit {
   
   type: Type;
   types: Type[];
-  displayedColumns: string[] = ['id', 'discipline', 'individual', 'result', 'edit', 'delete'];
+  displayedColumns: string[] = ['id', 'discipline', 'individual', 'result', 'draw', 'edit', 'delete'];
   dataSource: any;
   individual: String;
 
@@ -34,13 +34,14 @@ export class EditDisciplineComponent implements OnInit {
       this.types = data;
       this.dataSource = new MatTableDataSource(this.types);
       this.dataSource.filterPredicate = function customFilter(dataFilter , filter:string ): boolean {
-        if(dataFilter.individual)
-          this.individual ="Indywidualna";
-        else
-          this.individual ="Drużynowa";
+        if(dataFilter.individual) { this.individual ="Indywidualna"; }
+        else { this.individual ="Drużynowa"; }
+        if(dataFilter.draw) { this.draw = "Tak"; }
+        else { this.darw = "Nie"; }
         return (dataFilter.id === +filter ||                   
                 dataFilter.discipline.trim().toLowerCase().indexOf(filter) != -1 ||
-                this.individual.trim().toLowerCase().indexOf(filter) != -1 
+                this.individual.trim().toLowerCase().indexOf(filter) != -1 ||
+                this.draw.trim().toLowerCase().indexOf(filter) != -1
               );}
     });
   }
@@ -100,6 +101,9 @@ export class UpdateDisciplineDialog {
     ]),
     result: new FormControl('', [
       Validators.required
+    ]),
+    draw: new FormControl('', [
+      Validators.required
     ])
   });
 
@@ -118,6 +122,7 @@ export class UpdateDisciplineDialog {
       this.updateForm.get('discipline').setValue(this.type.discipline);
       this.updateForm.get('individual').setValue(String(this.type.individual));
       this.updateForm.get('result').setValue(String(this.type.result));
+      this.updateForm.get('draw').setValue(String(this.type.draw));
     }
   }
 
@@ -132,6 +137,8 @@ export class UpdateDisciplineDialog {
       else { this.type.individual = false; }
       if(this.updateForm.get('result').value == "true") { this.type.result = true; }
       else { this.type.result = false; }
+      if(this.updateForm.get('draw').value == "true") { this.type.draw = true; }
+      else { this.type.draw = false; }
       switch(this.flag) {
         case 0: {
           this.disciplineService.addDiscipline(this.type).subscribe(data => {
