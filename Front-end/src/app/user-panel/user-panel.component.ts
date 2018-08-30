@@ -12,6 +12,10 @@ export class ChangePassword{
   currentPassword: String;
   password: String;
 }
+export class Authentication{
+  id: number;
+  secretPassword: String;
+}
 
 @Component({
   selector: 'app-user-panel',
@@ -25,6 +29,7 @@ export class UserPanelComponent implements OnInit {
   currentUser: number;
   currentPassword: any;
   password: any;
+  authenticationKey: Authentication = new Authentication();
   account: number[]= [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
   chance: number=0.0;
   dataSourceGraph: Object;
@@ -37,6 +42,9 @@ export class UserPanelComponent implements OnInit {
 
   changePasswordForm =new FormGroup({
     currentPassword : new FormControl('', [
+      Validators.required,
+    ]),
+    authentication : new FormControl('', [
       Validators.required,
     ]),
     password : new FormControl('', [
@@ -86,16 +94,49 @@ export class UserPanelComponent implements OnInit {
     }
   }
 
-  openSnackBar(flag: number) {
-    if(flag==1){
-    this.snackBar.open('Hasło zostało zmienione!\nZaloguj się ponownie przy użyciu nowego hasła.', 'Zamknij', {
-      duration: 3000
-    });
-  } else {
-    this.snackBar.open('Wystąpił błąd przy zmianie hasła!', 'Zamknij', {
-      duration: 3000
-    });
+  authentication(){
+    if(this.changePasswordForm.get('authentication').errors==null){
+      this.authenticationKey.secretPassword = this.changePasswordForm.get('authentication').value;
+      this.authenticationKey.id = this.user.id;
+      this.userPanelService.authentication(this.authenticationKey).subscribe(data => {
+        if(data=="true"){
+          this.openSnackBar(3);
+          this.router.navigate(['/events']);
+        }
+        else {
+          this.openSnackBar(4);
+        }
+      });
+    }
   }
+
+  openSnackBar(flag: number) {
+    switch (flag) {
+      case 1:
+        this.snackBar.open('Hasło zostało zmienione!\nZaloguj się ponownie przy użyciu nowego hasła.', 'Zamknij', {
+          duration: 3000
+        });
+        break;
+      case 2:
+        this.snackBar.open('Wystąpił błąd przy zmianie hasła!', 'Zamknij', {
+          duration: 3000
+        });
+        break;
+      case 3:
+        this.snackBar.open('Weryfikacja zakończona pomyślnie!\nŻyczymy powodzenia w obstawianiu zakładów!', 'Zamknij', {
+          duration: 3000
+        });
+        break;
+      case 4:
+        this.snackBar.open('Weryfikacja nie powiodła się!', 'Zamknij', {
+          duration: 3000
+        });
+        break;
+      default:
+        this.snackBar.open('Wystąpił błąd.', 'Zamknij', {
+          duration: 3000});
+        break;
+    }
   }
 
   getGraph(){
