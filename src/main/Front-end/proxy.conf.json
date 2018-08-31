@@ -1,6 +1,6 @@
 {
     "/api/*": {
-      "target": "http://localhost:5432",
+      "target": "postgres://ldpxzhtgnodlcv:ecf89e38ade77b78c19595008d0f084caa2fcc19589d62699862ae343d9b817d@ec2-54-228-251-254.eu-west-1.compute.amazonaws.com:5432/d8mg27f3itchd8",
       "secure": false
     }
   }
