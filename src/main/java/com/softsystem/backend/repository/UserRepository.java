@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT u FROM User u JOIN u.roles ur WHERE (SELECT COUNT(uo) FROM u.roles uo JOIN u.roles ur) = 1")
+    @Query("SELECT u FROM User u JOIN u.roles ur WHERE ur.id = 2")
     List<User> findAllUsers();
 
     @Query(value = "SELECT * FROM user u WHERE u.username = :username", nativeQuery = true)

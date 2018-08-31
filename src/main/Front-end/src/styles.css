@@ -37,16 +37,6 @@ html {
     overflow-y: scroll;
 }
 
-marquee {
-    margin-left: 10%;
-    margin-right: 10%;
-}
-
-.footerText {
-    color: white;
-    font-size: 120%;
-}
-
-.BTBico {
+/* .BTBico {
     content: url(./assets/ico/btb-small.ico);
-}
+} */

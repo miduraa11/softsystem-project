@@ -51,20 +51,16 @@ export class EditEventsComponent implements OnInit {
     });
     this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
       this.events = data;
-      if(this.events.length ==0)
-        this.empty = true;
-      else
-        this.empty = false;
+      if(this.events.length ==0) { this.empty = true; }
+      else { this.empty = false; }
     });
     this.filterForm.valueChanges.subscribe(value => {
       this.chosenDiscipline = value.chosenDiscipline;
       this.chosenStatus = value.chosenStatus;
       this.eventService.getActiveEvents(this.chosenDiscipline, this.chosenStatus).subscribe(data => {
         this.events = data;
-        if(this.events.length ==0)
-          this.empty = true;
-        else
-          this.empty = false;
+        if(this.events.length == 0) { this.empty = true; }
+        else { this.empty = false; }
       });
     });
   }
@@ -132,12 +128,15 @@ export class UpdateEventDialog {
     endDate: new FormControl('', [
       Validators.required
     ]),
+    time: new FormControl('', [
+      Validators.required
+    ]),
     discipline: new FormControl('', [
       Validators.required
     ]),
     members: new FormControl('', [
       Validators.required
-    ]),
+    ])
   });
 
   constructor(public dialogRef: MatDialogRef<UpdateEventDialog>,
@@ -168,6 +167,7 @@ export class UpdateEventDialog {
       this.updateForm.get('name').setValue(this.event.name);
       this.updateForm.get('beginDate').setValue(this.event.beginDate);
       this.updateForm.get('endDate').setValue(this.event.endDate);
+      this.updateForm.get('time').setValue(this.event.endDate.getHours());
       this.updateForm.get('discipline').setValue(this.event.type.id);
       this.updateForm.get('members').setValue(this.event.members.map(x => x.id));
     }
@@ -182,6 +182,7 @@ export class UpdateEventDialog {
       this.event.name = this.updateForm.get('name').value;
       this.event.beginDate = this.updateForm.get('beginDate').value;
       this.event.endDate = this.updateForm.get('endDate').value;
+      this.event.endDate.setHours(this.updateForm.get('time').value);
       if(this.event.endDate > this.sysDate) { this.event.active = true; }
       else { this.event.active = false; }
       switch(this.flag) {

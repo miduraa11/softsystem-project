@@ -20,7 +20,7 @@
         <mat-form-field style="width: 400px">            
             <input matInput formControlName="amount" style="width: 350px" placeholder="Podaj kwotę, na którą chcesz postawić zakład."/>
             <mat-error *ngIf="betForm.get('amount').hasError('pattern') && !betForm.get('amount').hasError('required')">
-                Proszę wpisać <strong>poprawną</strong> kwotę!
+                Proszę wpisać <strong>poprawną</strong> kwotę! (np. 20.00, 35.55)
             </mat-error>
             <mat-error *ngIf="betForm.get('amount').hasError('required')">
                 Kwota jest <strong>wymagana</strong>!

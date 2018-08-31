@@ -68,8 +68,9 @@
                   <b>{{event.name}}</b>
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <b>Data rozpoczęcia wydarzenia:</b> {{event.beginDate | date: "dd.MM.yyyy"}} <br>
-              <b>Data zakończenia wydarzenia:</b> {{event.endDate | date: "dd.MM.yyyy"}} <br>
+              <b>Data rozpoczęcia wydarzenia: </b> {{event.beginDate | date: "dd.MM.yyyy"}} <br>
+              <b>Data zakończenia wydarzenia: </b> {{event.endDate | date: "dd.MM.yyyy"}} <br>
+              <b>Godzina zakończenia: </b>{{event.endDate | date: "HH:mm"}}<br>
               <b>Dyscyplina:</b> {{event.type.discipline}} <br>
               <b>Drużyny biorące udział w wydarzeniu:</b>
               <ul>
