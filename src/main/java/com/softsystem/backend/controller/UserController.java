@@ -51,4 +51,5 @@ public class UserController {
     public Object getHistory(@PathVariable(name="userId")Long userId) {
         return userService.getHistory(userId);
     }
+    
 }
