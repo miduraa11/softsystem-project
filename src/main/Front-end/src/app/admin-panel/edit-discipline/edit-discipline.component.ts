@@ -40,9 +40,11 @@ export class EditDisciplineComponent implements OnInit {
         else { this.individual ="Drużynowa"; }
         if(dataFilter.result) { this.result = "Szczegółowy"; }
         else { this.result = "Ogólny"; }
-        if(dataFilter.draw) { this.draw = "Tak"; }
-        else { this.darw = "Nie"; }
-        return (dataFilter.id == filter ||                   
+        if(dataFilter.draw) 
+          { this.draw = "Tak"; }
+        else 
+          { this.draw = "Nie"; }
+        return (dataFilter.id === +filter ||                   
                 dataFilter.discipline.trim().toLowerCase().indexOf(filter) != -1 ||
                 this.individual.trim().toLowerCase().indexOf(filter) != -1 ||
                 this.result.trim().toLowerCase().indexOf(filter) != -1 ||

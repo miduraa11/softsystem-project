@@ -4,9 +4,12 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <h4><b><u>Moje dane</u></b></h4>
+        <h4>
+          <mat-icon class="icon">person</mat-icon>
+          <b><u>Moje dane</u></b>
+        </h4>
       </mat-panel-title>
-      <mat-panel-description>
+      <mat-panel-description class="centerHeader">
         <h4>Login: {{this.user.username}}</h4>
       </mat-panel-description>
     </mat-expansion-panel-header>
@@ -20,7 +23,10 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <h4><b><u>Zmiana hasła</u></b></h4>
+        <h4>
+            <mat-icon class="icon">https</mat-icon>
+          <b><u>Zmiana hasła</u></b>
+        </h4>
       </mat-panel-title>
     </mat-expansion-panel-header>
 
@@ -65,9 +71,13 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <h4><b><u>Moje konto</u></b></h4>
+        <h4>
+          <mat-icon *ngIf="account[2]>=0" class="greenIcon icon">attach_money</mat-icon>
+          <mat-icon *ngIf="account[2]<0" class="redIcon icon">attach_money</mat-icon>
+          <b><u>Moje konto</u></b>
+        </h4>
       </mat-panel-title>
-      <mat-panel-description>
+      <mat-panel-description class="centerHeader">
         <h4 *ngIf="account[2]<0" class="loss">Stan rachunku: {{account[2].toFixed(2)}} PLN</h4>
         <h4 *ngIf="account[2]>=0" class="win">Stan rachunku: {{account[2].toFixed(2)}} PLN</h4>
       </mat-panel-description>
@@ -95,7 +105,10 @@
   <mat-expansion-panel (closed)="panelOpenGraph = false" (opened)="panelOpenGraph = true; getGraph()">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <h4><b><u>Wykres szans</u></b></h4>
+        <h4>
+          <mat-icon class="icon">swap_vert</mat-icon>
+          <b><u>Wykres szans</u></b>
+        </h4>
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="center">
@@ -106,13 +119,19 @@
         dataFormat="json"
         [dataSource]="dataSourceGraph">
       </fusioncharts>
+      <nav *ngIf="chance>=33 && chance<66" class="displayPercent blue">Twoja trafność wynosi: {{chance.toFixed(0)}} %</nav>
+      <nav *ngIf="chance>=66" class="displayPercent win">Twoja trafność wynosi: {{chance.toFixed(0)}} %</nav>
+      <nav *ngIf="chance<33" class="displayPercent loss">Twoja trafność wynosi: {{chance.toFixed(0)}} %</nav>
     </div>
   </mat-expansion-panel>
 
   <mat-expansion-panel (closed)="panelOpenHistory = false" (opened)="panelOpenHistory = true; getHistory()">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <h4><b><u>Statystyki</u></b></h4>
+        <h4>
+          <mat-icon class="icon">trending_up</mat-icon>
+          <b><u>Statystyki</u></b>
+        </h4>
       </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="center">
@@ -127,9 +146,12 @@
   </mat-expansion-panel>
 
   <mat-expansion-panel *ngIf="!user.activated">
-    <mat-expansion-panel-header class="redHeader">
+    <mat-expansion-panel-header>
       <mat-panel-title>
-        <h4><b><u>Weryfikacja konta</u></b></h4>
+        <h4>
+          <mat-icon class="redIcon icon">highlight_off</mat-icon>
+          <b><u>Weryfikacja konta</u></b>
+        </h4>
       </mat-panel-title>
     </mat-expansion-panel-header>
 
@@ -149,7 +171,10 @@
   <mat-expansion-panel *ngIf="user.activated">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <h4><b><u>Weryfikacja konta</u></b></h4>
+        <h4>
+          <mat-icon class="greenIcon icon">check_circle_outline</mat-icon>
+          <b><u>Weryfikacja konta</u></b>
+        </h4>
       </mat-panel-title>
     </mat-expansion-panel-header>
 
@@ -159,37 +184,5 @@
     </div>
     </div>
   </mat-expansion-panel>
-
-  <mat-expansion-panel *ngIf="isAdmin()">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <h4><b><u>Zmiana hasła weryfikacyjnego</u></b></h4>
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-        <div class="center">
-          <form [formGroup]="changeActivationPasswordForm">
-            <mat-form-field  class="example-full-width formPassword">
-              <input matInput type="password" placeholder="Wprowadź nowe hasło" formControlName="changeActivationPassword">
-              <mat-error>
-                Podanie hasła jest <strong>wymagane</strong>!
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field  class="example-full-width formPassword">
-              <input matInput type="password" placeholder="Powtórz nowe hasło" formControlName="confirmActivationPassword" pattern="{{changeActivationPasswordForm.get('changeActivationPassword').value}}">
-              <mat-error *ngIf="changeActivationPasswordForm.get('confirmActivationPassword').hasError('pattern') && !changeActivationPasswordForm.get('confirmActivationPassword').hasError('required')">
-                Podane hasła są <strong>różne</strong> !
-              </mat-error>
-              <mat-error *ngIf="changeActivationPasswordForm.get('confirmActivationPassword').hasError('required')">
-                Powtórzenie nowego hasła jest <strong>wymagane</strong>!
-              </mat-error>
-            </mat-form-field>
-
-            <button mat-raised-button class="saveBtn" (click)="saveActivationPassword()">Zapisz hasło</button>
-          </form>
-        </div>
-
-  </mat-expansion-panel>
-
 </mat-accordion>
 </div>

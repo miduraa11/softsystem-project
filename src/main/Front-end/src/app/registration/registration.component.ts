@@ -72,19 +72,22 @@ export class RegistrationComponent {
 
   openLoginSnackBar() {
     this.snackBar.open('Podany login już istnieje!\nProszę podać inny lub zalogować się na istniejące konto.', 'Zamknij', {
-      duration: 3000
+      duration: 3000,
+      verticalPosition: 'top'
     });
   }
 
   openErrorSnackBar() {
     this.snackBar.open('Niepoprawnie wprowadzone dane!', 'Zamknij', {
-      duration: 3000
+      duration: 3000,
+      verticalPosition: 'top'
     });
   }
 
   openWelcomeSnackBar(userName: String) {
     this.snackBar.open('Rejestracja zakończona pomyślnie! \nWitaj '+ userName + ' w BTB.', 'Zamknij', {
-      duration: 3000
+      duration: 3000,
+      verticalPosition: 'top'
     });
   }
 

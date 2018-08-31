@@ -59,21 +59,21 @@
 
 .resolveBtn {
   background: orange;
-  color: black;
+  color: white;
   width: 100%;
   margin-top: 10px;
 }
 
 .saveBtn {
   background: green;
-  color: black;
+  color: white;
   width: 100%;
   margin-top: 15px;
 }
 
 .cancelBtn {
   background: rgb(177, 53, 53);
-  color: black;
+  color: white;
   width: 100%;
   margin-top: 15px;
 }
@@ -88,15 +88,15 @@
 }
 
 .winnersBtn {
-  background: skyblue;
-  color: black;
+  background: rgb(91, 174, 207);
+  color: white;
   width: 100%;
   margin-top: 10px;
 }
 
 .closeBtn {
   background: lightslategray;
-  color: black;
+  color: white;
   width: 100%;
   margin-top: 15px;
 }

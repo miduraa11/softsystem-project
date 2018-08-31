@@ -5,7 +5,6 @@ import {FormControl, Validators, FormGroup} from '@angular/forms';
 import { AppComponent } from '../app.component';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import {TokenStorage} from "../token.storage";
 const USER_ID = 'User id';
 
 export class ChangePassword{
@@ -40,9 +39,8 @@ export class UserPanelComponent implements OnInit {
   accountState: Array<any>=new Array(20);
   result: Array<any>=new Array(20);
   changePassword: ChangePassword = new ChangePassword();
-  newActivationPassword: String;
 
-  changePasswordForm = new FormGroup({
+  changePasswordForm =new FormGroup({
     currentPassword : new FormControl('', [
       Validators.required,
     ]),
@@ -59,18 +57,8 @@ export class UserPanelComponent implements OnInit {
     ])
   });
 
-  changeActivationPasswordForm = new FormGroup({
-    changeActivationPassword : new FormControl('',[
-      Validators.required,
-    ]),
-    confirmActivationPassword : new FormControl('', [
-      Validators.required,
-    ])
-  });
 
-
-  constructor(public tokenStorage: TokenStorage,
-    private userPanelService: UserPanelService,
+  constructor(private userPanelService: UserPanelService,
     private logout: AppComponent,
     private router: Router,
     public snackBar: MatSnackBar
@@ -103,28 +91,6 @@ export class UserPanelComponent implements OnInit {
           this.openSnackBar(2);
         }
       });
-    }
-  }
-
-  isAdmin(){
-    let currentUser = this.tokenStorage.getDecodedToken();
-    if(currentUser.scopes == "ROLE_ADMIN"){
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  saveActivationPassword(){
-    if(this.changeActivationPasswordForm.valid){
-      this.newActivationPassword = this.changeActivationPasswordForm.get('changeActivationPassword').value;
-      this.userPanelService.saveActivationPassword(this.newActivationPassword).subscribe( data => {
-        this.openSnackBar(5);
-        this.changeActivationPasswordForm.get('changeActivationPassword').setValue('');
-        this.changeActivationPasswordForm.get('confirmActivationPassword').setValue('');
-      })
-    } else {
-      this.openSnackBar(2);
     }
   }
 
@@ -166,11 +132,6 @@ export class UserPanelComponent implements OnInit {
           duration: 3000
         });
         break;
-      case 5:
-        this.snackBar.open('Hasło zostało zmienione!', 'Zamknij', {
-          duration: 3000
-        });
-        break;
       default:
         this.snackBar.open('Wystąpił błąd.', 'Zamknij', {
           duration: 3000});
@@ -188,9 +149,9 @@ export class UserPanelComponent implements OnInit {
       },
       "colorrange": {
         "color": [
-          {"minvalue": "0", "maxvalue": "33","code": "#F2726F"},
-          {"minvalue": "33", "maxvalue": "66", "code": "#FFC533"},
-          {"minvalue": "66", "maxvalue": "100", "code": "#62B58F"}
+          {"minvalue": "0", "maxvalue": "33","code": "#D40000"},
+          {"minvalue": "33", "maxvalue": "66", "code": "#0077FF"},
+          {"minvalue": "66", "maxvalue": "100", "code": "#00A300"}
         ]
       },
       "dials": {"dial": [{"value": this.chance}]}

@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-//@CrossOrigin(origins = "http://localhost:4200")
+
 @RestController
 @RequestMapping({"/api"})
 public class UserController {
@@ -38,12 +38,7 @@ public class UserController {
         return userService.checkSecretPassword(accountActivation);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping(value ="user-panel/change-activation-password")
-    public void changeActivationPassword(@RequestBody String currentActivationPassword) {
 
-        userService.changeActivationPassword(currentActivationPassword);
-    }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping(value = "/user-panel/account/{userId}")

@@ -24,15 +24,20 @@ export class LoginComponent {
 
   openSnackBar(): void {
     this.snackBar.open('Niepoprawny login lub hasło !', 'Zamknij', {
-      duration: 3000
+      duration: 3000,
+      verticalPosition: 'top'
     });
   }
 
   login(): void {
     this.authService.attemptAuth(this.username, this.password).subscribe(
       data => {
-        this.token.saveToken(data.token);
-        this.router.navigate(['home']);
+        if(data!=false){
+          this.token.saveToken(data.token);
+          this.router.navigate(['home']);
+        }
+        else 
+          this.openSnackBar();
       }
     );
   }

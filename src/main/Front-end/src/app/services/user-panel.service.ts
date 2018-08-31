@@ -34,8 +34,4 @@ export class UserPanelService {
   authentication(authenticationKey: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/accountActivation`, authenticationKey, {responseType: 'text'});
   }
-
-  saveActivationPassword(newPassword: String) : Observable<any> {
-    return this.http.post(`${this.baseUrl}/change-activation-password`, newPassword);
-  }
 }
