@@ -159,5 +159,37 @@
     </div>
     </div>
   </mat-expansion-panel>
+
+  <mat-expansion-panel *ngIf="isAdmin()">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h4><b><u>Zmiana hasła weryfikacyjnego</u></b></h4>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+        <div class="center">
+          <form [formGroup]="changeActivationPasswordForm">
+            <mat-form-field  class="example-full-width formPassword">
+              <input matInput type="password" placeholder="Wprowadź nowe hasło" formControlName="changeActivationPassword">
+              <mat-error>
+                Podanie hasła jest <strong>wymagane</strong>!
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field  class="example-full-width formPassword">
+              <input matInput type="password" placeholder="Powtórz nowe hasło" formControlName="confirmActivationPassword" pattern="{{changeActivationPasswordForm.get('changeActivationPassword').value}}">
+              <mat-error *ngIf="changeActivationPasswordForm.get('confirmActivationPassword').hasError('pattern') && !changeActivationPasswordForm.get('confirmActivationPassword').hasError('required')">
+                Podane hasła są <strong>różne</strong> !
+              </mat-error>
+              <mat-error *ngIf="changeActivationPasswordForm.get('confirmActivationPassword').hasError('required')">
+                Powtórzenie nowego hasła jest <strong>wymagane</strong>!
+              </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button class="saveBtn" (click)="saveActivationPassword()">Zapisz hasło</button>
+          </form>
+        </div>
+
+  </mat-expansion-panel>
+
 </mat-accordion>
 </div>

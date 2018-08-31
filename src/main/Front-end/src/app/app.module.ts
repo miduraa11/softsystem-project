@@ -50,6 +50,7 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { RoleGuardService } from './services/role-guard.service';
 import { TokenStorage } from './token.storage';
 import { Interceptor } from './interceptor';
+import {LoginGuardService} from "./services/login-guard.service";
 
 
 FusionChartsModule.fcRoot(FusionCharts, AngularGauge, MsLine);
@@ -139,6 +140,7 @@ const routes: Routes = [
     AuthService,
     RoleGuardService,
     AuthGuardService,
+    LoginGuardService,
     TokenStorage,
     {provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,

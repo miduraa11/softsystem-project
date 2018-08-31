@@ -10,13 +10,13 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
+export class LoginGuardService implements CanActivate {
 
   constructor(public tokenStorage: TokenStorage, public router: Router) { }
 
   canActivate(): boolean {
-    if(!this.tokenStorage.getToken()){
-      this.router.navigate(['login']);
+    if(this.tokenStorage.getToken()){
+      this.router.navigate(['home']);
       return false;
     } else
       return true;
