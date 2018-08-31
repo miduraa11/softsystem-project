@@ -31,6 +31,38 @@
     </mat-form-field>
 
     <mat-form-field style="width: 100%">
+    <mat-select formControlName="time" style="width: 100%" placeholder="Wybierz godzinę zakończenia wydarzenia">
+        <mat-option [value]=1>1:00</mat-option>
+        <mat-option [value]=2>2:00</mat-option>
+        <mat-option [value]=3>3:00</mat-option>
+        <mat-option [value]=4>4:00</mat-option>
+        <mat-option [value]=5>5:00</mat-option>
+        <mat-option [value]=6>6:00</mat-option>
+        <mat-option [value]=7>7:00</mat-option>
+        <mat-option [value]=8>8:00</mat-option>
+        <mat-option [value]=9>9:00</mat-option>
+        <mat-option [value]=10>10:00</mat-option>
+        <mat-option [value]=11>11:00</mat-option>
+        <mat-option [value]=12>12:00</mat-option>
+        <mat-option [value]=13>13:00</mat-option>
+        <mat-option [value]=14>14:00</mat-option>
+        <mat-option [value]=15>15:00</mat-option>
+        <mat-option [value]=16>16:00</mat-option>
+        <mat-option [value]=17>17:00</mat-option>
+        <mat-option [value]=18>18:00</mat-option>
+        <mat-option [value]=19>19:00</mat-option>
+        <mat-option [value]=20>20:00</mat-option>
+        <mat-option [value]=21>21:00</mat-option>
+        <mat-option [value]=22>22:00</mat-option>
+        <mat-option [value]=23>23:00</mat-option>
+        <mat-option [value]=24>24:00</mat-option>
+    </mat-select>
+    <mat-error>
+        Wybór godziny zakończenia jest <strong>wymagany</strong>!
+    </mat-error>
+    </mat-form-field>  
+
+    <mat-form-field style="width: 100%">
     <mat-select *ngSwitchCase="0" formControlName="discipline" style="width: 100%" placeholder="Wybierz dyscyplinę">
         <mat-option *ngFor="let type of types" [value]="type">{{type.discipline}}</mat-option>
     </mat-select>
