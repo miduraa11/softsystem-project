@@ -10,11 +10,14 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 @EnableScheduling
 public class EventService {
+
+    protected final Logger log = Logger.getLogger(getClass().getName());
 
     @Autowired
     private EventRepository eventRepository;
@@ -130,10 +133,10 @@ public class EventService {
                 x -> {
                     if(x.getEndDate().before(sysDate)) { x.setActive(false); }
                     if(x.getEndDate().after(sysDate)) { x.setActive(true); }
-                    eventRepository.save(x);
                 }
         );
-        System.out.println(sysDate + " INFO [ Events activity has been updated. ]");
+        eventRepository.saveAll(eventList);
+        log.info("Events activity has been updated.");
     }
 
     public List<UserListDTO> getAllWinners(List<Bet> bet) {

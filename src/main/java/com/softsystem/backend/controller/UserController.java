@@ -38,7 +38,11 @@ public class UserController {
         return userService.checkSecretPassword(accountActivation);
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping(value ="user-panel/change-activation-password")
+    public void changeActivationPassword(@RequestBody String currentActivationPassword) {
+        userService.changeActivationPassword(currentActivationPassword);
+    }
 
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping(value = "/user-panel/account/{userId}")
