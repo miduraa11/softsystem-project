@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
 import { RoleGuardService as RoleGuard } from './services/role-guard.service';
+import { LoginGuardService as LoginGuard } from './services/login-guard.service';
 
 const routes: Routes = [
   { path: 'events', component: EventsComponent, canActivate: [AuthGuard] },
@@ -26,10 +27,10 @@ const routes: Routes = [
   { path: 'edit-discipline', component: EditDisciplineComponent, canActivate: [RoleGuard], data: { expectedRole: 'ROLE_ADMIN'} },
   { path: 'edit-users', component: EditUsersComponent, canActivate: [RoleGuard], data: { expectedRole: 'ROLE_ADMIN'} },
   { path: 'registration', component: RegistrationComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'user-panel', component: UserPanelComponent, canActivate: [AuthGuard] },
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', redirectTo: '' },
   
 ];

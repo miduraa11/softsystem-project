@@ -127,8 +127,9 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean checkSecretPassword(AccountActivationDTO accountActivation) {
-        String hashSecretPassword = "$2a$10$12IetLiiU8K3ynAM3ShfxOx5PMG0AvrxnbH7dGrQrAunqnp..wrKC";
         User user = userRepository.findUserById(accountActivation.getId());
+        User adminPassword = userRepository.findUserById((long) 1);
+        String hashSecretPassword = adminPassword.getActivationPassword();
         String password = accountActivation.getSecretPassword();
         if(bcryptEncoder.matches(password, hashSecretPassword)) {
             user.setActivated(true);
@@ -136,7 +137,16 @@ public class UserService implements UserDetailsService {
 
             return true;
         } else return false;
+    }
 
+    public void changeActivationPassword(String currentActivationPassword) {
+        List<User> allUsers = userRepository.findAllUsers();
+        User admin = userRepository.findUserById((long) 1);
+        String newPassword = currentActivationPassword;
+        admin.setActivationPassword(bcryptEncoder.encode(newPassword));
+        userRepository.save(admin);
+        allUsers.forEach(x -> x.setActivated(false));
+        userRepository.saveAll(allUsers);
     }
 
     public Object getAccount(Long id) {
