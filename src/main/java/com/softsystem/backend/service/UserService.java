@@ -2,9 +2,7 @@ package com.softsystem.backend.service;
 
 import com.softsystem.backend.DTO.AccountActivationDTO;
 import com.softsystem.backend.DTO.ChangePasswordDTO;
-import com.softsystem.backend.model.Bet;
-import com.softsystem.backend.model.Role;
-import com.softsystem.backend.model.User;
+import com.softsystem.backend.model.*;
 import com.softsystem.backend.repository.RoleRepository;
 import com.softsystem.backend.repository.BetRepository;
 import com.softsystem.backend.repository.UserRepository;
@@ -15,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.*;
 
 @Service(value = "userService")
@@ -30,7 +26,6 @@ public class UserService implements UserDetailsService {
     BetRepository betRepository;
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
-
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
@@ -132,9 +127,8 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean checkSecretPassword(AccountActivationDTO accountActivation) {
+        String hashSecretPassword = "$2a$10$12IetLiiU8K3ynAM3ShfxOx5PMG0AvrxnbH7dGrQrAunqnp..wrKC";
         User user = userRepository.findUserById(accountActivation.getId());
-        User adminPassword = userRepository.findUserById((long) 1);
-        String hashSecretPassword = adminPassword.getActivationPassword();
         String password = accountActivation.getSecretPassword();
         if(bcryptEncoder.matches(password, hashSecretPassword)) {
             user.setActivated(true);
@@ -143,16 +137,6 @@ public class UserService implements UserDetailsService {
             return true;
         } else return false;
 
-    }
-
-    public void changeActivationPassword(String currentActivationPassword) {
-        List<User> allUsers = userRepository.findAllUsers();
-        User admin = userRepository.findUserById((long) 1);
-        String newPassword = currentActivationPassword;
-        admin.setActivationPassword(bcryptEncoder.encode(newPassword));
-        userRepository.save(admin);
-        allUsers.forEach(x -> x.setActivated(false));
-        userRepository.saveAll(allUsers);
     }
 
     public Object getAccount(Long id) {
@@ -202,6 +186,5 @@ public class UserService implements UserDetailsService {
         }
         return history;
     }
-
 
 }

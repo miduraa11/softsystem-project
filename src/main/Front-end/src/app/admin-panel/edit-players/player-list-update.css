@@ -1,13 +1,13 @@
 .saveBtn {
   background: green;
-  color: black;
+  color: white;
   width: 100%;
   margin-top: 15px;
 }
 
 .cancelBtn {
   background: rgb(177, 53, 53);
-  color: black;
+  color: white;
   width: 100%;
   margin-top: 15px;
 }

@@ -4,11 +4,11 @@
       
       <form>
         <mat-form-field style="width: 350px">
-          <input matInput placeholder="Login" (keyup.enter)="login()" [(ngModel)]="username" name="username" required>
+          <input matInput placeholder="Login" [(ngModel)]="username" name="username" required>
         </mat-form-field>
         
         <mat-form-field style="width: 350px; padding-bottom: 20px">
-          <input matInput type="password" placeholder="Hasło" (keyup.enter)="login()" [(ngModel)]="password" name="password" required>
+          <input matInput type="password" placeholder="Hasło" [(ngModel)]="password" name="password" required>
         </mat-form-field>
         <div class="loginButton">
             <a mat-stroked-button class="buttonLogin" routerLink="/edit-events" (click)="login()">Zaloguj się</a>
